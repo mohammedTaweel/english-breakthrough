@@ -258,22 +258,42 @@ function QuickResp() {
   );
 }
 
-function WeeklyQuiz() {
+function WeeklyQuiz({ onSave }) {
   const [qi, setQi] = useState(0);
   const [picked, setPicked] = useState(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
+  const [prevPct, setPrevPct] = useState(null);
   const qs = useRef(shuffle(QUIZ_BANK, gdn()).slice(0, 10));
+  const saved = useRef(false);
   function pick(oi) { setPicked(oi); const { correctIndex } = shuffleOpts(qs.current[qi].opts, qs.current[qi].ans, qi * 17 + 59); if (oi === correctIndex) setScore(score + 1); }
   function next() { if (qi + 1 >= qs.current.length) { setDone(true); return; } setQi(qi + 1); setPicked(null); }
-  function restart() { qs.current = shuffle(QUIZ_BANK, Date.now()); setQi(0); setPicked(null); setScore(0); setDone(false); }
+  function restart() { qs.current = shuffle(QUIZ_BANK, Date.now()); setQi(0); setPicked(null); setScore(0); setDone(false); saved.current = false; setPrevPct(null); }
+  useEffect(() => {
+    if (done && !saved.current) {
+      saved.current = true;
+      const pct = Math.round((score / qs.current.length) * 100);
+      (async () => {
+        try {
+          const r = await window.storage.get("quiz-results");
+          const results = r && r.value ? JSON.parse(r.value) : [];
+          if (results.length > 0) setPrevPct(results[results.length - 1].pct);
+          results.push({ date: gtd(), pct, score, total: qs.current.length });
+          await window.storage.set("quiz-results", JSON.stringify(results));
+          if (onSave) onSave();
+        } catch (e) {}
+      })();
+    }
+  }, [done, score, onSave]);
   if (done) {
     const pct = Math.round((score / qs.current.length) * 100);
+    const diff = prevPct !== null ? pct - prevPct : null;
     return (
       <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
         <div style={{ fontSize: 40, marginBottom: 12 }}>📊</div>
         <div style={{ fontSize: 28, fontWeight: 800, color: pct >= 80 ? "#34d399" : pct >= 50 ? "#f59e0b" : "#ef4444", marginBottom: 4 }}>{pct + "%"}</div>
         <div style={{ fontSize: 16, color: "#8892a4", marginBottom: 4 }}>{score + "/" + qs.current.length}</div>
+        {diff !== null && <div style={{ fontSize: 14, fontWeight: 700, color: diff >= 0 ? "#34d399" : "#ef4444", marginBottom: 4 }}>{diff >= 0 ? "📈 +" + diff + "% عن الاختبار السابق" : "📉 " + diff + "% عن الاختبار السابق"}</div>}
         <div style={{ fontSize: 14, color: "#8892a4", marginBottom: 16 }}>{pct >= 80 ? "ممتاز! الجمل صارت جزء منك 🔥" : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
         <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#a78bfa", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 اختبار جديد</button>
       </div>
@@ -319,14 +339,22 @@ export default function App() {
   const [pCat, setPCat] = useState(0);
   const [reps, setReps] = useState({});
   const [trainMode, setTrainMode] = useState(null);
+  const [quizResults, setQuizResults] = useState(null);
   const tmRef = useRef(null);
 
   useEffect(() => {
     (async () => {
       try { const r = await window.storage.get(DK); if (r && r.value) setStore(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await window.storage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); } catch (e) {}
       setLoading(false);
     })();
   }, []);
+
+  useEffect(() => {
+    if (quizResults === null && !loading) {
+      (async () => { try { const r = await window.storage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); else setQuizResults([]); } catch (e) { setQuizResults([]); } })();
+    }
+  }, [quizResults, loading]);
 
   const save = useCallback(async (s) => { setStore(s); try { await window.storage.set(DK, JSON.stringify(s)); } catch (e) {} }, []);
   const today = gtd();
@@ -449,7 +477,7 @@ export default function App() {
             )}
             {trainMode === "sim" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><MeetingSim /></Card>}
             {trainMode === "quick" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><QuickResp /></Card>}
-            {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz /></Card>}
+            {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} /></Card>}
           </div>
         )}
 
@@ -502,6 +530,24 @@ export default function App() {
                 ))}
               </div>
             </Card>
+            {quizResults && quizResults.length > 0 && <Card>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#a78bfa", marginBottom: 12 }}>📊 نتائج الاختبارات</div>
+              <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height: 100, padding: "0 4px" }}>
+                {quizResults.slice(-10).map((r, i) => (
+                  <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: r.pct >= 80 ? "#34d399" : r.pct >= 50 ? "#f59e0b" : "#ef4444" }}>{r.pct + "%"}</div>
+                    <div style={{ width: "100%", height: Math.max(r.pct * 0.8, 4), borderRadius: 4, background: r.pct >= 80 ? "#34d399" : r.pct >= 50 ? "#f59e0b" : "#ef4444", transition: "height .3s" }} />
+                    <div style={{ fontSize: 8, color: "#4a5568" }}>{r.date ? r.date.slice(5) : ""}</div>
+                  </div>
+                ))}
+              </div>
+              {quizResults.length >= 2 && (() => {
+                const last = quizResults[quizResults.length - 1].pct;
+                const prev = quizResults[quizResults.length - 2].pct;
+                const diff = last - prev;
+                return <div style={{ textAlign: "center", marginTop: 8, fontSize: 13, fontWeight: 700, color: diff >= 0 ? "#34d399" : "#ef4444" }}>{diff >= 0 ? "📈 +" + diff + "%" : "📉 " + diff + "%"} مقارنة بالاختبار السابق</div>;
+              })()}
+            </Card>}
             <div style={{ textAlign: "center", marginTop: 14 }}>
               <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(239,68,68,0.1)", background: "transparent", color: "#ef4444", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة تعيين</button>
             </div>
