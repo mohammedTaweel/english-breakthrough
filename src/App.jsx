@@ -98,6 +98,12 @@ const gdow = () => new Date().getDay();
 const getWk = (s) => { const x = Math.floor((new Date(gtd()) - new Date(s)) / 864e5); return x < 0 ? 0 : Math.min(Math.floor(x / 7) + 1, 12); };
 const getPh = (w) => w <= 4 ? { n: 1, nm: "بناء الأساس", c: "#22d3ee", gap: 6 } : w <= 8 ? { n: 2, nm: "التسريع", c: "#a78bfa", gap: 4 } : { n: 3, nm: "الإطلاق", c: "#f59e0b", gap: 3 };
 function shuffle(arr, seed) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = (seed * (i + 1) * 9301 + 49297) % 233280; const k = Math.floor((j / 233280) * (i + 1)); [a[i], a[k]] = [a[k], a[i]]; } return a; }
+function shuffleOpts(opts, correctIndex, seed) {
+  const correct = opts[correctIndex];
+  const indices = opts.map((_, i) => i);
+  const shuffled = shuffle(indices, seed);
+  return { opts: shuffled.map(i => opts[i]), correctIndex: shuffled.indexOf(correctIndex) };
+}
 
 function Prompter({ lines, gap, color, label }) {
   const [on, setOn] = useState(false);
@@ -154,7 +160,9 @@ function MeetingSim() {
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
   const m = MEETINGS[mi];
-  const s = m.steps[step];
+  const raw = m.steps[step];
+  const { opts: sOpts, correctIndex: sAns } = shuffleOpts(raw.opts, raw.ans, mi * 1000 + step * 7 + 31);
+  const s = { ...raw, opts: sOpts, ans: sAns };
   function pick(oi) { setPicked(oi); if (oi === s.ans) setScore(score + 1); }
   function next() { if (step + 1 >= m.steps.length) { setDone(true); return; } setStep(step + 1); setPicked(null); }
   function restart() { setMi((mi + 1) % MEETINGS.length); setStep(0); setPicked(null); setScore(0); setDone(false); }
@@ -207,7 +215,7 @@ function QuickResp() {
   const tRef = useRef(null);
   const qs = useRef(shuffle(QUICK_RESP, gdn()).slice(0, 8));
   function startTimer() { setTimer(10); clearInterval(tRef.current); tRef.current = setInterval(() => setTimer(p => { if (p <= 1) { clearInterval(tRef.current); return 0; } return p - 1; }), 1000); }
-  function pick(oi) { clearInterval(tRef.current); setPicked(oi); if (oi === qs.current[qi].ans) setScore(score + 1); setTotal(total + 1); }
+  function pick(oi) { clearInterval(tRef.current); setPicked(oi); const { correctIndex } = shuffleOpts(qs.current[qi].opts, qs.current[qi].ans, qi * 13 + 47); if (oi === correctIndex) setScore(score + 1); setTotal(total + 1); }
   function next() { if (qi + 1 >= qs.current.length) { setDone(true); return; } setQi(qi + 1); setPicked(null); startTimer(); }
   function restart() { qs.current = shuffle(QUICK_RESP, Date.now()); setQi(0); setPicked(null); setScore(0); setTotal(0); setDone(false); startTimer(); }
   useEffect(() => { startTimer(); return () => clearInterval(tRef.current); }, []);
@@ -219,7 +227,9 @@ function QuickResp() {
       <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#f59e0b", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
     </div>
   );
-  const q = qs.current[qi];
+  const rawQ = qs.current[qi];
+  const { opts: qOpts, correctIndex: qAns } = shuffleOpts(rawQ.opts, rawQ.ans, qi * 13 + 47);
+  const q = { ...rawQ, opts: qOpts, ans: qAns };
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
@@ -254,7 +264,7 @@ function WeeklyQuiz() {
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
   const qs = useRef(shuffle(QUIZ_BANK, gdn()).slice(0, 10));
-  function pick(oi) { setPicked(oi); if (oi === qs.current[qi].ans) setScore(score + 1); }
+  function pick(oi) { setPicked(oi); const { correctIndex } = shuffleOpts(qs.current[qi].opts, qs.current[qi].ans, qi * 17 + 59); if (oi === correctIndex) setScore(score + 1); }
   function next() { if (qi + 1 >= qs.current.length) { setDone(true); return; } setQi(qi + 1); setPicked(null); }
   function restart() { qs.current = shuffle(QUIZ_BANK, Date.now()); setQi(0); setPicked(null); setScore(0); setDone(false); }
   if (done) {
@@ -269,7 +279,9 @@ function WeeklyQuiz() {
       </div>
     );
   }
-  const q = qs.current[qi];
+  const rawQz = qs.current[qi];
+  const { opts: qzOpts, correctIndex: qzAns } = shuffleOpts(rawQz.opts, rawQz.ans, qi * 17 + 59);
+  const q = { ...rawQz, opts: qzOpts, ans: qzAns };
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
