@@ -19,6 +19,10 @@ const STORIES = [
   { t: "اجتماع الاثنين", lines: ["Sarah walked into the conference room at nine.", "The team was already seated around the table.", "Good morning everyone, she said confidently.", "Today we need to discuss quarterly targets.", "The sales team exceeded expectations this month.", "However, challenges remain in the European market.", "I propose we allocate more resources to Berlin.", "After discussion, the team reached a consensus.", "Sarah closed by thanking everyone.", "The next meeting was set for Thursday."] },
   { t: "مقابلة العمل", lines: ["Ahmed prepared carefully for his interview.", "He reviewed the company products and news.", "Tell me about yourself, the interviewer began.", "Ahmed spoke about five years of experience.", "He mentioned specific successful projects.", "The interviewer was impressed by his preparation.", "What motivates you in your career, she asked.", "Building teams that deliver results, he said.", "Both sides felt the interview went well.", "Ahmed received an offer the following week."] },
   { t: "إطلاق المنتج", lines: ["The company worked toward this day for months.", "The new product was finally ready for launch.", "The CEO took the stage before hundreds of people.", "Welcome. Today marks an important milestone.", "We spent two years developing something innovative.", "Let me walk you through the key features.", "First, it is designed to be incredibly simple.", "Second, it integrates with existing tools.", "The audience responded with enthusiasm.", "By the end of the day, a thousand orders came in."] },
+  { t: "العرض التقديمي", lines: ["Khalid prepared his presentation the night before.", "He practiced in front of the mirror three times.", "Good afternoon. Thank you for being here.", "Today I will cover three main topics.", "Let me start with our current market position.", "As you can see from the graph, sales are rising.", "Now let me address the challenges we face.", "The competition is getting stronger every quarter.", "However, I believe our strategy is solid.", "Any questions before I move to the next slide?"] },
+  { t: "التفاوض مع العميل", lines: ["The client requested a meeting to discuss pricing.", "Omar arrived early and reviewed his numbers.", "Thank you for meeting with us on short notice.", "We really value the partnership between our companies.", "Let me walk you through the updated proposal.", "We have reduced costs by fifteen percent.", "In return, we ask for a longer contract term.", "The client asked several thoughtful questions.", "After an hour, both sides reached an agreement.", "Omar sent the signed contract that afternoon."] },
+  { t: "أول يوم في الشركة", lines: ["It was Nora's first day at the new company.", "She arrived thirty minutes before the start time.", "The manager greeted her with a warm welcome.", "Let me introduce you to the rest of the team.", "Everyone was friendly and offered to help.", "Here is your desk and your login details.", "Take your time getting settled in today.", "Nora spent the morning reading company policies.", "By lunch, she already felt part of the team.", "She left the office feeling confident about her decision."] },
+  { t: "حل مشكلة تقنية", lines: ["The system went down on a busy Monday morning.", "The IT team immediately started investigating.", "We need to identify the root cause quickly.", "After thirty minutes, they found the issue.", "A recent update had caused a conflict in the server.", "The team lead called an emergency meeting.", "Here is what happened and here is our fix.", "We will roll back the update and test again.", "By noon, the system was fully operational.", "The team documented the incident to prevent it in the future."] },
 ];
 const PROMPTS = [
   { en: "Describe your morning routine", ar: "وصف روتينك الصباحي", starters: ["First, I usually...", "Then I...", "After that, I...", "Before leaving, I...", "By the time I get to work, I..."] },
@@ -62,6 +66,20 @@ const MEETINGS = [
     { speaker: "زميلك", text: "I think we need more training for the support team.", prompt: "ادعم الفكرة وأضف", opts: ["I agree, and I'd also suggest we implement a weekly quality review.", "Training is a waste of time.", "Maybe, I'm not sure."], ans: 0 },
     { speaker: "المدير", text: "Who will lead this initiative?", prompt: "تحمّل المسؤولية", opts: ["I'll take the lead on this. Let me prepare a detailed plan.", "Not me.", "Ask someone else."], ans: 0 },
     { speaker: "المدير", text: "Great. Anything else before we close?", prompt: "اختم باحترافية", opts: ["I'll send the action items and timeline to everyone by end of day.", "Nope.", "Can I go now?"], ans: 0 },
+  ]},
+  { title: "التخطيط الاستراتيجي", steps: [
+    { speaker: "المدير", text: "We need to set our priorities for next quarter.", prompt: "ابدأ بنقاطك", opts: ["I'd like to propose three key focus areas based on our data.", "I don't have any ideas.", "Just do what we did last time."], ans: 0 },
+    { speaker: "زميلك", text: "I think we should invest more in customer retention.", prompt: "وافق وأضف", opts: ["That's a great point. I'd also add that we should improve onboarding.", "I disagree completely.", "Whatever you think."], ans: 0 },
+    { speaker: "المدير", text: "How do we measure success for these initiatives?", prompt: "اقترح مقاييس", opts: ["I suggest we track three KPIs: retention rate, NPS score, and time to value.", "I don't know how to measure that.", "Numbers don't matter."], ans: 0 },
+    { speaker: "زميلك", text: "That seems like a lot to take on. Can we prioritize?", prompt: "رتّب الأولويات", opts: ["You're right. Let's start with retention as our top priority and phase in the rest.", "We can do everything at once.", "Fine, forget all of it."], ans: 0 },
+    { speaker: "المدير", text: "Sounds good. Let's finalize the plan.", prompt: "لخّص وحدد الخطوات", opts: ["To summarize: retention first, then onboarding. I'll share a detailed timeline by Wednesday.", "OK.", "Someone else can write it up."], ans: 0 },
+  ]},
+  { title: "حل خلاف بين فريقين", steps: [
+    { speaker: "المدير", text: "There seems to be a disagreement between the two teams.", prompt: "اعترف بالمشكلة", opts: ["You're right. Let me provide some context on where the disconnect happened.", "There's no problem.", "It's their fault, not ours."], ans: 0 },
+    { speaker: "زميلك", text: "We feel that the requirements keep changing without notice.", prompt: "تفهّم واعتذر", opts: ["I understand the frustration. We should have communicated the changes earlier.", "That's not true.", "Deal with it."], ans: 0 },
+    { speaker: "المدير", text: "How can we prevent this from happening again?", prompt: "اقترح عملية", opts: ["I propose we set up a weekly sync meeting and a shared change log.", "I have no idea.", "Just be more careful."], ans: 0 },
+    { speaker: "زميلك", text: "That could work. Who will own the change log?", prompt: "تطوّع", opts: ["I'll take ownership of the change log and make sure it's updated weekly.", "Not my responsibility.", "Someone else should do it."], ans: 0 },
+    { speaker: "المدير", text: "Excellent. I'm glad we resolved this constructively.", prompt: "اختم بإيجابية", opts: ["Thank you everyone. Better communication will make us a stronger team.", "Finally this is over.", "Whatever."], ans: 0 },
   ]},
 ];
 
@@ -624,7 +642,7 @@ export default function App() {
   const wk = getWk(store.start), ph = getPh(wk), dn = gdn(), dw = gdow();
   const pct = Math.round((done.length / 5) * 100);
   const tp = PROMPTS[dn % PROMPTS.length];
-  const shadow = SHADOW_LINES[dn % SHADOW_LINES.length];
+  const shadow = SHADOW_LINES[ph.n - 1];
   const story = STORIES[dn % STORIES.length];
   const story2 = STORIES[(dn + 2) % STORIES.length];
   const pc = PHRASES[dn % PHRASES.length];
