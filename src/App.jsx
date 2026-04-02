@@ -11,141 +11,158 @@ const CSS = `
 `;
 
 const SHADOW_LINES = [
-  ["Good morning everyone.", "Thank you for joining us today.", "Let me start with a quick update.", "I have a question about the timeline.", "Can we move to the next topic?", "I agree with that point.", "That sounds like a good plan.", "We need more time to review this.", "Let me check and get back to you.", "Let's schedule a follow-up meeting."],
-  ["I will send the report by Friday.", "Could you repeat that please?", "The deadline is next Monday.", "I have a suggestion to make.", "We are on track to finish on time.", "I need your approval on this.", "Please let me know if you have questions.", "I will follow up with an email.", "Thank you for your time today.", "Let me share my thoughts on this."],
-  ["Before we dive in, let me provide some context.", "We have seen significant improvement this quarter.", "The main challenge is resource allocation.", "I recommend a phased approach to this project.", "Based on the data, we should move forward.", "Let me summarize the action items.", "I want to make sure we are on the same page.", "Let us align on priorities for next quarter.", "Are there any concerns before we proceed?", "I believe this approach will deliver the best results."],
+  ["Good morning. How are you today?", "I would like a cup of coffee, please.", "Excuse me, where is the nearest pharmacy?", "Thank you very much for your help.", "Can I have the bill, please?", "I need to make an appointment.", "Could you speak more slowly, please?", "I'm sorry, I didn't understand that.", "What time does the store close?", "Have a nice day!"],
+  ["I've been living here for about five years.", "Could you recommend a good restaurant nearby?", "I need to reschedule my appointment to next week.", "The weather has been really nice lately.", "I'm looking for something in a medium size.", "Let me check my calendar and get back to you.", "I appreciate your patience with this.", "Would it be possible to get a refund?", "I'll send you the details by email.", "That's exactly what I was looking for."],
+  ["I've been meaning to bring this up for a while now.", "Based on what you're saying, I think we should consider another option.", "I completely understand your concern, and here's what I suggest.", "Would it be possible to explore a different approach to this?", "Let me walk you through the details so we're on the same page.", "I want to make sure we're aligned before we move forward.", "From my experience, this tends to work better in the long run.", "I'd appreciate it if you could look into this for me.", "Let me summarize what we've discussed so far.", "I believe this is the best path forward given the circumstances."],
 ];
 const STORIES = [
-  { t: "اجتماع الاثنين", lines: ["Sarah walked into the conference room at nine.", "The team was already seated around the table.", "Good morning everyone, she said confidently.", "Today we need to discuss quarterly targets.", "The sales team exceeded expectations this month.", "However, challenges remain in the European market.", "I propose we allocate more resources to Berlin.", "After discussion, the team reached a consensus.", "Sarah closed by thanking everyone.", "The next meeting was set for Thursday."] },
-  { t: "مقابلة العمل", lines: ["Ahmed prepared carefully for his interview.", "He reviewed the company products and news.", "Tell me about yourself, the interviewer began.", "Ahmed spoke about five years of experience.", "He mentioned specific successful projects.", "The interviewer was impressed by his preparation.", "What motivates you in your career, she asked.", "Building teams that deliver results, he said.", "Both sides felt the interview went well.", "Ahmed received an offer the following week."] },
-  { t: "إطلاق المنتج", lines: ["The company worked toward this day for months.", "The new product was finally ready for launch.", "The CEO took the stage before hundreds of people.", "Welcome. Today marks an important milestone.", "We spent two years developing something innovative.", "Let me walk you through the key features.", "First, it is designed to be incredibly simple.", "Second, it integrates with existing tools.", "The audience responded with enthusiasm.", "By the end of the day, a thousand orders came in."] },
-  { t: "العرض التقديمي", lines: ["Khalid prepared his presentation the night before.", "He practiced in front of the mirror three times.", "Good afternoon. Thank you for being here.", "Today I will cover three main topics.", "Let me start with our current market position.", "As you can see from the graph, sales are rising.", "Now let me address the challenges we face.", "The competition is getting stronger every quarter.", "However, I believe our strategy is solid.", "Any questions before I move to the next slide?"] },
-  { t: "التفاوض مع العميل", lines: ["The client requested a meeting to discuss pricing.", "Omar arrived early and reviewed his numbers.", "Thank you for meeting with us on short notice.", "We really value the partnership between our companies.", "Let me walk you through the updated proposal.", "We have reduced costs by fifteen percent.", "In return, we ask for a longer contract term.", "The client asked several thoughtful questions.", "After an hour, both sides reached an agreement.", "Omar sent the signed contract that afternoon."] },
-  { t: "أول يوم في الشركة", lines: ["It was Nora's first day at the new company.", "She arrived thirty minutes before the start time.", "The manager greeted her with a warm welcome.", "Let me introduce you to the rest of the team.", "Everyone was friendly and offered to help.", "Here is your desk and your login details.", "Take your time getting settled in today.", "Nora spent the morning reading company policies.", "By lunch, she already felt part of the team.", "She left the office feeling confident about her decision."] },
-  { t: "حل مشكلة تقنية", lines: ["The system went down on a busy Monday morning.", "The IT team immediately started investigating.", "We need to identify the root cause quickly.", "After thirty minutes, they found the issue.", "A recent update had caused a conflict in the server.", "The team lead called an emergency meeting.", "Here is what happened and here is our fix.", "We will roll back the update and test again.", "By noon, the system was fully operational.", "The team documented the incident to prevent it in the future."] },
+  { t: "رحلة إلى لندن", lines: ["Faisal had always dreamed of visiting London.", "He booked his flight and hotel online by himself.", "At the airport, he asked for directions in English.", "Excuse me, which gate is for the London flight?", "The flight attendant smiled and pointed the way.", "In London, he took the underground to his hotel.", "He ordered fish and chips at a local restaurant.", "The waiter asked, Would you like anything to drink?", "Just water, please, Faisal replied with confidence.", "He realized his English was better than he thought."] },
+  { t: "عند الدكتور", lines: ["Huda moved to a new city and needed a doctor.", "She called the clinic to book an appointment.", "I would like to see a doctor this week, she said.", "The receptionist asked about her symptoms.", "I have had a headache for three days, Huda explained.", "The doctor examined her carefully and asked questions.", "Have you been under a lot of stress recently?", "Yes, I just moved and started a new routine.", "The doctor recommended rest and staying hydrated.", "Huda left feeling relieved and understood."] },
+  { t: "اجتماع أولياء الأمور", lines: ["Tariq went to his daughter's school for a meeting.", "The teacher greeted him in English warmly.", "Thank you for coming. Sara is a wonderful student.", "She is very good at math but needs help with reading.", "Tariq listened carefully and took mental notes.", "What can I do at home to help her, he asked.", "Read with her for fifteen minutes every night.", "That sounds simple enough, Tariq said.", "He felt proud that he understood the whole conversation.", "On the way home, he started planning their reading time."] },
+  { t: "التسوق أونلاين", lines: ["Mona wanted to buy a laptop from an international store.", "She compared prices and read reviews in English.", "This one has great battery life, one review said.", "She added it to her cart and went to checkout.", "The website asked for her shipping address.", "She typed everything carefully in English.", "A chat window popped up asking if she needed help.", "Yes, does this ship to Saudi Arabia, she typed.", "The agent confirmed and gave her a tracking number.", "The laptop arrived in perfect condition a week later."] },
+  { t: "مقابلة العمل", lines: ["Ahmed prepared carefully for his interview.", "He reviewed the company website and recent news.", "Tell me about yourself, the interviewer began.", "Ahmed spoke about his ten years of experience.", "He mentioned specific projects he was proud of.", "The interviewer was impressed by his preparation.", "What motivates you in your career, she asked.", "Solving problems and helping my team grow, he said.", "Both sides felt the interview went very well.", "Ahmed received an offer the following week."] },
+  { t: "في المطعم", lines: ["Salma and her husband went to a nice restaurant.", "Good evening. A table for two, please, she said.", "The waiter brought the menu and explained the specials.", "Tonight we have grilled salmon with lemon sauce.", "That sounds delicious. I will have that, Salma said.", "Her husband ordered a steak, medium well.", "They enjoyed their meal and had a great conversation.", "Could we have the dessert menu, please, she asked.", "They shared a chocolate cake and drank coffee.", "The evening was perfect from start to finish."] },
+  { t: "الجار الجديد", lines: ["A new family moved in next door to Youssef.", "He decided to welcome them with a friendly visit.", "Hi, I am Youssef. Welcome to the neighborhood.", "The neighbor smiled and introduced his family.", "We just moved from Canada, the neighbor explained.", "If you need anything, please do not hesitate to ask.", "They talked about the best schools and grocery stores.", "Youssef recommended his favorite local restaurant.", "They exchanged phone numbers before saying goodbye.", "A simple conversation turned into a real friendship."] },
+  { t: "أول يوم في الدورة", lines: ["Layla signed up for an online photography course.", "The instructor spoke English with a British accent.", "Welcome everyone. Let me introduce myself first.", "She took notes in English for the first time.", "Today we will learn about lighting and composition.", "The instructor showed examples and asked for opinions.", "Layla typed in the chat, I think the second photo is better.", "Great observation, the instructor replied.", "She felt a rush of confidence after being noticed.", "By the end of the class, she had learned ten new words."] },
 ];
 const PROMPTS = [
-  { en: "Describe your morning routine", ar: "وصف روتينك الصباحي", starters: ["First, I usually...", "Then I...", "After that, I...", "Before leaving, I...", "By the time I get to work, I..."] },
-  { en: "Talk about a decision you made this week", ar: "تكلم عن قرار اتخذته", starters: ["This week, I had to decide...", "The main options were...", "I chose to... because...", "Looking back, I think...", "What I learned from this is..."] },
-  { en: "Explain your job to someone new", ar: "اشرح وظيفتك لشخص جديد", starters: ["I work as a... at...", "My main responsibility is...", "On a typical day, I...", "The most challenging part is...", "What I enjoy most is..."] },
-  { en: "Describe a challenge at work", ar: "وصف تحدي في العمل", starters: ["Recently, we faced a problem with...", "The main issue was...", "We tried to solve it by...", "What helped the most was...", "In the end, we managed to..."] },
-  { en: "Summarize a recent meeting", ar: "لخّص اجتماع حضرته", starters: ["Last week, we had a meeting about...", "The main topic was...", "Someone suggested that...", "We agreed to...", "The next step is..."] },
-  { en: "Talk about what makes a good leader", ar: "صفات القائد الجيد", starters: ["In my opinion, a good leader...", "One important quality is...", "For example, my manager...", "I also believe that...", "The best leaders I've seen..."] },
-  { en: "Describe your weekend plans", ar: "خططك لنهاية الأسبوع", starters: ["This weekend, I'm planning to...", "On Saturday morning, I...", "In the afternoon, I usually...", "If the weather is good, I...", "On Sunday, I like to..."] },
-  { en: "Explain a project you work on", ar: "مشروع تشتغل عليه", starters: ["Currently, I'm working on...", "The goal of this project is...", "My role in the project is...", "The biggest challenge so far is...", "We expect to finish by..."] },
-  { en: "Talk about a goal for this year", ar: "هدف تبي تحققه", starters: ["One of my goals this year is...", "The reason I chose this goal is...", "To achieve it, I need to...", "So far, I have...", "By the end of the year, I hope to..."] },
-  { en: "Describe a typical workday", ar: "يوم عمل عادي", starters: ["I usually start my day at...", "The first thing I do is...", "Around midday, I...", "In the afternoon, I focus on...", "I usually finish work by..."] },
+  { en: "Describe your favorite place to visit", ar: "وصف مكانك المفضل", starters: ["My favorite place is...", "I usually go there when...", "What I love about it is...", "The last time I visited, I...", "I would recommend it because..."] },
+  { en: "Talk about a meal you love to cook", ar: "أكلة تحب تسويها", starters: ["One of my favorite dishes is...", "To make it, you need...", "First, you start by...", "The secret ingredient is...", "I learned this recipe from..."] },
+  { en: "Explain something you learned recently", ar: "شيء تعلمته مؤخراً", starters: ["Recently, I learned about...", "What surprised me was...", "The most interesting part is...", "I learned it by...", "I want to learn more about..."] },
+  { en: "Describe your ideal weekend", ar: "وصف نهاية أسبوع مثالية", starters: ["My perfect weekend starts with...", "In the morning, I like to...", "For lunch, I usually...", "In the afternoon, I enjoy...", "By the evening, I feel..."] },
+  { en: "Talk about a trip you took", ar: "رحلة سويتها", starters: ["A few years ago, I traveled to...", "The best part of the trip was...", "I tried... for the first time.", "One funny thing that happened was...", "I would go back because..."] },
+  { en: "Describe a person who influenced you", ar: "شخص أثّر فيك", starters: ["Someone who really influenced me is...", "I met this person when...", "What I admire about them is...", "They taught me that...", "Because of them, I now..."] },
+  { en: "Explain your job to a stranger", ar: "اشرح وظيفتك لشخص غريب", starters: ["I work in the field of...", "Basically, what I do is...", "A typical day looks like...", "The best part about my job is...", "The most challenging thing is..."] },
+  { en: "Talk about a goal for this year", ar: "هدف تبي تحققه هالسنة", starters: ["One of my goals this year is...", "The reason I chose this goal is...", "To achieve it, I need to...", "So far, I have...", "By the end of the year, I hope to..."] },
+  { en: "Describe how you spend your evenings", ar: "كيف تقضي أمسياتك", starters: ["After a long day, I usually...", "Sometimes I like to...", "My family and I often...", "If I have free time, I...", "Before I sleep, I always..."] },
+  { en: "Talk about a hobby or skill you enjoy", ar: "هواية أو مهارة تستمتع فيها", starters: ["I've been doing... for about...", "I got into it because...", "What I enjoy most about it is...", "It has taught me...", "I would recommend it to anyone who..."] },
+  { en: "Describe a challenge you overcame", ar: "تحدي تغلبت عليه", starters: ["A few years ago, I faced...", "The hardest part was...", "I tried to solve it by...", "What helped me the most was...", "Looking back, I learned that..."] },
+  { en: "Talk about what makes a good friend", ar: "صفات الصديق الجيد", starters: ["In my opinion, a good friend is someone who...", "One important quality is...", "For example, my best friend...", "I also believe that...", "The best friendships I've seen..."] },
 ];
 const PHRASES = [
-  { cat: "فتح الاجتماع", icon: "🚀", items: [
-    { en: "Let's get started. Thank you all for joining.", ar: "نبدأ. شكراً لحضوركم جميعاً." },
-    { en: "The purpose of today's meeting is to...", ar: "الهدف من اجتماع اليوم هو..." },
-    { en: "Let's go through the agenda quickly.", ar: "نستعرض جدول الأعمال بسرعة." },
-    { en: "I'd like us to focus on three key points.", ar: "أبي نركّز على ثلاث نقاط رئيسية." },
-    { en: "Before we begin, any updates?", ar: "قبل ما نبدأ، في أي مستجدات؟" },
+  { cat: "التعارف والمجاملات", icon: "👋", items: [
+    { en: "Nice to meet you. Where are you from?", ar: "تشرفنا. من وين أنت؟" },
+    { en: "I've heard great things about you.", ar: "سمعت عنك أشياء حلوة." },
+    { en: "How long have you been living here?", ar: "من متى وأنت ساكن هنا؟" },
+    { en: "What do you do for a living?", ar: "وش شغلك؟ (سؤال مهذب)" },
+    { en: "It was really nice talking to you.", ar: "كان ممتع إني أتكلم معك." },
   ]},
-  { cat: "طلب التوضيح", icon: "🔍", items: [
-    { en: "Could you elaborate on that?", ar: "ممكن توضّح أكثر؟" },
-    { en: "Let me make sure I understand correctly...", ar: "خلني أتأكد إني فاهم صح..." },
-    { en: "Can you give me a specific example?", ar: "تقدر تعطيني مثال محدد؟" },
-    { en: "I'm not sure I follow. Could you rephrase?", ar: "مو متأكد إني فاهم. تقدر تعيد بصيغة ثانية؟" },
-    { en: "Just to clarify, are you saying that...?", ar: "بس للتوضيح، تقصد إن...؟" },
+  { cat: "السفر والمطار", icon: "✈️", items: [
+    { en: "Excuse me, where is gate number seven?", ar: "لو سمحت، وين بوابة رقم ٧؟" },
+    { en: "I'd like to check in for my flight, please.", ar: "أبي أسوي تشيك إن لرحلتي." },
+    { en: "Is there a direct flight or do I have a layover?", ar: "في رحلة مباشرة أو عندي توقف؟" },
+    { en: "Could you help me find my connecting flight?", ar: "تقدر تساعدني ألاقي رحلتي المتصلة؟" },
+    { en: "My luggage didn't arrive. Where can I report this?", ar: "شنطتي ما وصلت. وين أبلّغ؟" },
   ]},
-  { cat: "إبداء الرأي", icon: "💡", items: [
-    { en: "I'd like to add something here.", ar: "أبي أضيف شي هنا." },
-    { en: "That's a valid point. I also think...", ar: "نقطة صحيحة. وأنا أيضاً أشوف..." },
+  { cat: "المطاعم والطلبات", icon: "🍽️", items: [
+    { en: "A table for two, please.", ar: "طاولة لشخصين، لو سمحت." },
+    { en: "What do you recommend from the menu?", ar: "وش تنصح من القائمة؟" },
+    { en: "I'm allergic to nuts. Does this contain any?", ar: "عندي حساسية مكسرات. هل فيها؟" },
+    { en: "Could we have the bill, please?", ar: "ممكن الحساب لو سمحت؟" },
+    { en: "The food was excellent. Thank you.", ar: "الأكل كان ممتاز. شكراً لك." },
+  ]},
+  { cat: "المواعيد والاتصالات", icon: "📞", items: [
+    { en: "I'd like to make an appointment, please.", ar: "أبي أحجز موعد لو سمحت." },
+    { en: "Is it possible to reschedule to next week?", ar: "ممكن أأجّل الموعد للأسبوع الجاي؟" },
+    { en: "I'm calling to follow up on my request.", ar: "أتصل أتابع طلبي." },
+    { en: "Could you transfer me to the right department?", ar: "ممكن تحوّلني للقسم المختص؟" },
+    { en: "Thank you for your help. Have a nice day.", ar: "شكراً على مساعدتك. يوم سعيد." },
+  ]},
+  { cat: "إبداء الرأي والنقاش", icon: "💡", items: [
     { en: "I see it differently. From my perspective...", ar: "أشوفها بشكل مختلف. من وجهة نظري..." },
-    { en: "I agree overall, but I have a concern.", ar: "بشكل عام متفق، لكن عندي تحفّظ." },
-    { en: "Let me push back on that slightly.", ar: "خلني أعترض على هالنقطة بشكل بسيط." },
-  ]},
-  { cat: "القرارات", icon: "✅", items: [
-    { en: "Let's move forward with this approach.", ar: "نمشي بهالطريقة." },
-    { en: "Can we agree on the next steps?", ar: "نقدر نتفق على الخطوات الجاية؟" },
-    { en: "I'll take the action item on this.", ar: "أنا آخذ هالمهمة على عاتقي." },
-    { en: "Let's take this offline.", ar: "نكمل هالموضوع بره الاجتماع." },
-    { en: "Who's responsible for the follow-up?", ar: "مين المسؤول عن المتابعة؟" },
+    { en: "That's a good point. I also think...", ar: "نقطة ممتازة. وأنا أيضاً أشوف..." },
+    { en: "I agree overall, but I have one concern.", ar: "بشكل عام متفق، بس عندي تحفّظ." },
+    { en: "Could you explain why you think that?", ar: "تقدر توضّح ليش تشوف كذا؟" },
+    { en: "Let me think about it and get back to you.", ar: "خلني أفكر فيها وأرجعلك." },
   ]},
   { cat: "عبارات إنقاذ", icon: "🛟", items: [
-    { en: "Sorry, I missed that. Could you repeat?", ar: "آسف، ما انتبهت. تقدر تعيد؟" },
-    { en: "Bear with me for a moment...", ar: "أعطني لحظة... (اصبر عليّ شوي)" },
-    { en: "That's interesting. Let me think about it.", ar: "مثير للاهتمام. خلني أفكر فيها." },
-    { en: "Can we come back to that in a moment?", ar: "نقدر نرجع لهالنقطة بعد شوي؟" },
-    { en: "I'd like to park that idea for later.", ar: "أبي نحط هالفكرة جانباً ونرجعلها لاحقاً." },
+    { en: "Sorry, I didn't catch that. Could you repeat?", ar: "آسف ما فهمت. تقدر تعيد؟" },
+    { en: "Could you speak a bit more slowly, please?", ar: "ممكن تتكلم أبطأ شوي؟" },
+    { en: "What does that word mean exactly?", ar: "وش معنى هالكلمة بالضبط؟" },
+    { en: "How do you say... in English?", ar: "كيف تقول... بالإنجليزي؟" },
+    { en: "I understand, but let me make sure...", ar: "فاهم، بس خلني أتأكد..." },
+  ]},
+  { cat: "العمل والاجتماعات", icon: "💼", items: [
+    { en: "Let me give you a quick update on this.", ar: "خلني أعطيك تحديث سريع." },
+    { en: "I'd like to suggest a different approach.", ar: "أبي أقترح طريقة ثانية." },
+    { en: "Can we agree on the next steps?", ar: "نقدر نتفق على الخطوات الجاية؟" },
+    { en: "I'll take care of this and follow up.", ar: "أنا آخذها على عاتقي وأتابع." },
+    { en: "Let me summarize what we discussed.", ar: "خلني ألخّص اللي ناقشناه." },
   ]},
 ];
 const MOTIV = [
-  "تخيّل نفسك تفتح الاجتماع بكرة بثقة — تمرّن على جملتين من بنك الجمل وبتكون جاهز",
+  "تخيّل نفسك ترد على الأجنبي بثقة بدون تفكير — تمرّن على جملتين اليوم وبتكون أقرب",
   "المشكلة مو ذكاءك — المشكلة كانت الطريقة. هالبرنامج مبني على أبحاث اكتساب اللغة الحقيقية",
-  "٣٥ دقيقة اليوم = جملة جديدة تطلع منك تلقائياً في اجتماعك الجاي",
-  "الجمل الجاهزة = سلاحك السري. كل جملة تحفظها تقلّل توترك في الاجتماع القادم",
+  "٥ دقائق اليوم = جملة جديدة تطلع منك تلقائياً لما تحتاجها في الحياة الحقيقية",
+  "الجمل الجاهزة = سلاحك السري. في المطعم، الفندق، المطار — جاهز لأي موقف",
   "لا تترجم في راسك — ردّد الجملة الإنجليزية مباشرة. عقلك يبني مسار جديد كل مرة",
-  "بعد ٤ أسابيع فقط: ردود أسرع، تردد أقل، ثقة أكبر — ابدأ اليوم",
+  "بعد ٤ أسابيع: تطلب في المطعم، تحجز بالفندق، تتكلم مع جيرانك — كله بثقة",
   "كل مرة تتكلم لوحدك بالإنجليزي، لسانك يتعوّد ويصير أسرع. الحرج يختفي بالتكرار",
-  "آخر مرة تمرّنت؟ اليوم تكمل السلسلة. ١٠ دقائق تكفي لتحافظ على الزخم",
+  "آخر مرة تمرّنت؟ اليوم تكمل السلسلة. حتى ٥ دقائق تسوي فرق",
 ];
 
-const MEETINGS = [
-  { title: "مراجعة المشروع", steps: [
-    { speaker: "المدير", text: "Good morning team. Let's review the project status.", prompt: "افتح بتحديث سريع", opts: ["Let me give you a quick update on where we stand.", "I think we should probably start with some general thoughts.", "The project has been going on for a while now."], ans: 0 },
-    { speaker: "زميلك", text: "We are behind schedule by two weeks. The client is asking for an update.", prompt: "اطلب توضيح", opts: ["Could you elaborate on what caused the delay?", "I noticed that too. We should probably look into it.", "The timeline has been challenging for everyone."], ans: 0 },
-    { speaker: "زميلك", text: "The development team needed more time for testing.", prompt: "اقترح حل", opts: ["I recommend we take a phased approach to get back on track.", "Maybe we could try to work faster on the next phase.", "We should discuss this more before deciding."], ans: 0 },
-    { speaker: "المدير", text: "That sounds reasonable. What about the budget impact?", prompt: "أجب بثقة", opts: ["Based on my analysis, the additional cost is minimal.", "I think the budget might be okay but I need to check.", "The numbers are something we should review together."], ans: 0 },
-    { speaker: "المدير", text: "Good. Let's wrap up. Any final thoughts?", prompt: "اختم الاجتماع", opts: ["Let me summarize: we'll take a phased approach and I'll send the updated timeline by Friday.", "I think we covered everything important today.", "It was a good discussion. We should do this again soon."], ans: 0 },
+const CONVERSATIONS = [
+  { title: "في الفندق", icon: "🏨", steps: [
+    { speaker: "موظف الاستقبال", text: "Good evening. Welcome to our hotel. Do you have a reservation?", prompt: "أكّد حجزك", opts: ["Yes, I have a reservation under the name Al-Rashid.", "I think I booked something online recently.", "I'm here to stay at the hotel."], ans: 0 },
+    { speaker: "موظف الاستقبال", text: "I found it. A double room for three nights. Could I see your ID?", prompt: "أعطِ معلوماتك", opts: ["Of course. Here's my passport. Is breakfast included?", "Sure, let me look for it in my bag.", "Yes, here you go."], ans: 0 },
+    { speaker: "موظف الاستقبال", text: "Breakfast is from 7 to 10. Your room is on the fifth floor.", prompt: "اسأل عن الخدمات", opts: ["Great. Is there a gym and pool available for guests?", "That sounds fine. Thank you.", "OK, I'll find it."], ans: 0 },
+    { speaker: "موظف الاستقبال", text: "Yes, both are on the second floor. Open until 10 PM.", prompt: "اطلب شيء إضافي", opts: ["Perfect. Could I also get some extra towels sent to the room?", "That's nice to know. Thank you.", "I'll check them out later."], ans: 0 },
+    { speaker: "موظف الاستقبال", text: "Absolutely. Is there anything else I can help you with?", prompt: "اشكره واختم", opts: ["That's everything. Thank you so much for your help.", "No, I think that's all for now.", "I'm fine, thanks."], ans: 0 },
   ]},
-  { title: "مناقشة الميزانية", steps: [
-    { speaker: "المدير", text: "We need to discuss the Q3 budget allocation.", prompt: "ابدأ بنقطة", opts: ["I'd like us to focus on three key areas today.", "There are several things we could talk about.", "The budget is an important topic for all of us."], ans: 0 },
-    { speaker: "زميلك", text: "I think we should increase marketing spend by 20 percent.", prompt: "وافق جزئياً", opts: ["I agree with the direction, but I have a concern about the timing.", "That could work. Let me think about it more.", "Marketing is definitely something we should invest in."], ans: 0 },
-    { speaker: "زميلك", text: "Why do you have concerns about timing?", prompt: "وضّح موقفك", opts: ["From my experience, launching in Q3 gives us better results than Q4.", "I feel like the timing might not be ideal right now.", "There are a few reasons I'm not fully sure about it."], ans: 0 },
-    { speaker: "المدير", text: "Interesting point. Can we find a middle ground?", prompt: "اقترح حل وسط", opts: ["What if we start with a 10 percent increase and review after one month?", "Maybe we could find something that works for both sides.", "We could try a smaller change and see how it goes."], ans: 0 },
-    { speaker: "المدير", text: "Good idea. Let's move forward with that.", prompt: "حدد الخطوات", opts: ["I'll take the action item on preparing the revised budget by Monday.", "I can help with the next steps on this.", "Let's all think about what we need to do next."], ans: 0 },
+  { title: "عند الطبيب", icon: "🏥", steps: [
+    { speaker: "الطبيب", text: "Good morning. What brings you in today?", prompt: "اشرح أعراضك", opts: ["I've been having a persistent headache for the past three days, along with some fatigue.", "My head hurts and I feel tired.", "I haven't been feeling well lately."], ans: 0 },
+    { speaker: "الطبيب", text: "I see. Have you experienced any other symptoms like fever or nausea?", prompt: "أجب بتفصيل", opts: ["No fever, but I've noticed some mild dizziness, especially in the morning.", "I don't think so. Maybe a little.", "Not really, just the headache."], ans: 0 },
+    { speaker: "الطبيب", text: "Have you been under a lot of stress recently? Any changes in sleep?", prompt: "اشرح وضعك", opts: ["Yes, actually. I've been sleeping less than usual and my schedule has been very hectic.", "Kind of. I've been busy with a lot of things.", "Maybe a little stressed, nothing major."], ans: 0 },
+    { speaker: "الطبيب", text: "I'd recommend some blood tests just to be safe. I'll also prescribe something for the headache.", prompt: "اسأل عن العلاج", opts: ["That sounds good. How often should I take the medication, and are there any side effects?", "OK, I'll do the blood tests. Thank you.", "Sure, whatever you recommend."], ans: 0 },
+    { speaker: "الطبيب", text: "Take it twice daily with food. Come back in a week if it doesn't improve.", prompt: "اشكره وأكّد", opts: ["Thank you, doctor. I'll follow your advice and schedule a follow-up if needed.", "OK, I'll come back if it doesn't get better.", "Thanks for seeing me today."], ans: 0 },
   ]},
-  { title: "تقييم الأداء", steps: [
-    { speaker: "المدير", text: "Let's discuss the team performance this quarter.", prompt: "قدّم النتائج", opts: ["I'd like to walk you through the key metrics and highlights.", "The team has been working hard this quarter.", "There are some things I'd like to share about our performance."], ans: 0 },
-    { speaker: "المدير", text: "What about the drop in customer satisfaction scores?", prompt: "اعترف واقترح", opts: ["That's a valid concern. We've identified the root cause and have a plan.", "Yes, we noticed that too. We're looking into possible causes.", "Customer satisfaction is something we all need to work on."], ans: 0 },
-    { speaker: "زميلك", text: "I think we need more training for the support team.", prompt: "ادعم الفكرة وأضف", opts: ["I agree, and I'd also suggest we implement a weekly quality review.", "Training would be helpful. It's something to consider.", "The support team could definitely benefit from more guidance."], ans: 0 },
-    { speaker: "المدير", text: "Who will lead this initiative?", prompt: "تحمّل المسؤولية", opts: ["I'll take the lead on this. Let me prepare a detailed plan.", "I could help with some parts of this if needed.", "We should figure out who has the capacity for this."], ans: 0 },
-    { speaker: "المدير", text: "Great. Anything else before we close?", prompt: "اختم باحترافية", opts: ["I'll send the action items and timeline to everyone by end of day.", "I think we had a productive discussion today.", "Thank you for the meeting. We'll follow up soon."], ans: 0 },
+  { title: "اجتماع أولياء أمور", icon: "🎓", steps: [
+    { speaker: "المعلم/ة", text: "Thank you for coming. Your son Omar is a bright student.", prompt: "اشكره واسأل", opts: ["Thank you. I'm glad to hear that. How is he doing in his main subjects?", "That's great to hear. Thank you.", "Good, I was hoping he was doing well."], ans: 0 },
+    { speaker: "المعلم/ة", text: "He's excellent in math and science, but he needs to improve his reading.", prompt: "اسأل عن التفاصيل", opts: ["I see. Could you give me specific examples of where he's struggling?", "I noticed that at home too.", "What can we do about that?"], ans: 0 },
+    { speaker: "المعلم/ة", text: "He reads slowly and sometimes skips words. I think more practice at home would help.", prompt: "اقترح خطة", opts: ["That makes sense. What if we start with fifteen minutes of reading together every evening?", "I'll try to read with him more.", "We'll work on it at home."], ans: 0 },
+    { speaker: "المعلم/ة", text: "That would be wonderful. I can also send home some recommended books.", prompt: "وافق واسأل", opts: ["I'd really appreciate that. Are there any apps or websites you'd also recommend?", "Sure, that would be helpful. Thank you.", "OK, please send them."], ans: 0 },
+    { speaker: "المعلم/ة", text: "Yes, I'll email you a list. Feel free to reach out if you have any questions.", prompt: "اختم بشكر", opts: ["Thank you so much for your time and guidance. I'll stay in touch.", "Great, thanks for everything.", "I appreciate it. Have a good day."], ans: 0 },
   ]},
-  { title: "التخطيط الاستراتيجي", steps: [
-    { speaker: "المدير", text: "We need to set our priorities for next quarter.", prompt: "ابدأ بنقاطك", opts: ["I'd like to propose three key focus areas based on our data.", "I have some thoughts about what we could prioritize.", "There are a few areas that seem important right now."], ans: 0 },
-    { speaker: "زميلك", text: "I think we should invest more in customer retention.", prompt: "وافق وأضف", opts: ["That's a great point. I'd also add that we should improve onboarding.", "I agree with that. Retention is really important.", "Customer retention is definitely a priority for us."], ans: 0 },
-    { speaker: "المدير", text: "How do we measure success for these initiatives?", prompt: "اقترح مقاييس", opts: ["I suggest we track three KPIs: retention rate, NPS score, and time to value.", "We could use some performance indicators to measure progress.", "There are several metrics we could look at for this."], ans: 0 },
-    { speaker: "زميلك", text: "That seems like a lot to take on. Can we prioritize?", prompt: "رتّب الأولويات", opts: ["You're right. Let's start with retention as our top priority and phase in the rest.", "Good point. We probably shouldn't try everything at once.", "Maybe we should pick the most important ones first."], ans: 0 },
-    { speaker: "المدير", text: "Sounds good. Let's finalize the plan.", prompt: "لخّص وحدد الخطوات", opts: ["To summarize: retention first, then onboarding. I'll share a detailed timeline by Wednesday.", "I'll put together a summary of what we discussed.", "We can finalize the details in a follow-up meeting."], ans: 0 },
+  { title: "استئجار شقة", icon: "🏠", steps: [
+    { speaker: "صاحب الشقة", text: "Hi, thanks for coming to see the apartment. Let me show you around.", prompt: "اسأل عن التفاصيل", opts: ["Thank you. I'm really interested. How many bedrooms does it have?", "It looks nice. Tell me more about it.", "Thanks. I saw the ad online."], ans: 0 },
+    { speaker: "صاحب الشقة", text: "It has two bedrooms, one bathroom, and a balcony. Utilities are included.", prompt: "اسأل عن الشروط", opts: ["That's great. What's the monthly rent, and is there a minimum lease period?", "How much is the rent per month?", "That sounds reasonable."], ans: 0 },
+    { speaker: "صاحب الشقة", text: "It's fifteen hundred a month with a one-year lease. Two months deposit required.", prompt: "فاوض بأدب", opts: ["I see. Would you consider fourteen hundred if I pay three months upfront?", "That's a bit high. Could you lower it?", "Let me think about the price."], ans: 0 },
+    { speaker: "صاحب الشقة", text: "I could do fourteen fifty with three months upfront. That's the best I can offer.", prompt: "وافق واسأل", opts: ["That works for me. When would the apartment be available to move in?", "OK, I'll take it at that price.", "Sure, let's go with that."], ans: 0 },
+    { speaker: "صاحب الشقة", text: "You can move in on the first of next month. I'll prepare the contract.", prompt: "أكّد وأنهِ", opts: ["Perfect. I'll review the contract and have it signed by the end of the week.", "Great, I'll be ready by then.", "Sounds good. Thank you."], ans: 0 },
   ]},
-  { title: "حل خلاف بين فريقين", steps: [
-    { speaker: "المدير", text: "There seems to be a disagreement between the two teams.", prompt: "اعترف بالمشكلة", opts: ["You're right. Let me provide some context on where the disconnect happened.", "There has been some miscommunication on both sides.", "We've had a few challenges working together recently."], ans: 0 },
-    { speaker: "زميلك", text: "We feel that the requirements keep changing without notice.", prompt: "تفهّم واعتذر", opts: ["I understand the frustration. We should have communicated the changes earlier.", "I can see how that would be difficult for your team.", "Changes happen sometimes, but we should manage them better."], ans: 0 },
-    { speaker: "المدير", text: "How can we prevent this from happening again?", prompt: "اقترح عملية", opts: ["I propose we set up a weekly sync meeting and a shared change log.", "We should probably communicate more regularly going forward.", "Better coordination between the teams would help with this."], ans: 0 },
-    { speaker: "زميلك", text: "That could work. Who will own the change log?", prompt: "تطوّع", opts: ["I'll take ownership of the change log and make sure it's updated weekly.", "I can help set it up and we can share the responsibility.", "We should assign someone who has time for this task."], ans: 0 },
-    { speaker: "المدير", text: "Excellent. I'm glad we resolved this constructively.", prompt: "اختم بإيجابية", opts: ["Thank you everyone. Better communication will make us a stronger team.", "It was a good discussion. I think we're on the right track.", "I'm glad we talked about this. Hopefully things will improve."], ans: 0 },
+  { title: "مكالمة خدمة العملاء", icon: "📱", steps: [
+    { speaker: "موظف الخدمة", text: "Thank you for calling. How can I help you today?", prompt: "اشرح مشكلتك", opts: ["Hi, I placed an order last week and it still hasn't arrived. My order number is five-seven-three.", "I have a problem with my order.", "My order is late."], ans: 0 },
+    { speaker: "موظف الخدمة", text: "I'm sorry about that. Let me check the status for you. One moment please.", prompt: "انتظر بأدب", opts: ["Of course, take your time. I appreciate you looking into this.", "Sure, no problem.", "OK, I'll wait."], ans: 0 },
+    { speaker: "موظف الخدمة", text: "It looks like the package was delayed due to a shipping issue. It should arrive by Thursday.", prompt: "اسأل عن التعويض", opts: ["I understand. Since it's significantly late, is there any compensation you can offer?", "OK, as long as it arrives by Thursday.", "That's fine then."], ans: 0 },
+    { speaker: "موظف الخدمة", text: "I can offer you free shipping on your next order. Would that work?", prompt: "وافق واطلب تأكيد", opts: ["That would be great. Could you send me a confirmation email with the details?", "Sure, that's fine. Thank you.", "OK, I'll accept that."], ans: 0 },
+    { speaker: "موظف الخدمة", text: "Absolutely. Is there anything else I can help you with?", prompt: "اشكره واختم", opts: ["No, that's everything. Thank you for resolving this so quickly.", "No, that's all. Thanks.", "I'm good. Bye."], ans: 0 },
   ]},
 ];
 
 const QUICK_RESP = [
-  { sit: "زميلك اقترح فكرة جديدة وتبي توافق وتضيف عليها", opts: ["That's a valid point. I also think we should consider the timeline.", "Yes, good idea. We should think about it.", "I think that could work for us.", "It sounds reasonable to me."], ans: 0 },
-  { sit: "ما فهمت اللي قاله المدير وتبي يعيد", opts: ["Sorry, I missed that. Could you repeat?", "Can you say that one more time?", "I didn't quite hear that.", "Could you go over that part again?"], ans: 0 },
-  { sit: "تبي تأجل موضوع فرعي والتركيز على الأهم", opts: ["Let's take this offline and follow up separately.", "Maybe we can discuss this another time.", "We should probably move on for now.", "This is something we can come back to."], ans: 0 },
-  { sit: "تبي تنهي الاجتماع بتلخيص", opts: ["Let me quickly summarize what we agreed on.", "I think that covers everything for today.", "We've had a good discussion today.", "Thanks everyone for your time."], ans: 0 },
-  { sit: "تبي تعترض بأدب على اقتراح", opts: ["I see it differently. From my perspective...", "I'm not fully convinced about that approach.", "That's one way to look at it, but...", "I have a slightly different view on this."], ans: 0 },
-  { sit: "تبي تتحمل مسؤولية مهمة", opts: ["I'll take the action item on this.", "I can help with that if you'd like.", "I could probably look into that.", "Let me see if I can assist with this."], ans: 0 },
-  { sit: "تبي تطلب مثال لتفهم أكثر", opts: ["Can you give me a specific example?", "Could you explain what you mean exactly?", "What would that look like in practice?", "How would that work in a real situation?"], ans: 0 },
-  { sit: "تحتاج وقت تفكير ولا تبي ترد بسرعة", opts: ["That's an interesting point. Let me think about it.", "I'd like to take some time to consider this.", "Let me review this before I respond.", "I want to give this some thought first."], ans: 0 },
-  { sit: "تبي تبدأ الاجتماع بشكل احترافي", opts: ["Let's get started. Thank you all for joining.", "Good morning everyone. Shall we begin?", "Thanks for coming. Let's start the meeting.", "Hello everyone. I think we're ready to begin."], ans: 0 },
-  { sit: "تبي تسأل مين المسؤول عن المتابعة", opts: ["Who's responsible for the follow-up on this?", "Can someone handle the next steps?", "Who should we assign this to?", "Does anyone want to take this forward?"], ans: 0 },
+  { sit: "أنت في مطعم والنادل يسألك عن طلبك", opts: ["I'll have the grilled chicken, please. And a glass of water.", "I want chicken and water.", "Give me the chicken.", "Whatever you recommend."], ans: 0 },
+  { sit: "شخص يتكلم بسرعة وما فهمت عليه", opts: ["Sorry, could you speak a bit more slowly? I want to make sure I understand.", "Can you repeat that?", "I didn't hear you.", "What did you say?"], ans: 0 },
+  { sit: "تبي تسأل عن الاتجاهات في مدينة جديدة", opts: ["Excuse me, could you tell me how to get to the nearest metro station?", "Where is the metro?", "I need to go to the metro.", "How do I get there?"], ans: 0 },
+  { sit: "حد يمدح شغلك وتبي ترد بتواضع", opts: ["Thank you, I really appreciate that. It was a team effort.", "Thanks a lot.", "Oh, it was nothing.", "Yeah, I worked hard."], ans: 0 },
+  { sit: "تبي ترفض دعوة بأدب", opts: ["I really appreciate the invitation, but I won't be able to make it this time.", "Sorry, I can't come.", "No thanks.", "I'm busy that day."], ans: 0 },
+  { sit: "تبي تسأل الدكتور عن الدواء", opts: ["How often should I take this, and are there any side effects I should know about?", "When do I take the medicine?", "Is this safe?", "What does this do?"], ans: 0 },
+  { sit: "تبي تشتكي على منتج بأدب", opts: ["I purchased this last week and it's not working properly. Is it possible to get a replacement?", "This doesn't work. I want my money back.", "I have a problem with this.", "This product is broken."], ans: 0 },
+  { sit: "جارك الجديد يسلّم عليك وتبي تتعرف عليه", opts: ["Nice to meet you! I'm Omar. Welcome to the neighborhood. Let me know if you need anything.", "Hi, I live next door.", "Hello.", "I'm your neighbor."], ans: 0 },
+  { sit: "تبي تعبّر عن رأيك بأدب في نقاش", opts: ["I see it differently. From my perspective, I think there's another way to look at it.", "I disagree with that.", "That's not right.", "I have a different idea."], ans: 0 },
+  { sit: "شخص يسألك عن شغلك وتبي تشرح ببساطة", opts: ["I work in project management. Basically, I help teams deliver their work on time.", "I'm a manager.", "I work at a company.", "I do project stuff."], ans: 0 },
 ];
 
 const QUIZ_BANK = [
-  { q: "زميلك يقول: 'We need to delay the launch.' — ماهو أفضل رد إذا تبي توافق جزئياً؟", opts: ["I agree with the direction, but I have a concern about the timeline.", "I think delaying is a good idea for the team.", "We could delay it if that's what everyone wants.", "The launch date is something we need to discuss more."], ans: 0 },
-  { q: "المدير يسأل: 'Any updates?' — ماهو أفضل رد؟", opts: ["Let me give you a quick update on where we stand.", "Yes, there are a few things I wanted to mention.", "Things have been going well on my side.", "I have some updates I can share with the team."], ans: 0 },
-  { q: "أي جملة تستخدمها لتأجيل موضوع فرعي بأدب؟", opts: ["Let's take this offline and follow up separately.", "We can talk about this some other time.", "Maybe we should discuss this later in the week.", "This is something we can revisit at the next meeting."], ans: 0 },
-  { q: "كيف تطلب من شخص يعيد كلامه بأدب واحترافية؟", opts: ["Sorry, I missed that. Could you repeat?", "Can you say that again for me?", "I didn't quite catch that part.", "Would you mind going over that one more time?"], ans: 0 },
-  { q: "كيف تختم اجتماع باحترافية وتثبّت النتائج؟", opts: ["Let me summarize what we agreed on.", "I think we covered everything we needed to.", "Thanks everyone for a productive discussion.", "That wraps up our agenda for today."], ans: 0 },
-  { q: "كيف تقترح فكرة بديلة بأدب ودبلوماسية؟", opts: ["What if we considered a different approach?", "I have another idea that might work well.", "Have we thought about trying something else?", "There might be another option worth exploring."], ans: 0 },
-  { q: "تبي تتحمل مهمة بوضوح والتزام — ماذا تقول؟", opts: ["I'll take the action item on this.", "I can probably help with this task.", "I'm happy to contribute to this effort.", "I could look into this if no one else is available."], ans: 0 },
-  { q: "كيف تكسب وقت للتفكير في الاجتماع باحترافية؟", opts: ["That's an interesting point. Let me think about it.", "I'd like to take some time to consider this.", "Let me review this before giving my input.", "I want to give this some careful thought."], ans: 0 },
-  { q: "كيف تبدأ اجتماع رسمي بثقة وسيطرة؟", opts: ["Let's get started. Thank you all for joining.", "Good morning everyone. Shall we begin?", "Thank you for making the time for this meeting.", "I appreciate everyone being here. Let's start."], ans: 0 },
-  { q: "كيف تطلب مثال توضيحي لفكرة مجردة؟", opts: ["Can you give me a specific example?", "Could you walk me through a scenario?", "How would that work in a real case?", "What does that look like in practice?"], ans: 0 },
+  { q: "وصلت الفندق وتبي تأكد حجزك — وش أفضل جملة؟", opts: ["I have a reservation under the name Al-Rashid.", "I booked a room. Check please.", "I want my room now.", "There should be a booking."], ans: 0 },
+  { q: "ما فهمت كلام شخص يتكلم بسرعة — كيف تطلب يبطّئ بأدب؟", opts: ["Could you speak a bit more slowly, please?", "Talk slower.", "I can't understand you.", "You're speaking too fast."], ans: 0 },
+  { q: "تبي ترفض عرض بأدب بدون ما تزعل الشخص", opts: ["I really appreciate the offer, but I'll have to pass this time.", "No thanks.", "I don't want it.", "Maybe later."], ans: 0 },
+  { q: "الدكتور يسألك عن أعراضك — كيف تشرح بدقة؟", opts: ["I've been having a persistent headache for three days, along with some fatigue.", "My head hurts.", "I feel bad.", "I have pain."], ans: 0 },
+  { q: "في المطعم، النادل يسأل عن طلبك — وش الأنسب؟", opts: ["I'll have the grilled salmon, please. And could I get a glass of water?", "Give me salmon and water.", "Salmon.", "I want to eat fish."], ans: 0 },
+  { q: "تبي تعبّر عن رأي مختلف بأدب في نقاش", opts: ["I see it differently. From my perspective...", "That's wrong.", "I don't agree at all.", "No, I think the opposite."], ans: 0 },
+  { q: "شخص يمدحك — كيف ترد بتواضع واحترافية؟", opts: ["Thank you, I really appreciate that. It was a team effort.", "Yeah, I know.", "Thanks.", "It was nothing really."], ans: 0 },
+  { q: "تبي تسأل عن الاتجاهات بأدب في مدينة جديدة", opts: ["Excuse me, could you tell me how to get to the nearest metro station?", "Where is the metro?", "Metro?", "I need to go somewhere."], ans: 0 },
+  { q: "تبي تشتكي على منتج معيب بشكل محترف", opts: ["I purchased this last week and it's not working properly. Is it possible to get a replacement?", "This is broken. Fix it.", "I want my money back now.", "This doesn't work at all."], ans: 0 },
+  { q: "جارك الجديد يسلّم عليك — كيف تكسر الجليد؟", opts: ["Nice to meet you! I'm Omar. Welcome to the neighborhood.", "Hi.", "You're new here?", "Hello, I live here."], ans: 0 },
 ];
 
 // ===== CEFR-ALIGNED PLACEMENT TEST =====
@@ -156,9 +173,9 @@ const QUIZ_BANK = [
 const CEFR_LEVELS = [
   { code: "A1", name: "مبتدئ", nameEn: "Beginner", color: "#ef4444", desc: "تعرف كلمات وجمل بسيطة جداً. تقدر تعرّف نفسك وتسأل أسئلة أساسية.", tip: "ركّز على حفظ الجمل الأساسية والمفردات اليومية. ابدأ بتمارين الظل مع الجمل القصيرة." },
   { code: "A2", name: "ما قبل المتوسط", nameEn: "Elementary", color: "#f97316", desc: "تفهم جمل متكررة في مواضيع يومية. تقدر تتواصل في مواقف بسيطة ومباشرة.", tip: "وسّع مفرداتك وركّز على تركيب جمل بسيطة. استخدم تمرين 'تفكير بصوت عالٍ' يومياً." },
-  { code: "B1", name: "متوسط", nameEn: "Intermediate", color: "#f59e0b", desc: "تفهم النقاط الرئيسية في محادثات واضحة. تقدر تتعامل مع أغلب المواقف اليومية.", tip: "ابدأ بمحاكاة الاجتماعات وركّز على ربط الأفكار. تمرّن على الجمل الجاهزة للاجتماعات." },
+  { code: "B1", name: "متوسط", nameEn: "Intermediate", color: "#f59e0b", desc: "تفهم النقاط الرئيسية في محادثات واضحة. تقدر تتعامل مع أغلب المواقف اليومية.", tip: "ابدأ بالمحادثات التفاعلية وركّز على ربط الأفكار. تمرّن على الجمل الجاهزة لمواقف الحياة." },
   { code: "B2", name: "فوق المتوسط", nameEn: "Upper-Intermediate", color: "#22d3ee", desc: "تفهم أفكار معقدة وتقدر تتفاعل بطلاقة مع متحدثين أصليين بدون جهد كبير.", tip: "ركّز على الدقة في التعبير والمصطلحات المتخصصة. تمرّن على العروض التقديمية والتفاوض." },
-  { code: "C1", name: "متقدم", nameEn: "Advanced", color: "#a78bfa", desc: "تفهم نصوص طويلة ومعقدة وتقدر تعبّر عن نفسك بطلاقة وعفوية في أي موقف مهني.", tip: "ركّز على الفروق الدقيقة في اللغة والتعابير الاصطلاحية. تمرّن على قيادة الاجتماعات." },
+  { code: "C1", name: "متقدم", nameEn: "Advanced", color: "#a78bfa", desc: "تفهم نصوص طويلة ومعقدة وتقدر تعبّر عن نفسك بطلاقة وعفوية في أي موقف مهني.", tip: "ركّز على الفروق الدقيقة في اللغة والتعابير الاصطلاحية. تمرّن على المحادثات المتقدمة." },
   { code: "C2", name: "إتقان", nameEn: "Mastery", color: "#34d399", desc: "تفهم كل شيء تقريباً وتقدر تعبّر بدقة عالية حتى في المواقف الأكثر تعقيداً.", tip: "حافظ على مستواك بالممارسة المستمرة. ركّز على الأسلوب والبلاغة في التواصل المهني." },
 ];
 
@@ -225,8 +242,197 @@ const LEVEL_TEST = [
 ];
 
 const LEVEL_IDX = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4, C2: 5 };
-const TYPE_LABELS = { grammar: "قواعد", vocab: "مفردات", reading: "فهم القراءة", pragmatics: "تواصل مهني" };
+const TYPE_LABELS = { grammar: "قواعد", vocab: "مفردات", reading: "فهم القراءة", pragmatics: "تواصل" };
 const TYPE_ICONS = { grammar: "📐", vocab: "📚", reading: "📖", pragmatics: "🗣️" };
+
+// ===== SPEECH UTILITY =====
+function speak(text, rate = 0.85) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "en-US";
+  u.rate = rate;
+  u.pitch = 1;
+  // Try to find a good English voice
+  const voices = window.speechSynthesis.getVoices();
+  const enVoice = voices.find(v => v.lang.startsWith("en") && v.name.includes("Google")) || voices.find(v => v.lang.startsWith("en-US")) || voices.find(v => v.lang.startsWith("en"));
+  if (enVoice) u.voice = enVoice;
+  window.speechSynthesis.speak(u);
+  return u;
+}
+
+function SpeakBtn({ text, rate, size, color }) {
+  const [playing, setPlaying] = useState(false);
+  function play() {
+    setPlaying(true);
+    const u = speak(text, rate || 0.85);
+    if (u) u.onend = () => setPlaying(false);
+    else setPlaying(false);
+  }
+  return (
+    <button onClick={(e) => { e.stopPropagation(); play(); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: size || 16, padding: 2, opacity: playing ? 1 : 0.5, color: color || "#22d3ee", transition: ".2s", flexShrink: 0 }} title="استمع">{playing ? "🔊" : "🔈"}</button>
+  );
+}
+
+// ===== LISTENING COMPREHENSION =====
+const LISTEN_ITEMS = [
+  { text: "Excuse me, where is the nearest pharmacy?", q: "ماذا يسأل المتحدث؟", opts: ["يسأل عن أقرب صيدلية", "يسأل عن أقرب مطعم", "يسأل عن الوقت", "يسأل عن الطريق للفندق"], ans: 0 },
+  { text: "I'd like to make an appointment for next Tuesday, please.", q: "ماذا يريد المتحدث؟", opts: ["يبي يحجز موعد يوم الثلاثاء", "يبي يلغي موعد", "يبي يغيّر موعده ليوم الأحد", "يبي يسأل عن المواعيد المتاحة"], ans: 0 },
+  { text: "The flight has been delayed by approximately two hours.", q: "ما هو الخبر؟", opts: ["الرحلة تأخرت ساعتين", "الرحلة ألغيت", "الرحلة تقدمت ساعتين", "البوابة تغيّرت"], ans: 0 },
+  { text: "Could you speak a bit more slowly? I want to make sure I understand.", q: "ماذا يطلب المتحدث؟", opts: ["يطلب إن الشخص يتكلم أبطأ", "يطلب إن الشخص يتكلم أعلى", "يطلب إن الشخص يتوقف عن الكلام", "يطلب إن الشخص يكرر كل شيء"], ans: 0 },
+  { text: "I purchased this item last week and unfortunately it stopped working after two days.", q: "ما هي المشكلة؟", opts: ["اشترى شيء وخرب بعد يومين", "اشترى شيء غالي جداً", "نسي يشتري شيء", "المنتج ما وصل أصلاً"], ans: 0 },
+  { text: "We've been living in this neighborhood for about three years now, and we really enjoy it.", q: "ماذا يقول المتحدث عن الحي؟", opts: ["ساكن فيه ٣ سنوات ومبسوط", "ساكن فيه ٣ أشهر", "يبي ينتقل من الحي", "ما يحب الحي"], ans: 0 },
+  { text: "I'm allergic to peanuts, so could you please check if this dish contains any nuts?", q: "ماذا يخبر الشخص النادل؟", opts: ["عنده حساسية مكسرات ويبي يتأكد من الأكل", "ما يحب طعم المكسرات", "يبي يضيف مكسرات", "يسأل عن أسعار الأطباق"], ans: 0 },
+  { text: "The doctor recommended that I get some rest and drink plenty of water.", q: "ماذا نصح الطبيب؟", opts: ["راحة وشرب ماء كثير", "أخذ دواء قوي", "عملية جراحية", "تحاليل دم فورية"], ans: 0 },
+  { text: "Thank you for your time today. I'll send you a follow-up email with all the details.", q: "ماذا سيفعل المتحدث؟", opts: ["يرسل إيميل متابعة بالتفاصيل", "يتصل بكرة", "يحدد موعد ثاني", "يلغي الاتفاق"], ans: 0 },
+  { text: "I see it differently. From my perspective, I think we should consider the long-term impact.", q: "ما موقف المتحدث؟", opts: ["عنده رأي مختلف ويبي يفكرون بالمدى البعيد", "يوافق تماماً", "ما عنده رأي", "يبي ينهي النقاش"], ans: 0 },
+];
+
+// ===== DICTATION =====
+const DICTATION_ITEMS = [
+  "I would like a table for two, please.",
+  "Could you speak more slowly?",
+  "I have a reservation under my name.",
+  "The flight has been delayed by two hours.",
+  "Thank you for your help. Have a nice day.",
+  "I need to reschedule my appointment.",
+  "Nice to meet you. Where are you from?",
+  "I see it differently from my perspective.",
+  "Is it possible to get a refund?",
+  "How long have you been living here?",
+  "I appreciate your patience with this.",
+  "What do you recommend from the menu?",
+];
+
+// ===== DAILY DEEP PROCESSING SCENARIOS =====
+// Each scenario is ONE topic processed through 6 cognitive layers
+const DAILY_SCENARIOS = [
+  { title: "في المطعم", icon: "🍽️", dialogue: [
+    { speaker: "أنت", text: "Good evening. A table for two, please." },
+    { speaker: "النادل", text: "Of course. Would you prefer indoor or outdoor seating?" },
+    { speaker: "أنت", text: "Indoor, please. Could we have the menu?" },
+    { speaker: "النادل", text: "Here you go. Our special today is grilled salmon." },
+    { speaker: "أنت", text: "That sounds great. I'll have that, please." },
+    { speaker: "النادل", text: "Excellent choice. And for drinks?" },
+    { speaker: "أنت", text: "Just water, please. Thank you." },
+  ],
+  keyPhrases: [
+    { en: "A table for two, please.", ar: "طاولة لشخصين، لو سمحت." },
+    { en: "Could we have the menu?", ar: "ممكن القائمة؟" },
+    { en: "I'll have that, please.", ar: "آخذ هذا، لو سمحت." },
+  ],
+  producePrompt: "أنت في مطعم. النادل يسألك عن طلبك. اكتب ردك:",
+  produceModel: "I'll have the grilled chicken, please. And could I get a glass of water?",
+  challenge: "اليوم: اطلب قهوتك من أي كافيه بالإنجليزي. حتى لو جملة وحدة." },
+
+  { title: "عند الدكتور", icon: "🏥", dialogue: [
+    { speaker: "الطبيب", text: "Good morning. What brings you in today?" },
+    { speaker: "أنت", text: "I've been having a headache for three days." },
+    { speaker: "الطبيب", text: "I see. Any other symptoms? Fever or nausea?" },
+    { speaker: "أنت", text: "No fever, but I've been feeling dizzy in the morning." },
+    { speaker: "الطبيب", text: "Have you been under stress recently?" },
+    { speaker: "أنت", text: "Yes, my schedule has been very hectic lately." },
+    { speaker: "الطبيب", text: "I'll prescribe something. Take it twice daily with food." },
+  ],
+  keyPhrases: [
+    { en: "I've been having a headache for three days.", ar: "عندي صداع من ٣ أيام." },
+    { en: "I've been feeling dizzy in the morning.", ar: "أحس بدوخة الصبح." },
+    { en: "My schedule has been very hectic lately.", ar: "جدولي كان مزدحم جداً مؤخراً." },
+  ],
+  producePrompt: "أنت عند الدكتور. اشرح أعراضك بالتفصيل:",
+  produceModel: "I've been having a persistent headache for the past three days, along with some fatigue and dizziness.",
+  challenge: "اليوم: لو أحد سألك How are you — رد بجملة كاملة بدل fine." },
+
+  { title: "في الفندق", icon: "🏨", dialogue: [
+    { speaker: "الموظف", text: "Good evening. Welcome. Do you have a reservation?" },
+    { speaker: "أنت", text: "Yes, under the name Al-Rashid. For three nights." },
+    { speaker: "الموظف", text: "Found it. Could I see your passport?" },
+    { speaker: "أنت", text: "Of course. Here you go. Is breakfast included?" },
+    { speaker: "الموظف", text: "Yes, from seven to ten. Your room is on the fifth floor." },
+    { speaker: "أنت", text: "Great. Is there a gym available for guests?" },
+    { speaker: "الموظف", text: "Yes, on the second floor. Open until ten PM." },
+  ],
+  keyPhrases: [
+    { en: "I have a reservation under the name Al-Rashid.", ar: "عندي حجز باسم الراشد." },
+    { en: "Is breakfast included?", ar: "الفطور مشمول؟" },
+    { en: "Is there a gym available for guests?", ar: "في نادي رياضي للنزلاء؟" },
+  ],
+  producePrompt: "وصلت الفندق. سوِّ check-in واسأل عن الخدمات:",
+  produceModel: "I have a reservation under the name Al-Rashid for three nights. Is breakfast included, and is there a pool?",
+  challenge: "اليوم: افتح موقع فندق وحاول تقرأ صفحة الخدمات بالإنجليزي بدون ترجمة." },
+
+  { title: "اجتماع أولياء أمور", icon: "🎓", dialogue: [
+    { speaker: "المعلمة", text: "Thank you for coming. Sara is a wonderful student." },
+    { speaker: "أنت", text: "Thank you. How is she doing in her main subjects?" },
+    { speaker: "المعلمة", text: "She's great in math, but needs help with reading." },
+    { speaker: "أنت", text: "Could you give me specific examples?" },
+    { speaker: "المعلمة", text: "She reads slowly and sometimes skips words." },
+    { speaker: "أنت", text: "What if we start with fifteen minutes of reading every evening?" },
+    { speaker: "المعلمة", text: "That would be wonderful. I'll send home some books." },
+  ],
+  keyPhrases: [
+    { en: "How is she doing in her main subjects?", ar: "كيف مستواها في المواد الرئيسية؟" },
+    { en: "Could you give me specific examples?", ar: "تقدر تعطيني أمثلة محددة؟" },
+    { en: "What if we start with fifteen minutes of reading every evening?", ar: "وش رأيك نبدأ بـ ١٥ دقيقة قراءة كل مساء؟" },
+  ],
+  producePrompt: "المعلمة تقول إن ابنك يحتاج تحسين في القراءة. اقترح خطة:",
+  produceModel: "That makes sense. What if we start with fifteen minutes of reading together every evening? Are there any books you'd recommend?",
+  challenge: "اليوم: اقرأ لعيالك قصة قصيرة بالإنجليزي — حتى لو مو perfect." },
+
+  { title: "مكالمة خدمة العملاء", icon: "📱", dialogue: [
+    { speaker: "الموظف", text: "Thank you for calling. How can I help you?" },
+    { speaker: "أنت", text: "I placed an order last week and it hasn't arrived." },
+    { speaker: "الموظف", text: "I'm sorry. Let me check. One moment please." },
+    { speaker: "أنت", text: "Of course, take your time." },
+    { speaker: "الموظف", text: "It was delayed. It should arrive by Thursday." },
+    { speaker: "أنت", text: "Since it's late, is there any compensation?" },
+    { speaker: "الموظف", text: "I can offer free shipping on your next order." },
+  ],
+  keyPhrases: [
+    { en: "I placed an order last week and it hasn't arrived.", ar: "طلبت أوردر الأسبوع الماضي وما وصل." },
+    { en: "Of course, take your time.", ar: "طبعاً، خذ وقتك." },
+    { en: "Since it's late, is there any compensation?", ar: "بما إنه تأخر، في أي تعويض؟" },
+  ],
+  producePrompt: "طلبك تأخر أسبوع. اتصل بخدمة العملاء واشرح المشكلة:",
+  produceModel: "Hi, I placed an order last week, order number 573, and it still hasn't arrived. Could you check the status for me?",
+  challenge: "اليوم: لو اشتريت شيء أونلاين — اقرأ صفحة الـ FAQ بالإنجليزي." },
+
+  { title: "التعارف مع شخص جديد", icon: "👋", dialogue: [
+    { speaker: "الشخص", text: "Hi! I don't think we've met. I'm David." },
+    { speaker: "أنت", text: "Nice to meet you, David. I'm Omar." },
+    { speaker: "الشخص", text: "So, what do you do for a living?" },
+    { speaker: "أنت", text: "I work in project management. How about you?" },
+    { speaker: "الشخص", text: "I'm in software engineering. How long have you been here?" },
+    { speaker: "أنت", text: "About five years now. Where are you from originally?" },
+    { speaker: "الشخص", text: "I'm from Toronto. It's great to meet you!" },
+  ],
+  keyPhrases: [
+    { en: "Nice to meet you. I'm Omar.", ar: "تشرفنا. أنا عمر." },
+    { en: "I work in project management.", ar: "أشتغل في إدارة المشاريع." },
+    { en: "How long have you been here?", ar: "من متى وأنت هنا؟" },
+  ],
+  producePrompt: "شخص جديد يسألك عن نفسك. عرّف نفسك وسأله:",
+  produceModel: "Nice to meet you! I'm Omar. I work in project management. I've been living here for about five years. What about you?",
+  challenge: "اليوم: لو قابلت أي شخص أجنبي — قل Nice to meet you وسأله سؤال واحد." },
+
+  { title: "في المطار", icon: "✈️", dialogue: [
+    { speaker: "الموظفة", text: "Good morning. May I see your passport and ticket?" },
+    { speaker: "أنت", text: "Of course. Here they are. I'd like a window seat." },
+    { speaker: "الموظفة", text: "Let me check. Yes, 14A is available." },
+    { speaker: "أنت", text: "Perfect. Do I have a layover or is it direct?" },
+    { speaker: "الموظفة", text: "It's direct. Boarding starts at gate 7 in one hour." },
+    { speaker: "أنت", text: "Thank you. Where is the nearest lounge?" },
+    { speaker: "الموظفة", text: "Turn right after security. Enjoy your flight!" },
+  ],
+  keyPhrases: [
+    { en: "I'd like a window seat, please.", ar: "أبي مقعد جنب النافذة." },
+    { en: "Do I have a layover or is it direct?", ar: "عندي توقف أو مباشر؟" },
+    { en: "Where is the nearest lounge?", ar: "وين أقرب صالة انتظار؟" },
+  ],
+  producePrompt: "أنت في المطار تسوي check-in. تكلم مع الموظفة:",
+  produceModel: "Here's my passport. I'd like a window seat if possible. Is this a direct flight or do I have a layover?",
+  challenge: "اليوم: لو رحت أي مكان فيه موظف — سأل سؤال واحد بالإنجليزي." },
+];
 
 const DK = "eng-v10";
 const gtd = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
@@ -242,28 +448,49 @@ function shuffleOpts(opts, correctIndex, seed) {
   return { opts: shuffled.map(i => opts[i]), correctIndex: shuffled.indexOf(correctIndex) };
 }
 
-function Prompter({ lines, gap, color, label }) {
+function Prompter({ lines, gap, color, label, withAudio }) {
   const [on, setOn] = useState(false);
   const [idx, setIdx] = useState(0);
   const [sec, setSec] = useState(0);
+  const [phase, setPhase] = useState("listen"); // "listen" or "repeat"
   const ref = useRef(null);
   const iRef = useRef(0);
 
-  function stop() { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); iRef.current = 0; }
+  function stop() { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); iRef.current = 0; setPhase("listen"); window.speechSynthesis && window.speechSynthesis.cancel(); }
   function start() {
-    stop(); setOn(true); setSec(gap); iRef.current = 0; let c = gap;
+    stop(); setOn(true); iRef.current = 0;
+    // Play audio first, then start countdown for repeating
+    if (withAudio && window.speechSynthesis) {
+      setPhase("listen");
+      const u = speak(lines[0], 0.8);
+      if (u) {
+        u.onend = () => { setPhase("repeat"); setSec(gap); startCountdown(); };
+      } else { setPhase("repeat"); setSec(gap); startCountdown(); }
+    } else { setPhase("repeat"); setSec(gap); startCountdown(); }
+  }
+  function startCountdown() {
+    let c = gap;
     ref.current = setInterval(() => {
       c--;
       if (c <= 0) {
         iRef.current++;
-        if (iRef.current >= lines.length) { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); return; }
+        if (iRef.current >= lines.length) { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); setPhase("listen"); return; }
         setIdx(iRef.current);
+        // Play next line audio
+        if (withAudio && window.speechSynthesis) {
+          setPhase("listen");
+          clearInterval(ref.current);
+          const u2 = speak(lines[iRef.current], 0.8);
+          if (u2) { u2.onend = () => { setPhase("repeat"); c = gap; setSec(gap); startCountdown(); }; }
+          else { setPhase("repeat"); c = gap; setSec(gap); startCountdown(); }
+          return;
+        }
         c = gap;
       }
       setSec(c);
     }, 1000);
   }
-  useEffect(() => () => clearInterval(ref.current), []);
+  useEffect(() => () => { clearInterval(ref.current); window.speechSynthesis && window.speechSynthesis.cancel(); }, []);
 
   return (
     <div>
@@ -273,16 +500,19 @@ function Prompter({ lines, gap, color, label }) {
         ) : (
           <button onClick={stop} style={{ padding: "8px 20px", borderRadius: 10, border: "1px solid #1e293b", background: "transparent", color: "#64748b", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>⏹ إيقاف</button>
         )}
-        {on && sec > 0 && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 22, fontWeight: 700, color: color }}>{sec}</div>}
-        {on && sec > 0 && <div style={{ fontSize: 12, color: "#5a6a80" }}>ردّد بصوت عالٍ!</div>}
+        {on && phase === "listen" && <div style={{ fontSize: 13, color: "#f59e0b", fontWeight: 600 }}>🔊 استمع...</div>}
+        {on && phase === "repeat" && sec > 0 && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 22, fontWeight: 700, color: color }}>{sec}</div>}
+        {on && phase === "repeat" && sec > 0 && <div style={{ fontSize: 12, color: "#5a6a80" }}>ردّد بصوت عالٍ!</div>}
       </div>
       {lines.map((line, i) => {
         const cur = on && i === idx;
         const past = on && i < idx;
         return (
-          <div key={i} style={{ padding: "10px 14px", borderRadius: 10, marginBottom: 4, fontFamily: "'IBM Plex Mono',monospace", fontSize: cur ? 16 : 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, transition: "all .4s", background: cur ? color + "18" : "rgba(255,255,255,0.015)", border: "1px solid " + (cur ? color + "40" : "rgba(255,255,255,0.04)"), color: cur ? "#fff" : past ? "#3a4a5c" : "#94a3b8", fontWeight: cur ? 600 : 400, transform: cur ? "scale(1.01)" : "none" }}>
-            {line}
-            {cur && <span style={{ marginRight: 8, fontSize: 12, color: color }}> ← اقرأ!</span>}
+          <div key={i} style={{ padding: "10px 14px", borderRadius: 10, marginBottom: 4, fontFamily: "'IBM Plex Mono',monospace", fontSize: cur ? 16 : 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, transition: "all .4s", background: cur ? color + "18" : "rgba(255,255,255,0.015)", border: "1px solid " + (cur ? color + "40" : "rgba(255,255,255,0.04)"), color: cur ? "#fff" : past ? "#3a4a5c" : "#94a3b8", fontWeight: cur ? 600 : 400, transform: cur ? "scale(1.01)" : "none", display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{ flex: 1 }}>{line}</div>
+            <SpeakBtn text={line} size={cur ? 18 : 14} color={cur ? color : "#5a6a80"} />
+            {cur && phase === "repeat" && <span style={{ fontSize: 12, color: color, flexShrink: 0 }}>← ردّد!</span>}
+            {cur && phase === "listen" && <span style={{ fontSize: 12, color: "#f59e0b", flexShrink: 0 }}>← استمع</span>}
           </div>
         );
       })}
@@ -296,30 +526,30 @@ function MeetingSim() {
   const [picked, setPicked] = useState(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
-  const m = MEETINGS[mi];
+  const m = CONVERSATIONS[mi];
   const raw = m.steps[step];
   const { opts: sOpts, correctIndex: sAns } = shuffleOpts(raw.opts, raw.ans, mi * 1000 + step * 7 + 31);
   const s = { ...raw, opts: sOpts, ans: sAns };
   function pick(oi) { setPicked(oi); if (oi === s.ans) setScore(score + 1); }
   function next() { if (step + 1 >= m.steps.length) { setDone(true); return; } setStep(step + 1); setPicked(null); }
-  function restart() { setMi((mi + 1) % MEETINGS.length); setStep(0); setPicked(null); setScore(0); setDone(false); }
+  function restart() { setMi((mi + 1) % CONVERSATIONS.length); setStep(0); setPicked(null); setScore(0); setDone(false); }
   if (done) return (
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>🎉</div>
       <div style={{ fontSize: 20, fontWeight: 800, color: "#22d3ee", marginBottom: 8 }}>{score}/{m.steps.length}</div>
-      <div style={{ fontSize: 14, color: "#8892a4", marginBottom: 16 }}>{score === m.steps.length ? "ممتاز! أدرت الاجتماع باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل الجاهزة"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 اجتماع جديد</button>
+      <div style={{ fontSize: 14, color: "#8892a4", marginBottom: 16 }}>{score === m.steps.length ? "ممتاز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محادثة جديدة</button>
     </div>
   );
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: "#22d3ee" }}>{"🎭 " + m.title}</div>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "#22d3ee" }}>{(m.icon || "🎭") + " " + m.title}</div>
         <div style={{ fontSize: 12, color: "#5a6a80" }}>{"خطوة " + (step + 1) + "/" + m.steps.length}</div>
       </div>
       <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
         <div style={{ fontSize: 11, color: "#f59e0b", marginBottom: 4 }}>{"💬 " + s.speaker + ":"}</div>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "#e0e7f1" }}>{s.text}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "#e0e7f1", flex: 1 }}>{s.text}</div><SpeakBtn text={s.text} size={18} /></div>
       </div>
       <div style={{ fontSize: 12, color: "#a78bfa", fontWeight: 600, marginBottom: 8 }}>{"🎯 " + s.prompt + " — اختر الرد الأنسب واقرأه بصوت عالٍ:"}</div>
       {s.opts.map((o, oi) => {
@@ -465,21 +695,21 @@ function WeeklyQuiz({ onSave }) {
 }
 
 const FILL_BLANKS = [
-  { full: "Let me give you a quick update on where we stand.", blanks: ["quick", "update"] },
-  { full: "Could you elaborate on that?", blanks: ["elaborate"] },
-  { full: "I'd like to add something here.", blanks: ["add", "something"] },
-  { full: "Let's move forward with this approach.", blanks: ["move", "forward"] },
-  { full: "Sorry, I missed that. Could you repeat?", blanks: ["missed", "repeat"] },
-  { full: "I agree with the direction, but I have a concern.", blanks: ["agree", "concern"] },
-  { full: "Let me summarize what we agreed on.", blanks: ["summarize", "agreed"] },
-  { full: "I'll take the action item on this.", blanks: ["action", "item"] },
-  { full: "That's an interesting point. Let me think about it.", blanks: ["interesting", "think"] },
-  { full: "Can you give me a specific example?", blanks: ["specific", "example"] },
-  { full: "From my experience, this approach works better.", blanks: ["experience", "approach"] },
-  { full: "Let's take this offline and follow up separately.", blanks: ["offline", "separately"] },
-  { full: "I recommend we take a phased approach.", blanks: ["recommend", "phased"] },
-  { full: "Who's responsible for the follow-up on this?", blanks: ["responsible", "follow-up"] },
-  { full: "What if we considered a different approach?", blanks: ["considered", "different"] },
+  { full: "Excuse me, could you tell me how to get there?", blanks: ["Excuse", "tell"] },
+  { full: "I'd like to make an appointment, please.", blanks: ["appointment", "please"] },
+  { full: "Could you speak a bit more slowly?", blanks: ["speak", "slowly"] },
+  { full: "Nice to meet you. Where are you from?", blanks: ["Nice", "from"] },
+  { full: "Sorry, I didn't catch that. Could you repeat?", blanks: ["catch", "repeat"] },
+  { full: "I really appreciate your help with this.", blanks: ["appreciate", "help"] },
+  { full: "Is it possible to reschedule to next week?", blanks: ["possible", "reschedule"] },
+  { full: "What do you recommend from the menu?", blanks: ["recommend", "menu"] },
+  { full: "I've been having this problem for three days.", blanks: ["having", "problem"] },
+  { full: "That sounds great. I'll take it.", blanks: ["sounds", "take"] },
+  { full: "How often should I take this medication?", blanks: ["often", "medication"] },
+  { full: "Thank you for your patience with this.", blanks: ["patience", "this"] },
+  { full: "I see it differently. From my perspective...", blanks: ["differently", "perspective"] },
+  { full: "Would it be possible to get a refund?", blanks: ["possible", "refund"] },
+  { full: "I'll review the details and get back to you.", blanks: ["review", "details"] },
 ];
 
 function FillBlank() {
@@ -583,21 +813,21 @@ function FillBlank() {
 }
 
 const SENTENCE_BUILD = [
-  "Let me give you a quick update.",
-  "Could you elaborate on that point?",
-  "I agree with the overall direction.",
-  "Let's move forward with this approach.",
-  "I'll take the action item on this.",
-  "Can we come back to that later?",
-  "Let me summarize what we agreed on.",
-  "I'd like to suggest a different approach.",
-  "Who is responsible for the follow-up?",
-  "That's a valid point to consider.",
-  "Sorry I missed that. Could you repeat?",
-  "Let's take this offline and discuss separately.",
-  "I recommend we take a phased approach.",
-  "Based on the data we should move forward.",
-  "I want to make sure we are aligned.",
+  "Nice to meet you. Where are you from?",
+  "Could you speak more slowly please?",
+  "I would like a table for two.",
+  "How do I get to the nearest station?",
+  "I have a reservation under my name.",
+  "Is it possible to get a refund?",
+  "Thank you for your help with this.",
+  "I really appreciate your patience.",
+  "What time does the store close today?",
+  "I need to reschedule my appointment.",
+  "The food was excellent. Thank you.",
+  "Could you recommend something from the menu?",
+  "I see it differently from my perspective.",
+  "I have been living here for five years.",
+  "Let me think about it and get back.",
 ];
 
 function SentenceBuild() {
@@ -702,14 +932,14 @@ function SentenceBuild() {
 
 // ===== FREE RECALL PRODUCTION EXERCISE =====
 const RECALL_SCENARIOS = [
-  { sit: "مديرك يسأل: 'Any updates on the project?'", hint: "أعطه تحديث سريع وواضح", model: "Let me give you a quick update on where we stand.", keywords: ["update", "stand", "quick"] },
-  { sit: "زميلك طرح فكرة وأنت تبي تعترض بأدب", hint: "اعترض بدبلوماسية واعطِ وجهة نظرك", model: "I see it differently. From my perspective, we should consider the risks.", keywords: ["perspective", "differently", "consider"] },
-  { sit: "ما فهمت نقطة في الاجتماع وتبي توضيح", hint: "اطلب التوضيح باحترافية", model: "Could you elaborate on that? I want to make sure I understand correctly.", keywords: ["elaborate", "clarify", "understand"] },
-  { sit: "تبي تنهي الاجتماع وتلخّص القرارات", hint: "لخّص وحدد الخطوات القادمة", model: "Let me summarize what we agreed on. I'll send the action items by end of day.", keywords: ["summarize", "agreed", "action"] },
-  { sit: "تبي تتحمل مسؤولية مهمة أمام الفريق", hint: "أظهر التزامك ووضّح الموعد", model: "I'll take the lead on this. Let me prepare a detailed plan by Monday.", keywords: ["take", "lead", "plan"] },
-  { sit: "تبي تأجل موضوع جانبي والتركيز على الأهم", hint: "أجّل بأدب واقترح وقت آخر", model: "Let's take this offline and follow up separately.", keywords: ["offline", "follow", "separately"] },
-  { sit: "مديرك يسأل عن حل لمشكلة في المشروع", hint: "اقترح حل منظّم ومرحلي", model: "I recommend we take a phased approach to get back on track.", keywords: ["recommend", "phased", "approach"] },
-  { sit: "تبي تبدأ الاجتماع وتسيطر على المحادثة", hint: "افتح بثقة وحدد الهدف", model: "Let's get started. The purpose of today's meeting is to align on priorities.", keywords: ["started", "purpose", "priorities"] },
+  { sit: "وصلت فندق وتبي تسوي check-in", hint: "أكّد حجزك وسأل عن الخدمات", model: "I have a reservation under the name Al-Rashid. Is breakfast included?", keywords: ["reservation", "name", "breakfast"] },
+  { sit: "في المطعم والنادل يسألك عن طلبك", hint: "اطلب بوضوح وسأل عن التوصيات", model: "I'll have the grilled chicken, please. What do you recommend for dessert?", keywords: ["have", "please", "recommend"] },
+  { sit: "تحس بصداع من ٣ أيام وأنت عند الدكتور", hint: "اشرح أعراضك بالتفصيل", model: "I've been having a persistent headache for three days, along with some fatigue.", keywords: ["headache", "days", "fatigue"] },
+  { sit: "شخص يتكلم بسرعة وما فهمت عليه", hint: "اطلب منه يبطّئ بأدب", model: "Sorry, could you speak a bit more slowly? I want to make sure I understand.", keywords: ["speak", "slowly", "understand"] },
+  { sit: "اشتريت منتج وطلع معيب وتبي تشتكي", hint: "اشرح المشكلة واطلب حل", model: "I purchased this last week and it's not working properly. Is it possible to get a replacement?", keywords: ["purchased", "working", "replacement"] },
+  { sit: "معلم ولدك يسألك تساعده في القراءة بالبيت", hint: "وافق واسأل عن التفاصيل", model: "That makes sense. What if we start with fifteen minutes of reading together every evening?", keywords: ["start", "minutes", "reading"] },
+  { sit: "جارك الجديد يسلّم عليك وتبي تتعرف عليه", hint: "عرّف نفسك ورحّب فيه", model: "Nice to meet you! I'm Omar. Welcome to the neighborhood. Let me know if you need anything.", keywords: ["nice", "meet", "welcome"] },
+  { sit: "تبي تعبّر عن رأيك المختلف بأدب في نقاش", hint: "اعترض بدبلوماسية", model: "I see it differently. From my perspective, I think there's another way to look at it.", keywords: ["differently", "perspective", "another"] },
 ];
 
 function FreeRecall() {
@@ -799,6 +1029,331 @@ function FreeRecall() {
           )}
           <div style={{ textAlign: "center" }}>
             <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "#f472b6", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ===== DAILY DEEP PROCESSING SESSION =====
+function DailySession({ scenario, onComplete, dayNum }) {
+  const [step, setStep] = useState(0); // 0-5 = 6 steps
+  const [listenDone, setListenDone] = useState(false);
+  const [shadowIdx, setShadowIdx] = useState(0);
+  const [shadowReps, setShadowReps] = useState({});
+  const [prodInput, setProdInput] = useState("");
+  const [prodSubmitted, setProdSubmitted] = useState(false);
+  const [challengeAccepted, setChallengeAccepted] = useState(false);
+
+  const sc = scenario;
+  const steps = [
+    { icon: "👂", title: "استمع", desc: "استمع للمحادثة بدون ما تشوف النص" },
+    { icon: "👂📖", title: "استمع واقرأ", desc: "استمع مرة ثانية مع النص — لاحظ اللي فاتك" },
+    { icon: "🔊", title: "ردّد", desc: "استمع وردّد الجمل المفتاحية ٣ مرات لكل وحدة" },
+    { icon: "💬", title: "احفظ", desc: "احفظ ٣ جمل أساسية — ردّدها حتى ترسخ" },
+    { icon: "✍️", title: "أنتج", desc: "اكتب ردك بنفسك لنفس الموقف" },
+    { icon: "🌍", title: "طبّق", desc: "تحدّي حقيقي تسويه اليوم" },
+  ];
+
+  function playFullDialogue() {
+    const allText = sc.dialogue.map(d => d.text).join(". ");
+    speak(allText, 0.75);
+  }
+
+  function playLine(text) { speak(text, 0.8); }
+
+  const stepPct = Math.round(((step + 1) / 6) * 100);
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+        <div style={{ fontSize: 28 }}>{sc.icon}</div>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 16, fontWeight: 700, color: "#22d3ee" }}>{"جلسة اليوم: " + sc.title}</div>
+          <div style={{ fontSize: 12, color: "#5a6a80" }}>{"الخطوة " + (step + 1) + "/6 — " + steps[step].title}</div>
+        </div>
+        <div style={{ fontSize: 14, fontWeight: 800, color: "#22d3ee", fontFamily: "'IBM Plex Mono'" }}>{stepPct + "%"}</div>
+      </div>
+
+      {/* Progress */}
+      <div style={{ display: "flex", gap: 4, marginBottom: 16 }}>
+        {steps.map((s, i) => (
+          <div key={i} style={{ flex: 1, textAlign: "center" }}>
+            <div style={{ height: 4, borderRadius: 2, background: i <= step ? "#22d3ee" : "#1a2236", transition: ".3s", marginBottom: 4 }} />
+            <div style={{ fontSize: 10, color: i === step ? "#22d3ee" : i < step ? "#34d399" : "#3a4a5c" }}>{s.icon}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Step 1: Listen only (no text) */}
+      {step === 0 && (
+        <div>
+          <div style={{ background: "rgba(139,92,246,0.06)", border: "1px solid rgba(139,92,246,0.12)", borderRadius: 14, padding: 24, textAlign: "center", marginBottom: 14 }}>
+            <div style={{ fontSize: 15, color: "#8892a4", marginBottom: 16, lineHeight: 2 }}>استمع للمحادثة كاملة — حاول تفهم أكبر قدر بدون ما تشوف النص</div>
+            <button onClick={() => { playFullDialogue(); setTimeout(() => setListenDone(true), 2000); }} style={{ padding: "14px 32px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#8b5cf6,#6366f1)", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer" }}>🔊 استمع للمحادثة</button>
+          </div>
+          {listenDone && <div style={{ textAlign: "center" }}>
+            <div style={{ fontSize: 13, color: "#34d399", marginBottom: 8 }}>فهمت شيء؟ ممتاز. في الخطوة الجاية بتشوف النص وتلاحظ اللي فاتك.</div>
+            <button onClick={() => { setStep(1); setListenDone(false); }} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: استمع واقرأ →</button>
+          </div>}
+        </div>
+      )}
+
+      {/* Step 2: Listen + Read */}
+      {step === 1 && (
+        <div>
+          <div style={{ fontSize: 13, color: "#8892a4", marginBottom: 12, lineHeight: 2 }}>استمع مرة ثانية مع النص. لاحظ الكلمات اللي ما فهمتها أول مرة.</div>
+          <button onClick={playFullDialogue} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#8b5cf6", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer", marginBottom: 12 }}>🔊 شغّل المحادثة</button>
+          {sc.dialogue.map((d, i) => (
+            <div key={i} style={{ display: "flex", gap: 10, padding: 10, marginBottom: 4, borderRadius: 10, background: d.speaker === "أنت" ? "rgba(34,211,238,0.06)" : "rgba(255,255,255,0.02)", border: "1px solid " + (d.speaker === "أنت" ? "rgba(34,211,238,0.1)" : "rgba(255,255,255,0.04)") }}>
+              <div style={{ fontSize: 11, color: d.speaker === "أنت" ? "#22d3ee" : "#f59e0b", fontWeight: 700, minWidth: 50, flexShrink: 0 }}>{d.speaker}</div>
+              <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, flex: 1, color: "#e0e7f1" }}>{d.text}</div>
+              <SpeakBtn text={d.text} size={16} />
+            </div>
+          ))}
+          <div style={{ textAlign: "center", marginTop: 14 }}>
+            <button onClick={() => setStep(2)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: ردّد الجمل →</button>
+          </div>
+        </div>
+      )}
+
+      {/* Step 3: Shadow key phrases */}
+      {step === 2 && (
+        <div>
+          <div style={{ fontSize: 13, color: "#8892a4", marginBottom: 12, lineHeight: 2 }}>استمع لكل جملة ثم ردّدها بصوت عالٍ. اضغط على الدائرة كل مرة ترددّ. الهدف: ٣ مرات.</div>
+          {sc.keyPhrases.map((p, i) => {
+            const r = shadowReps[i] || 0;
+            return (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 3 ? "rgba(52,211,153,0.06)" : "rgba(255,255,255,0.02)", border: "1px solid " + (r >= 3 ? "rgba(52,211,153,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 6 }}>
+                <div onClick={() => setShadowReps(prev => ({ ...prev, [i]: (prev[i] || 0) + 1 }))} style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 3 ? "#34d399" : r > 0 ? "#22d3ee" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", cursor: "pointer", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
+                  <div style={{ fontSize: 12, color: "#5a6a80", marginTop: 2 }}>{p.ar}</div>
+                </div>
+                <SpeakBtn text={p.en} size={18} />
+              </div>
+            );
+          })}
+          {Object.values(shadowReps).filter(r => r >= 3).length >= sc.keyPhrases.length && (
+            <div style={{ textAlign: "center", marginTop: 14 }}>
+              <button onClick={() => setStep(3)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: احفظ →</button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Step 4: Memorize — repeat without looking */}
+      {step === 3 && (
+        <div>
+          <div style={{ fontSize: 13, color: "#8892a4", marginBottom: 12, lineHeight: 2 }}>الآن حاول تقول الجمل من ذاكرتك. استمع ← أوقف ← ردّد من ذاكرتك ← تحقق.</div>
+          {sc.keyPhrases.map((p, i) => (
+            <div key={i} style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.1)", borderRadius: 10, padding: 14, marginBottom: 8 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                <SpeakBtn text={p.en} size={20} color="#f59e0b" />
+                <div style={{ fontSize: 13, color: "#f59e0b", fontWeight: 600 }}>استمع ← أوقف ← ردّد من ذاكرتك</div>
+              </div>
+              <div style={{ fontSize: 12, color: "#5a6a80" }}>{p.ar}</div>
+            </div>
+          ))}
+          <div style={{ textAlign: "center", marginTop: 14 }}>
+            <button onClick={() => setStep(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
+          </div>
+        </div>
+      )}
+
+      {/* Step 5: Produce */}
+      {step === 4 && (
+        <div>
+          <div style={{ background: "rgba(244,114,182,0.06)", border: "1px solid rgba(244,114,182,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+            <div style={{ fontSize: 15, color: "#e0e7f1", lineHeight: 2, marginBottom: 4 }}>{sc.producePrompt}</div>
+          </div>
+          <textarea value={prodInput} onChange={(e) => !prodSubmitted && setProdInput(e.target.value)} placeholder="اكتب ردك بالإنجليزي..." disabled={prodSubmitted} style={{ width: "100%", minHeight: 80, padding: 14, borderRadius: 12, fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(244,114,182,0.2)", color: "#e0e7f1", outline: "none", resize: "vertical", marginBottom: 12 }} />
+          {!prodSubmitted ? (
+            <div style={{ textAlign: "center" }}>
+              <button onClick={() => setProdSubmitted(true)} disabled={prodInput.trim().length < 5} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: prodInput.trim().length >= 5 ? "#f472b6" : "#1e293b", color: prodInput.trim().length >= 5 ? "#060a14" : "#4a5568", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: prodInput.trim().length >= 5 ? "pointer" : "default" }}>✓ أرسل</button>
+            </div>
+          ) : (
+            <div>
+              <div style={{ background: "rgba(52,211,153,0.06)", border: "1px solid rgba(52,211,153,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
+                <div style={{ fontSize: 12, color: "#34d399", fontWeight: 700, marginBottom: 6 }}>النموذج المثالي:</div>
+                <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#e0e7f1" }}>{sc.produceModel}</div>
+                <SpeakBtn text={sc.produceModel} size={16} />
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <button onClick={() => setStep(5)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تحدّي اليوم →</button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Step 6: Real-world challenge */}
+      {step === 5 && (
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: 48, marginBottom: 12 }}>🌍</div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: "#f59e0b", marginBottom: 12 }}>تحدّي اليوم</div>
+          <div style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.12)", borderRadius: 14, padding: 20, marginBottom: 16 }}>
+            <div style={{ fontSize: 16, color: "#e0e7f1", lineHeight: 2 }}>{sc.challenge}</div>
+          </div>
+          {!challengeAccepted ? (
+            <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
+              <button onClick={() => { setChallengeAccepted(true); if (onComplete) onComplete(); }} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#34d399,#22d3ee)", color: "#060a14", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>أقبل التحدي ✓</button>
+            </div>
+          ) : (
+            <div style={{ animation: "fadeUp .4s" }}>
+              <div style={{ fontSize: 40, marginBottom: 8 }}>🎉</div>
+              <div style={{ fontSize: 16, fontWeight: 700, color: "#34d399", marginBottom: 6 }}>أحسنت! أنهيت جلسة اليوم</div>
+              <div style={{ fontSize: 13, color: "#8892a4", lineHeight: 2 }}>تمرّنت على موقف "{sc.title}" من ٦ زوايا مختلفة. هالجمل الآن أقرب لذاكرتك طويلة المدى.</div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ===== LISTENING COMPREHENSION =====
+function ListenExercise() {
+  const [qi, setQi] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+  const qs = useRef(shuffle(LISTEN_ITEMS, gdn()).slice(0, 8));
+
+  function playQ() { speak(qs.current[qi].text, 0.85); }
+  function pick(oi) {
+    setPicked(oi);
+    const { correctIndex } = shuffleOpts(qs.current[qi].opts, qs.current[qi].ans, qi * 19 + 73);
+    if (oi === correctIndex) setScore(score + 1);
+  }
+  function next() { if (qi + 1 >= qs.current.length) { setDone(true); return; } setQi(qi + 1); setPicked(null); setRevealed(false); }
+  function restart() { qs.current = shuffle(LISTEN_ITEMS, Date.now()); setQi(0); setPicked(null); setScore(0); setDone(false); setRevealed(false); }
+
+  // Auto-play on mount and question change
+  useEffect(() => { if (!done) { const t = setTimeout(() => playQ(), 400); return () => clearTimeout(t); } }, [qi, done]);
+
+  if (done) return (
+    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: 40, marginBottom: 12 }}>👂</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#34d399" : score >= 4 ? "#f59e0b" : "#ef4444", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: 14, color: "#8892a4", marginBottom: 16 }}>{score >= 6 ? "ممتاز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#8b5cf6", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+    </div>
+  );
+
+  const raw = qs.current[qi];
+  const { opts: qOpts, correctIndex: qAns } = shuffleOpts(raw.opts, raw.ans, qi * 19 + 73);
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+        <div style={{ fontSize: 13, color: "#5a6a80" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: 13, color: "#8b5cf6", fontWeight: 600 }}>{score + " صحيح"}</div>
+      </div>
+
+      <div style={{ background: "rgba(139,92,246,0.06)", border: "1px solid rgba(139,92,246,0.12)", borderRadius: 12, padding: 20, marginBottom: 12, textAlign: "center" }}>
+        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#8b5cf6,#6366f1)", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", marginBottom: 10 }}>🔊 استمع للجملة</button>
+        <div style={{ fontSize: 12, color: "#5a6a80" }}>اضغط للاستماع — ثم أجب على السؤال</div>
+        {revealed && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, color: "#8b5cf6", marginTop: 10, direction: "ltr" }}>{raw.text}</div>}
+      </div>
+
+      <div style={{ fontSize: 14, color: "#e0e7f1", marginBottom: 10, fontWeight: 600 }}>{raw.q}</div>
+
+      {qOpts.map((o, oi) => {
+        const show = picked !== null;
+        const isCorrect = oi === qAns;
+        const isPicked = picked === oi;
+        let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
+        if (show && isCorrect) { bg = "rgba(52,211,153,0.1)"; brd = "rgba(52,211,153,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(239,68,68,0.1)"; brd = "rgba(239,68,68,0.3)"; }
+        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 5, cursor: show ? "default" : "pointer", fontSize: 14, lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+          {o}{show && isCorrect && <span style={{ color: "#34d399", fontSize: 11 }}> ✓</span>}
+        </div>;
+      })}
+      {picked !== null && (
+        <div style={{ textAlign: "center", marginTop: 10 }}>
+          {!revealed && <button onClick={() => setRevealed(true)} style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(139,92,246,0.2)", background: "transparent", color: "#8b5cf6", fontFamily: "inherit", fontSize: 12, cursor: "pointer", marginLeft: 8 }}>👁 أظهر النص</button>}
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#8b5cf6", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer", marginRight: 8 }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ===== DICTATION =====
+function DictationExercise() {
+  const [qi, setQi] = useState(0);
+  const [input, setInput] = useState("");
+  const [checked, setChecked] = useState(false);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const qs = useRef(shuffle(DICTATION_ITEMS, gdn()).slice(0, 8));
+
+  function playQ() { speak(qs.current[qi], 0.75); }
+  function check() {
+    setChecked(true);
+    const userWords = input.trim().toLowerCase().replace(/[.,!?]/g, "").split(/\s+/).filter(Boolean);
+    const correctWords = qs.current[qi].toLowerCase().replace(/[.,!?]/g, "").split(/\s+/).filter(Boolean);
+    let match = 0;
+    correctWords.forEach(w => { if (userWords.includes(w)) match++; });
+    if (match / correctWords.length >= 0.7) setScore(score + 1);
+  }
+  function next() { if (qi + 1 >= qs.current.length) { setDone(true); return; } setQi(qi + 1); setInput(""); setChecked(false); }
+  function restart() { qs.current = shuffle(DICTATION_ITEMS, Date.now()); setQi(0); setInput(""); setChecked(false); setScore(0); setDone(false); }
+
+  useEffect(() => { if (!done) { const t = setTimeout(() => playQ(), 400); return () => clearTimeout(t); } }, [qi, done]);
+
+  if (done) return (
+    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: 40, marginBottom: 12 }}>🎧</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#34d399" : score >= 4 ? "#f59e0b" : "#ef4444", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: 14, color: "#8892a4", marginBottom: 16 }}>{score >= 6 ? "ممتاز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#ec4899", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+    </div>
+  );
+
+  const correct = qs.current[qi];
+  const userWords = input.trim().toLowerCase().replace(/[.,!?]/g, "").split(/\s+/).filter(Boolean);
+  const correctWords = correct.toLowerCase().replace(/[.,!?]/g, "").split(/\s+/).filter(Boolean);
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+        <div style={{ fontSize: 13, color: "#5a6a80" }}>{"جملة " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: 13, color: "#ec4899", fontWeight: 600 }}>{score + " صحيح"}</div>
+      </div>
+
+      <div style={{ background: "rgba(236,72,153,0.06)", border: "1px solid rgba(236,72,153,0.12)", borderRadius: 12, padding: 20, marginBottom: 12, textAlign: "center" }}>
+        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#ec4899,#f472b6)", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", marginBottom: 6 }}>🔊 استمع</button>
+        <div style={{ marginTop: 6 }}>
+          <button onClick={() => speak(qs.current[qi], 0.55)} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(236,72,153,0.2)", background: "transparent", color: "#ec4899", fontFamily: "inherit", fontSize: 11, cursor: "pointer" }}>🐢 بطيء</button>
+        </div>
+        <div style={{ fontSize: 12, color: "#5a6a80", marginTop: 8 }}>استمع ثم اكتب ما سمعته بالإنجليزي</div>
+      </div>
+
+      <textarea value={input} onChange={(e) => !checked && setInput(e.target.value)} placeholder="اكتب ما سمعته هنا..." disabled={checked} style={{ width: "100%", minHeight: 70, padding: 14, borderRadius: 12, fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(236,72,153,0.2)", color: "#e0e7f1", outline: "none", resize: "vertical", marginBottom: 12 }} />
+
+      {!checked ? (
+        <div style={{ textAlign: "center" }}>
+          <button onClick={check} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#ec4899" : "#1e293b", color: input.trim().length >= 3 ? "#fff" : "#4a5568", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ تحقق</button>
+        </div>
+      ) : (
+        <div>
+          <div style={{ background: "rgba(52,211,153,0.06)", border: "1px solid rgba(52,211,153,0.12)", borderRadius: 12, padding: 14, marginBottom: 10 }}>
+            <div style={{ fontSize: 12, color: "#34d399", fontWeight: 700, marginBottom: 6 }}>✓ الجملة الصحيحة:</div>
+            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#e0e7f1" }}>{correct}</div>
+          </div>
+          <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 2, marginBottom: 10 }}>
+            {correctWords.map((w, wi) => {
+              const matched = userWords.includes(w);
+              return <span key={wi} style={{ color: matched ? "#34d399" : "#ef4444", fontWeight: matched ? 400 : 700 }}>{w + " "}</span>;
+            })}
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "#ec4899", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
           </div>
         </div>
       )}
@@ -979,7 +1534,7 @@ function LevelTest({ onComplete }) {
           { icon: "📐", label: "قواعد اللغة", desc: "تركيب الجمل والأزمنة" },
           { icon: "📚", label: "المفردات", desc: "معاني الكلمات واستخدامها" },
           { icon: "📖", label: "فهم القراءة", desc: "فهم النصوص والسياق" },
-          { icon: "🗣️", label: "التواصل المهني", desc: "الرد المناسب في الاجتماعات" },
+          { icon: "🗣️", label: "التواصل", desc: "الرد المناسب في مواقف الحياة" },
         ].map((s, i) => (
           <div key={i} style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 10, padding: 12 }}>
             <div style={{ fontSize: 20, marginBottom: 4 }}>{s.icon}</div>
@@ -1198,7 +1753,7 @@ export default function App() {
       <div style={{ textAlign: "center", padding: 32, animation: "fadeUp 1s" }}>
         <div style={{ fontSize: 56, marginBottom: 16, animation: "pulse 2s infinite" }}>🎯</div>
         <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8, background: "linear-gradient(135deg,#22d3ee,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1.5 }}>اختراق حاجز الإنجليزية</h1>
-        <p style={{ fontSize: 14, color: "#5a6a80", marginBottom: 32, lineHeight: 1.8 }}>١٢ أسبوعاً — ٣٥ دقيقة يومياً — كل شيء هنا</p>
+        <p style={{ fontSize: 15, color: "#5a6a80", marginBottom: 32, lineHeight: 1.9 }}>تكلّم إنجليزي بثقة — في السفر، الشغل، والحياة اليومية</p>
         <button onClick={() => save({ ...store, start: gtd() })} style={{ padding: "13px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#22d3ee,#06b6d4)", color: "#060a14", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer" }}>ابدأ رحلتك 🚀</button>
       </div>
     </div>
@@ -1213,20 +1768,8 @@ export default function App() {
     if (lvl <= 3) return { ...ph, n: 2, gap: 4 }; // B1-B2: medium
     return { ...ph, n: 3, gap: 3 }; // C1-C2: fast
   })();
-  const pct = Math.round((done.length / 5) * 100);
-  const tp = PROMPTS[dn % PROMPTS.length];
-  const shadow = SHADOW_LINES[adaptedPhase.n - 1];
-  const story = STORIES[dn % STORIES.length];
-  const story2 = STORIES[(dn + 2) % STORIES.length];
-  const pc = PHRASES[dn % PHRASES.length];
-  const spLbl = adaptedPhase.n === 1 ? "بطيء 🐢" : adaptedPhase.n === 2 ? "متوسط 🚶" : "طبيعي 🏃";
-  const tasks = [
-    { id: "shadow", ic: "🎧", nm: "تقنية الظل", dur: 15 },
-    { id: "think", ic: "🗣️", nm: "تفكير بصوت عالٍ", dur: 10 },
-    { id: "passive", ic: "📻", nm: "قراءة قصة", dur: 15 },
-    { id: "phrases", ic: "💬", nm: "مراجعة ٥ جمل", dur: 10 },
-    { id: "watch", ic: "🎬", nm: "قصة اليوم", dur: 15 },
-  ];
+  const pct = done.includes("session") ? 100 : 0;
+  const todayScenario = DAILY_SCENARIOS[dn % DAILY_SCENARIOS.length];
   const Card = ({ children, s }) => <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 16, padding: 18, marginBottom: 12, animation: "fadeUp .4s", ...s }}>{children}</div>;
 
   return (
@@ -1238,7 +1781,7 @@ export default function App() {
         <div style={{ padding: "16px 0 10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
             <h1 style={{ fontSize: 18, fontWeight: 800, background: "linear-gradient(135deg,#22d3ee,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>اختراق حاجز الإنجليزية</h1>
-            <div style={{ fontSize: 12, color: "#4a5568", marginTop: 2 }}>{"أسبوع " + wk + "/12 — " + ph.nm + " — " + spLbl + (levelResult ? " — " + levelResult.levelCode : "")}</div>
+            <div style={{ fontSize: 12, color: "#4a5568", marginTop: 2 }}>{"أسبوع " + wk + "/12 — " + ph.nm + (levelResult ? " — " + levelResult.levelCode : "")}</div>
           </div>
           <div style={{ fontSize: 16, fontWeight: 800, color: adaptedPhase.c, fontFamily: "'IBM Plex Mono'" }}>{pct + "%"}</div>
         </div>
@@ -1249,48 +1792,29 @@ export default function App() {
           ))}
         </div>
 
-        {/* TODAY */}
+        {/* TODAY — Deep Processing Session */}
         {tab === "today" && (
           <div>
-            {/* Quick Start — one tap to next undone task */}
-            {done.length < 5 && !openTask && <Card s={{ background: "linear-gradient(135deg, rgba(34,211,238,0.06), rgba(167,139,250,0.06))", borderColor: "rgba(34,211,238,0.15)" }}>
-              {(() => { const nextTask = tasks.find(t => !done.includes(t.id)); return nextTask ? (
-                <div onClick={() => setOpenTask(nextTask.id)} style={{ textAlign: "center", cursor: "pointer", padding: 8 }}>
-                  <div style={{ fontSize: 32, marginBottom: 8 }}>{nextTask.ic}</div>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: "#22d3ee", marginBottom: 4 }}>{"ابدأ: " + nextTask.nm}</div>
-                  <div style={{ fontSize: 13, color: "#5a6a80" }}>{nextTask.dur + " دقيقة — اضغط للبدء فوراً"}</div>
-                </div>
-              ) : null; })()}
-            </Card>}
             <Card><div style={{ fontSize: 14, color: "#8892a4", textAlign: "center", lineHeight: 2 }}>{"💎 " + MOTIV[dn % MOTIV.length]}</div></Card>
-            {tmOn && <Card s={{ borderColor: "rgba(34,211,238,0.12)" }}><div style={{ textAlign: "center" }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 44, fontWeight: 700, color: tmSec >= tmMax ? "#34d399" : "#22d3ee" }}>{String(Math.floor((tmMax - tmSec) / 60)).padStart(2, "0") + ":" + String((tmMax - tmSec) % 60).padStart(2, "0")}</div>{tmSec >= tmMax && <div style={{ color: "#34d399", fontWeight: 700, marginTop: 6 }}>✅ أحسنت!</div>}<button onClick={() => { clearInterval(tmRef.current); setTmOn(false); }} style={{ marginTop: 8, padding: "6px 16px", borderRadius: 8, border: "1px solid #1e293b", background: "transparent", color: "#64748b", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إيقاف</button></div></Card>}
             <Card>
-              <div style={{ fontSize: 13, color: "#4a5568", fontWeight: 600, marginBottom: 8 }}>{"📋 أنشطة اليوم — " + pct + "%"}</div>
-              <div style={{ height: 4, borderRadius: 2, background: "#111827", marginBottom: 12, overflow: "hidden" }}><div style={{ height: "100%", width: pct + "%", borderRadius: 2, background: pct === 100 ? "linear-gradient(90deg,#34d399,#22d3ee)" : "#22d3ee", transition: "width .5s" }} /></div>
-              {tasks.map((t) => {
-                const isDone = done.includes(t.id), isOpen = openTask === t.id;
-                return (
-                  <div key={t.id}>
-                    <div onClick={() => setOpenTask(isOpen ? null : t.id)} style={{ display: "flex", alignItems: "center", gap: 12, padding: 12, borderRadius: 12, cursor: "pointer", border: "1px solid " + (isOpen ? "rgba(34,211,238,0.15)" : "transparent"), background: isOpen ? "rgba(34,211,238,0.04)" : "transparent", opacity: isDone ? 0.4 : 1 }}>
-                      <div onClick={(e) => { e.stopPropagation(); toggle(t.id); }} style={{ width: 26, height: 26, borderRadius: "50%", border: "2px solid " + (isDone ? "#22d3ee" : "#2a3448"), background: isDone ? "#22d3ee" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#060a14", flexShrink: 0, cursor: "pointer" }}>{isDone ? "✓" : ""}</div>
-                      <span style={{ fontSize: 20, flexShrink: 0 }}>{t.ic}</span>
-                      <div style={{ flex: 1 }}><div style={{ fontSize: 15, fontWeight: 600 }}>{t.nm}</div><div style={{ fontSize: 12, color: "#3a4a5c" }}>{t.dur + " دقيقة"}</div></div>
-                      <span style={{ fontSize: 16, color: "#3a4a5c", transform: isOpen ? "rotate(180deg)" : "", transition: ".3s", display: "inline-block" }}>▾</span>
-                    </div>
-                    {isOpen && (
-                      <div style={{ padding: "10px 12px 16px", animation: "fadeUp .3s" }}>
-                        {t.id === "shadow" && <div><p style={{ fontSize: 12, color: "#8892a4", lineHeight: 1.9, marginBottom: 12 }}>{"🎧 اضغط ▶ — اقرأ كل جملة بصوت عالٍ قبل ما ينتهي العدّاد!"}</p><Prompter lines={shadow} gap={adaptedPhase.gap} color={adaptedPhase.c} label="التمرين" />{!tmOn && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={() => startTm(15)} style={{ padding: "7px 16px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>⏱️ مؤقت ١٥ دقيقة</button></div>}</div>}
-                        {t.id === "think" && <div><p style={{ fontSize: 12, color: "#8892a4", lineHeight: 1.9, marginBottom: 12 }}>{"🗣️ اقرأ الموضوع ثم تكلم عنه بصوت عالٍ بالإنجليزي. استخدم جمل البداية!"}</p><div style={{ background: "rgba(34,211,238,0.04)", border: "1px solid rgba(34,211,238,0.08)", borderRadius: 14, padding: 20, textAlign: "center" }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 17, color: "#22d3ee", direction: "ltr", lineHeight: 1.6, marginBottom: 8 }}>{tp.en}</div><div style={{ fontSize: 13, color: "#5a6a80" }}>{tp.ar}</div></div>{tp.starters && <div style={{ marginTop: 12, background: "rgba(167,139,250,0.06)", border: "1px solid rgba(167,139,250,0.12)", borderRadius: 12, padding: 14 }}><div style={{ fontSize: 12, color: "#a78bfa", fontWeight: 700, marginBottom: 8 }}>💡 ابدأ بهذه الجمل:</div>{tp.starters.map((st, si) => <div key={si} style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#c4b5fd", padding: "4px 0" }}>{st}</div>)}</div>}{!tmOn && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={() => startTm(10)} style={{ padding: "7px 16px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>⏱️ مؤقت ١٠ دقائق</button></div>}</div>}
-                        {t.id === "passive" && <div><p style={{ fontSize: 12, color: "#8892a4", lineHeight: 1.9, marginBottom: 12 }}>{"📻 اقرأ القصة بصمت مع الجمل وهي تتحرك. لا تترجم — فقط تابع."}</p><div style={{ fontSize: 14, fontWeight: 700, color: "#34d399", marginBottom: 8 }}>{"📖 " + story.t}</div><Prompter lines={story.lines} gap={ph.gap + 2} color="#34d399" label="القراءة" /></div>}
-                        {t.id === "phrases" && <div><p style={{ fontSize: 14, color: "#8892a4", lineHeight: 1.9, marginBottom: 12 }}>{"💬 اضغط على الدائرة كل مرة ترددّ الجملة. الهدف ٥."}</p><div style={{ fontSize: 14, fontWeight: 700, color: "#22d3ee", marginBottom: 8 }}>{pc.icon + " " + pc.cat}</div>{pc.items.map((p, i) => { const k = dn + "-" + i; const r = reps[k] || 0; return (<div key={i} onClick={() => setReps(prev => ({ ...prev, [k]: (prev[k] || 0) + 1 }))} style={{ display: "flex", alignItems: "center", gap: 10, padding: 10, borderRadius: 10, background: r >= 5 ? "rgba(52,211,153,0.06)" : "rgba(255,255,255,0.015)", border: "1px solid " + (r >= 5 ? "rgba(52,211,153,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 5, cursor: "pointer" }}><div style={{ width: 26, height: 26, borderRadius: "50%", background: r >= 5 ? "#34d399" : r > 0 ? "#22d3ee" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div><div style={{ flex: 1 }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.6 }}>{p.en}</div><div style={{ fontSize: 12, color: "#5a6a80", marginTop: 2 }}>{p.ar}</div></div></div>); })}</div>}
-                        {t.id === "watch" && <div><p style={{ fontSize: 12, color: "#8892a4", lineHeight: 1.9, marginBottom: 12 }}>{"🎬 قصة قصيرة. اضغط ▶ وتابع الجمل. استمتع!"}</p><div style={{ fontSize: 14, fontWeight: 700, color: "#a78bfa", marginBottom: 8 }}>{"📖 " + story2.t}</div><Prompter lines={story2.lines} gap={ph.gap + 2} color="#a78bfa" label="القصة" /></div>}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+              <DailySession
+                scenario={DAILY_SCENARIOS[dn % DAILY_SCENARIOS.length]}
+                dayNum={dn}
+                onComplete={() => {
+                  const d = store.days[today] || [];
+                  if (!d.includes("session")) {
+                    save({ ...store, days: { ...store.days, [today]: [...d, "session"] } });
+                    setConf(true); setTimeout(() => setConf(false), 3000);
+                  }
+                }}
+              />
             </Card>
-            {(dw === 1 || dw === 4) && <Card s={{ borderColor: "rgba(167,139,250,0.1)" }}><div style={{ fontSize: 12, color: "#8892a4", lineHeight: 1.8 }}>🎤 <b>جلسة محادثة ٢٥ دقيقة</b> — افتح Cambly أو italki على جوالك</div></Card>}
+            {done.includes("session") && <Card s={{ borderColor: "rgba(52,211,153,0.15)" }}>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 14, color: "#34d399", fontWeight: 700, marginBottom: 4 }}>✅ جلسة اليوم مكتملة!</div>
+                <div style={{ fontSize: 12, color: "#5a6a80" }}>تبي تمارين إضافية؟ روح لتبويب "تدريب"</div>
+              </div>
+            </Card>}
           </div>
         )}
 
@@ -1299,13 +1823,15 @@ export default function App() {
           <div>
             {!trainMode && (
               <div>
-                <Card><div style={{ fontSize: 13, color: "#8892a4", textAlign: "center", lineHeight: 1.8 }}>🎭 تدريبات تفاعلية تجهّزك للاجتماعات الحقيقية</div></Card>
+                <Card><div style={{ fontSize: 14, color: "#8892a4", textAlign: "center", lineHeight: 1.9 }}>🎭 تدريبات تفاعلية تجهّزك لمواقف الحياة الحقيقية</div></Card>
                 {[
-                  { id: "sim", icon: "🎭", title: "محاكاة اجتماع", desc: "سيناريو اجتماع كامل — اختر الرد المناسب واقرأه بصوت عالٍ", color: "#22d3ee" },
-                  { id: "quick", icon: "⚡", title: "استجابة سريعة", desc: "مواقف سريعة — اختر الجملة الصح قبل ما ينتهي الوقت", color: "#f59e0b" },
+                  { id: "sim", icon: "🎭", title: "محادثات تفاعلية", desc: "سيناريوهات حقيقية: فندق، طبيب، مطعم، مدرسة — اختر الرد واقرأه", color: "#22d3ee" },
+                  { id: "quick", icon: "⚡", title: "استجابة سريعة", desc: "مواقف يومية سريعة — اختر الرد الأنسب", color: "#f59e0b" },
                   { id: "quiz", icon: "📊", title: "اختبار أسبوعي", desc: "١٠ أسئلة تقيس تقدمك في حفظ الجمل واستخدامها", color: "#a78bfa" },
                   { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة في الجمل — يختبر حفظك الحقيقي", color: "#06b6d4" },
                   { id: "build", icon: "🧩", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة لتكوين جمل صحيحة — يعالج مشكلة تركيب الجمل", color: "#10b981" },
+                  { id: "listen", icon: "👂", title: "فهم الاستماع", desc: "استمع لجملة وأجب — يدرّب أذنك على فهم الإنجليزي المنطوق", color: "#8b5cf6" },
+                  { id: "dictation", icon: "🎧", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته — يربط الأذن باليد والذاكرة", color: "#ec4899" },
                   { id: "recall", icon: "✍️", title: "إنتاج حر", desc: "اكتب ردك بنفسك بدون خيارات — يختبر قدرتك الحقيقية على الإنتاج", color: "#f472b6" },
                   { id: "level", icon: "🎯", title: "اختبار تحديد المستوى", desc: "اختبار تكيّفي CEFR يقيس مستواك الحقيقي — قواعد ومفردات وقراءة وتواصل مهني", color: "#e879f9" },
                 ].map((m) => (
@@ -1321,6 +1847,8 @@ export default function App() {
             {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} /></Card>}
             {trainMode === "fill" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FillBlank /></Card>}
             {trainMode === "build" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><SentenceBuild /></Card>}
+            {trainMode === "listen" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><ListenExercise /></Card>}
+            {trainMode === "dictation" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><DictationExercise /></Card>}
             {trainMode === "recall" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FreeRecall /></Card>}
             {trainMode === "level" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><LevelTest onComplete={(result) => setLevelResult(result)} /></Card>}
           </div>
@@ -1421,9 +1949,9 @@ export default function App() {
           <div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
               {[
-                { l: "أيام", v: Object.values(store.days).filter(d => d.length >= 3).length, c: "#22d3ee" },
+                { l: "أيام", v: Object.values(store.days).filter(d => d.length >= 1).length, c: "#22d3ee" },
                 { l: "أسبوع", v: wk + "/12", c: "#a78bfa" },
-                { l: "سلسلة 🔥", v: (() => { let s = 0, d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 3) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s; })(), c: "#f59e0b" },
+                { l: "سلسلة 🔥", v: (() => { let s = 0, d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s; })(), c: "#f59e0b" },
               ].map((s, i) => (
                 <Card key={i} s={{ padding: 12 }}>
                   <div style={{ textAlign: "center" }}>
