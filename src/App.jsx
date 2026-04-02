@@ -245,13 +245,12 @@ const LEVEL_IDX = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4, C2: 5 };
 const TYPE_LABELS = { grammar: "قواعد", vocab: "مفردات", reading: "فهم القراءة", pragmatics: "تواصل" };
 const TYPE_ICONS = { grammar: "📐", vocab: "📚", reading: "📖", pragmatics: "🗣️" };
 
-// ===== SPEECH ENGINE — OpenAI TTS + SpeechSynthesis fallback =====
-// Audio cache: avoids re-generating same sentence
+// ===== SPEECH ENGINE — Smart Voice Selection + Optional OpenAI TTS =====
+// Priority: OpenAI TTS (paid, best) → Neural browser voices (free, great) → Standard browser voices (free, OK)
 const _audioCache = {};
 let _openaiKey = null;
-let _ttsVoice = "nova"; // OpenAI voices: alloy, echo, fable, onyx, nova, shimmer
+let _ttsVoice = "nova";
 
-// Load API key from storage on init
 (async () => {
   try {
     const r = await window.storage.get("openai-tts-key");
@@ -285,6 +284,45 @@ async function speakOpenAI(text, speed = 1.0) {
   } catch (e) { return null; }
 }
 
+// Smart voice picker — prioritizes high-quality Neural voices available for free
+function getBestVoice() {
+  if (!window.speechSynthesis) return null;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  // Priority list — best free voices across browsers/platforms
+  const priority = [
+    // Microsoft Edge Neural voices (free, excellent quality — like Azure Neural)
+    v => v.name.includes("Online (Natural)") && v.lang.startsWith("en"),
+    v => v.name.includes("Microsoft") && v.name.includes("Online") && v.lang.startsWith("en"),
+    // Google Neural/WaveNet on Chrome (free, very good)
+    v => v.name.includes("Google US English"),
+    v => v.name.includes("Google UK English"),
+    // macOS/iOS high quality voices
+    v => v.name === "Samantha" && v.lang.startsWith("en"),
+    v => v.name === "Karen" && v.lang.startsWith("en"),
+    v => v.name === "Daniel" && v.lang.startsWith("en"),
+    v => (v.name.includes("Enhanced") || v.name.includes("Premium")) && v.lang.startsWith("en"),
+    // Android Neural voices
+    v => v.lang.startsWith("en-US") && v.localService === false,
+    // Any en-US voice as last resort
+    v => v.lang.startsWith("en-US"),
+    v => v.lang.startsWith("en-GB"),
+    v => v.lang.startsWith("en"),
+  ];
+  for (const test of priority) {
+    const found = voices.find(test);
+    if (found) return found;
+  }
+  return voices[0];
+}
+
+let _bestVoice = null;
+// Voices load async — listen for them
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = () => { _bestVoice = getBestVoice(); };
+  _bestVoice = getBestVoice();
+}
+
 function speakBrowser(text, rate = 0.85) {
   if (!window.speechSynthesis) return null;
   window.speechSynthesis.cancel();
@@ -292,24 +330,19 @@ function speakBrowser(text, rate = 0.85) {
   u.lang = "en-US";
   u.rate = rate;
   u.pitch = 1;
-  const voices = window.speechSynthesis.getVoices();
-  const enVoice = voices.find(v => v.lang.startsWith("en") && v.name.includes("Google")) || voices.find(v => v.lang.startsWith("en-US")) || voices.find(v => v.lang.startsWith("en"));
-  if (enVoice) u.voice = enVoice;
+  if (_bestVoice) u.voice = _bestVoice;
   window.speechSynthesis.speak(u);
   return u;
 }
 
-// Unified speak function — tries OpenAI first, falls back to browser
 function speak(text, rate = 0.85) {
   if (_openaiKey) {
     const speed = rate < 0.7 ? 0.8 : rate < 0.9 ? 0.95 : 1.0;
     const audioPromise = speakOpenAI(text, speed);
-    // Return a fake utterance-like object for onend compatibility
     const fakeU = { onend: null };
     audioPromise.then(audio => {
       if (audio) { audio.onended = () => { if (fakeU.onend) fakeU.onend(); }; }
       else {
-        // Fallback to browser TTS if OpenAI fails
         const u = speakBrowser(text, rate);
         if (u) u.onend = () => { if (fakeU.onend) fakeU.onend(); };
         else if (fakeU.onend) fakeU.onend();
@@ -327,7 +360,6 @@ function SpeakBtn({ text, rate, size, color }) {
     const u = speak(text, rate || 0.85);
     if (u) {
       u.onend = () => setPlaying(false);
-      // Safety timeout for OpenAI (in case onend doesn't fire)
       setTimeout(() => setPlaying(false), 15000);
     } else setPlaying(false);
   }
@@ -336,11 +368,12 @@ function SpeakBtn({ text, rate, size, color }) {
   );
 }
 
-// Voice quality indicator
 function VoiceBadge() {
-  return _openaiKey
-    ? <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: "rgba(52,211,153,0.15)", color: "#34d399", fontWeight: 600 }}>صوت بشري</span>
-    : <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: "rgba(245,158,11,0.15)", color: "#f59e0b", fontWeight: 600 }}>صوت آلي</span>;
+  if (_openaiKey) return <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: "rgba(52,211,153,0.15)", color: "#34d399", fontWeight: 600 }}>OpenAI — صوت بشري</span>;
+  const vn = _bestVoice ? _bestVoice.name : "";
+  const isNeural = vn.includes("Natural") || vn.includes("Online") || vn.includes("Enhanced") || vn.includes("Premium") || vn.includes("Google");
+  if (isNeural) return <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: "rgba(34,211,238,0.15)", color: "#22d3ee", fontWeight: 600 }}>{"مجاني — " + vn.split(" ").slice(0, 3).join(" ")}</span>;
+  return <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: "rgba(245,158,11,0.15)", color: "#f59e0b", fontWeight: 600 }}>صوت أساسي</span>;
 }
 
 // ===== LISTENING COMPREHENSION =====
@@ -2342,18 +2375,32 @@ export default function App() {
             {/* Voice Settings */}
             <Card>
               <div style={{ fontSize: 14, fontWeight: 700, color: "#22d3ee", marginBottom: 10 }}>🔊 إعدادات الصوت</div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
                 <div style={{ fontSize: 13, color: "#8892a4" }}>الحالة:</div>
                 <VoiceBadge />
               </div>
-              <div style={{ fontSize: 12, color: "#5a6a80", lineHeight: 2, marginBottom: 12 }}>
-                للحصول على صوت بشري طبيعي، أدخل مفتاح OpenAI API. بدونه يستخدم الصوت الآلي للمتصفح.
-                <br />التكلفة: أقل من سنت واحد لكل جلسة يومية.
+
+              {/* Test current voice */}
+              <div style={{ marginBottom: 14 }}>
+                <button onClick={() => speak("Hello! Nice to meet you. How are you today?", 0.9)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "rgba(34,211,238,0.1)", color: "#22d3ee", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>🔊 جرّب الصوت الحالي</button>
               </div>
+
+              {/* Tier explanation */}
+              <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 10, padding: 12, marginBottom: 14 }}>
+                <div style={{ fontSize: 12, color: "#e0e7f1", lineHeight: 2.2 }}>
+                  <div style={{ marginBottom: 4 }}><span style={{ color: "#22d3ee" }}>المستوى المجاني:</span> التطبيق يختار تلقائياً أفضل صوت متاح في متصفحك</div>
+                  <div style={{ fontSize: 11, color: "#5a6a80" }}>Edge = أصوات Neural ممتازة | Chrome = Google voices جيدة | Safari = أصوات Apple</div>
+                  <div style={{ marginTop: 8, marginBottom: 4 }}><span style={{ color: "#34d399" }}>المستوى المدفوع (اختياري):</span> صوت بشري حقيقي عبر OpenAI</div>
+                  <div style={{ fontSize: 11, color: "#5a6a80" }}>أفضل جودة — connected speech + نبرة طبيعية (~$0.10/شهر)</div>
+                </div>
+              </div>
+
+              {/* OpenAI API key (optional) */}
+              <div style={{ fontSize: 12, color: "#5a6a80", marginBottom: 6 }}>مفتاح OpenAI (اختياري):</div>
               <div style={{ marginBottom: 10 }}>
                 <input
                   type="password"
-                  placeholder="sk-... أدخل مفتاح OpenAI API"
+                  placeholder="sk-... اتركه فاضي للمجاني"
                   defaultValue={_openaiKey || ""}
                   onBlur={async (e) => {
                     const key = e.target.value.trim();
@@ -2363,13 +2410,16 @@ export default function App() {
                   style={{ width: "100%", padding: 12, borderRadius: 10, fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(34,211,238,0.15)", color: "#e0e7f1", outline: "none" }}
                 />
               </div>
-              <div style={{ fontSize: 12, color: "#5a6a80", marginBottom: 10 }}>الصوت:</div>
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
-                {["nova", "alloy", "echo", "fable", "onyx", "shimmer"].map(v => (
-                  <button key={v} onClick={async () => { _ttsVoice = v; try { await window.storage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (_ttsVoice === v ? "rgba(34,211,238,0.3)" : "rgba(255,255,255,0.06)"), background: _ttsVoice === v ? "rgba(34,211,238,0.1)" : "transparent", color: _ttsVoice === v ? "#22d3ee" : "#6b7a8d", fontFamily: "'IBM Plex Mono'", fontSize: 12, cursor: "pointer" }}>{v}</button>
-                ))}
-              </div>
-              <div style={{ fontSize: 10, color: "#3a4a5c" }}>nova = أنثى طبيعية | onyx = ذكر واثق | shimmer = أنثى دافئة | echo = ذكر هادئ</div>
+              {_openaiKey && <div>
+                <div style={{ fontSize: 12, color: "#5a6a80", marginBottom: 6 }}>الصوت:</div>
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
+                  {["nova", "alloy", "echo", "fable", "onyx", "shimmer"].map(v => (
+                    <button key={v} onClick={async () => { _ttsVoice = v; try { await window.storage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (_ttsVoice === v ? "rgba(34,211,238,0.3)" : "rgba(255,255,255,0.06)"), background: _ttsVoice === v ? "rgba(34,211,238,0.1)" : "transparent", color: _ttsVoice === v ? "#22d3ee" : "#6b7a8d", fontFamily: "'IBM Plex Mono'", fontSize: 12, cursor: "pointer" }}>{v}</button>
+                  ))}
+                </div>
+                <div style={{ fontSize: 10, color: "#3a4a5c" }}>nova = أنثى طبيعية | onyx = ذكر واثق | shimmer = أنثى دافئة | echo = ذكر هادئ</div>
+              </div>}
+              {!_openaiKey && <div style={{ fontSize: 11, color: "#34d399", background: "rgba(52,211,153,0.06)", borderRadius: 8, padding: 10 }}>💡 نصيحة: افتح التطبيق في متصفح Edge للحصول على أفضل صوت مجاني (Microsoft Neural voices)</div>}
             </Card>
             <div style={{ textAlign: "center", marginTop: 14 }}>
               <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(239,68,68,0.1)", background: "transparent", color: "#ef4444", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة تعيين</button>
