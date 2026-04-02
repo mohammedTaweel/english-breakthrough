@@ -245,15 +245,53 @@ const LEVEL_IDX = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4, C2: 5 };
 const TYPE_LABELS = { grammar: "قواعد", vocab: "مفردات", reading: "فهم القراءة", pragmatics: "تواصل" };
 const TYPE_ICONS = { grammar: "📐", vocab: "📚", reading: "📖", pragmatics: "🗣️" };
 
-// ===== SPEECH UTILITY =====
-function speak(text, rate = 0.85) {
-  if (!window.speechSynthesis) return;
+// ===== SPEECH ENGINE — OpenAI TTS + SpeechSynthesis fallback =====
+// Audio cache: avoids re-generating same sentence
+const _audioCache = {};
+let _openaiKey = null;
+let _ttsVoice = "nova"; // OpenAI voices: alloy, echo, fable, onyx, nova, shimmer
+
+// Load API key from storage on init
+(async () => {
+  try {
+    const r = await window.storage.get("openai-tts-key");
+    if (r && r.value) _openaiKey = r.value;
+    const v = await window.storage.get("openai-tts-voice");
+    if (v && v.value) _ttsVoice = v.value;
+  } catch (e) {}
+})();
+
+async function speakOpenAI(text, speed = 1.0) {
+  if (!_openaiKey) return null;
+  const cacheKey = text + "|" + _ttsVoice + "|" + speed;
+  if (_audioCache[cacheKey]) {
+    const audio = new Audio(_audioCache[cacheKey]);
+    audio.play();
+    return audio;
+  }
+  try {
+    const res = await fetch("https://api.openai.com/v1/audio/speech", {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + _openaiKey, "Content-Type": "application/json" },
+      body: JSON.stringify({ model: "tts-1", input: text, voice: _ttsVoice, speed }),
+    });
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    _audioCache[cacheKey] = url;
+    const audio = new Audio(url);
+    audio.play();
+    return audio;
+  } catch (e) { return null; }
+}
+
+function speakBrowser(text, rate = 0.85) {
+  if (!window.speechSynthesis) return null;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "en-US";
   u.rate = rate;
   u.pitch = 1;
-  // Try to find a good English voice
   const voices = window.speechSynthesis.getVoices();
   const enVoice = voices.find(v => v.lang.startsWith("en") && v.name.includes("Google")) || voices.find(v => v.lang.startsWith("en-US")) || voices.find(v => v.lang.startsWith("en"));
   if (enVoice) u.voice = enVoice;
@@ -261,17 +299,48 @@ function speak(text, rate = 0.85) {
   return u;
 }
 
+// Unified speak function — tries OpenAI first, falls back to browser
+function speak(text, rate = 0.85) {
+  if (_openaiKey) {
+    const speed = rate < 0.7 ? 0.8 : rate < 0.9 ? 0.95 : 1.0;
+    const audioPromise = speakOpenAI(text, speed);
+    // Return a fake utterance-like object for onend compatibility
+    const fakeU = { onend: null };
+    audioPromise.then(audio => {
+      if (audio) { audio.onended = () => { if (fakeU.onend) fakeU.onend(); }; }
+      else {
+        // Fallback to browser TTS if OpenAI fails
+        const u = speakBrowser(text, rate);
+        if (u) u.onend = () => { if (fakeU.onend) fakeU.onend(); };
+        else if (fakeU.onend) fakeU.onend();
+      }
+    });
+    return fakeU;
+  }
+  return speakBrowser(text, rate);
+}
+
 function SpeakBtn({ text, rate, size, color }) {
   const [playing, setPlaying] = useState(false);
   function play() {
     setPlaying(true);
     const u = speak(text, rate || 0.85);
-    if (u) u.onend = () => setPlaying(false);
-    else setPlaying(false);
+    if (u) {
+      u.onend = () => setPlaying(false);
+      // Safety timeout for OpenAI (in case onend doesn't fire)
+      setTimeout(() => setPlaying(false), 15000);
+    } else setPlaying(false);
   }
   return (
     <button onClick={(e) => { e.stopPropagation(); play(); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: size || 16, padding: 2, opacity: playing ? 1 : 0.5, color: color || "#22d3ee", transition: ".2s", flexShrink: 0 }} title="استمع">{playing ? "🔊" : "🔈"}</button>
   );
+}
+
+// Voice quality indicator
+function VoiceBadge() {
+  return _openaiKey
+    ? <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: "rgba(52,211,153,0.15)", color: "#34d399", fontWeight: 600 }}>صوت بشري</span>
+    : <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: "rgba(245,158,11,0.15)", color: "#f59e0b", fontWeight: 600 }}>صوت آلي</span>;
 }
 
 // ===== LISTENING COMPREHENSION =====
@@ -2270,6 +2339,38 @@ export default function App() {
                 return <div style={{ textAlign: "center", marginTop: 8, fontSize: 13, fontWeight: 700, color: diff >= 0 ? "#34d399" : "#ef4444" }}>{diff >= 0 ? "📈 +" + diff + "%" : "📉 " + diff + "%"} مقارنة بالاختبار السابق</div>;
               })()}
             </Card>}
+            {/* Voice Settings */}
+            <Card>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#22d3ee", marginBottom: 10 }}>🔊 إعدادات الصوت</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+                <div style={{ fontSize: 13, color: "#8892a4" }}>الحالة:</div>
+                <VoiceBadge />
+              </div>
+              <div style={{ fontSize: 12, color: "#5a6a80", lineHeight: 2, marginBottom: 12 }}>
+                للحصول على صوت بشري طبيعي، أدخل مفتاح OpenAI API. بدونه يستخدم الصوت الآلي للمتصفح.
+                <br />التكلفة: أقل من سنت واحد لكل جلسة يومية.
+              </div>
+              <div style={{ marginBottom: 10 }}>
+                <input
+                  type="password"
+                  placeholder="sk-... أدخل مفتاح OpenAI API"
+                  defaultValue={_openaiKey || ""}
+                  onBlur={async (e) => {
+                    const key = e.target.value.trim();
+                    _openaiKey = key || null;
+                    try { await window.storage.set("openai-tts-key", key); } catch(ex) {}
+                  }}
+                  style={{ width: "100%", padding: 12, borderRadius: 10, fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(34,211,238,0.15)", color: "#e0e7f1", outline: "none" }}
+                />
+              </div>
+              <div style={{ fontSize: 12, color: "#5a6a80", marginBottom: 10 }}>الصوت:</div>
+              <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
+                {["nova", "alloy", "echo", "fable", "onyx", "shimmer"].map(v => (
+                  <button key={v} onClick={async () => { _ttsVoice = v; try { await window.storage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (_ttsVoice === v ? "rgba(34,211,238,0.3)" : "rgba(255,255,255,0.06)"), background: _ttsVoice === v ? "rgba(34,211,238,0.1)" : "transparent", color: _ttsVoice === v ? "#22d3ee" : "#6b7a8d", fontFamily: "'IBM Plex Mono'", fontSize: 12, cursor: "pointer" }}>{v}</button>
+                ))}
+              </div>
+              <div style={{ fontSize: 10, color: "#3a4a5c" }}>nova = أنثى طبيعية | onyx = ذكر واثق | shimmer = أنثى دافئة | echo = ذكر هادئ</div>
+            </Card>
             <div style={{ textAlign: "center", marginTop: 14 }}>
               <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(239,68,68,0.1)", background: "transparent", color: "#ef4444", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة تعيين</button>
             </div>
