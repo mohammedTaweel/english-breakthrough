@@ -109,6 +109,86 @@ const QUIZ_BANK = [
   { q: "كيف تطلب مثال توضيحي؟", opts: ["Can you give me a specific example?", "What?", "I don't get it.", "Say it again."], ans: 0 },
 ];
 
+// ===== CEFR-ALIGNED PLACEMENT TEST =====
+// Adaptive test based on Cambridge/IELTS/EF SET standards
+// Covers: Grammar, Vocabulary, Reading Comprehension, Pragmatics
+// Levels: A1 (Beginner) → C2 (Mastery)
+
+const CEFR_LEVELS = [
+  { code: "A1", name: "مبتدئ", nameEn: "Beginner", color: "#ef4444", desc: "تعرف كلمات وجمل بسيطة جداً. تقدر تعرّف نفسك وتسأل أسئلة أساسية.", tip: "ركّز على حفظ الجمل الأساسية والمفردات اليومية. ابدأ بتمارين الظل مع الجمل القصيرة." },
+  { code: "A2", name: "ما قبل المتوسط", nameEn: "Elementary", color: "#f97316", desc: "تفهم جمل متكررة في مواضيع يومية. تقدر تتواصل في مواقف بسيطة ومباشرة.", tip: "وسّع مفرداتك وركّز على تركيب جمل بسيطة. استخدم تمرين 'تفكير بصوت عالٍ' يومياً." },
+  { code: "B1", name: "متوسط", nameEn: "Intermediate", color: "#f59e0b", desc: "تفهم النقاط الرئيسية في محادثات واضحة. تقدر تتعامل مع أغلب المواقف اليومية.", tip: "ابدأ بمحاكاة الاجتماعات وركّز على ربط الأفكار. تمرّن على الجمل الجاهزة للاجتماعات." },
+  { code: "B2", name: "فوق المتوسط", nameEn: "Upper-Intermediate", color: "#22d3ee", desc: "تفهم أفكار معقدة وتقدر تتفاعل بطلاقة مع متحدثين أصليين بدون جهد كبير.", tip: "ركّز على الدقة في التعبير والمصطلحات المتخصصة. تمرّن على العروض التقديمية والتفاوض." },
+  { code: "C1", name: "متقدم", nameEn: "Advanced", color: "#a78bfa", desc: "تفهم نصوص طويلة ومعقدة وتقدر تعبّر عن نفسك بطلاقة وعفوية في أي موقف مهني.", tip: "ركّز على الفروق الدقيقة في اللغة والتعابير الاصطلاحية. تمرّن على قيادة الاجتماعات." },
+  { code: "C2", name: "إتقان", nameEn: "Mastery", color: "#34d399", desc: "تفهم كل شيء تقريباً وتقدر تعبّر بدقة عالية حتى في المواقف الأكثر تعقيداً.", tip: "حافظ على مستواك بالممارسة المستمرة. ركّز على الأسلوب والبلاغة في التواصل المهني." },
+];
+
+const LEVEL_TEST = [
+  // ===== A1 - GRAMMAR =====
+  { level: 0, type: "grammar", q: "She ___ a teacher.", opts: ["is", "are", "am", "be"], ans: 0 },
+  { level: 0, type: "grammar", q: "I ___ from Saudi Arabia.", opts: ["am", "is", "are", "be"], ans: 0 },
+  { level: 0, type: "grammar", q: "___ you like coffee?", opts: ["Do", "Does", "Is", "Are"], ans: 0 },
+  { level: 0, type: "grammar", q: "There ___ three books on the table.", opts: ["are", "is", "has", "have"], ans: 0 },
+  { level: 0, type: "vocab", q: "The opposite of 'hot' is ___.", opts: ["cold", "warm", "cool", "big"], ans: 0 },
+  { level: 0, type: "vocab", q: "You eat breakfast in the ___.", opts: ["morning", "night", "evening", "afternoon"], ans: 0 },
+
+  // ===== A2 - GRAMMAR & VOCAB =====
+  { level: 1, type: "grammar", q: "She ___ to work every day.", opts: ["goes", "go", "going", "gone"], ans: 0 },
+  { level: 1, type: "grammar", q: "I ___ my homework last night.", opts: ["did", "do", "done", "does"], ans: 0 },
+  { level: 1, type: "grammar", q: "He is ___ than his brother.", opts: ["taller", "more tall", "tallest", "most tall"], ans: 0 },
+  { level: 1, type: "vocab", q: "To 'postpone' a meeting means to ___.", opts: ["delay it", "cancel it", "start it", "end it"], ans: 0 },
+  { level: 1, type: "vocab", q: "A 'colleague' is someone who ___.", opts: ["works with you", "lives near you", "teaches you", "manages you"], ans: 0 },
+  { level: 1, type: "pragmatics", q: "Someone says 'How are you?' — What is the best response?", opts: ["I'm fine, thank you. And you?", "Yes.", "What?", "My name is Ahmed."], ans: 0 },
+
+  // ===== B1 - GRAMMAR, VOCAB, READING =====
+  { level: 2, type: "grammar", q: "If it rains tomorrow, I ___ stay home.", opts: ["will", "would", "am", "had"], ans: 0 },
+  { level: 2, type: "grammar", q: "The report ___ by the team yesterday.", opts: ["was completed", "completed", "is completed", "has completed"], ans: 0 },
+  { level: 2, type: "grammar", q: "She has been working here ___ five years.", opts: ["for", "since", "from", "during"], ans: 0 },
+  { level: 2, type: "grammar", q: "I wish I ___ more time to finish the project.", opts: ["had", "have", "has", "having"], ans: 0 },
+  { level: 2, type: "vocab", q: "'We need to streamline the process' means we need to ___.", opts: ["make it more efficient", "stop it", "restart it", "complicate it"], ans: 0 },
+  { level: 2, type: "vocab", q: "A 'deadline' is ___.", opts: ["the last date to finish something", "a type of meeting", "a company policy", "a work schedule"], ans: 0 },
+  { level: 2, type: "reading", q: "Read: 'The meeting was rescheduled due to unforeseen circumstances. All attendees will be notified of the new date.' — Why was the meeting moved?", opts: ["Unexpected events happened", "No one wanted to attend", "The room was too small", "It was a holiday"], ans: 0 },
+  { level: 2, type: "pragmatics", q: "Your manager asks for your opinion in a meeting. What do you say?", opts: ["From my perspective, I think we should consider...", "I don't know.", "Whatever you decide.", "Ask someone else."], ans: 0 },
+
+  // ===== B2 - GRAMMAR, VOCAB, READING, PRAGMATICS =====
+  { level: 3, type: "grammar", q: "Had I known about the issue earlier, I ___ it differently.", opts: ["would have handled", "will handle", "handle", "am handling"], ans: 0 },
+  { level: 3, type: "grammar", q: "The project, ___ was started last year, is almost complete.", opts: ["which", "what", "who", "where"], ans: 0 },
+  { level: 3, type: "grammar", q: "Not only ___ the presentation well, but he also answered every question.", opts: ["did he deliver", "he delivered", "he did deliver", "delivered he"], ans: 0 },
+  { level: 3, type: "grammar", q: "By the time the client arrives, we ___ the proposal.", opts: ["will have finished", "finished", "are finishing", "finish"], ans: 0 },
+  { level: 3, type: "vocab", q: "'The CEO alluded to potential layoffs during the earnings call.' — 'Alluded to' means ___.", opts: ["indirectly mentioned", "directly announced", "denied", "celebrated"], ans: 0 },
+  { level: 3, type: "vocab", q: "'We need to mitigate the risks associated with this investment.' — 'Mitigate' means ___.", opts: ["reduce or lessen", "increase", "ignore", "calculate"], ans: 0 },
+  { level: 3, type: "reading", q: "Read: 'While the quarterly results exceeded expectations, the board remains cautious about Q4 projections given the volatile market conditions and rising inflation rates.' — What is the board's attitude?", opts: ["Careful despite good results", "Very optimistic", "Completely negative", "Indifferent"], ans: 0 },
+  { level: 3, type: "reading", q: "Read: 'The merger, though initially met with skepticism from stakeholders, has proven to be a strategic masterstroke that significantly enhanced market share.' — The merger was ___.", opts: ["Doubted at first but successful", "Always popular", "A complete failure", "Never completed"], ans: 0 },
+  { level: 3, type: "pragmatics", q: "A colleague presents an idea you disagree with. What is the most professional response?", opts: ["I see your point, but have we considered the potential risks?", "That's completely wrong.", "Sure, whatever.", "I disagree. Next topic."], ans: 0 },
+  { level: 3, type: "pragmatics", q: "You need to deliver bad news to your team about a delayed project. How do you start?", opts: ["I want to be transparent with you about a challenge we're facing.", "This is all your fault.", "Bad news, everyone.", "I don't want to talk about it."], ans: 0 },
+
+  // ===== C1 - GRAMMAR, VOCAB, READING, PRAGMATICS =====
+  { level: 4, type: "grammar", q: "Seldom ___ such a comprehensive analysis of market trends.", opts: ["have I seen", "I have seen", "I saw", "did I saw"], ans: 0 },
+  { level: 4, type: "grammar", q: "___ the circumstances, I believe we should proceed with caution.", opts: ["Given", "Giving", "Gave", "Being given"], ans: 0 },
+  { level: 4, type: "grammar", q: "The report is believed ___ several inaccuracies.", opts: ["to contain", "containing", "to containing", "that contains"], ans: 0 },
+  { level: 4, type: "grammar", q: "Were the board ___ the full extent of the losses, they would have acted sooner.", opts: ["to realize", "realizing", "realized", "realizes"], ans: 0 },
+  { level: 4, type: "vocab", q: "'The new policy has far-reaching ramifications for the industry.' — 'Ramifications' means ___.", opts: ["complex consequences", "simple benefits", "minor changes", "no effects"], ans: 0 },
+  { level: 4, type: "vocab", q: "'Her cogent argument persuaded the entire board.' — 'Cogent' means ___.", opts: ["clear and convincing", "long and boring", "emotional and dramatic", "confusing"], ans: 0 },
+  { level: 4, type: "vocab", q: "'The company's fiscal prudence during the downturn proved prescient.' — 'Prescient' means ___.", opts: ["showing foresight about the future", "showing ignorance", "being wasteful", "being careless"], ans: 0 },
+  { level: 4, type: "reading", q: "Read: 'The ostensible rationale for the restructuring was cost reduction; however, insiders suggest it was primarily aimed at consolidating the CEO's authority over previously autonomous divisions.' — The real reason for restructuring was likely ___.", opts: ["To give the CEO more control", "To save money", "To hire more people", "To expand divisions"], ans: 0 },
+  { level: 4, type: "reading", q: "Read: 'Notwithstanding the apparent consensus, several board members harbored reservations that, while unexpressed publicly, influenced subsequent voting patterns.' — What happened?", opts: ["Some members secretly disagreed despite appearing to agree", "Everyone fully agreed", "The vote was cancelled", "Members expressed their concerns openly"], ans: 0 },
+  { level: 4, type: "pragmatics", q: "You need to push back on an unrealistic deadline from a senior executive. What do you say?", opts: ["I appreciate the urgency. To ensure quality, could we explore a phased delivery approach?", "That's impossible and you know it.", "Fine, but don't blame me if it fails.", "I'll try my best."], ans: 0 },
+
+  // ===== C2 - GRAMMAR, VOCAB, READING, PRAGMATICS =====
+  { level: 5, type: "grammar", q: "Little ___ that the decision would have such profound implications.", opts: ["did they realize", "they realized", "they did realize", "realized they"], ans: 0 },
+  { level: 5, type: "grammar", q: "So pervasive ___ that virtually no sector of the economy remained unaffected.", opts: ["was the impact", "the impact was", "the impact", "were the impact"], ans: 0 },
+  { level: 5, type: "grammar", q: "___ it not for the intervention of the regulatory body, the merger would have proceeded unchallenged.", opts: ["Were", "Was", "Had", "If"], ans: 0 },
+  { level: 5, type: "vocab", q: "'The interlocutor's obfuscation of the salient points rendered the negotiation futile.' — This sentence means the speaker ___.", opts: ["deliberately made key points unclear, making talks useless", "clearly explained everything", "successfully negotiated", "ended the meeting early"], ans: 0 },
+  { level: 5, type: "vocab", q: "'Her perspicacious analysis of the geopolitical landscape proved invaluable.' — 'Perspicacious' means ___.", opts: ["showing keen mental perception and understanding", "superficial and brief", "emotional and biased", "lengthy and detailed"], ans: 0 },
+  { level: 5, type: "reading", q: "Read: 'The paradox inherent in the company's strategy—pursuing aggressive expansion while simultaneously advocating for fiscal austerity—was not lost on analysts, who questioned whether such cognitive dissonance could yield sustainable growth.' — The analysts think the strategy is ___.", opts: ["Contradictory and potentially unsustainable", "Brilliant and innovative", "Simple and clear", "Risky but likely to succeed"], ans: 0 },
+  { level: 5, type: "reading", q: "Read: 'The CEO's resignation, ostensibly precipitated by health concerns, coincided suspiciously with the emergence of an accounting scandal, leading commentators to infer a causal nexus between the two events.' — Commentators believe ___.", opts: ["The resignation was actually caused by the scandal, not health", "Health was the real reason", "There was no scandal", "The CEO was forced out by the board"], ans: 0 },
+  { level: 5, type: "pragmatics", q: "You discover a critical flaw in a strategy that your CEO personally championed in front of the board. How do you address it?", opts: ["I've been reviewing the implementation details and identified an area where we might want to stress-test our assumptions before proceeding further.", "Your strategy is flawed.", "I think there's a problem but it's probably fine.", "I'll just fix it quietly and not say anything."], ans: 0 },
+];
+
+const LEVEL_IDX = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4, C2: 5 };
+const TYPE_LABELS = { grammar: "قواعد", vocab: "مفردات", reading: "فهم القراءة", pragmatics: "تواصل مهني" };
+const TYPE_ICONS = { grammar: "📐", vocab: "📚", reading: "📖", pragmatics: "🗣️" };
+
 const DK = "eng-v10";
 const gtd = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
 const gdn = () => { const d = new Date(); return d.getDate() + d.getMonth() * 31 + d.getFullYear(); };
@@ -581,6 +661,342 @@ function SentenceBuild() {
   );
 }
 
+function LevelTest({ onComplete }) {
+  const [phase, setPhase] = useState("intro"); // intro, testing, result
+  const [qi, setQi] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [currentLevel, setCurrentLevel] = useState(2); // Start at B1
+  const [history, setHistory] = useState([]); // {level, correct}
+  const [questions, setQuestions] = useState([]);
+  const [startTime, setStartTime] = useState(null);
+  const [levelScores, setLevelScores] = useState({0:0,1:0,2:0,3:0,4:0,5:0});
+  const [levelAttempts, setLevelAttempts] = useState({0:0,1:0,2:0,3:0,4:0,5:0});
+  const [consecutiveCorrect, setConsecutiveCorrect] = useState(0);
+  const [consecutiveWrong, setConsecutiveWrong] = useState(0);
+  const [finalLevel, setFinalLevel] = useState(null);
+  const [skillBreakdown, setSkillBreakdown] = useState(null);
+
+  const TOTAL_QUESTIONS = 25;
+
+  function startTest() {
+    // Build adaptive question pool - pick from current level
+    const seed = Date.now();
+    const pool = [];
+    for (let lvl = 0; lvl < 6; lvl++) {
+      const lvlQs = LEVEL_TEST.filter(q => q.level === lvl);
+      pool.push(shuffle(lvlQs, seed + lvl));
+    }
+    setQuestions(pool);
+    setPhase("testing");
+    setStartTime(Date.now());
+  }
+
+  function getNextQuestion() {
+    if (!questions.length) return null;
+    const lvlPool = questions[currentLevel];
+    // Find next unanswered question at this level
+    const answered = history.filter(h => h.level === currentLevel).length;
+    if (answered < lvlPool.length) return { ...lvlPool[answered], _level: currentLevel };
+    // If exhausted at this level, try adjacent
+    for (let d = 1; d <= 5; d++) {
+      for (const dir of [1, -1]) {
+        const tryLvl = currentLevel + d * dir;
+        if (tryLvl >= 0 && tryLvl <= 5) {
+          const pool2 = questions[tryLvl];
+          const ans2 = history.filter(h => h.level === tryLvl).length;
+          if (ans2 < pool2.length) return { ...pool2[ans2], _level: tryLvl };
+        }
+      }
+    }
+    return null;
+  }
+
+  function pick(oi) {
+    if (picked !== null) return;
+    const currentQ = getNextQuestion();
+    if (!currentQ) return;
+    const { correctIndex } = shuffleOpts(currentQ.opts, currentQ.ans, qi * 31 + 97 + currentQ._level * 7);
+    const isCorrect = oi === correctIndex;
+    setPicked(oi);
+
+    const newHistory = [...history, { level: currentQ._level, correct: isCorrect, type: currentQ.type }];
+    setHistory(newHistory);
+
+    const newScores = { ...levelScores };
+    const newAttempts = { ...levelAttempts };
+    if (isCorrect) newScores[currentQ._level]++;
+    newAttempts[currentQ._level]++;
+    setLevelScores(newScores);
+    setLevelAttempts(newAttempts);
+
+    // Adaptive logic
+    let newConsCorrect = isCorrect ? consecutiveCorrect + 1 : 0;
+    let newConsWrong = isCorrect ? 0 : consecutiveWrong + 1;
+    setConsecutiveCorrect(newConsCorrect);
+    setConsecutiveWrong(newConsWrong);
+
+    let newLevel = currentLevel;
+    if (newConsCorrect >= 2 && currentLevel < 5) {
+      newLevel = currentLevel + 1;
+      newConsCorrect = 0;
+      setConsecutiveCorrect(0);
+    } else if (newConsWrong >= 2 && currentLevel > 0) {
+      newLevel = currentLevel - 1;
+      newConsWrong = 0;
+      setConsecutiveWrong(0);
+    }
+    setCurrentLevel(newLevel);
+  }
+
+  function next() {
+    if (qi + 1 >= TOTAL_QUESTIONS) {
+      finishTest();
+      return;
+    }
+    setQi(qi + 1);
+    setPicked(null);
+  }
+
+  function finishTest() {
+    // Calculate final level using weighted scoring
+    // Higher levels worth more, need to sustain performance
+    let weightedScore = 0;
+    let maxPossible = 0;
+    const skills = { grammar: { correct: 0, total: 0 }, vocab: { correct: 0, total: 0 }, reading: { correct: 0, total: 0 }, pragmatics: { correct: 0, total: 0 } };
+
+    history.forEach(h => {
+      const weight = h.level + 1; // A1=1, C2=6
+      if (h.correct) weightedScore += weight;
+      maxPossible += weight;
+      if (skills[h.type]) {
+        skills[h.type].total++;
+        if (h.correct) skills[h.type].correct++;
+      }
+    });
+
+    // Determine level: find highest level where accuracy >= 60%
+    let detectedLevel = 0;
+    for (let lvl = 5; lvl >= 0; lvl--) {
+      if (levelAttempts[lvl] >= 2) {
+        const acc = levelScores[lvl] / levelAttempts[lvl];
+        if (acc >= 0.6) {
+          detectedLevel = lvl;
+          break;
+        }
+      }
+    }
+
+    // Also consider weighted score as secondary signal
+    const weightedPct = maxPossible > 0 ? weightedScore / maxPossible : 0;
+    const weightedLevel = Math.min(5, Math.floor(weightedPct * 6));
+
+    // Final level: average of both signals, biased toward sustained performance
+    const computed = Math.round(detectedLevel * 0.7 + weightedLevel * 0.3);
+
+    setFinalLevel(computed);
+    setSkillBreakdown(skills);
+    setPhase("result");
+
+    // Save result
+    const result = {
+      date: gtd(),
+      level: computed,
+      levelCode: CEFR_LEVELS[computed].code,
+      weightedPct: Math.round(weightedPct * 100),
+      skills,
+      duration: Math.round((Date.now() - startTime) / 1000),
+      levelScores: { ...levelScores },
+      levelAttempts: { ...levelAttempts },
+    };
+    (async () => {
+      try {
+        const r = await window.storage.get("level-test-results");
+        const results = r && r.value ? JSON.parse(r.value) : [];
+        results.push(result);
+        await window.storage.set("level-test-results", JSON.stringify(results));
+        if (onComplete) onComplete(result);
+      } catch (e) {}
+    })();
+  }
+
+  // INTRO SCREEN
+  if (phase === "intro") return (
+    <div style={{ animation: "fadeUp .4s", textAlign: "center" }}>
+      <div style={{ fontSize: 48, marginBottom: 16 }}>🎯</div>
+      <div style={{ fontSize: 20, fontWeight: 800, background: "linear-gradient(135deg,#22d3ee,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: 12 }}>اختبار تحديد المستوى</div>
+      <div style={{ fontSize: 13, color: "#8892a4", lineHeight: 2, marginBottom: 20 }}>
+        اختبار تكيّفي يقيس مستواك الحقيقي بدقة
+        <br />يغطي: القواعد، المفردات، فهم القراءة، التواصل المهني
+        <br />معتمد على معايير CEFR العالمية (A1 → C2)
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 20, textAlign: "right" }}>
+        {[
+          { icon: "📐", label: "قواعد اللغة", desc: "تركيب الجمل والأزمنة" },
+          { icon: "📚", label: "المفردات", desc: "معاني الكلمات واستخدامها" },
+          { icon: "📖", label: "فهم القراءة", desc: "فهم النصوص والسياق" },
+          { icon: "🗣️", label: "التواصل المهني", desc: "الرد المناسب في الاجتماعات" },
+        ].map((s, i) => (
+          <div key={i} style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 10, padding: 12 }}>
+            <div style={{ fontSize: 20, marginBottom: 4 }}>{s.icon}</div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: "#e0e7f1" }}>{s.label}</div>
+            <div style={{ fontSize: 10, color: "#5a6a80" }}>{s.desc}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{ background: "rgba(167,139,250,0.06)", border: "1px solid rgba(167,139,250,0.12)", borderRadius: 10, padding: 12, marginBottom: 20 }}>
+        <div style={{ fontSize: 12, color: "#a78bfa", fontWeight: 600 }}>⏱️ {TOTAL_QUESTIONS} سؤال — حوالي ١٠ دقائق</div>
+        <div style={{ fontSize: 11, color: "#5a6a80", marginTop: 4 }}>الأسئلة تتكيّف مع مستواك — تزداد صعوبة إذا أجبت صح</div>
+      </div>
+      <button onClick={startTest} style={{ padding: "12px 36px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#22d3ee,#a78bfa)", color: "#060a14", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ الاختبار 🚀</button>
+    </div>
+  );
+
+  // RESULT SCREEN
+  if (phase === "result" && finalLevel !== null) {
+    const lvl = CEFR_LEVELS[finalLevel];
+    const totalCorrect = history.filter(h => h.correct).length;
+    return (
+      <div style={{ animation: "fadeUp .4s" }}>
+        <div style={{ textAlign: "center", marginBottom: 20 }}>
+          <div style={{ fontSize: 48, marginBottom: 8 }}>🏆</div>
+          <div style={{ fontSize: 13, color: "#5a6a80", marginBottom: 8 }}>مستواك في اللغة الإنجليزية</div>
+          <div style={{ display: "inline-block", padding: "12px 32px", borderRadius: 16, background: lvl.color + "18", border: "2px solid " + lvl.color + "40" }}>
+            <div style={{ fontSize: 36, fontWeight: 800, color: lvl.color, fontFamily: "'IBM Plex Mono'" }}>{lvl.code}</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: "#e0e7f1" }}>{lvl.name}</div>
+            <div style={{ fontSize: 12, color: "#8892a4" }}>{lvl.nameEn}</div>
+          </div>
+        </div>
+
+        <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+          <div style={{ fontSize: 13, color: "#e0e7f1", lineHeight: 2 }}>{lvl.desc}</div>
+        </div>
+
+        <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "#22d3ee", marginBottom: 10 }}>💡 نصيحة لك</div>
+          <div style={{ fontSize: 13, color: "#8892a4", lineHeight: 2 }}>{lvl.tip}</div>
+        </div>
+
+        {/* Skill breakdown */}
+        <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "#a78bfa", marginBottom: 12 }}>📊 تحليل المهارات</div>
+          {skillBreakdown && Object.keys(skillBreakdown).map(skill => {
+            const s = skillBreakdown[skill];
+            if (s.total === 0) return null;
+            const pct = Math.round((s.correct / s.total) * 100);
+            const barColor = pct >= 80 ? "#34d399" : pct >= 50 ? "#f59e0b" : "#ef4444";
+            return (
+              <div key={skill} style={{ marginBottom: 10 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                  <div style={{ fontSize: 12, color: "#e0e7f1" }}>{TYPE_ICONS[skill]} {TYPE_LABELS[skill]}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: barColor, fontFamily: "'IBM Plex Mono'" }}>{pct}%</div>
+                </div>
+                <div style={{ height: 6, borderRadius: 3, background: "#111827", overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: pct + "%", borderRadius: 3, background: barColor, transition: "width .5s" }} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Level breakdown */}
+        <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "#f59e0b", marginBottom: 12 }}>📈 الأداء حسب المستوى</div>
+          <div style={{ display: "flex", gap: 6, alignItems: "flex-end" }}>
+            {CEFR_LEVELS.map((l, i) => {
+              const att = levelAttempts[i];
+              const sc = levelScores[i];
+              const pct = att > 0 ? Math.round((sc / att) * 100) : 0;
+              const isFinal = i === finalLevel;
+              return (
+                <div key={i} style={{ flex: 1, textAlign: "center" }}>
+                  <div style={{ fontSize: 9, fontWeight: 700, color: att > 0 ? (pct >= 60 ? "#34d399" : "#ef4444") : "#3a4a5c", marginBottom: 4 }}>{att > 0 ? pct + "%" : "—"}</div>
+                  <div style={{ height: Math.max(att > 0 ? pct * 0.6 : 4, 4), borderRadius: 4, background: att > 0 ? l.color : "#1a2236", border: isFinal ? "2px solid #fff" : "none", transition: "height .3s" }} />
+                  <div style={{ fontSize: 10, fontWeight: isFinal ? 800 : 600, color: isFinal ? "#fff" : "#5a6a80", marginTop: 4 }}>{l.code}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div style={{ display: "flex", gap: 6, marginBottom: 8 }}>
+          <div style={{ flex: 1, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 10, padding: 12, textAlign: "center" }}>
+            <div style={{ fontSize: 20, fontWeight: 800, color: "#22d3ee", fontFamily: "'IBM Plex Mono'" }}>{totalCorrect}/{history.length}</div>
+            <div style={{ fontSize: 10, color: "#5a6a80" }}>إجابات صحيحة</div>
+          </div>
+          <div style={{ flex: 1, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 10, padding: 12, textAlign: "center" }}>
+            <div style={{ fontSize: 20, fontWeight: 800, color: "#a78bfa", fontFamily: "'IBM Plex Mono'" }}>{Math.round((Date.now() - startTime) / 1000)}s</div>
+            <div style={{ fontSize: 10, color: "#5a6a80" }}>الوقت</div>
+          </div>
+        </div>
+
+        <div style={{ textAlign: "center", marginTop: 16 }}>
+          <button onClick={() => { setPhase("intro"); setQi(0); setPicked(null); setCurrentLevel(2); setHistory([]); setQuestions([]); setLevelScores({0:0,1:0,2:0,3:0,4:0,5:0}); setLevelAttempts({0:0,1:0,2:0,3:0,4:0,5:0}); setConsecutiveCorrect(0); setConsecutiveWrong(0); setFinalLevel(null); setSkillBreakdown(null); }} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#22d3ee,#a78bfa)", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد الاختبار</button>
+        </div>
+      </div>
+    );
+  }
+
+  // TESTING SCREEN
+  const currentQ = getNextQuestion();
+  if (!currentQ) { finishTest(); return null; }
+  const { opts: qOpts, correctIndex: qAns } = shuffleOpts(currentQ.opts, currentQ.ans, qi * 31 + 97 + currentQ._level * 7);
+  const displayQ = { ...currentQ, opts: qOpts, ans: qAns };
+  const levelInfo = CEFR_LEVELS[currentQ._level];
+  const progress = Math.round(((qi + 1) / TOTAL_QUESTIONS) * 100);
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      {/* Progress bar */}
+      <div style={{ marginBottom: 14 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+          <div style={{ fontSize: 12, color: "#5a6a80" }}>{"سؤال " + (qi + 1) + "/" + TOTAL_QUESTIONS}</div>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <div style={{ fontSize: 10, padding: "2px 8px", borderRadius: 6, background: levelInfo.color + "18", color: levelInfo.color, fontWeight: 700 }}>{levelInfo.code}</div>
+            <div style={{ fontSize: 10, color: "#5a6a80" }}>{TYPE_ICONS[currentQ.type]} {TYPE_LABELS[currentQ.type]}</div>
+          </div>
+        </div>
+        <div style={{ height: 4, borderRadius: 2, background: "#111827", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: progress + "%", borderRadius: 2, background: "linear-gradient(90deg,#22d3ee,#a78bfa)", transition: "width .3s" }} />
+        </div>
+      </div>
+
+      {/* Question */}
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: 16, marginBottom: 14 }}>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.9, color: "#e0e7f1" }}>{displayQ.q}</div>
+      </div>
+
+      {/* Options */}
+      {displayQ.opts.map((o, oi) => {
+        const show = picked !== null;
+        const isCorrect = oi === displayQ.ans;
+        const isPicked = picked === oi;
+        let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
+        if (show && isCorrect) { bg = "rgba(52,211,153,0.12)"; brd = "rgba(52,211,153,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(239,68,68,0.12)"; brd = "rgba(239,68,68,0.3)"; }
+        return (
+          <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 6, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1, transition: ".2s" }}>
+            {o}
+            {show && isCorrect && <span style={{ color: "#34d399", fontSize: 11 }}> ✓</span>}
+            {show && isPicked && !isCorrect && <span style={{ color: "#ef4444", fontSize: 11 }}> ✗</span>}
+          </div>
+        );
+      })}
+
+      {/* Explanation after answer */}
+      {picked !== null && (
+        <div style={{ textAlign: "center", marginTop: 12 }}>
+          <div style={{ fontSize: 12, color: picked === displayQ.ans ? "#34d399" : "#ef4444", marginBottom: 8, fontWeight: 600 }}>
+            {picked === displayQ.ans ? "✓ إجابة صحيحة!" : "✗ إجابة خاطئة"}
+          </div>
+          <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#22d3ee,#a78bfa)", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+            {qi + 1 >= TOTAL_QUESTIONS ? "🏁 عرض النتيجة" : "التالي ←"}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function App() {
   const [store, setStore] = useState({ start: null, days: {} });
   const [tab, setTab] = useState("today");
@@ -594,12 +1010,14 @@ export default function App() {
   const [reps, setReps] = useState({});
   const [trainMode, setTrainMode] = useState(null);
   const [quizResults, setQuizResults] = useState(null);
+  const [levelResult, setLevelResult] = useState(null);
   const tmRef = useRef(null);
 
   useEffect(() => {
     (async () => {
       try { const r = await window.storage.get(DK); if (r && r.value) setStore(JSON.parse(r.value)); } catch (e) {}
       try { const r = await window.storage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await window.storage.get("level-test-results"); if (r && r.value) { const arr = JSON.parse(r.value); if (arr.length > 0) setLevelResult(arr[arr.length - 1]); } } catch (e) {}
       setLoading(false);
     })();
   }, []);
@@ -723,6 +1141,7 @@ export default function App() {
                   { id: "quiz", icon: "📊", title: "اختبار أسبوعي", desc: "١٠ أسئلة تقيس تقدمك في حفظ الجمل واستخدامها", color: "#a78bfa" },
                   { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة في الجمل — يختبر حفظك الحقيقي", color: "#06b6d4" },
                   { id: "build", icon: "🧩", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة لتكوين جمل صحيحة — يعالج مشكلة تركيب الجمل", color: "#10b981" },
+                  { id: "level", icon: "🎯", title: "اختبار تحديد المستوى", desc: "اختبار تكيّفي CEFR يقيس مستواك الحقيقي — قواعد ومفردات وقراءة وتواصل مهني", color: "#e879f9" },
                 ].map((m) => (
                   <div key={m.id} onClick={() => setTrainMode(m.id)} style={{ display: "flex", alignItems: "center", gap: 14, padding: 16, borderRadius: 14, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", marginBottom: 10, cursor: "pointer", transition: ".3s" }}>
                     <div style={{ fontSize: 32, flexShrink: 0 }}>{m.icon}</div>
@@ -736,6 +1155,7 @@ export default function App() {
             {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} /></Card>}
             {trainMode === "fill" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FillBlank /></Card>}
             {trainMode === "build" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><SentenceBuild /></Card>}
+            {trainMode === "level" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><LevelTest onComplete={(result) => setLevelResult(result)} /></Card>}
           </div>
         )}
 
@@ -788,6 +1208,29 @@ export default function App() {
                 ))}
               </div>
             </Card>
+            {levelResult && <Card>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#e879f9", marginBottom: 12 }}>🎯 مستوى اللغة (CEFR)</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <div style={{ width: 60, height: 60, borderRadius: 12, background: CEFR_LEVELS[levelResult.level].color + "18", border: "2px solid " + CEFR_LEVELS[levelResult.level].color + "40", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ fontSize: 22, fontWeight: 800, color: CEFR_LEVELS[levelResult.level].color, fontFamily: "'IBM Plex Mono'" }}>{levelResult.levelCode}</div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: "#e0e7f1" }}>{CEFR_LEVELS[levelResult.level].name}</div>
+                  <div style={{ fontSize: 11, color: "#5a6a80" }}>{CEFR_LEVELS[levelResult.level].nameEn} — {levelResult.date}</div>
+                  {levelResult.skills && <div style={{ display: "flex", gap: 6, marginTop: 6, flexWrap: "wrap" }}>
+                    {Object.keys(levelResult.skills).map(sk => {
+                      const s = levelResult.skills[sk];
+                      if (!s || s.total === 0) return null;
+                      const pct = Math.round((s.correct / s.total) * 100);
+                      return <div key={sk} style={{ fontSize: 10, padding: "2px 6px", borderRadius: 4, background: (pct >= 60 ? "rgba(52,211,153,0.1)" : "rgba(239,68,68,0.1)"), color: pct >= 60 ? "#34d399" : "#ef4444" }}>{TYPE_ICONS[sk]} {pct}%</div>;
+                    })}
+                  </div>}
+                </div>
+              </div>
+              <div style={{ textAlign: "center", marginTop: 10 }}>
+                <button onClick={() => { setTab("train"); setTrainMode("level"); }} style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(232,121,249,0.2)", background: "transparent", color: "#e879f9", fontFamily: "inherit", fontSize: 11, cursor: "pointer" }}>🔄 أعد الاختبار</button>
+              </div>
+            </Card>}
             {quizResults && quizResults.length > 0 && <Card>
               <div style={{ fontSize: 13, fontWeight: 700, color: "#a78bfa", marginBottom: 12 }}>📊 نتائج الاختبارات</div>
               <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height: 100, padding: "0 4px" }}>
