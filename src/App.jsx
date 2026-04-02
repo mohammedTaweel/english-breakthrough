@@ -445,6 +445,124 @@ function FillBlank() {
   );
 }
 
+const SENTENCE_BUILD = [
+  "Let me give you a quick update.",
+  "Could you elaborate on that point?",
+  "I agree with the overall direction.",
+  "Let's move forward with this approach.",
+  "I'll take the action item on this.",
+  "Can we come back to that later?",
+  "Let me summarize what we agreed on.",
+  "I'd like to suggest a different approach.",
+  "Who is responsible for the follow-up?",
+  "That's a valid point to consider.",
+  "Sorry I missed that. Could you repeat?",
+  "Let's take this offline and discuss separately.",
+  "I recommend we take a phased approach.",
+  "Based on the data we should move forward.",
+  "I want to make sure we are aligned.",
+];
+
+function SentenceBuild() {
+  const [qi, setQi] = useState(0);
+  const [selected, setSelected] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const qs = useRef(shuffle(SENTENCE_BUILD, gdn()).slice(0, 8));
+
+  function getWords(sentence) {
+    return sentence.replace(/[.,!?]/g, "").split(" ").filter(Boolean);
+  }
+
+  const words = getWords(qs.current[qi]);
+  const shuffledWords = useRef(shuffle(words, qi * 31 + 11));
+
+  useEffect(() => {
+    shuffledWords.current = shuffle(getWords(qs.current[qi]), qi * 31 + 11);
+  }, [qi]);
+
+  function toggleWord(wi) {
+    if (checked) return;
+    if (selected.includes(wi)) {
+      setSelected(selected.filter(i => i !== wi));
+    } else {
+      setSelected([...selected, wi]);
+    }
+  }
+
+  function check() {
+    setChecked(true);
+    const builtSentence = selected.map(i => shuffledWords.current[i]).join(" ").toLowerCase();
+    const correctSentence = words.join(" ").toLowerCase();
+    if (builtSentence === correctSentence) setScore(score + 1);
+  }
+
+  function next() {
+    if (qi + 1 >= qs.current.length) { setDone(true); return; }
+    setQi(qi + 1); setSelected([]); setChecked(false);
+  }
+
+  function restart() {
+    qs.current = shuffle(SENTENCE_BUILD, Date.now());
+    setQi(0); setSelected([]); setChecked(false); setScore(0); setDone(false);
+  }
+
+  if (done) return (
+    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: 40, marginBottom: 12 }}>🧩</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#34d399" : score >= 4 ? "#f59e0b" : "#ef4444", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: 14, color: "#8892a4", marginBottom: 16 }}>{score >= 6 ? "ممتاز! تركيب الجمل صار سهل 🔥" : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#10b981", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+    </div>
+  );
+
+  const builtSentence = selected.map(i => shuffledWords.current[i]).join(" ").toLowerCase();
+  const correctSentence = words.join(" ").toLowerCase();
+  const isCorrect = checked && builtSentence === correctSentence;
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+        <div style={{ fontSize: 12, color: "#5a6a80" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: 12, color: "#10b981", fontWeight: 600 }}>{score + " صحيح"}</div>
+      </div>
+      <div style={{ background: "rgba(16,185,129,0.06)", border: "1px solid rgba(16,185,129,0.12)", borderRadius: 12, padding: 14, marginBottom: 12, minHeight: 50 }}>
+        <div style={{ fontSize: 12, color: "#10b981", fontWeight: 600, marginBottom: 8 }}>🔗 الجملة المُركّبة:</div>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: checked ? (isCorrect ? "#34d399" : "#ef4444") : "#e0e7f1", minHeight: 24 }}>
+          {selected.length > 0 ? selected.map(i => shuffledWords.current[i]).join(" ") : <span style={{ color: "#3a4a5c" }}>اضغط على الكلمات بالترتيب الصحيح...</span>}
+        </div>
+        {checked && !isCorrect && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#34d399", marginTop: 8 }}>{"✓ " + qs.current[qi]}</div>}
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
+        {shuffledWords.current.map((w, wi) => {
+          const isSelected = selected.includes(wi);
+          return (
+            <button key={wi} onClick={() => toggleWord(wi)} style={{
+              padding: "8px 14px", borderRadius: 8,
+              fontFamily: "'IBM Plex Mono'", fontSize: 14,
+              border: "1px solid " + (isSelected ? "rgba(16,185,129,0.4)" : "rgba(255,255,255,0.08)"),
+              background: isSelected ? "rgba(16,185,129,0.15)" : "rgba(255,255,255,0.03)",
+              color: isSelected ? "#34d399" : "#e0e7f1",
+              cursor: checked ? "default" : "pointer",
+              opacity: isSelected ? 0.5 : 1,
+              transition: ".2s"
+            }}>{w}</button>
+          );
+        })}
+      </div>
+      <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
+        {!checked && selected.length > 0 && <button onClick={() => setSelected([])} style={{ padding: "8px 16px", borderRadius: 10, border: "1px solid #1e293b", background: "transparent", color: "#64748b", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>↻ مسح</button>}
+        {!checked ? (
+          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: selected.length > 0 ? "#10b981" : "#1e293b", color: selected.length > 0 ? "#060a14" : "#4a5568", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>✓ تحقق</button>
+        ) : (
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#10b981", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [store, setStore] = useState({ start: null, days: {} });
   const [tab, setTab] = useState("today");
@@ -586,6 +704,7 @@ export default function App() {
                   { id: "quick", icon: "⚡", title: "استجابة سريعة", desc: "مواقف سريعة — اختر الجملة الصح قبل ما ينتهي الوقت", color: "#f59e0b" },
                   { id: "quiz", icon: "📊", title: "اختبار أسبوعي", desc: "١٠ أسئلة تقيس تقدمك في حفظ الجمل واستخدامها", color: "#a78bfa" },
                   { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة في الجمل — يختبر حفظك الحقيقي", color: "#06b6d4" },
+                  { id: "build", icon: "🧩", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة لتكوين جمل صحيحة — يعالج مشكلة تركيب الجمل", color: "#10b981" },
                 ].map((m) => (
                   <div key={m.id} onClick={() => setTrainMode(m.id)} style={{ display: "flex", alignItems: "center", gap: 14, padding: 16, borderRadius: 14, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", marginBottom: 10, cursor: "pointer", transition: ".3s" }}>
                     <div style={{ fontSize: 32, flexShrink: 0 }}>{m.icon}</div>
@@ -598,6 +717,7 @@ export default function App() {
             {trainMode === "quick" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><QuickResp /></Card>}
             {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} /></Card>}
             {trainMode === "fill" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FillBlank /></Card>}
+            {trainMode === "build" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><SentenceBuild /></Card>}
           </div>
         )}
 
