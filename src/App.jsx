@@ -327,6 +327,124 @@ function WeeklyQuiz({ onSave }) {
   );
 }
 
+const FILL_BLANKS = [
+  { full: "Let me give you a quick update on where we stand.", blanks: ["quick", "update"] },
+  { full: "Could you elaborate on that?", blanks: ["elaborate"] },
+  { full: "I'd like to add something here.", blanks: ["add", "something"] },
+  { full: "Let's move forward with this approach.", blanks: ["move", "forward"] },
+  { full: "Sorry, I missed that. Could you repeat?", blanks: ["missed", "repeat"] },
+  { full: "I agree with the direction, but I have a concern.", blanks: ["agree", "concern"] },
+  { full: "Let me summarize what we agreed on.", blanks: ["summarize", "agreed"] },
+  { full: "I'll take the action item on this.", blanks: ["action", "item"] },
+  { full: "That's an interesting point. Let me think about it.", blanks: ["interesting", "think"] },
+  { full: "Can you give me a specific example?", blanks: ["specific", "example"] },
+  { full: "From my experience, this approach works better.", blanks: ["experience", "approach"] },
+  { full: "Let's take this offline and follow up separately.", blanks: ["offline", "separately"] },
+  { full: "I recommend we take a phased approach.", blanks: ["recommend", "phased"] },
+  { full: "Who's responsible for the follow-up on this?", blanks: ["responsible", "follow-up"] },
+  { full: "What if we considered a different approach?", blanks: ["considered", "different"] },
+];
+
+function FillBlank() {
+  const [qi, setQi] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [checked, setChecked] = useState(false);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const qs = useRef(shuffle(FILL_BLANKS, gdn()).slice(0, 8));
+
+  function getSentenceWithBlanks(item) {
+    let sentence = item.full;
+    const parts = [];
+    let remaining = sentence;
+    item.blanks.forEach((blank, bi) => {
+      const idx = remaining.toLowerCase().indexOf(blank.toLowerCase());
+      if (idx >= 0) {
+        parts.push({ type: "text", value: remaining.slice(0, idx) });
+        parts.push({ type: "blank", index: bi, word: blank });
+        remaining = remaining.slice(idx + blank.length);
+      }
+    });
+    if (remaining) parts.push({ type: "text", value: remaining });
+    return parts;
+  }
+
+  function check() {
+    setChecked(true);
+    const item = qs.current[qi];
+    let correct = 0;
+    item.blanks.forEach((blank, bi) => {
+      if ((answers[bi] || "").trim().toLowerCase() === blank.toLowerCase()) correct++;
+    });
+    if (correct === item.blanks.length) setScore(score + 1);
+  }
+
+  function next() {
+    if (qi + 1 >= qs.current.length) { setDone(true); return; }
+    setQi(qi + 1); setAnswers({}); setChecked(false);
+  }
+
+  function restart() { qs.current = shuffle(FILL_BLANKS, Date.now()); setQi(0); setAnswers({}); setChecked(false); setScore(0); setDone(false); }
+
+  if (done) return (
+    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: 40, marginBottom: 12 }}>📝</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#34d399" : score >= 4 ? "#f59e0b" : "#ef4444", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: 14, color: "#8892a4", marginBottom: 16 }}>{score >= 6 ? "ممتاز! ذاكرتك قوية 🔥" : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#06b6d4", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+    </div>
+  );
+
+  const item = qs.current[qi];
+  const parts = getSentenceWithBlanks(item);
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+        <div style={{ fontSize: 12, color: "#5a6a80" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: 12, color: "#06b6d4", fontWeight: 600 }}>{score + " صحيح"}</div>
+      </div>
+      <div style={{ background: "rgba(6,182,212,0.06)", border: "1px solid rgba(6,182,212,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 2.2, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 4 }}>
+          {parts.map((p, pi) => p.type === "text" ? (
+            <span key={pi} style={{ color: "#e0e7f1" }}>{p.value}</span>
+          ) : (
+            <span key={pi} style={{ display: "inline-block" }}>
+              <input
+                type="text"
+                value={answers[p.index] || ""}
+                onChange={(e) => !checked && setAnswers({ ...answers, [p.index]: e.target.value })}
+                style={{
+                  width: Math.max(p.word.length * 11, 60),
+                  padding: "4px 8px", borderRadius: 6, fontSize: 14,
+                  fontFamily: "'IBM Plex Mono'", textAlign: "center",
+                  background: checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(52,211,153,0.15)" : "rgba(239,68,68,0.15)") : "rgba(255,255,255,0.06)",
+                  border: "1px solid " + (checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(52,211,153,0.4)" : "rgba(239,68,68,0.4)") : "rgba(6,182,212,0.3)"),
+                  color: "#fff", outline: "none"
+                }}
+                placeholder="..."
+                disabled={checked}
+              />
+              {checked && (answers[p.index] || "").trim().toLowerCase() !== p.word.toLowerCase() && (
+                <div style={{ fontSize: 11, color: "#34d399", textAlign: "center" }}>{p.word}</div>
+              )}
+            </span>
+          ))}
+        </div>
+      </div>
+      {!checked ? (
+        <div style={{ textAlign: "center" }}>
+          <button onClick={check} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#06b6d4", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>✓ تحقق</button>
+        </div>
+      ) : (
+        <div style={{ textAlign: "center" }}>
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#06b6d4", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function App() {
   const [store, setStore] = useState({ start: null, days: {} });
   const [tab, setTab] = useState("today");
@@ -467,6 +585,7 @@ export default function App() {
                   { id: "sim", icon: "🎭", title: "محاكاة اجتماع", desc: "سيناريو اجتماع كامل — اختر الرد المناسب واقرأه بصوت عالٍ", color: "#22d3ee" },
                   { id: "quick", icon: "⚡", title: "استجابة سريعة", desc: "مواقف سريعة — اختر الجملة الصح قبل ما ينتهي الوقت", color: "#f59e0b" },
                   { id: "quiz", icon: "📊", title: "اختبار أسبوعي", desc: "١٠ أسئلة تقيس تقدمك في حفظ الجمل واستخدامها", color: "#a78bfa" },
+                  { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة في الجمل — يختبر حفظك الحقيقي", color: "#06b6d4" },
                 ].map((m) => (
                   <div key={m.id} onClick={() => setTrainMode(m.id)} style={{ display: "flex", alignItems: "center", gap: 14, padding: 16, borderRadius: 14, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", marginBottom: 10, cursor: "pointer", transition: ".3s" }}>
                     <div style={{ fontSize: 32, flexShrink: 0 }}>{m.icon}</div>
@@ -478,6 +597,7 @@ export default function App() {
             {trainMode === "sim" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><MeetingSim /></Card>}
             {trainMode === "quick" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><QuickResp /></Card>}
             {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} /></Card>}
+            {trainMode === "fill" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FillBlank /></Card>}
           </div>
         )}
 
