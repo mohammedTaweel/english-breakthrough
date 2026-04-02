@@ -245,6 +245,65 @@ const LEVEL_IDX = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4, C2: 5 };
 const TYPE_LABELS = { grammar: "قواعد", vocab: "مفردات", reading: "فهم القراءة", pragmatics: "تواصل" };
 const TYPE_ICONS = { grammar: "📐", vocab: "📚", reading: "📖", pragmatics: "🗣️" };
 
+// ===== SPEECH UTILITY =====
+function speak(text, rate = 0.85) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "en-US";
+  u.rate = rate;
+  u.pitch = 1;
+  // Try to find a good English voice
+  const voices = window.speechSynthesis.getVoices();
+  const enVoice = voices.find(v => v.lang.startsWith("en") && v.name.includes("Google")) || voices.find(v => v.lang.startsWith("en-US")) || voices.find(v => v.lang.startsWith("en"));
+  if (enVoice) u.voice = enVoice;
+  window.speechSynthesis.speak(u);
+  return u;
+}
+
+function SpeakBtn({ text, rate, size, color }) {
+  const [playing, setPlaying] = useState(false);
+  function play() {
+    setPlaying(true);
+    const u = speak(text, rate || 0.85);
+    if (u) u.onend = () => setPlaying(false);
+    else setPlaying(false);
+  }
+  return (
+    <button onClick={(e) => { e.stopPropagation(); play(); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: size || 16, padding: 2, opacity: playing ? 1 : 0.5, color: color || "#22d3ee", transition: ".2s", flexShrink: 0 }} title="استمع">{playing ? "🔊" : "🔈"}</button>
+  );
+}
+
+// ===== LISTENING COMPREHENSION =====
+const LISTEN_ITEMS = [
+  { text: "Excuse me, where is the nearest pharmacy?", q: "ماذا يسأل المتحدث؟", opts: ["يسأل عن أقرب صيدلية", "يسأل عن أقرب مطعم", "يسأل عن الوقت", "يسأل عن الطريق للفندق"], ans: 0 },
+  { text: "I'd like to make an appointment for next Tuesday, please.", q: "ماذا يريد المتحدث؟", opts: ["يبي يحجز موعد يوم الثلاثاء", "يبي يلغي موعد", "يبي يغيّر موعده ليوم الأحد", "يبي يسأل عن المواعيد المتاحة"], ans: 0 },
+  { text: "The flight has been delayed by approximately two hours.", q: "ما هو الخبر؟", opts: ["الرحلة تأخرت ساعتين", "الرحلة ألغيت", "الرحلة تقدمت ساعتين", "البوابة تغيّرت"], ans: 0 },
+  { text: "Could you speak a bit more slowly? I want to make sure I understand.", q: "ماذا يطلب المتحدث؟", opts: ["يطلب إن الشخص يتكلم أبطأ", "يطلب إن الشخص يتكلم أعلى", "يطلب إن الشخص يتوقف عن الكلام", "يطلب إن الشخص يكرر كل شيء"], ans: 0 },
+  { text: "I purchased this item last week and unfortunately it stopped working after two days.", q: "ما هي المشكلة؟", opts: ["اشترى شيء وخرب بعد يومين", "اشترى شيء غالي جداً", "نسي يشتري شيء", "المنتج ما وصل أصلاً"], ans: 0 },
+  { text: "We've been living in this neighborhood for about three years now, and we really enjoy it.", q: "ماذا يقول المتحدث عن الحي؟", opts: ["ساكن فيه ٣ سنوات ومبسوط", "ساكن فيه ٣ أشهر", "يبي ينتقل من الحي", "ما يحب الحي"], ans: 0 },
+  { text: "I'm allergic to peanuts, so could you please check if this dish contains any nuts?", q: "ماذا يخبر الشخص النادل؟", opts: ["عنده حساسية مكسرات ويبي يتأكد من الأكل", "ما يحب طعم المكسرات", "يبي يضيف مكسرات", "يسأل عن أسعار الأطباق"], ans: 0 },
+  { text: "The doctor recommended that I get some rest and drink plenty of water.", q: "ماذا نصح الطبيب؟", opts: ["راحة وشرب ماء كثير", "أخذ دواء قوي", "عملية جراحية", "تحاليل دم فورية"], ans: 0 },
+  { text: "Thank you for your time today. I'll send you a follow-up email with all the details.", q: "ماذا سيفعل المتحدث؟", opts: ["يرسل إيميل متابعة بالتفاصيل", "يتصل بكرة", "يحدد موعد ثاني", "يلغي الاتفاق"], ans: 0 },
+  { text: "I see it differently. From my perspective, I think we should consider the long-term impact.", q: "ما موقف المتحدث؟", opts: ["عنده رأي مختلف ويبي يفكرون بالمدى البعيد", "يوافق تماماً", "ما عنده رأي", "يبي ينهي النقاش"], ans: 0 },
+];
+
+// ===== DICTATION =====
+const DICTATION_ITEMS = [
+  "I would like a table for two, please.",
+  "Could you speak more slowly?",
+  "I have a reservation under my name.",
+  "The flight has been delayed by two hours.",
+  "Thank you for your help. Have a nice day.",
+  "I need to reschedule my appointment.",
+  "Nice to meet you. Where are you from?",
+  "I see it differently from my perspective.",
+  "Is it possible to get a refund?",
+  "How long have you been living here?",
+  "I appreciate your patience with this.",
+  "What do you recommend from the menu?",
+];
+
 const DK = "eng-v10";
 const gtd = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
 const gdn = () => { const d = new Date(); return d.getDate() + d.getMonth() * 31 + d.getFullYear(); };
@@ -259,28 +318,49 @@ function shuffleOpts(opts, correctIndex, seed) {
   return { opts: shuffled.map(i => opts[i]), correctIndex: shuffled.indexOf(correctIndex) };
 }
 
-function Prompter({ lines, gap, color, label }) {
+function Prompter({ lines, gap, color, label, withAudio }) {
   const [on, setOn] = useState(false);
   const [idx, setIdx] = useState(0);
   const [sec, setSec] = useState(0);
+  const [phase, setPhase] = useState("listen"); // "listen" or "repeat"
   const ref = useRef(null);
   const iRef = useRef(0);
 
-  function stop() { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); iRef.current = 0; }
+  function stop() { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); iRef.current = 0; setPhase("listen"); window.speechSynthesis && window.speechSynthesis.cancel(); }
   function start() {
-    stop(); setOn(true); setSec(gap); iRef.current = 0; let c = gap;
+    stop(); setOn(true); iRef.current = 0;
+    // Play audio first, then start countdown for repeating
+    if (withAudio && window.speechSynthesis) {
+      setPhase("listen");
+      const u = speak(lines[0], 0.8);
+      if (u) {
+        u.onend = () => { setPhase("repeat"); setSec(gap); startCountdown(); };
+      } else { setPhase("repeat"); setSec(gap); startCountdown(); }
+    } else { setPhase("repeat"); setSec(gap); startCountdown(); }
+  }
+  function startCountdown() {
+    let c = gap;
     ref.current = setInterval(() => {
       c--;
       if (c <= 0) {
         iRef.current++;
-        if (iRef.current >= lines.length) { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); return; }
+        if (iRef.current >= lines.length) { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); setPhase("listen"); return; }
         setIdx(iRef.current);
+        // Play next line audio
+        if (withAudio && window.speechSynthesis) {
+          setPhase("listen");
+          clearInterval(ref.current);
+          const u2 = speak(lines[iRef.current], 0.8);
+          if (u2) { u2.onend = () => { setPhase("repeat"); c = gap; setSec(gap); startCountdown(); }; }
+          else { setPhase("repeat"); c = gap; setSec(gap); startCountdown(); }
+          return;
+        }
         c = gap;
       }
       setSec(c);
     }, 1000);
   }
-  useEffect(() => () => clearInterval(ref.current), []);
+  useEffect(() => () => { clearInterval(ref.current); window.speechSynthesis && window.speechSynthesis.cancel(); }, []);
 
   return (
     <div>
@@ -290,16 +370,19 @@ function Prompter({ lines, gap, color, label }) {
         ) : (
           <button onClick={stop} style={{ padding: "8px 20px", borderRadius: 10, border: "1px solid #1e293b", background: "transparent", color: "#64748b", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>⏹ إيقاف</button>
         )}
-        {on && sec > 0 && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 22, fontWeight: 700, color: color }}>{sec}</div>}
-        {on && sec > 0 && <div style={{ fontSize: 12, color: "#5a6a80" }}>ردّد بصوت عالٍ!</div>}
+        {on && phase === "listen" && <div style={{ fontSize: 13, color: "#f59e0b", fontWeight: 600 }}>🔊 استمع...</div>}
+        {on && phase === "repeat" && sec > 0 && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 22, fontWeight: 700, color: color }}>{sec}</div>}
+        {on && phase === "repeat" && sec > 0 && <div style={{ fontSize: 12, color: "#5a6a80" }}>ردّد بصوت عالٍ!</div>}
       </div>
       {lines.map((line, i) => {
         const cur = on && i === idx;
         const past = on && i < idx;
         return (
-          <div key={i} style={{ padding: "10px 14px", borderRadius: 10, marginBottom: 4, fontFamily: "'IBM Plex Mono',monospace", fontSize: cur ? 16 : 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, transition: "all .4s", background: cur ? color + "18" : "rgba(255,255,255,0.015)", border: "1px solid " + (cur ? color + "40" : "rgba(255,255,255,0.04)"), color: cur ? "#fff" : past ? "#3a4a5c" : "#94a3b8", fontWeight: cur ? 600 : 400, transform: cur ? "scale(1.01)" : "none" }}>
-            {line}
-            {cur && <span style={{ marginRight: 8, fontSize: 12, color: color }}> ← اقرأ!</span>}
+          <div key={i} style={{ padding: "10px 14px", borderRadius: 10, marginBottom: 4, fontFamily: "'IBM Plex Mono',monospace", fontSize: cur ? 16 : 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, transition: "all .4s", background: cur ? color + "18" : "rgba(255,255,255,0.015)", border: "1px solid " + (cur ? color + "40" : "rgba(255,255,255,0.04)"), color: cur ? "#fff" : past ? "#3a4a5c" : "#94a3b8", fontWeight: cur ? 600 : 400, transform: cur ? "scale(1.01)" : "none", display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{ flex: 1 }}>{line}</div>
+            <SpeakBtn text={line} size={cur ? 18 : 14} color={cur ? color : "#5a6a80"} />
+            {cur && phase === "repeat" && <span style={{ fontSize: 12, color: color, flexShrink: 0 }}>← ردّد!</span>}
+            {cur && phase === "listen" && <span style={{ fontSize: 12, color: "#f59e0b", flexShrink: 0 }}>← استمع</span>}
           </div>
         );
       })}
@@ -336,7 +419,7 @@ function MeetingSim() {
       </div>
       <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
         <div style={{ fontSize: 11, color: "#f59e0b", marginBottom: 4 }}>{"💬 " + s.speaker + ":"}</div>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "#e0e7f1" }}>{s.text}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "#e0e7f1", flex: 1 }}>{s.text}</div><SpeakBtn text={s.text} size={18} /></div>
       </div>
       <div style={{ fontSize: 12, color: "#a78bfa", fontWeight: 600, marginBottom: 8 }}>{"🎯 " + s.prompt + " — اختر الرد الأنسب واقرأه بصوت عالٍ:"}</div>
       {s.opts.map((o, oi) => {
@@ -823,6 +906,153 @@ function FreeRecall() {
   );
 }
 
+// ===== LISTENING COMPREHENSION =====
+function ListenExercise() {
+  const [qi, setQi] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+  const qs = useRef(shuffle(LISTEN_ITEMS, gdn()).slice(0, 8));
+
+  function playQ() { speak(qs.current[qi].text, 0.85); }
+  function pick(oi) {
+    setPicked(oi);
+    const { correctIndex } = shuffleOpts(qs.current[qi].opts, qs.current[qi].ans, qi * 19 + 73);
+    if (oi === correctIndex) setScore(score + 1);
+  }
+  function next() { if (qi + 1 >= qs.current.length) { setDone(true); return; } setQi(qi + 1); setPicked(null); setRevealed(false); }
+  function restart() { qs.current = shuffle(LISTEN_ITEMS, Date.now()); setQi(0); setPicked(null); setScore(0); setDone(false); setRevealed(false); }
+
+  // Auto-play on mount and question change
+  useEffect(() => { if (!done) { const t = setTimeout(() => playQ(), 400); return () => clearTimeout(t); } }, [qi, done]);
+
+  if (done) return (
+    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: 40, marginBottom: 12 }}>👂</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#34d399" : score >= 4 ? "#f59e0b" : "#ef4444", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: 14, color: "#8892a4", marginBottom: 16 }}>{score >= 6 ? "ممتاز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#8b5cf6", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+    </div>
+  );
+
+  const raw = qs.current[qi];
+  const { opts: qOpts, correctIndex: qAns } = shuffleOpts(raw.opts, raw.ans, qi * 19 + 73);
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+        <div style={{ fontSize: 13, color: "#5a6a80" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: 13, color: "#8b5cf6", fontWeight: 600 }}>{score + " صحيح"}</div>
+      </div>
+
+      <div style={{ background: "rgba(139,92,246,0.06)", border: "1px solid rgba(139,92,246,0.12)", borderRadius: 12, padding: 20, marginBottom: 12, textAlign: "center" }}>
+        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#8b5cf6,#6366f1)", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", marginBottom: 10 }}>🔊 استمع للجملة</button>
+        <div style={{ fontSize: 12, color: "#5a6a80" }}>اضغط للاستماع — ثم أجب على السؤال</div>
+        {revealed && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, color: "#8b5cf6", marginTop: 10, direction: "ltr" }}>{raw.text}</div>}
+      </div>
+
+      <div style={{ fontSize: 14, color: "#e0e7f1", marginBottom: 10, fontWeight: 600 }}>{raw.q}</div>
+
+      {qOpts.map((o, oi) => {
+        const show = picked !== null;
+        const isCorrect = oi === qAns;
+        const isPicked = picked === oi;
+        let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
+        if (show && isCorrect) { bg = "rgba(52,211,153,0.1)"; brd = "rgba(52,211,153,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(239,68,68,0.1)"; brd = "rgba(239,68,68,0.3)"; }
+        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 5, cursor: show ? "default" : "pointer", fontSize: 14, lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+          {o}{show && isCorrect && <span style={{ color: "#34d399", fontSize: 11 }}> ✓</span>}
+        </div>;
+      })}
+      {picked !== null && (
+        <div style={{ textAlign: "center", marginTop: 10 }}>
+          {!revealed && <button onClick={() => setRevealed(true)} style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(139,92,246,0.2)", background: "transparent", color: "#8b5cf6", fontFamily: "inherit", fontSize: 12, cursor: "pointer", marginLeft: 8 }}>👁 أظهر النص</button>}
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#8b5cf6", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer", marginRight: 8 }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ===== DICTATION =====
+function DictationExercise() {
+  const [qi, setQi] = useState(0);
+  const [input, setInput] = useState("");
+  const [checked, setChecked] = useState(false);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const qs = useRef(shuffle(DICTATION_ITEMS, gdn()).slice(0, 8));
+
+  function playQ() { speak(qs.current[qi], 0.75); }
+  function check() {
+    setChecked(true);
+    const userWords = input.trim().toLowerCase().replace(/[.,!?]/g, "").split(/\s+/).filter(Boolean);
+    const correctWords = qs.current[qi].toLowerCase().replace(/[.,!?]/g, "").split(/\s+/).filter(Boolean);
+    let match = 0;
+    correctWords.forEach(w => { if (userWords.includes(w)) match++; });
+    if (match / correctWords.length >= 0.7) setScore(score + 1);
+  }
+  function next() { if (qi + 1 >= qs.current.length) { setDone(true); return; } setQi(qi + 1); setInput(""); setChecked(false); }
+  function restart() { qs.current = shuffle(DICTATION_ITEMS, Date.now()); setQi(0); setInput(""); setChecked(false); setScore(0); setDone(false); }
+
+  useEffect(() => { if (!done) { const t = setTimeout(() => playQ(), 400); return () => clearTimeout(t); } }, [qi, done]);
+
+  if (done) return (
+    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: 40, marginBottom: 12 }}>🎧</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#34d399" : score >= 4 ? "#f59e0b" : "#ef4444", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: 14, color: "#8892a4", marginBottom: 16 }}>{score >= 6 ? "ممتاز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#ec4899", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+    </div>
+  );
+
+  const correct = qs.current[qi];
+  const userWords = input.trim().toLowerCase().replace(/[.,!?]/g, "").split(/\s+/).filter(Boolean);
+  const correctWords = correct.toLowerCase().replace(/[.,!?]/g, "").split(/\s+/).filter(Boolean);
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+        <div style={{ fontSize: 13, color: "#5a6a80" }}>{"جملة " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: 13, color: "#ec4899", fontWeight: 600 }}>{score + " صحيح"}</div>
+      </div>
+
+      <div style={{ background: "rgba(236,72,153,0.06)", border: "1px solid rgba(236,72,153,0.12)", borderRadius: 12, padding: 20, marginBottom: 12, textAlign: "center" }}>
+        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#ec4899,#f472b6)", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", marginBottom: 6 }}>🔊 استمع</button>
+        <div style={{ marginTop: 6 }}>
+          <button onClick={() => speak(qs.current[qi], 0.55)} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(236,72,153,0.2)", background: "transparent", color: "#ec4899", fontFamily: "inherit", fontSize: 11, cursor: "pointer" }}>🐢 بطيء</button>
+        </div>
+        <div style={{ fontSize: 12, color: "#5a6a80", marginTop: 8 }}>استمع ثم اكتب ما سمعته بالإنجليزي</div>
+      </div>
+
+      <textarea value={input} onChange={(e) => !checked && setInput(e.target.value)} placeholder="اكتب ما سمعته هنا..." disabled={checked} style={{ width: "100%", minHeight: 70, padding: 14, borderRadius: 12, fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(236,72,153,0.2)", color: "#e0e7f1", outline: "none", resize: "vertical", marginBottom: 12 }} />
+
+      {!checked ? (
+        <div style={{ textAlign: "center" }}>
+          <button onClick={check} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#ec4899" : "#1e293b", color: input.trim().length >= 3 ? "#fff" : "#4a5568", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ تحقق</button>
+        </div>
+      ) : (
+        <div>
+          <div style={{ background: "rgba(52,211,153,0.06)", border: "1px solid rgba(52,211,153,0.12)", borderRadius: 12, padding: 14, marginBottom: 10 }}>
+            <div style={{ fontSize: 12, color: "#34d399", fontWeight: 700, marginBottom: 6 }}>✓ الجملة الصحيحة:</div>
+            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#e0e7f1" }}>{correct}</div>
+          </div>
+          <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 2, marginBottom: 10 }}>
+            {correctWords.map((w, wi) => {
+              const matched = userWords.includes(w);
+              return <span key={wi} style={{ color: matched ? "#34d399" : "#ef4444", fontWeight: matched ? 400 : 700 }}>{w + " "}</span>;
+            })}
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "#ec4899", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function LevelTest({ onComplete }) {
   const [phase, setPhase] = useState("intro"); // intro, testing, result
   const [qi, setQi] = useState(0);
@@ -1296,7 +1526,7 @@ export default function App() {
                     </div>
                     {isOpen && (
                       <div style={{ padding: "10px 12px 16px", animation: "fadeUp .3s" }}>
-                        {t.id === "shadow" && <div><p style={{ fontSize: 12, color: "#8892a4", lineHeight: 1.9, marginBottom: 12 }}>{"🎧 اضغط ▶ — اقرأ كل جملة بصوت عالٍ قبل ما ينتهي العدّاد!"}</p><Prompter lines={shadow} gap={adaptedPhase.gap} color={adaptedPhase.c} label="التمرين" />{!tmOn && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={() => startTm(15)} style={{ padding: "7px 16px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>⏱️ مؤقت ١٥ دقيقة</button></div>}</div>}
+                        {t.id === "shadow" && <div><p style={{ fontSize: 13, color: "#8892a4", lineHeight: 1.9, marginBottom: 12 }}>{"🎧 اضغط ▶ — استمع للجملة أولاً ثم ردّدها بصوت عالٍ!"}</p><Prompter lines={shadow} gap={adaptedPhase.gap} color={adaptedPhase.c} label="التمرين" withAudio={true} />{!tmOn && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={() => startTm(15)} style={{ padding: "7px 16px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>⏱️ مؤقت ١٥ دقيقة</button></div>}</div>}
                         {t.id === "think" && <div><p style={{ fontSize: 12, color: "#8892a4", lineHeight: 1.9, marginBottom: 12 }}>{"🗣️ اقرأ الموضوع ثم تكلم عنه بصوت عالٍ بالإنجليزي. استخدم جمل البداية!"}</p><div style={{ background: "rgba(34,211,238,0.04)", border: "1px solid rgba(34,211,238,0.08)", borderRadius: 14, padding: 20, textAlign: "center" }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 17, color: "#22d3ee", direction: "ltr", lineHeight: 1.6, marginBottom: 8 }}>{tp.en}</div><div style={{ fontSize: 13, color: "#5a6a80" }}>{tp.ar}</div></div>{tp.starters && <div style={{ marginTop: 12, background: "rgba(167,139,250,0.06)", border: "1px solid rgba(167,139,250,0.12)", borderRadius: 12, padding: 14 }}><div style={{ fontSize: 12, color: "#a78bfa", fontWeight: 700, marginBottom: 8 }}>💡 ابدأ بهذه الجمل:</div>{tp.starters.map((st, si) => <div key={si} style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#c4b5fd", padding: "4px 0" }}>{st}</div>)}</div>}{!tmOn && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={() => startTm(10)} style={{ padding: "7px 16px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>⏱️ مؤقت ١٠ دقائق</button></div>}</div>}
                         {t.id === "passive" && <div><p style={{ fontSize: 12, color: "#8892a4", lineHeight: 1.9, marginBottom: 12 }}>{"📻 اقرأ القصة بصمت مع الجمل وهي تتحرك. لا تترجم — فقط تابع."}</p><div style={{ fontSize: 14, fontWeight: 700, color: "#34d399", marginBottom: 8 }}>{"📖 " + story.t}</div><Prompter lines={story.lines} gap={ph.gap + 2} color="#34d399" label="القراءة" /></div>}
                         {t.id === "phrases" && <div><p style={{ fontSize: 14, color: "#8892a4", lineHeight: 1.9, marginBottom: 12 }}>{"💬 اضغط على الدائرة كل مرة ترددّ الجملة. الهدف ٥."}</p><div style={{ fontSize: 14, fontWeight: 700, color: "#22d3ee", marginBottom: 8 }}>{pc.icon + " " + pc.cat}</div>{pc.items.map((p, i) => { const k = dn + "-" + i; const r = reps[k] || 0; return (<div key={i} onClick={() => setReps(prev => ({ ...prev, [k]: (prev[k] || 0) + 1 }))} style={{ display: "flex", alignItems: "center", gap: 10, padding: 10, borderRadius: 10, background: r >= 5 ? "rgba(52,211,153,0.06)" : "rgba(255,255,255,0.015)", border: "1px solid " + (r >= 5 ? "rgba(52,211,153,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 5, cursor: "pointer" }}><div style={{ width: 26, height: 26, borderRadius: "50%", background: r >= 5 ? "#34d399" : r > 0 ? "#22d3ee" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div><div style={{ flex: 1 }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.6 }}>{p.en}</div><div style={{ fontSize: 12, color: "#5a6a80", marginTop: 2 }}>{p.ar}</div></div></div>); })}</div>}
@@ -1323,6 +1553,8 @@ export default function App() {
                   { id: "quiz", icon: "📊", title: "اختبار أسبوعي", desc: "١٠ أسئلة تقيس تقدمك في حفظ الجمل واستخدامها", color: "#a78bfa" },
                   { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة في الجمل — يختبر حفظك الحقيقي", color: "#06b6d4" },
                   { id: "build", icon: "🧩", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة لتكوين جمل صحيحة — يعالج مشكلة تركيب الجمل", color: "#10b981" },
+                  { id: "listen", icon: "👂", title: "فهم الاستماع", desc: "استمع لجملة وأجب — يدرّب أذنك على فهم الإنجليزي المنطوق", color: "#8b5cf6" },
+                  { id: "dictation", icon: "🎧", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته — يربط الأذن باليد والذاكرة", color: "#ec4899" },
                   { id: "recall", icon: "✍️", title: "إنتاج حر", desc: "اكتب ردك بنفسك بدون خيارات — يختبر قدرتك الحقيقية على الإنتاج", color: "#f472b6" },
                   { id: "level", icon: "🎯", title: "اختبار تحديد المستوى", desc: "اختبار تكيّفي CEFR يقيس مستواك الحقيقي — قواعد ومفردات وقراءة وتواصل مهني", color: "#e879f9" },
                 ].map((m) => (
@@ -1338,6 +1570,8 @@ export default function App() {
             {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} /></Card>}
             {trainMode === "fill" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FillBlank /></Card>}
             {trainMode === "build" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><SentenceBuild /></Card>}
+            {trainMode === "listen" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><ListenExercise /></Card>}
+            {trainMode === "dictation" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><DictationExercise /></Card>}
             {trainMode === "recall" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FreeRecall /></Card>}
             {trainMode === "level" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><LevelTest onComplete={(result) => setLevelResult(result)} /></Card>}
           </div>
