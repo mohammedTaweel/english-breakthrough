@@ -324,6 +324,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "أنت في مطعم. النادل يسألك عن طلبك. اكتب ردك:",
   produceModel: "I'll have the grilled chicken, please. And could I get a glass of water?",
   noticingTips: ["\"I'll have\" أقوى وأكثر أدباً من \"I want\" — لاحظ الفرق", "\"please\" في نهاية الطلب = أساسي في الثقافة الإنجليزية", "السؤال الإضافي (glass of water) يُظهر طلاقة وثقة"],
+  listenQ: { q: "وين تصير هالمحادثة؟", opts: ["مطعم", "مطار", "بنك"], ans: 0 },
   challenge: "اليوم: اطلب قهوتك من أي كافيه بالإنجليزي. حتى لو جملة وحدة." },
 
   { title: "عند الدكتور", icon: "🏥", dialogue: [
@@ -343,6 +344,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "أنت عند الدكتور. اشرح أعراضك بالتفصيل:",
   produceModel: "I've been having a persistent headache for the past three days, along with some fatigue and dizziness.",
   noticingTips: ["\"I've been having\" (present perfect continuous) أدق من \"I have\" — يوصف شيء مستمر", "\"persistent\" كلمة طبية مهمة = مستمر ما يروح", "تحديد المدة (three days) + أعراض إضافية (fatigue) = الدكتور يفهمك أسرع"],
+  listenQ: { q: "وش مشكلة المتحدث؟", opts: ["صداع ودوخة", "ألم في الظهر", "مشكلة في النظر"], ans: 0 },
   challenge: "اليوم: لو أحد سألك How are you — رد بجملة كاملة بدل fine." },
 
   { title: "في الفندق", icon: "🏨", dialogue: [
@@ -362,6 +364,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "وصلت الفندق. سوِّ check-in واسأل عن الخدمات:",
   produceModel: "I have a reservation under the name Al-Rashid for three nights. Is breakfast included, and is there a pool?",
   noticingTips: ["\"under the name\" = الطريقة الصحيحة لذكر اسم الحجز", "\"Is breakfast included?\" = سؤال ذكي يُظهر إنك مسافر متمرس", "ذكر عدد الليالي فوراً = يسهّل على الموظف ويُظهر وضوحك"],
+  listenQ: { q: "كم ليلة الحجز؟", opts: ["٣ ليالي", "ليلة وحدة", "أسبوع"], ans: 0 },
   challenge: "اليوم: افتح موقع فندق وحاول تقرأ صفحة الخدمات بالإنجليزي بدون ترجمة." },
 
   { title: "اجتماع أولياء أمور", icon: "🎓", dialogue: [
@@ -381,6 +384,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "المعلمة تقول إن ابنك يحتاج تحسين في القراءة. اقترح خطة:",
   produceModel: "That makes sense. What if we start with fifteen minutes of reading together every evening? Are there any books you'd recommend?",
   noticingTips: ["\"That makes sense\" = بداية قوية تُظهر إنك فاهم ومتفاعل", "\"What if we...\" = اقتراح بأدب أقوى من \"We should\"", "السؤال في النهاية (books you'd recommend) = يُظهر اهتمام حقيقي"],
+  listenQ: { q: "وش تحتاج البنت تحسّن؟", opts: ["القراءة", "الرياضيات", "الرسم"], ans: 0 },
   challenge: "اليوم: اقرأ لعيالك قصة قصيرة بالإنجليزي — حتى لو مو perfect." },
 
   { title: "مكالمة خدمة العملاء", icon: "📱", dialogue: [
@@ -400,6 +404,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "طلبك تأخر أسبوع. اتصل بخدمة العملاء واشرح المشكلة:",
   produceModel: "Hi, I placed an order last week, order number 573, and it still hasn't arrived. Could you check the status for me?",
   noticingTips: ["ذكر رقم الطلب فوراً = يوفر وقت ويُظهر تنظيمك", "\"it still hasn't arrived\" أفضل من \"it didn't come\" — أدق لغوياً", "\"Could you check\" = طلب مهذب أقوى من \"check please\""],
+  listenQ: { q: "وش المشكلة؟", opts: ["الطلب ما وصل", "المنتج مكسور", "السعر غلط"], ans: 0 },
   challenge: "اليوم: لو اشتريت شيء أونلاين — اقرأ صفحة الـ FAQ بالإنجليزي." },
 
   { title: "التعارف مع شخص جديد", icon: "👋", dialogue: [
@@ -419,6 +424,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "شخص جديد يسألك عن نفسك. عرّف نفسك وسأله:",
   produceModel: "Nice to meet you! I'm Omar. I work in project management. I've been living here for about five years. What about you?",
   noticingTips: ["التسلسل: تحية → اسم → شغل → معلومة شخصية → سؤال = بناء محادثة احترافي", "\"What about you?\" في النهاية = تحوّل المحادثة من monologue لـ dialogue", "\"I've been living here for...\" أفضل من \"I live here since...\" — هذا خطأ شائع"],
+  listenQ: { q: "وش شغل المتحدث؟", opts: ["إدارة مشاريع", "هندسة برمجيات", "تسويق"], ans: 0 },
   challenge: "اليوم: لو قابلت أي شخص أجنبي — قل Nice to meet you وسأله سؤال واحد." },
 
   { title: "في المطار", icon: "✈️", dialogue: [
@@ -438,6 +444,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "أنت في المطار تسوي check-in. تكلم مع الموظفة:",
   produceModel: "Here's my passport. I'd like a window seat if possible. Is this a direct flight or do I have a layover?",
   noticingTips: ["\"I'd like\" أفضل من \"I want\" = أكثر أدباً في الطلبات", "\"if possible\" = تُظهر إنك مرن ومهذب", "السؤال عن الـ layover = يُظهر إنك مسافر واعي ومتمكن"],
+  listenQ: { q: "هل الرحلة مباشرة؟", opts: ["نعم مباشرة", "فيها توقف", "ما ذكر"], ans: 0 },
   challenge: "اليوم: لو رحت أي مكان فيه موظف — سأل سؤال واحد بالإنجليزي." },
 
   { title: "في الصيدلية", icon: "💊", dialogue: [
@@ -457,6 +464,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "أنت في صيدلية. اشرح أعراضك واسأل عن الدواء:",
   produceModel: "I need something for a sore throat. I've had it for two days and it gets worse at night. Are there any side effects?",
   noticingTips: ["\"I need something for...\" = الطريقة المثالية لطلب دواء بدون ما تعرف اسمه", "وصف متى يزيد (at night) = يساعد الصيدلي يعطيك الدواء المناسب", "السؤال عن side effects = يُظهر وعي صحي ويحميك"],
+  listenQ: { q: "وش يشتكي منه؟", opts: ["التهاب حلق", "صداع", "ألم بطن"], ans: 0 },
   challenge: "اليوم: اقرأ نشرة أي دواء عندك بالبيت — الجانب الإنجليزي." },
 
   { title: "في السوبرماركت", icon: "🛒", dialogue: [
@@ -476,6 +484,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "أنت في سوبرماركت أجنبي. اسأل عن مكان المنتجات:",
   produceModel: "Excuse me, where can I find the dairy section? Also, do you have any organic products?",
   noticingTips: ["\"Where can I find...\" أفضل من \"Where is...\" = أكثر أدباً وطبيعية", "\"Do you have any...\" = طريقة مهذبة للسؤال عن توفر منتج", "\"Also\" لربط سؤالين = يُظهر طلاقة في المحادثة"],
+  listenQ: { q: "وش يدوّر عليه؟", opts: ["قسم الألبان", "قسم اللحوم", "قسم الخضار"], ans: 0 },
   challenge: "اليوم: لو دخلت أي محل — اقرأ أسماء المنتجات بالإنجليزي في بالك." },
 
   { title: "حجز موعد بالتلفون", icon: "📞", dialogue: [
@@ -495,6 +504,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "اتصل بعيادة أسنان واحجز موعد:",
   produceModel: "I'd like to make an appointment for a dental checkup. This would be my first visit. Do you have anything available this week?",
   noticingTips: ["\"I'd like to make an appointment\" = الجملة السحرية لأي حجز", "\"works perfectly for me\" أقوى من \"OK\" — تُظهر حسم وثقة", "تحديد نوع الزيارة (checkup) = يساعد العيادة تجهّز لك"],
+  listenQ: { q: "متى الموعد؟", opts: ["الخميس ١٠ الصبح", "الثلاثاء ٢ الظهر", "السبت ٩ الصبح"], ans: 0 },
   challenge: "اليوم: احجز أي موعد بالتلفون — حتى لو بالعربي، فكّر كيف تقولها بالإنجليزي." },
 
   { title: "طلب توصيل أونلاين", icon: "📦", dialogue: [
@@ -514,6 +524,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "اتصل بمطعم واطلب أكل توصيل:",
   produceModel: "Hi, I'd like to place a delivery order. I'll have two chicken burgers, a large fries, and two colas. How long will it take?",
   noticingTips: ["\"I'd like to place an order\" أفضل من \"I want to order\" = احترافي أكثر", "تجميع الطلب في جملة وحدة = يوفر وقت ويُظهر وضوح", "السؤال عن الوقت = سؤال ذكي يُظهر إنك مهتم بالتفاصيل"],
+  listenQ: { q: "وش طلب؟", opts: ["برقرين وبطاطس", "بيتزا وسلطة", "سمك وأرز"], ans: 0 },
   challenge: "اليوم: اطلب من أي مطعم أونلاين وحاول تقرأ القائمة الإنجليزية." },
 
   { title: "في البنك", icon: "🏦", dialogue: [
@@ -533,6 +544,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "أنت في بنك أجنبي. اشرح ماذا تحتاج واسأل عن الرسوم:",
   produceModel: "I'd like to open a savings account. Here's my passport. Could you tell me about the fees for international transfers?",
   noticingTips: ["\"I'd like to open\" = الطريقة القياسية لفتح حساب", "تجهيز الأوراق وتقديمها فوراً (Here's my passport) = يُظهر تنظيم واحترافية", "\"What are the fees for...\" = سؤال مالي مهم لازم تتقنه"],
+  listenQ: { q: "وش يبي يسوي؟", opts: ["يفتح حساب توفير", "يأخذ قرض", "يغيّر كلمة السر"], ans: 0 },
   challenge: "اليوم: افتح تطبيق بنكك وحوّل اللغة للإنجليزي ٥ دقائق." },
 
   { title: "استئجار سيارة", icon: "🚗", dialogue: [
@@ -552,6 +564,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "تبي تستأجر سيارة في السفر. اسأل عن الخيارات والأسعار:",
   produceModel: "I'd like to rent an SUV for five days. What's the daily rate, and does it include insurance and unlimited mileage?",
   noticingTips: ["تحديد النوع + المدة في جملة وحدة = واضح ومباشر", "\"What's the daily rate\" أفضل من \"How much\" = أكثر تحديداً", "السؤال عن insurance و mileage = أسئلة مسافر متمرس"],
+  listenQ: { q: "كم سعر اليوم؟", opts: ["80 دولار", "50 دولار", "120 دولار"], ans: 0 },
   challenge: "اليوم: ادخل أي موقع تأجير سيارات واقرأ الشروط بالإنجليزي." },
 
   { title: "شكوى في الفندق", icon: "🔧", dialogue: [
@@ -571,6 +584,7 @@ const DAILY_SCENARIOS = [
   producePrompt: "في الفندق، غرفتك فيها مشكلة. اشرح الشكوى بأدب:",
   produceModel: "Excuse me, I have an issue with my room. The air conditioning isn't working and there's no hot water. Would it be possible to move to another room?",
   noticingTips: ["\"I have an issue with\" أفضل من \"There is a problem\" = تركيز على تجربتك", "وصف المشاكل بوضوح (AC + hot water) = يسرّع الحل", "\"Would it be possible to...\" = طلب مهذب جداً أقوى من \"Can I\""],
+  listenQ: { q: "وش المشكلة في الغرفة؟", opts: ["المكيف والماء الحار", "التلفزيون", "الواي فاي"], ans: 0 },
   challenge: "اليوم: لو واجهت أي مشكلة — فكّر كيف تشرحها بالإنجليزي." },
 ];
 
@@ -1179,8 +1193,9 @@ function FreeRecall() {
 // ===== DAILY DEEP PROCESSING SESSION =====
 function DailySession({ scenario, onComplete, dayNum }) {
   const [step, setStep] = useState(0);
-  const [listenIdx, setListenIdx] = useState(-1); // -1 = not started, 0+ = playing line i
+  const [listenIdx, setListenIdx] = useState(-1);
   const [listenDone, setListenDone] = useState(false);
+  const [listenAnswer, setListenAnswer] = useState(null); // comprehension Q answer
   const [shadowReps, setShadowReps] = useState({});
   const [recallState, setRecallState] = useState({}); // { 0: "hidden"|"thinking"|"revealed" }
   const [recallScore, setRecallScore] = useState({});
@@ -1256,14 +1271,34 @@ function DailySession({ scenario, onComplete, dayNum }) {
               </div>
             )}
           </div>
-          {listenDone && <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 14, color: "#34d399", marginBottom: 6 }}>كم جملة فهمت؟</div>
-            <div style={{ fontSize: 13, color: "#8892a4", marginBottom: 12 }}>في الخطوة الجاية بتشوف النص وتلاحظ اللي فاتك</div>
-            <div style={{ display: "flex", gap: 8, justifyContent: "center", marginBottom: 10 }}>
-              <button onClick={playDialogueSequence} style={{ padding: "8px 16px", borderRadius: 8, border: "1px solid rgba(139,92,246,0.2)", background: "transparent", color: "#8b5cf6", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🔄 استمع مرة ثانية</button>
-              <button onClick={() => setStep(1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي →</button>
+          {listenDone && (
+            <div style={{ animation: "fadeUp .3s" }}>
+              {/* Comprehension check */}
+              {sc.listenQ && listenAnswer === null && (
+                <div style={{ background: "rgba(139,92,246,0.06)", border: "1px solid rgba(139,92,246,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+                  <div style={{ fontSize: 14, color: "#a78bfa", fontWeight: 700, marginBottom: 10 }}>🤔 سؤال سريع — {sc.listenQ.q}</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    {sc.listenQ.opts.map((o, oi) => (
+                      <div key={oi} onClick={() => setListenAnswer(oi)} style={{ padding: 12, borderRadius: 10, cursor: "pointer", fontSize: 14, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", transition: ".2s" }}>{o}</div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {listenAnswer !== null && (
+                <div style={{ textAlign: "center", marginBottom: 12 }}>
+                  <div style={{ fontSize: 14, color: listenAnswer === (sc.listenQ ? sc.listenQ.ans : 0) ? "#34d399" : "#f59e0b", fontWeight: 700, marginBottom: 4 }}>
+                    {listenAnswer === (sc.listenQ ? sc.listenQ.ans : 0) ? "✓ صح! فهمت المحادثة" : "تقريباً — في الخطوة الجاية بتشوف النص وتلاحظ اللي فاتك"}
+                  </div>
+                </div>
+              )}
+              {(listenAnswer !== null || !sc.listenQ) && (
+                <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
+                  <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} style={{ padding: "8px 16px", borderRadius: 8, border: "1px solid rgba(139,92,246,0.2)", background: "transparent", color: "#8b5cf6", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🔄 استمع مرة ثانية</button>
+                  <button onClick={() => setStep(1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي →</button>
+                </div>
+              )}
             </div>
-          </div>}
+          )}
         </div>
       )}
 
@@ -1292,7 +1327,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
             const r = shadowReps[i] || 0;
             return (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 3 ? "rgba(52,211,153,0.06)" : "rgba(255,255,255,0.02)", border: "1px solid " + (r >= 3 ? "rgba(52,211,153,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 6 }}>
-                <div onClick={() => setShadowReps(prev => ({ ...prev, [i]: (prev[i] || 0) + 1 }))} style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 3 ? "#34d399" : r > 0 ? "#22d3ee" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", cursor: "pointer", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
+                <div onClick={() => { speak(p.en, 0.8); setShadowReps(prev => ({ ...prev, [i]: (prev[i] || 0) + 1 })); }} style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 3 ? "#34d399" : r > 0 ? "#22d3ee" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", cursor: "pointer", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
                   <div style={{ fontSize: 12, color: "#5a6a80", marginTop: 2 }}>{p.ar}</div>
@@ -1351,11 +1386,32 @@ function DailySession({ scenario, onComplete, dayNum }) {
               </div>
             );
           })}
-          {Object.keys(recallScore).length >= sc.keyPhrases.length && (
-            <div style={{ textAlign: "center", marginTop: 14 }}>
-              <button onClick={() => setStep(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
-            </div>
-          )}
+          {Object.keys(recallScore).length >= sc.keyPhrases.length && (() => {
+            const forgotten = sc.keyPhrases.map((_, i) => i).filter(i => recallScore[i] === "forgot" || recallScore[i] === "partial");
+            const allGood = forgotten.length === 0;
+            return (
+              <div style={{ marginTop: 14 }}>
+                {!allGood && (
+                  <div style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.1)", borderRadius: 10, padding: 14, marginBottom: 10, textAlign: "center" }}>
+                    <div style={{ fontSize: 13, color: "#ef4444", fontWeight: 600, marginBottom: 8 }}>{"🔄 " + forgotten.length + " جملة تحتاج مراجعة — ردّدها ثم أعد التقييم"}</div>
+                    {forgotten.map(fi => (
+                      <div key={fi} style={{ display: "flex", alignItems: "center", gap: 8, padding: 10, borderRadius: 8, background: "rgba(255,255,255,0.02)", marginBottom: 4 }}>
+                        <SpeakBtn text={sc.keyPhrases[fi].en} size={18} color="#f59e0b" />
+                        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", flex: 1, color: "#e0e7f1" }}>{sc.keyPhrases[fi].en}</div>
+                      </div>
+                    ))}
+                    <button onClick={() => { const newState = { ...recallState }; const newScore = { ...recallScore }; forgotten.forEach(fi => { newState[fi] = "hidden"; delete newScore[fi]; }); setRecallState(newState); setRecallScore(newScore); }} style={{ marginTop: 8, padding: "8px 20px", borderRadius: 8, border: "none", background: "#f59e0b", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد اختبار الجمل المنسيّة</button>
+                  </div>
+                )}
+                {allGood && (
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: 13, color: "#34d399", fontWeight: 600, marginBottom: 8 }}>✓ ممتاز! تذكّرت كل الجمل</div>
+                    <button onClick={() => setStep(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
         </div>
       )}
 
