@@ -6,9 +6,14 @@ const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
   @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
   @keyframes pulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.06); } }
   @keyframes glow { 0%,100% { box-shadow:0 0 10px rgba(34,211,238,0.1); } 50% { box-shadow:0 0 25px rgba(34,211,238,0.2); } }
   @keyframes confDrop { 0% { transform:translateY(-100vh) rotate(0); opacity:1; } 100% { transform:translateY(100vh) rotate(720deg); opacity:0; } }
+  @keyframes slideIn { from { opacity:0; transform:translateX(30px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes firePulse { 0%,100% { transform:scale(1); filter:brightness(1); } 50% { transform:scale(1.2); filter:brightness(1.3); } }
+  @keyframes stepDone { 0% { transform:scale(1); } 50% { transform:scale(1.3); } 100% { transform:scale(1); } }
+  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 `;
 
 const SHADOW_LINES = [
@@ -1426,6 +1431,14 @@ function DailySession({ scenario, onComplete, dayNum }) {
   }
 
   const stepPct = Math.round(((step + 1) / 6) * 100);
+  const [stepCelebration, setStepCelebration] = useState(null);
+
+  // Micro-celebration on step change
+  function advanceStep(nextStep) {
+    const msgs = ["ممتاز! 🔥", "أحسنت! ⚡", "يلّا كمّل! 💪", "رائع! ✨", "نص الطريق! 🎯", ""];
+    setStepCelebration(msgs[step] || "👏");
+    setTimeout(() => { setStepCelebration(null); setStep(nextStep); }, 800);
+  }
 
   return (
     <div style={{ animation: "fadeUp .4s" }}>
@@ -1439,15 +1452,20 @@ function DailySession({ scenario, onComplete, dayNum }) {
         <div style={{ fontSize: 14, fontWeight: 800, color: "#22d3ee", fontFamily: "'IBM Plex Mono'" }}>{stepPct + "%"}</div>
       </div>
 
+      {/* Micro-celebration popup */}
+      {stepCelebration && <div style={{ textAlign: "center", padding: 16, animation: "stepDone .6s" }}>
+        <div style={{ fontSize: 28, fontWeight: 800, color: "#34d399" }}>{stepCelebration}</div>
+      </div>}
+
       {/* Progress */}
-      <div style={{ display: "flex", gap: 4, marginBottom: 16 }}>
+      {!stepCelebration && <div style={{ display: "flex", gap: 4, marginBottom: 16 }}>
         {steps.map((s, i) => (
           <div key={i} style={{ flex: 1, textAlign: "center" }}>
-            <div style={{ height: 4, borderRadius: 2, background: i <= step ? "#22d3ee" : "#1a2236", transition: ".3s", marginBottom: 4 }} />
-            <div style={{ fontSize: 10, color: i === step ? "#22d3ee" : i < step ? "#34d399" : "#3a4a5c" }}>{s.icon}</div>
+            <div style={{ height: 5, borderRadius: 3, background: i < step ? "linear-gradient(90deg,#34d399,#22d3ee)" : i === step ? "#22d3ee" : "#1a2236", transition: ".3s", marginBottom: 4 }} />
+            <div style={{ fontSize: 11, color: i === step ? "#22d3ee" : i < step ? "#34d399" : "#3a4a5c" }}>{i < step ? "✓" : s.icon}</div>
           </div>
         ))}
-      </div>
+      </div>}
 
       {/* Step 1: Listen only — sentence by sentence, no text */}
       {step === 0 && (
@@ -1492,7 +1510,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
               {(listenAnswer !== null || !sc.listenQ) && (
                 <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
                   <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} style={{ padding: "8px 16px", borderRadius: 8, border: "1px solid rgba(139,92,246,0.2)", background: "transparent", color: "#8b5cf6", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🔄 استمع مرة ثانية</button>
-                  <button onClick={() => setStep(1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي →</button>
+                  <button onClick={() => advanceStep(1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي →</button>
                 </div>
               )}
             </div>
@@ -1512,7 +1530,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
             </div>
           ))}
           <div style={{ textAlign: "center", marginTop: 14 }}>
-            <button onClick={() => setStep(2)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: ردّد الجمل →</button>
+            <button onClick={() => advanceStep(2)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: ردّد الجمل →</button>
           </div>
         </div>
       )}
@@ -1537,7 +1555,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
           })}
           {Object.values(shadowReps).filter(r => r >= 3).length >= sc.keyPhrases.length && (
             <div style={{ textAlign: "center", marginTop: 14 }}>
-              <button onClick={() => setStep(3)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تذكّر →</button>
+              <button onClick={() => advanceStep(3)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تذكّر →</button>
             </div>
           )}
         </div>
@@ -1605,7 +1623,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
                 {allGood && (
                   <div style={{ textAlign: "center" }}>
                     <div style={{ fontSize: 13, color: "#34d399", fontWeight: 600, marginBottom: 8 }}>✓ ممتاز! تذكّرت كل الجمل</div>
-                    <button onClick={() => setStep(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
+                    <button onClick={() => advanceStep(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
                   </div>
                 )}
               </div>
@@ -1671,7 +1689,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
                 )}
               </div>
               <div style={{ textAlign: "center" }}>
-                <button onClick={() => setStep(5)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تحدّي اليوم →</button>
+                <button onClick={() => advanceStep(5)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تحدّي اليوم →</button>
               </div>
             </div>
           )}
@@ -2390,6 +2408,8 @@ export default function App() {
   const [srsData, setSrsData] = useState({});
   const [sessionHistory, setSessionHistory] = useState([]);
   const [chosenScenario, setChosenScenario] = useState(null);
+  const [xp, setXp] = useState(0);
+  const [showXpPop, setShowXpPop] = useState(null); // "+15 XP" popup
   const tmRef = useRef(null);
 
   useEffect(() => {
@@ -2399,6 +2419,7 @@ export default function App() {
       try { const r = await storage.get("level-test-results"); if (r && r.value) { const arr = JSON.parse(r.value); if (arr.length > 0) setLevelResult(arr[arr.length - 1]); } } catch (e) {}
       try { const r = await storage.get("srs-data"); if (r && r.value) setSrsData(JSON.parse(r.value)); } catch (e) {}
       try { const r = await storage.get("session-history"); if (r && r.value) setSessionHistory(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await storage.get("user-xp"); if (r && r.value) setXp(parseInt(r.value) || 0); } catch (e) {}
       setLoading(false);
     })();
   }, []);
@@ -2426,14 +2447,88 @@ export default function App() {
 
   if (loading) return <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#060a14", fontFamily: "'Noto Kufi Arabic',sans-serif" }}><style>{CSS}</style><div style={{ textAlign: "center", color: "#fff" }}><div style={{ fontSize: 40, animation: "pulse 1.5s infinite" }}>🎯</div><div style={{ fontSize: 14, opacity: 0.5, marginTop: 8 }}>جاري التحميل...</div></div></div>;
 
+  // ===== ONBOARDING — Emotional, Trust-building, Personalized =====
+  const [onboardStep, setOnboardStep] = useState(0);
+  const [userChallenge, setUserChallenge] = useState(null);
+
   if (!store.start) return (
     <div dir="rtl" style={{ minHeight: "100vh", background: "#060a14", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
       <style>{CSS}</style>
-      <div style={{ textAlign: "center", padding: 32, animation: "fadeUp 1s" }}>
-        <div style={{ fontSize: 56, marginBottom: 16, animation: "pulse 2s infinite" }}>🎯</div>
-        <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8, background: "linear-gradient(135deg,#22d3ee,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1.5 }}>اختراق حاجز الإنجليزية</h1>
-        <p style={{ fontSize: 15, color: "#5a6a80", marginBottom: 32, lineHeight: 1.9 }}>تكلّم إنجليزي بثقة — في السفر، الشغل، والحياة اليومية</p>
-        <button onClick={() => save({ ...store, start: gtd() })} style={{ padding: "13px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#22d3ee,#06b6d4)", color: "#060a14", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer" }}>ابدأ رحلتك 🚀</button>
+      <div style={{ maxWidth: 440, padding: 32, animation: "fadeUp .8s" }}>
+
+        {/* Screen 1: Emotional Hook */}
+        {onboardStep === 0 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
+          <div style={{ fontSize: 64, marginBottom: 20 }}>😔</div>
+          <h1 style={{ fontSize: 24, fontWeight: 800, color: "#e0e7f1", lineHeight: 1.8, marginBottom: 16 }}>تفهم كل شيء...<br/>بس لما تبي تتكلم، الكلمات ما تطلع؟</h1>
+          <p style={{ fontSize: 15, color: "#5a6a80", lineHeight: 2.2, marginBottom: 24 }}>في المطعم، مع الدكتور، في المطار...<br/>تعرف الجواب في راسك بس لسانك ما يساعدك.<br/><b style={{ color: "#8892a4" }}>جرّبت كورسات وتطبيقات كثير وما استمريت.</b></p>
+          <button onClick={() => setOnboardStep(1)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#22d3ee,#a78bfa)", color: "#060a14", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>هذا بالضبط أنا ←</button>
+        </div>}
+
+        {/* Screen 2: The Promise */}
+        {onboardStep === 1 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
+          <div style={{ fontSize: 64, marginBottom: 20 }}>💡</div>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#22d3ee", lineHeight: 1.8, marginBottom: 16 }}>المشكلة مو إنجليزيك.<br/>المشكلة الطريقة.</h1>
+          <div style={{ background: "rgba(34,211,238,0.06)", borderRadius: 16, padding: 20, marginBottom: 20, textAlign: "right" }}>
+            <div style={{ fontSize: 14, color: "#e0e7f1", lineHeight: 2.4 }}>
+              <div style={{ marginBottom: 8 }}>❌ الكورسات تعلّمك <b>قواعد</b> — أنت ما تحتاج قواعد</div>
+              <div style={{ marginBottom: 8 }}>❌ التطبيقات تعلّمك <b>تترجم</b> — أنت ما تحتاج ترجمة</div>
+              <div>✅ أنت تحتاج <b>تتمرّن على مواقف حقيقية</b> حتى لسانك يتعوّد</div>
+            </div>
+          </div>
+          <p style={{ fontSize: 13, color: "#5a6a80", lineHeight: 2, marginBottom: 20 }}>مبني على أبحاث جامعية في اكتساب اللغة<br/>— مو ترجمة لتطبيق أجنبي</p>
+          <button onClick={() => setOnboardStep(2)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#22d3ee,#a78bfa)", color: "#060a14", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>كيف يشتغل؟ ←</button>
+        </div>}
+
+        {/* Screen 3: How it works */}
+        {onboardStep === 2 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#e0e7f1", lineHeight: 1.8, marginBottom: 20 }}>١٥ دقيقة باليوم<br/>جلسة واحدة — ٦ خطوات</h1>
+          <div style={{ textAlign: "right", marginBottom: 20 }}>
+            {[
+              { icon: "👂", text: "استمع — بدون نص، درّب أذنك", color: "#8b5cf6" },
+              { icon: "📖", text: "اقرأ — شوف النص ولاحظ اللي فاتك", color: "#22d3ee" },
+              { icon: "🔊", text: "ردّد — كرّر الجمل المهمة مع الصوت", color: "#34d399" },
+              { icon: "🧠", text: "تذكّر — قلها من ذاكرتك بدون ما تشوف", color: "#f59e0b" },
+              { icon: "✍️", text: "أنتج — اكتب ردك بنفسك", color: "#f472b6" },
+              { icon: "🌍", text: "طبّق — تحدّي حقيقي تسويه اليوم", color: "#ef4444" },
+            ].map((s, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: 10, animation: "slideIn .4s " + (i * 0.1) + "s both" }}>
+                <div style={{ fontSize: 24, flexShrink: 0 }}>{s.icon}</div>
+                <div style={{ fontSize: 14, color: s.color, fontWeight: 600 }}>{s.text}</div>
+              </div>
+            ))}
+          </div>
+          <button onClick={() => setOnboardStep(3)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#22d3ee,#a78bfa)", color: "#060a14", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>يناسبني! ←</button>
+        </div>}
+
+        {/* Screen 4: Personalization Question */}
+        {onboardStep === 3 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>🎯</div>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#e0e7f1", lineHeight: 1.8, marginBottom: 20 }}>وش أكبر تحدي عندك؟</h1>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {[
+              { id: "speak", icon: "🗣️", text: "أفهم بس ما أقدر أتكلم", sub: "الكلمات في راسي بس ما تطلع" },
+              { id: "listen", icon: "👂", text: "ما أفهم لما يتكلمون بسرعة", sub: "أقرأ كويس بس الاستماع صعب" },
+              { id: "travel", icon: "✈️", text: "أحتاجها للسفر والتعامل مع أجانب", sub: "فنادق، مطاعم، مطارات" },
+              { id: "work", icon: "💼", text: "أحتاجها للشغل والاجتماعات", sub: "عروض، إيميلات، مكالمات" },
+              { id: "life", icon: "🌍", text: "أبي أتكلم في حياتي اليومية بثقة", sub: "جيران، مدرسة، تسوق" },
+            ].map(c => (
+              <button key={c.id} onClick={() => { setUserChallenge(c.id); setOnboardStep(4); }} style={{ display: "flex", alignItems: "center", gap: 12, padding: 16, borderRadius: 14, border: "1px solid " + (userChallenge === c.id ? "rgba(34,211,238,0.3)" : "rgba(255,255,255,0.06)"), background: "rgba(255,255,255,0.02)", cursor: "pointer", textAlign: "right" }}>
+                <div style={{ fontSize: 28, flexShrink: 0 }}>{c.icon}</div>
+                <div><div style={{ fontSize: 15, fontWeight: 700, color: "#e0e7f1" }}>{c.text}</div><div style={{ fontSize: 12, color: "#5a6a80", marginTop: 2 }}>{c.sub}</div></div>
+              </button>
+            ))}
+          </div>
+        </div>}
+
+        {/* Screen 5: Ready — Start */}
+        {onboardStep === 4 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
+          <div style={{ fontSize: 72, marginBottom: 16, animation: "pulse 2s infinite" }}>🚀</div>
+          <h1 style={{ fontSize: 26, fontWeight: 800, marginBottom: 8, background: "linear-gradient(135deg,#22d3ee,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1.6 }}>جاهز!</h1>
+          <p style={{ fontSize: 16, color: "#8892a4", lineHeight: 2.2, marginBottom: 8 }}>جلستك الأولى جاهزة — ١٥ دقيقة فقط</p>
+          <p style={{ fontSize: 14, color: "#5a6a80", lineHeight: 2, marginBottom: 28 }}>بعد أسبوع واحد بتلاحظ الفرق.<br/>الجمل بتطلع منك تلقائي بدون تفكير.</p>
+          <button onClick={() => save({ ...store, start: gtd(), challenge: userChallenge })} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#22d3ee,#06b6d4)", color: "#060a14", fontFamily: "inherit", fontSize: 18, fontWeight: 800, cursor: "pointer", width: "100%", animation: "glow 2s infinite" }}>ابدأ جلستك الأولى</button>
+        </div>}
+
       </div>
     </div>
   );
@@ -2496,12 +2591,23 @@ export default function App() {
       {conf && <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 100 }}>{Array.from({ length: 25 }).map((_, i) => <div key={i} style={{ position: "absolute", top: 0, left: Math.random() * 100 + "%", width: 7, height: 7, background: ["#22d3ee", "#a78bfa", "#f59e0b", "#34d399"][i % 4], borderRadius: "50%", animation: "confDrop " + (2 + Math.random() * 2) + "s linear " + Math.random() * 0.5 + "s forwards" }} />)}</div>}
 
       <div style={{ maxWidth: 680, margin: "0 auto", padding: "0 14px" }}>
+        {/* XP popup */}
+        {showXpPop && <div style={{ position: "fixed", top: 60, left: "50%", transform: "translateX(-50%)", zIndex: 200, padding: "8px 20px", borderRadius: 10, background: "linear-gradient(135deg,#f59e0b,#f472b6)", color: "#fff", fontWeight: 800, fontSize: 16, fontFamily: "'IBM Plex Mono'", animation: "fadeUp .4s" }}>{showXpPop}</div>}
+
         <div style={{ padding: "16px 0 10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
             <h1 style={{ fontSize: 18, fontWeight: 800, background: "linear-gradient(135deg,#22d3ee,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>اختراق حاجز الإنجليزية</h1>
-            <div style={{ fontSize: 12, color: "#4a5568", marginTop: 2 }}>{"أسبوع " + wk + "/12 — " + ph.nm + (levelResult ? " — " + levelResult.levelCode : "")}</div>
+            <div style={{ fontSize: 12, color: "#4a5568", marginTop: 2 }}>{"أسبوع " + wk + "/12" + (levelResult ? " — " + levelResult.levelCode : "")}</div>
           </div>
-          <div style={{ fontSize: 16, fontWeight: 800, color: adaptedPhase.c, fontFamily: "'IBM Plex Mono'" }}>{pct + "%"}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            {/* Streak flame */}
+            {(() => { let s = 0; const d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s > 0 ? <div style={{ display: "flex", alignItems: "center", gap: 3 }}><span style={{ fontSize: 18, animation: s >= 7 ? "firePulse 1s infinite" : "none" }}>🔥</span><span style={{ fontSize: 14, fontWeight: 800, color: "#f59e0b", fontFamily: "'IBM Plex Mono'" }}>{s}</span></div> : null; })()}
+            {/* XP */}
+            <div style={{ padding: "4px 10px", borderRadius: 8, background: "rgba(167,139,250,0.1)", display: "flex", alignItems: "center", gap: 4 }}>
+              <span style={{ fontSize: 12 }}>⚡</span>
+              <span style={{ fontSize: 13, fontWeight: 800, color: "#a78bfa", fontFamily: "'IBM Plex Mono'" }}>{xp}</span>
+            </div>
+          </div>
         </div>
 
         <div style={{ display: "flex", borderBottom: "1px solid rgba(255,255,255,0.04)", marginBottom: 14 }}>
@@ -2539,8 +2645,14 @@ export default function App() {
                   if (!d.includes("session")) {
                     save({ ...store, days: { ...store.days, [today]: [...d, "session"] } });
                     setConf(true); setTimeout(() => setConf(false), 3000);
+                    // Award XP
+                    const earned = 25;
+                    const newXp = xp + earned;
+                    setXp(newXp);
+                    setShowXpPop("+" + earned + " XP ⚡");
+                    setTimeout(() => setShowXpPop(null), 2000);
+                    (async () => { try { await storage.set("user-xp", String(newXp)); } catch(e) {} })();
                   }
-                  // Reload session history
                   (async () => { try { const r = await storage.get("session-history"); if (r && r.value) setSessionHistory(JSON.parse(r.value)); } catch(e) {} })();
                 }}
               />
@@ -2557,28 +2669,40 @@ export default function App() {
         {/* TRAINING */}
         {tab === "train" && (
           <div>
-            {!trainMode && (
-              <div>
-                <Card><div style={{ fontSize: 14, color: "#8892a4", textAlign: "center", lineHeight: 1.9 }}>🎭 تدريبات تفاعلية تجهّزك لمواقف الحياة الحقيقية</div></Card>
-                {[
-                  { id: "sim", icon: "🎭", title: "محادثات تفاعلية", desc: "سيناريوهات حقيقية: فندق، طبيب، مطعم، مدرسة — اختر الرد واقرأه", color: "#22d3ee" },
-                  { id: "quick", icon: "⚡", title: "استجابة سريعة", desc: "مواقف يومية سريعة — اختر الرد الأنسب", color: "#f59e0b" },
-                  { id: "quiz", icon: "📊", title: "اختبار أسبوعي", desc: "١٠ أسئلة تقيس تقدمك في حفظ الجمل واستخدامها", color: "#a78bfa" },
-                  { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة في الجمل — يختبر حفظك الحقيقي", color: "#06b6d4" },
-                  { id: "build", icon: "🧩", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة لتكوين جمل صحيحة — يعالج مشكلة تركيب الجمل", color: "#10b981" },
-                  { id: "fluency", icon: "🗣️", title: "تمرين الطلاقة 4-3-2", desc: "تكلم عن نفس الموضوع ٣ مرات بوقت أقل — يبني طلاقة حقيقية", color: "#f472b6" },
-                  { id: "listen", icon: "👂", title: "فهم الاستماع", desc: "استمع لجملة وأجب — يدرّب أذنك على فهم الإنجليزي المنطوق", color: "#8b5cf6" },
-                  { id: "dictation", icon: "🎧", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته — يربط الأذن باليد والذاكرة", color: "#ec4899" },
-                  { id: "recall", icon: "✍️", title: "إنتاج حر", desc: "اكتب ردك بنفسك بدون خيارات — يختبر قدرتك الحقيقية على الإنتاج", color: "#f472b6" },
-                  { id: "level", icon: "🎯", title: "اختبار تحديد المستوى", desc: "اختبار تكيّفي CEFR يقيس مستواك الحقيقي — قواعد ومفردات وقراءة وتواصل مهني", color: "#e879f9" },
-                ].map((m) => (
-                  <div key={m.id} onClick={() => setTrainMode(m.id)} style={{ display: "flex", alignItems: "center", gap: 14, padding: 16, borderRadius: 14, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", marginBottom: 10, cursor: "pointer", transition: ".3s" }}>
-                    <div style={{ fontSize: 32, flexShrink: 0 }}>{m.icon}</div>
-                    <div><div style={{ fontSize: 15, fontWeight: 700, color: m.color }}>{m.title}</div><div style={{ fontSize: 12, color: "#5a6a80", marginTop: 2 }}>{m.desc}</div></div>
-                  </div>
-                ))}
-              </div>
-            )}
+            {!trainMode && (() => {
+              const allExercises = [
+                { id: "sim", icon: "🎭", title: "محادثات تفاعلية", desc: "سيناريوهات حقيقية — اختر الرد واقرأه", color: "#22d3ee" },
+                { id: "quick", icon: "⚡", title: "استجابة سريعة", desc: "مواقف يومية — اختر الرد الأنسب", color: "#f59e0b" },
+                { id: "quiz", icon: "📊", title: "اختبار أسبوعي", desc: "١٠ أسئلة تقيس تقدمك", color: "#a78bfa" },
+                { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة", color: "#06b6d4" },
+                { id: "build", icon: "🧩", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة", color: "#10b981" },
+                { id: "fluency", icon: "🗣️", title: "تمرين الطلاقة", desc: "تكلم ٣ مرات بوقت أقل", color: "#f472b6" },
+                { id: "listen", icon: "👂", title: "فهم الاستماع", desc: "استمع وأجب", color: "#8b5cf6" },
+                { id: "dictation", icon: "🎧", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته", color: "#ec4899" },
+                { id: "recall", icon: "✍️", title: "إنتاج حر", desc: "اكتب ردك بدون خيارات", color: "#f472b6" },
+                { id: "level", icon: "🎯", title: "اختبار المستوى", desc: "اختبار CEFR تكيّفي", color: "#e879f9" },
+              ];
+              // Smart recommendations: top 3 based on user needs
+              const recommended = allExercises.slice(0, 3);
+              const rest = allExercises.slice(3);
+              const ExCard = ({ m }) => (
+                <div onClick={() => setTrainMode(m.id)} style={{ display: "flex", alignItems: "center", gap: 12, padding: 14, borderRadius: 14, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)", marginBottom: 8, cursor: "pointer", transition: ".3s" }}>
+                  <div style={{ fontSize: 28, flexShrink: 0 }}>{m.icon}</div>
+                  <div style={{ flex: 1 }}><div style={{ fontSize: 14, fontWeight: 700, color: m.color }}>{m.title}</div><div style={{ fontSize: 11, color: "#5a6a80", marginTop: 2 }}>{m.desc}</div></div>
+                  <div style={{ fontSize: 14, color: "#3a4a5c" }}>←</div>
+                </div>
+              );
+              return (
+                <div>
+                  <Card><div style={{ fontSize: 14, fontWeight: 700, color: "#22d3ee", marginBottom: 8 }}>⭐ مقترح لك</div>
+                    {recommended.map(m => <ExCard key={m.id} m={m} />)}
+                  </Card>
+                  <Card><div style={{ fontSize: 13, fontWeight: 600, color: "#5a6a80", marginBottom: 8 }}>المزيد من التمارين</div>
+                    {rest.map(m => <ExCard key={m.id} m={m} />)}
+                  </Card>
+                </div>
+              );
+            })()}
             {trainMode === "sim" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><MeetingSim /></Card>}
             {trainMode === "quick" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><QuickResp /></Card>}
             {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} /></Card>}
