@@ -69,7 +69,13 @@ function getBestBrowserVoice() {
   if (!window.speechSynthesis) return null;
   const voices = window.speechSynthesis.getVoices();
   if (!voices.length) return null;
+  // Try accent-specific voices first
+  const accentVoice = voices.find(v => v.lang === _accent || v.lang.startsWith(_accent.slice(0,5)));
   const priority = [
+    // Accent-matched Neural voices first
+    v => v.lang.startsWith(_accent.slice(0,5)) && (v.name.includes("Online") || v.name.includes("Natural") || v.name.includes("Google") || v.name.includes("Enhanced")),
+    v => v.lang.startsWith(_accent.slice(0,5)),
+    // Then any good English voice
     v => v.name.includes("Online (Natural)") && v.lang.startsWith("en"),
     v => v.name.includes("Microsoft") && v.name.includes("Online") && v.lang.startsWith("en"),
     v => v.name.includes("Google US English"),
@@ -102,6 +108,11 @@ const _audioCache = {};
 // OpenAI TTS state
 let _openaiKey = null;
 let _ttsVoice = "nova";
+
+// FIX 8: Accent selection
+let _accent = "en-US"; // en-US, en-GB, en-AU
+export function setAccent(a) { _accent = a; _bestBrowserVoice = getBestBrowserVoice(); }
+export function getAccent() { return _accent; }
 
 export function setOpenAIKey(key) { _openaiKey = key; }
 export function getOpenAIKey() { return _openaiKey; }
@@ -160,7 +171,7 @@ function speakBrowser(text, rate = 0.85) {
   if (!window.speechSynthesis) return null;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US";
+  u.lang = _accent;
   u.rate = rate;
   u.pitch = 1;
   if (_bestBrowserVoice) u.voice = _bestBrowserVoice;
