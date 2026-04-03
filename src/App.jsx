@@ -911,7 +911,7 @@ function MeetingSim() {
         const isPicked = picked === oi;
         let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
         if (show && isCorrect) { bg = "rgba(52,211,153,0.1)"; brd = "rgba(52,211,153,0.3)"; }
-        else if (show && isPicked && !isCorrect) { bg = "rgba(239,68,68,0.1)"; brd = "rgba(239,68,68,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(251,146,60,0.1)"; brd = "rgba(251,146,60,0.3)"; }
         return (
           <div key={oi} onClick={() => picked === null && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 6, cursor: picked === null ? "pointer" : "default", fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, transition: ".3s", opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
             {o}
@@ -965,7 +965,7 @@ function QuickResp() {
         const isPicked = picked === oi;
         let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
         if (show && isCorrect) { bg = "rgba(52,211,153,0.1)"; brd = "rgba(52,211,153,0.3)"; }
-        else if (show && isPicked && !isCorrect) { bg = "rgba(239,68,68,0.1)"; brd = "rgba(239,68,68,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(251,146,60,0.1)"; brd = "rgba(251,146,60,0.3)"; }
         return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: 10, marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
           {o}{show && isCorrect && <span style={{ color: "#34d399", fontSize: 11 }}> ✓ اقرأها!</span>}
         </div>;
@@ -1037,7 +1037,7 @@ function WeeklyQuiz({ onSave }) {
         const isPicked = picked === oi;
         let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
         if (show && isCorrect) { bg = "rgba(52,211,153,0.1)"; brd = "rgba(52,211,153,0.3)"; }
-        else if (show && isPicked && !isCorrect) { bg = "rgba(239,68,68,0.1)"; brd = "rgba(239,68,68,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(251,146,60,0.1)"; brd = "rgba(251,146,60,0.3)"; }
         return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: 10, marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
           {o}{show && isCorrect && <span style={{ color: "#34d399", fontSize: 11 }}> ✓</span>}
         </div>;
@@ -1396,6 +1396,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
   const [listenDone, setListenDone] = useState(false);
   const [listenAnswer, setListenAnswer] = useState(null); // comprehension Q answer
   const [shadowReps, setShadowReps] = useState({});
+  const [shadowSpoken, setShadowSpoken] = useState({});
   const [recallState, setRecallState] = useState({}); // { 0: "hidden"|"thinking"|"revealed" }
   const [recallScore, setRecallScore] = useState({});
   const [prodInput, setProdInput] = useState("");
@@ -1467,9 +1468,16 @@ function DailySession({ scenario, onComplete, dayNum }) {
         ))}
       </div>}
 
-      {/* Step 1: Listen only — sentence by sentence, no text */}
+      {/* FIX 7: Mental imagery + Step 1 */}
       {step === 0 && (
         <div>
+          {/* Mental imagery prompt — activates episodic memory */}
+          {listenIdx === -1 && !listenDone && <div style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.1)", borderRadius: 14, padding: 20, marginBottom: 14, textAlign: "center" }}>
+            <div style={{ fontSize: 24, marginBottom: 8 }}>{sc.icon}</div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#f59e0b", marginBottom: 8 }}>أغمض عينك لحظة...</div>
+            <div style={{ fontSize: 14, color: "#8892a4", lineHeight: 2.2 }}>تخيّل نفسك فعلاً {sc.title === "في المطعم" ? "جالس في مطعم... النادل يجي ويسألك عن طلبك" : sc.title === "عند الدكتور" ? "في عيادة الدكتور... يسألك عن صحتك" : sc.title === "في الفندق" ? "واقف أمام موظف الاستقبال... تسوي check-in" : "في هالموقف... وتحتاج تتكلم إنجليزي"}</div>
+            <div style={{ fontSize: 12, color: "#5a6a80", marginTop: 8 }}>التخيّل يُنشئ ارتباط في ذاكرتك = تتذكر الجمل أسرع 5x</div>
+          </div>}
           <div style={{ background: "rgba(139,92,246,0.06)", border: "1px solid rgba(139,92,246,0.12)", borderRadius: 14, padding: 24, textAlign: "center", marginBottom: 14 }}>
             <div style={{ fontSize: 15, color: "#8892a4", marginBottom: 16, lineHeight: 2 }}>استمع للمحادثة جملة جملة — حاول تفهم بدون ما تشوف النص</div>
             {listenIdx === -1 && !listenDone && (
@@ -1538,18 +1546,52 @@ function DailySession({ scenario, onComplete, dayNum }) {
       {/* Step 3: Shadow key phrases 3x */}
       {step === 2 && (
         <div>
-          <div style={{ fontSize: 13, color: "#8892a4", marginBottom: 12, lineHeight: 2 }}>اضغط 🔈 استمع — ثم اضغط الدائرة كل مرة ترددّ. الهدف: ٣.</div>
+          <div style={{ fontSize: 13, color: "#8892a4", marginBottom: 12, lineHeight: 2 }}>اسمع الجملة ← ردّدها بصوت عالٍ ← اضغط 🎙️ للتحقق من نطقك. الهدف: ٣ مرات.</div>
           {sc.keyPhrases.map((p, i) => {
             const r = shadowReps[i] || 0;
+            const [spokenResult, setSpokenResult] = [shadowSpoken[i], (v) => setShadowSpoken(prev => ({ ...prev, [i]: v }))];
             return (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 3 ? "rgba(52,211,153,0.06)" : "rgba(255,255,255,0.02)", border: "1px solid " + (r >= 3 ? "rgba(52,211,153,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 6 }}>
-                <div onClick={() => { speak(p.en, 0.8); setShadowReps(prev => ({ ...prev, [i]: (prev[i] || 0) + 1 })); }} style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 3 ? "#34d399" : r > 0 ? "#22d3ee" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", cursor: "pointer", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
-                  <div style={{ fontSize: 12, color: "#5a6a80", marginTop: 2 }}>{p.ar}</div>
+              <div key={i} style={{ padding: 12, borderRadius: 10, background: r >= 3 ? "rgba(52,211,153,0.06)" : "rgba(255,255,255,0.02)", border: "1px solid " + (r >= 3 ? "rgba(52,211,153,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 8 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 3 ? "#34d399" : r > 0 ? "#22d3ee" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", flexShrink: 0 }}>{r >= 3 ? "✓" : r + "/3"}</div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
+                    <div style={{ fontSize: 12, color: "#5a6a80", marginTop: 2 }}>{p.ar}</div>
+                  </div>
+                  <SpeakBtn text={p.en} size={18} />
                 </div>
-                <SpeakBtn text={p.en} size={18} />
-                <PronounceBtn targetText={p.en} />
+                {r < 3 && (
+                  <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                    <button onClick={() => {
+                      speak(p.en, 0.8);
+                      // Start speech recognition after audio finishes
+                      setTimeout(() => {
+                        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+                        if (SR) {
+                          const rec = new SR(); rec.lang = "en-US"; rec.interimResults = false;
+                          rec.onresult = (e) => {
+                            const heard = e.results[0][0].transcript.toLowerCase();
+                            const target = p.en.toLowerCase().replace(/[.,!?']/g, "").split(/\s+/);
+                            const heardW = heard.replace(/[.,!?']/g, "").split(/\s+/);
+                            let m = 0; target.forEach(w => { if (heardW.includes(w)) m++; });
+                            const pct = Math.round((m / target.length) * 100);
+                            setSpokenResult(pct);
+                            if (pct >= 50) setShadowReps(prev => ({ ...prev, [i]: (prev[i] || 0) + 1 }));
+                          };
+                          rec.onerror = () => { setShadowReps(prev => ({ ...prev, [i]: (prev[i] || 0) + 1 })); };
+                          rec.start();
+                        } else {
+                          setShadowReps(prev => ({ ...prev, [i]: (prev[i] || 0) + 1 }));
+                        }
+                      }, 2500);
+                    }} style={{ flex: 1, padding: "10px 16px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#8b5cf6,#6366f1)", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔊 استمع ثم 🎙️ ردّد</button>
+                  </div>
+                )}
+                {spokenResult !== undefined && spokenResult !== null && (
+                  <div style={{ fontSize: 12, color: spokenResult >= 80 ? "#34d399" : spokenResult >= 50 ? "#f59e0b" : "#ef4444", fontWeight: 600, marginTop: 4 }}>
+                    {spokenResult >= 80 ? "نطق ممتاز! " + spokenResult + "%" : spokenResult >= 50 ? "جيد! " + spokenResult + "% — جرّب مرة ثانية" : "حاول مرة ثانية — ركّز على الكلمات المفتاحية"}
+                  </div>
+                )}
               </div>
             );
           })}
@@ -1594,10 +1636,10 @@ function DailySession({ scenario, onComplete, dayNum }) {
                       <div style={{ display: "flex", gap: 6 }}>
                         <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "good" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(52,211,153,0.15)", color: "#34d399", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>تذكّرتها ✓</button>
                         <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "partial" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(245,158,11,0.15)", color: "#f59e0b", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>تقريباً</button>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(239,68,68,0.1)", color: "#ef4444", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>نسيتها</button>
+                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(251,146,60,0.1)", color: "#ef4444", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>نسيتها</button>
                       </div>
                     )}
-                    {selfScore && <div style={{ fontSize: 12, color: selfScore === "good" ? "#34d399" : selfScore === "partial" ? "#f59e0b" : "#ef4444", fontWeight: 600, marginTop: 4 }}>{selfScore === "good" ? "✓ ممتاز!" : selfScore === "partial" ? "⚡ قريب — ردّدها مرة" : "🔄 راجعها — ردّدها ٣ مرات"}</div>}
+                    {selfScore && <div style={{ fontSize: 12, color: selfScore === "good" ? "#34d399" : selfScore === "partial" ? "#f59e0b" : "#ef4444", fontWeight: 600, marginTop: 4 }}>{selfScore === "good" ? "✓ ممتاز!" : selfScore === "partial" ? "⚡ قريب — ردّدها مرة" : "🔄 لسه ما ترسّخت — بنراجعها مع بعض"}</div>}
                   </div>
                 )}
               </div>
@@ -1609,7 +1651,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
             return (
               <div style={{ marginTop: 14 }}>
                 {!allGood && (
-                  <div style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.1)", borderRadius: 10, padding: 14, marginBottom: 10, textAlign: "center" }}>
+                  <div style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(251,146,60,0.1)", borderRadius: 10, padding: 14, marginBottom: 10, textAlign: "center" }}>
                     <div style={{ fontSize: 13, color: "#ef4444", fontWeight: 600, marginBottom: 8 }}>{"🔄 " + forgotten.length + " جملة تحتاج مراجعة — ردّدها ثم أعد التقييم"}</div>
                     {forgotten.map(fi => (
                       <div key={fi} style={{ display: "flex", alignItems: "center", gap: 8, padding: 10, borderRadius: 8, background: "rgba(255,255,255,0.02)", marginBottom: 4 }}>
@@ -1961,7 +2003,7 @@ function ListenExercise() {
         const isPicked = picked === oi;
         let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
         if (show && isCorrect) { bg = "rgba(52,211,153,0.1)"; brd = "rgba(52,211,153,0.3)"; }
-        else if (show && isPicked && !isCorrect) { bg = "rgba(239,68,68,0.1)"; brd = "rgba(239,68,68,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(251,146,60,0.1)"; brd = "rgba(251,146,60,0.3)"; }
         return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 5, cursor: show ? "default" : "pointer", fontSize: 14, lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
           {o}{show && isCorrect && <span style={{ color: "#34d399", fontSize: 11 }}> ✓</span>}
         </div>;
@@ -2366,7 +2408,7 @@ function LevelTest({ onComplete }) {
         const isPicked = picked === oi;
         let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
         if (show && isCorrect) { bg = "rgba(52,211,153,0.12)"; brd = "rgba(52,211,153,0.3)"; }
-        else if (show && isPicked && !isCorrect) { bg = "rgba(239,68,68,0.12)"; brd = "rgba(239,68,68,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(239,68,68,0.12)"; brd = "rgba(251,146,60,0.3)"; }
         return (
           <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 6, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1, transition: ".2s" }}>
             {o}
@@ -2645,12 +2687,28 @@ export default function App() {
                   if (!d.includes("session")) {
                     save({ ...store, days: { ...store.days, [today]: [...d, "session"] } });
                     setConf(true); setTimeout(() => setConf(false), 3000);
-                    // Award XP
-                    const earned = 25;
+                    // Award XP + variable surprise rewards
+                    const sessCount = sessionHistory.length + 1;
+                    const bonus = sessCount % 5 === 0 ? 50 : sessCount % 3 === 0 ? 15 : 0;
+                    const earned = 25 + bonus;
                     const newXp = xp + earned;
                     setXp(newXp);
-                    setShowXpPop("+" + earned + " XP ⚡");
-                    setTimeout(() => setShowXpPop(null), 2000);
+                    // Variable reward messages (surprise = dopamine spike)
+                    const surprises = [
+                      null, null, // normal
+                      "🏆 إنجاز: أول ٣ جلسات متتالية!",
+                      null,
+                      "💎 حفظت ١٥ جملة — أكثر من معظم متعلمي اللغة!",
+                      null, null,
+                      "🔥 أسبوع كامل! عقلك بدأ يبني مسارات عصبية جديدة",
+                      null, null,
+                      "⭐ ١٠ جلسات! صرت تعرف ٣٠ جملة تقدر تستخدمها في أي مكان",
+                      null, null, null,
+                      "🎖️ أسبوعين! بروكا (منطقة الكلام في دماغك) صارت أنشط",
+                    ];
+                    const surprise = surprises[Math.min(sessCount - 1, surprises.length - 1)];
+                    setShowXpPop(surprise || ("+" + earned + " XP ⚡" + (bonus > 0 ? " 🎁 مكافأة!" : "")));
+                    setTimeout(() => setShowXpPop(null), surprise ? 4000 : 2000);
                     (async () => { try { await storage.set("user-xp", String(newXp)); } catch(e) {} })();
                   }
                   (async () => { try { const r = await storage.get("session-history"); if (r && r.value) setSessionHistory(JSON.parse(r.value)); } catch(e) {} })();
@@ -2661,6 +2719,26 @@ export default function App() {
               <div style={{ textAlign: "center" }}>
                 <div style={{ fontSize: 14, color: "#34d399", fontWeight: 700, marginBottom: 4 }}>✅ جلسة اليوم مكتملة!</div>
                 <div style={{ fontSize: 12, color: "#5a6a80" }}>تبي تمارين إضافية؟ روح لتبويب "تدريب"</div>
+              </div>
+            </Card>}
+            {/* FIX 2: Evening Review — 3 min before sleep = 2x consolidation */}
+            {done.includes("session") && <Card s={{ borderColor: "rgba(139,92,246,0.15)", background: "rgba(139,92,246,0.03)" }}>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 28, marginBottom: 8 }}>🌙</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: "#a78bfa", marginBottom: 6 }}>مراجعة ما قبل النوم</div>
+                <div style={{ fontSize: 13, color: "#8892a4", lineHeight: 2, marginBottom: 12 }}>استمع لجمل اليوم قبل ما تنام — ٣ دقائق فقط<br/>عقلك يرسّخها أثناء النوم (مثبت علمياً)</div>
+                <button onClick={() => {
+                  const sc2 = chosenScenario || todayScenario;
+                  let idx = 0;
+                  function playNext() {
+                    if (idx >= sc2.keyPhrases.length) return;
+                    speak(sc2.keyPhrases[idx].en, 0.75);
+                    idx++;
+                    setTimeout(playNext, 4000);
+                  }
+                  playNext();
+                }} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#8b5cf6,#a78bfa)", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔊 شغّل جمل اليوم</button>
+                <div style={{ fontSize: 11, color: "#5a6a80", marginTop: 8 }}>استرخِ واستمع فقط — لا تحتاج تردد</div>
               </div>
             </Card>}
           </div>
@@ -2914,7 +2992,7 @@ export default function App() {
                       const s = levelResult.skills[sk];
                       if (!s || s.total === 0) return null;
                       const pct = Math.round((s.correct / s.total) * 100);
-                      return <div key={sk} style={{ fontSize: 10, padding: "2px 6px", borderRadius: 4, background: (pct >= 60 ? "rgba(52,211,153,0.1)" : "rgba(239,68,68,0.1)"), color: pct >= 60 ? "#34d399" : "#ef4444" }}>{TYPE_ICONS[sk]} {pct}%</div>;
+                      return <div key={sk} style={{ fontSize: 10, padding: "2px 6px", borderRadius: 4, background: (pct >= 60 ? "rgba(52,211,153,0.1)" : "rgba(251,146,60,0.1)"), color: pct >= 60 ? "#34d399" : "#ef4444" }}>{TYPE_ICONS[sk]} {pct}%</div>;
                     })}
                   </div>}
                 </div>
@@ -2998,7 +3076,7 @@ export default function App() {
               {!getOpenAIKey() && <div style={{ fontSize: 11, color: "#34d399", background: "rgba(52,211,153,0.06)", borderRadius: 8, padding: 10 }}>💡 نصيحة: افتح التطبيق في متصفح Edge للحصول على أفضل صوت مجاني (Microsoft Neural voices)</div>}
             </Card>
             <div style={{ textAlign: "center", marginTop: 14 }}>
-              <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(239,68,68,0.1)", background: "transparent", color: "#ef4444", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة تعيين</button>
+              <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(251,146,60,0.1)", background: "transparent", color: "#ef4444", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة تعيين</button>
             </div>
           </div>
         )}
