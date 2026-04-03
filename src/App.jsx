@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { speak, stopSpeech, getVoiceInfo, setOpenAIKey, getOpenAIKey, setTTSVoice, getTTSVoice, storage } from "./platform.js";
+import { speak, stopSpeech, getVoiceInfo, setOpenAIKey, getOpenAIKey, setTTSVoice, getTTSVoice, setAccent, getAccent, storage } from "./platform.js";
 
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
@@ -240,11 +240,19 @@ const LEVEL_TEST = [
   { level: 5, type: "reading", q: "Read: 'The paradox inherent in the company's strategy—pursuing aggressive expansion while simultaneously advocating for fiscal austerity—was not lost on analysts, who questioned whether such cognitive dissonance could yield sustainable growth.' — The analysts think the strategy is ___.", opts: ["Contradictory and potentially unsustainable", "Brilliant and innovative", "Simple and clear", "Risky but likely to succeed"], ans: 0 },
   { level: 5, type: "reading", q: "Read: 'The CEO's resignation, ostensibly precipitated by health concerns, coincided suspiciously with the emergence of an accounting scandal, leading commentators to infer a causal nexus between the two events.' — Commentators believe ___.", opts: ["The resignation was actually caused by the scandal, not health", "Health was the real reason", "There was no scandal", "The CEO was forced out by the board"], ans: 0 },
   { level: 5, type: "pragmatics", q: "You discover a critical flaw in a strategy that your CEO personally championed in front of the board. How do you address it?", opts: ["I've been reviewing the implementation details and identified an area where we might want to stress-test our assumptions before proceeding further.", "Your strategy is flawed.", "I think there's a problem but it's probably fine.", "I'll just fix it quietly and not say anything."], ans: 0 },
+
+  // ===== LISTENING QUESTIONS (FIX 2) — audio-based, one per level =====
+  { level: 0, type: "listening", q: "🔊 Listen: 'I would like a cup of coffee, please.' — What does the speaker want?", audio: "I would like a cup of coffee, please.", opts: ["A cup of coffee", "A cup of tea", "A glass of water", "A sandwich"], ans: 0 },
+  { level: 1, type: "listening", q: "🔊 Listen: 'The store closes at nine o'clock on weekdays.' — When does the store close?", audio: "The store closes at nine o'clock on weekdays.", opts: ["9 PM on weekdays", "9 AM on weekdays", "10 PM every day", "8 PM on weekends"], ans: 0 },
+  { level: 2, type: "listening", q: "🔊 Listen: 'I've been waiting for over thirty minutes and my order still hasn't arrived.' — What is the problem?", audio: "I've been waiting for over thirty minutes and my order still hasn't arrived.", opts: ["The order is very late", "The food is cold", "The wrong order arrived", "The restaurant is closed"], ans: 0 },
+  { level: 3, type: "listening", q: "🔊 Listen: 'While the proposal has merit, I believe we should consider the long-term implications before committing resources.' — What is the speaker's position?", audio: "While the proposal has merit, I believe we should consider the long-term implications before committing resources.", opts: ["Cautiously supportive but wants more analysis", "Fully against the proposal", "Enthusiastically in favor", "Indifferent to the outcome"], ans: 0 },
+  { level: 4, type: "listening", q: "🔊 Listen: 'Notwithstanding the initial setbacks, the project has demonstrated remarkable resilience and is now on track to exceed its original projections.' — What happened to the project?", audio: "Notwithstanding the initial setbacks, the project has demonstrated remarkable resilience and is now on track to exceed its original projections.", opts: ["It struggled early but recovered and is now exceeding expectations", "It failed completely", "It was cancelled and restarted", "It met exactly the original targets"], ans: 0 },
+  { level: 5, type: "listening", q: "🔊 Listen: 'The ostensible rationale for the restructuring belied a more nuanced set of motivations that only became apparent in retrospect.' — What does this mean?", audio: "The ostensible rationale for the restructuring belied a more nuanced set of motivations that only became apparent in retrospect.", opts: ["The stated reasons were not the real reasons, which only became clear later", "The restructuring was fully transparent from the start", "Everyone understood the reasons immediately", "The restructuring had no clear purpose"], ans: 0 },
 ];
 
 const LEVEL_IDX = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4, C2: 5 };
-const TYPE_LABELS = { grammar: "قواعد", vocab: "مفردات", reading: "فهم القراءة", pragmatics: "تواصل" };
-const TYPE_ICONS = { grammar: "📐", vocab: "📚", reading: "📖", pragmatics: "🗣️" };
+const TYPE_LABELS = { grammar: "قواعد", vocab: "مفردات", reading: "فهم القراءة", pragmatics: "تواصل", listening: "استماع" };
+const TYPE_ICONS = { grammar: "📐", vocab: "📚", reading: "📖", pragmatics: "🗣️", listening: "👂" };
 
 // ===== SPEECH UI COMPONENTS (engine is in platform.js) =====
 function SpeakBtn({ text, rate, size, color }) {
@@ -1388,6 +1396,10 @@ function DailySession({ scenario, onComplete, dayNum }) {
   const [prodInput, setProdInput] = useState("");
   const [prodSubmitted, setProdSubmitted] = useState(false);
   const [challengeAccepted, setChallengeAccepted] = useState(false);
+  const [challengeDone, setChallengeDone] = useState(false);
+  const [challengeNote, setChallengeNote] = useState("");
+  const [aiFeedback, setAiFeedback] = useState(null);
+  const [aiLoading, setAiLoading] = useState(false);
 
   const sc = scenario;
   const steps = [
@@ -1519,6 +1531,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
                   <div style={{ fontSize: 12, color: "#5a6a80", marginTop: 2 }}>{p.ar}</div>
                 </div>
                 <SpeakBtn text={p.en} size={18} />
+                <PronounceBtn targetText={p.en} />
               </div>
             );
           })}
@@ -1621,6 +1634,33 @@ function DailySession({ scenario, onComplete, dayNum }) {
                   <SpeakBtn text={sc.produceModel} size={16} />
                 </div>
               </div>
+              {/* FIX 7: AI feedback on writing */}
+              {getOpenAIKey() && !aiFeedback && !aiLoading && (
+                <div style={{ textAlign: "center", marginBottom: 8 }}>
+                  <button onClick={async () => {
+                    setAiLoading(true);
+                    try {
+                      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+                        method: "POST", headers: { "Authorization": "Bearer " + getOpenAIKey(), "Content-Type": "application/json" },
+                        body: JSON.stringify({ model: "gpt-4o-mini", max_tokens: 200, messages: [
+                          { role: "system", content: "You are an English language coach for Arabic speakers. Compare the student's response with the model answer. Give 2-3 SHORT tips in Arabic about grammar, vocabulary, or naturalness. Be encouraging. Max 3 lines." },
+                          { role: "user", content: "Situation: " + sc.producePrompt + "\nStudent wrote: " + prodInput + "\nModel answer: " + sc.produceModel + "\nGive feedback in Arabic:" }
+                        ] })
+                      });
+                      const data = await res.json();
+                      setAiFeedback(data.choices[0].message.content);
+                    } catch { setAiFeedback("لم أتمكن من الاتصال. تحقق من مفتاح API."); }
+                    setAiLoading(false);
+                  }} style={{ padding: "6px 16px", borderRadius: 8, border: "1px solid rgba(139,92,246,0.2)", background: "transparent", color: "#8b5cf6", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🤖 تحليل ذكي لكتابتك</button>
+                </div>
+              )}
+              {aiLoading && <div style={{ textAlign: "center", fontSize: 12, color: "#8b5cf6", marginBottom: 8 }}>جاري التحليل...</div>}
+              {aiFeedback && (
+                <div style={{ background: "rgba(139,92,246,0.06)", border: "1px solid rgba(139,92,246,0.12)", borderRadius: 12, padding: 14, marginBottom: 8 }}>
+                  <div style={{ fontSize: 12, color: "#8b5cf6", fontWeight: 700, marginBottom: 6 }}>🤖 تحليل ذكي:</div>
+                  <div style={{ fontSize: 13, color: "#c4b5fd", lineHeight: 2, whiteSpace: "pre-wrap" }}>{aiFeedback}</div>
+                </div>
+              )}
               {/* Noticing feedback — explain WHY */}
               <div style={{ background: "rgba(167,139,250,0.06)", border: "1px solid rgba(167,139,250,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
                 <div style={{ fontSize: 12, color: "#a78bfa", fontWeight: 700, marginBottom: 6 }}>💡 لاحظ الفرق:</div>
@@ -1649,7 +1689,6 @@ function DailySession({ scenario, onComplete, dayNum }) {
           {!challengeAccepted ? (
             <button onClick={() => {
               setChallengeAccepted(true);
-              // Save session results with recall data
               const sessionData = { scenario: sc.title, date: gtd(), recallScore: { ...recallScore }, phrasesCount: sc.keyPhrases.length };
               (async () => { try {
                 const r = await storage.get("session-history");
@@ -1659,11 +1698,30 @@ function DailySession({ scenario, onComplete, dayNum }) {
               } catch(e) {} })();
               if (onComplete) onComplete();
             }} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#34d399,#22d3ee)", color: "#060a14", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>أقبل التحدي ✓</button>
+          ) : !challengeDone ? (
+            <div style={{ animation: "fadeUp .4s" }}>
+              {/* FIX 4: Challenge follow-up */}
+              <div style={{ fontSize: 14, color: "#f59e0b", fontWeight: 700, marginBottom: 10 }}>سوّيت التحدي؟</div>
+              <div style={{ display: "flex", gap: 8, justifyContent: "center", marginBottom: 10 }}>
+                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#34d399", color: "#060a14", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>نعم سويته ✓</button>
+                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", background: "transparent", color: "#5a6a80", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>بسويه لاحقاً</button>
+              </div>
+              <input value={challengeNote} onChange={(e) => setChallengeNote(e.target.value)} placeholder="كيف كانت التجربة؟ (اختياري)" style={{ width: "100%", padding: 10, borderRadius: 10, fontFamily: "inherit", fontSize: 13, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "#e0e7f1", outline: "none", textAlign: "center" }} />
+            </div>
           ) : (
             <div style={{ animation: "fadeUp .4s" }}>
               <div style={{ fontSize: 40, marginBottom: 8 }}>🎉</div>
-              <div style={{ fontSize: 16, fontWeight: 700, color: "#34d399", marginBottom: 6 }}>أحسنت! أنهيت جلسة اليوم</div>
-              <div style={{ fontSize: 13, color: "#8892a4", lineHeight: 2 }}>تمرّنت على "{sc.title}" من ٦ زوايا مختلفة. كل جلسة تبني طبقة جديدة في ذاكرتك.</div>
+              {/* FIX 5: Self-efficacy message based on history */}
+              {(() => {
+                const totalSessions = (sessionHistory || []).length;
+                const recalled = Object.values(recallScore).filter(v => v === "good").length;
+                const total = sc.keyPhrases.length;
+                if (totalSessions === 0) return <div style={{ fontSize: 16, fontWeight: 700, color: "#34d399", marginBottom: 6 }}>أول جلسة لك! بداية ممتازة.</div>;
+                if (recalled === total) return <div style={{ fontSize: 16, fontWeight: 700, color: "#34d399", marginBottom: 6, lineHeight: 2 }}>تذكّرت كل الجمل من ذاكرتك!<br/>هذا دليل إن عقلك يبني مسارات جديدة.</div>;
+                if (totalSessions >= 7) return <div style={{ fontSize: 16, fontWeight: 700, color: "#34d399", marginBottom: 6, lineHeight: 2 }}>أسبوع كامل! {totalSessions} جلسة أنجزتها.<br/>قبل أسبوع ما كنت تعرف هالجمل. اليوم تقولها.</div>;
+                return <div style={{ fontSize: 16, fontWeight: 700, color: "#34d399", marginBottom: 6, lineHeight: 2 }}>جلسة #{totalSessions + 1} مكتملة!<br/>كل جلسة تقرّبك خطوة من الطلاقة الحقيقية.</div>;
+              })()}
+              <div style={{ fontSize: 13, color: "#8892a4", lineHeight: 2 }}>تمرّنت على "{sc.title}" من ٦ زوايا. الجمل الآن أقرب لذاكرتك طويلة المدى.</div>
             </div>
           )}
         </div>
@@ -1672,7 +1730,49 @@ function DailySession({ scenario, onComplete, dayNum }) {
   );
 }
 
-// ===== LISTENING COMPREHENSION =====
+// ===== FIX 6: PRONUNCIATION CHECK (Web Speech Recognition) =====
+function PronounceBtn({ targetText, size }) {
+  const [state, setState] = useState("idle"); // idle, listening, result
+  const [result, setResult] = useState("");
+  const [score, setScore] = useState(0);
+
+  function startListening() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { setState("nosupport"); return; }
+    setState("listening");
+    const recognition = new SR();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.onresult = (event) => {
+      const heard = event.results[0][0].transcript.toLowerCase().trim();
+      setResult(heard);
+      // Compare with target
+      const targetWords = targetText.toLowerCase().replace(/[.,!?']/g, "").split(/\s+/);
+      const heardWords = heard.replace(/[.,!?']/g, "").split(/\s+/);
+      let match = 0;
+      targetWords.forEach(w => { if (heardWords.includes(w)) match++; });
+      const pct = Math.round((match / targetWords.length) * 100);
+      setScore(pct);
+      setState("result");
+    };
+    recognition.onerror = () => { setState("idle"); };
+    recognition.onend = () => { if (state === "listening") setState("idle"); };
+    recognition.start();
+  }
+
+  if (state === "nosupport") return null;
+  if (state === "idle") return (
+    <button onClick={startListening} style={{ background: "none", border: "1px solid rgba(167,139,250,0.2)", borderRadius: 6, cursor: "pointer", fontSize: size || 12, padding: "3px 8px", color: "#a78bfa", flexShrink: 0 }} title="جرّب نطقك">🎙️</button>
+  );
+  if (state === "listening") return (
+    <span style={{ fontSize: size || 12, color: "#ef4444", animation: "pulse 1s infinite" }}>🔴 تكلم...</span>
+  );
+  return (
+    <span style={{ fontSize: size || 11, color: score >= 80 ? "#34d399" : score >= 50 ? "#f59e0b" : "#ef4444", fontWeight: 600 }}>{score >= 80 ? "✓ " + score + "%" : score + "%"}</span>
+  );
+}
+
 // ===== 4-3-2 FLUENCY TECHNIQUE =====
 // Nation (1989): Speak about the SAME topic for 4 minutes, then 3, then 2.
 // Each round forces faster retrieval = builds automaticity = real fluency.
@@ -2238,6 +2338,7 @@ function LevelTest({ onComplete }) {
       {/* Question */}
       <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: 16, marginBottom: 14 }}>
         <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.9, color: "#e0e7f1" }}>{displayQ.q}</div>
+        {currentQ.audio && <div style={{ textAlign: "center", marginTop: 8 }}><button onClick={() => speak(currentQ.audio, 0.85)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#8b5cf6", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔊 استمع مرة ثانية</button></div>}
       </div>
 
       {/* Options */}
@@ -2288,6 +2389,7 @@ export default function App() {
   const [levelResult, setLevelResult] = useState(null);
   const [srsData, setSrsData] = useState({});
   const [sessionHistory, setSessionHistory] = useState([]);
+  const [chosenScenario, setChosenScenario] = useState(null);
   const tmRef = useRef(null);
 
   useEffect(() => {
@@ -2412,16 +2514,34 @@ export default function App() {
         {tab === "today" && (
           <div>
             <Card><div style={{ fontSize: 14, color: "#8892a4", textAlign: "center", lineHeight: 2 }}>{"💎 " + MOTIV[dn % MOTIV.length]}</div></Card>
+            {/* FIX 1: Scenario choice — user can accept or browse */}
+            <Card s={{ padding: 14 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                <div style={{ fontSize: 24 }}>{todayScenario.icon}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: "#22d3ee" }}>{"جلسة اليوم: " + todayScenario.title}</div>
+                  <div style={{ fontSize: 11, color: "#5a6a80" }}>مقترح بناءً على تقدمك</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 6 }}>
+                {DAILY_SCENARIOS.slice(0, 14).map((s, i) => (
+                  <button key={i} onClick={() => { setChosenScenario(s); }} style={{ padding: "4px 10px", borderRadius: 8, border: "1px solid " + ((chosenScenario || todayScenario).title === s.title ? "rgba(34,211,238,0.3)" : "rgba(255,255,255,0.05)"), background: (chosenScenario || todayScenario).title === s.title ? "rgba(34,211,238,0.1)" : "transparent", color: (chosenScenario || todayScenario).title === s.title ? "#22d3ee" : "#4a5568", fontSize: 16, cursor: "pointer", flexShrink: 0, whiteSpace: "nowrap" }} title={s.title}>{s.icon}</button>
+                ))}
+              </div>
+            </Card>
             <Card>
               <DailySession
-                scenario={DAILY_SCENARIOS[dn % DAILY_SCENARIOS.length]}
+                scenario={chosenScenario || todayScenario}
                 dayNum={dn}
+                sessionHistory={sessionHistory}
                 onComplete={() => {
                   const d = store.days[today] || [];
                   if (!d.includes("session")) {
                     save({ ...store, days: { ...store.days, [today]: [...d, "session"] } });
                     setConf(true); setTimeout(() => setConf(false), 3000);
                   }
+                  // Reload session history
+                  (async () => { try { const r = await storage.get("session-history"); if (r && r.value) setSessionHistory(JSON.parse(r.value)); } catch(e) {} })();
                 }}
               />
             </Card>
@@ -2586,6 +2706,29 @@ export default function App() {
                 ))}
               </div>
             </Card>
+            {/* FIX 3: Smart Weekly Summary */}
+            {sessionHistory.length >= 3 && <Card s={{ borderColor: "rgba(34,211,238,0.1)" }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#22d3ee", marginBottom: 10 }}>📋 ملخص الأسبوع</div>
+              {(() => {
+                const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
+                const weekStr = weekAgo.toISOString().slice(0, 10);
+                const thisWeek = sessionHistory.filter(s => s.date >= weekStr);
+                const totalPh = thisWeek.reduce((s, x) => s + (x.phrasesCount || 0), 0);
+                const recalled = thisWeek.reduce((s, x) => { const rs = x.recallScore || {}; return s + Object.values(rs).filter(v => v === "good").length; }, 0);
+                const scenarios = [...new Set(thisWeek.map(s => s.scenario))];
+                const weakScenarios = thisWeek.filter(s => { const rs = s.recallScore || {}; return Object.values(rs).filter(v => v === "forgot").length > 0; }).map(s => s.scenario);
+                const uniqueWeak = [...new Set(weakScenarios)];
+                return (
+                  <div style={{ fontSize: 13, color: "#8892a4", lineHeight: 2.2 }}>
+                    <div>{"✅ " + thisWeek.length + " جلسة هالأسبوع — " + scenarios.length + " موقف مختلف"}</div>
+                    <div>{"💬 " + totalPh + " جملة تمرّنت عليها — تذكّرت " + recalled + " منها"}</div>
+                    {uniqueWeak.length > 0 && <div style={{ color: "#f59e0b" }}>{"🔄 تحتاج مراجعة: " + uniqueWeak.slice(0, 3).join("، ")}</div>}
+                    {uniqueWeak.length === 0 && thisWeek.length >= 5 && <div style={{ color: "#34d399" }}>{"🔥 أسبوع ممتاز! ما نسيت أي جملة"}</div>}
+                    {thisWeek.length < 3 && <div style={{ color: "#5a6a80" }}>{"💡 حاول تسوي ٥ جلسات الأسبوع الجاي للحصول على أفضل نتيجة"}</div>}
+                  </div>
+                );
+              })()}
+            </Card>}
             {/* Smart Progress — Session History */}
             {sessionHistory.length > 0 && <Card>
               <div style={{ fontSize: 14, fontWeight: 700, color: "#f472b6", marginBottom: 10 }}>🧠 أداء الذاكرة</div>
@@ -2685,6 +2828,13 @@ export default function App() {
               {/* Test current voice */}
               <div style={{ marginBottom: 14 }}>
                 <button onClick={() => speak("Hello! Nice to meet you. How are you today?", 0.9)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "rgba(34,211,238,0.1)", color: "#22d3ee", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>🔊 جرّب الصوت الحالي</button>
+              </div>
+              {/* FIX 8: Accent selection */}
+              <div style={{ fontSize: 12, color: "#5a6a80", marginBottom: 6 }}>اللهجة:</div>
+              <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
+                {[{ code: "en-US", label: "🇺🇸 أمريكي" }, { code: "en-GB", label: "🇬🇧 بريطاني" }, { code: "en-AU", label: "🇦🇺 أسترالي" }].map(a => (
+                  <button key={a.code} onClick={() => { setAccent(a.code); speak("Hello! How are you today?", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (getAccent() === a.code ? "rgba(34,211,238,0.3)" : "rgba(255,255,255,0.06)"), background: getAccent() === a.code ? "rgba(34,211,238,0.1)" : "transparent", color: getAccent() === a.code ? "#22d3ee" : "#6b7a8d", fontSize: 12, cursor: "pointer" }}>{a.label}</button>
+                ))}
               </div>
 
               {/* Tier explanation */}
