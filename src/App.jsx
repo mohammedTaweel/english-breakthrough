@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { speak, stopSpeech, getVoiceInfo, setOpenAIKey, getOpenAIKey, setTTSVoice, getTTSVoice, storage } from "./platform.js";
 
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
@@ -245,114 +246,7 @@ const LEVEL_IDX = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4, C2: 5 };
 const TYPE_LABELS = { grammar: "قواعد", vocab: "مفردات", reading: "فهم القراءة", pragmatics: "تواصل" };
 const TYPE_ICONS = { grammar: "📐", vocab: "📚", reading: "📖", pragmatics: "🗣️" };
 
-// ===== SPEECH ENGINE — Smart Voice Selection + Optional OpenAI TTS =====
-// Priority: OpenAI TTS (paid, best) → Neural browser voices (free, great) → Standard browser voices (free, OK)
-const _audioCache = {};
-let _openaiKey = null;
-let _ttsVoice = "nova";
-
-(async () => {
-  try {
-    const r = await window.storage.get("openai-tts-key");
-    if (r && r.value) _openaiKey = r.value;
-    const v = await window.storage.get("openai-tts-voice");
-    if (v && v.value) _ttsVoice = v.value;
-  } catch (e) {}
-})();
-
-async function speakOpenAI(text, speed = 1.0) {
-  if (!_openaiKey) return null;
-  const cacheKey = text + "|" + _ttsVoice + "|" + speed;
-  if (_audioCache[cacheKey]) {
-    const audio = new Audio(_audioCache[cacheKey]);
-    audio.play();
-    return audio;
-  }
-  try {
-    const res = await fetch("https://api.openai.com/v1/audio/speech", {
-      method: "POST",
-      headers: { "Authorization": "Bearer " + _openaiKey, "Content-Type": "application/json" },
-      body: JSON.stringify({ model: "tts-1", input: text, voice: _ttsVoice, speed }),
-    });
-    if (!res.ok) return null;
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    _audioCache[cacheKey] = url;
-    const audio = new Audio(url);
-    audio.play();
-    return audio;
-  } catch (e) { return null; }
-}
-
-// Smart voice picker — prioritizes high-quality Neural voices available for free
-function getBestVoice() {
-  if (!window.speechSynthesis) return null;
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices.length) return null;
-  // Priority list — best free voices across browsers/platforms
-  const priority = [
-    // Microsoft Edge Neural voices (free, excellent quality — like Azure Neural)
-    v => v.name.includes("Online (Natural)") && v.lang.startsWith("en"),
-    v => v.name.includes("Microsoft") && v.name.includes("Online") && v.lang.startsWith("en"),
-    // Google Neural/WaveNet on Chrome (free, very good)
-    v => v.name.includes("Google US English"),
-    v => v.name.includes("Google UK English"),
-    // macOS/iOS high quality voices
-    v => v.name === "Samantha" && v.lang.startsWith("en"),
-    v => v.name === "Karen" && v.lang.startsWith("en"),
-    v => v.name === "Daniel" && v.lang.startsWith("en"),
-    v => (v.name.includes("Enhanced") || v.name.includes("Premium")) && v.lang.startsWith("en"),
-    // Android Neural voices
-    v => v.lang.startsWith("en-US") && v.localService === false,
-    // Any en-US voice as last resort
-    v => v.lang.startsWith("en-US"),
-    v => v.lang.startsWith("en-GB"),
-    v => v.lang.startsWith("en"),
-  ];
-  for (const test of priority) {
-    const found = voices.find(test);
-    if (found) return found;
-  }
-  return voices[0];
-}
-
-let _bestVoice = null;
-// Voices load async — listen for them
-if (window.speechSynthesis) {
-  window.speechSynthesis.onvoiceschanged = () => { _bestVoice = getBestVoice(); };
-  _bestVoice = getBestVoice();
-}
-
-function speakBrowser(text, rate = 0.85) {
-  if (!window.speechSynthesis) return null;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US";
-  u.rate = rate;
-  u.pitch = 1;
-  if (_bestVoice) u.voice = _bestVoice;
-  window.speechSynthesis.speak(u);
-  return u;
-}
-
-function speak(text, rate = 0.85) {
-  if (_openaiKey) {
-    const speed = rate < 0.7 ? 0.8 : rate < 0.9 ? 0.95 : 1.0;
-    const audioPromise = speakOpenAI(text, speed);
-    const fakeU = { onend: null };
-    audioPromise.then(audio => {
-      if (audio) { audio.onended = () => { if (fakeU.onend) fakeU.onend(); }; }
-      else {
-        const u = speakBrowser(text, rate);
-        if (u) u.onend = () => { if (fakeU.onend) fakeU.onend(); };
-        else if (fakeU.onend) fakeU.onend();
-      }
-    });
-    return fakeU;
-  }
-  return speakBrowser(text, rate);
-}
-
+// ===== SPEECH UI COMPONENTS (engine is in platform.js) =====
 function SpeakBtn({ text, rate, size, color }) {
   const [playing, setPlaying] = useState(false);
   function play() {
@@ -369,11 +263,10 @@ function SpeakBtn({ text, rate, size, color }) {
 }
 
 function VoiceBadge() {
-  if (_openaiKey) return <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: "rgba(52,211,153,0.15)", color: "#34d399", fontWeight: 600 }}>OpenAI — صوت بشري</span>;
-  const vn = _bestVoice ? _bestVoice.name : "";
-  const isNeural = vn.includes("Natural") || vn.includes("Online") || vn.includes("Enhanced") || vn.includes("Premium") || vn.includes("Google");
-  if (isNeural) return <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: "rgba(34,211,238,0.15)", color: "#22d3ee", fontWeight: 600 }}>{"مجاني — " + vn.split(" ").slice(0, 3).join(" ")}</span>;
-  return <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: "rgba(245,158,11,0.15)", color: "#f59e0b", fontWeight: 600 }}>صوت أساسي</span>;
+  const info = getVoiceInfo();
+  const colors = { openai: "#34d399", native: "#34d399", neural: "#22d3ee", basic: "#f59e0b" };
+  const bgs = { openai: "rgba(52,211,153,0.15)", native: "rgba(52,211,153,0.15)", neural: "rgba(34,211,238,0.15)", basic: "rgba(245,158,11,0.15)" };
+  return <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: bgs[info.tier], color: colors[info.tier], fontWeight: 600 }}>{info.label}</span>;
 }
 
 // ===== LISTENING COMPREHENSION =====
@@ -712,7 +605,7 @@ function Prompter({ lines, gap, color, label, withAudio }) {
   const ref = useRef(null);
   const iRef = useRef(0);
 
-  function stop() { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); iRef.current = 0; setPhase("listen"); window.speechSynthesis && window.speechSynthesis.cancel(); }
+  function stop() { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); iRef.current = 0; setPhase("listen"); stopSpeech(); }
   function start() {
     stop(); setOn(true); iRef.current = 0;
     // Play audio first, then start countdown for repeating
@@ -746,7 +639,7 @@ function Prompter({ lines, gap, color, label, withAudio }) {
       setSec(c);
     }, 1000);
   }
-  useEffect(() => () => { clearInterval(ref.current); window.speechSynthesis && window.speechSynthesis.cancel(); }, []);
+  useEffect(() => () => { clearInterval(ref.current); stopSpeech(); }, []);
 
   return (
     <div>
@@ -898,11 +791,11 @@ function WeeklyQuiz({ onSave }) {
       const pct = Math.round((score / qs.current.length) * 100);
       (async () => {
         try {
-          const r = await window.storage.get("quiz-results");
+          const r = await storage.get("quiz-results");
           const results = r && r.value ? JSON.parse(r.value) : [];
           if (results.length > 0) setPrevPct(results[results.length - 1].pct);
           results.push({ date: gtd(), pct, score, total: qs.current.length });
-          await window.storage.set("quiz-results", JSON.stringify(results));
+          await storage.set("quiz-results", JSON.stringify(results));
           if (onSave) onSave();
         } catch (e) {}
       })();
@@ -1873,10 +1766,10 @@ function LevelTest({ onComplete }) {
     };
     (async () => {
       try {
-        const r = await window.storage.get("level-test-results");
+        const r = await storage.get("level-test-results");
         const results = r && r.value ? JSON.parse(r.value) : [];
         results.push(result);
-        await window.storage.set("level-test-results", JSON.stringify(results));
+        await storage.set("level-test-results", JSON.stringify(results));
         if (onComplete) onComplete(result);
       } catch (e) {}
     })();
@@ -2079,21 +1972,21 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      try { const r = await window.storage.get(DK); if (r && r.value) setStore(JSON.parse(r.value)); } catch (e) {}
-      try { const r = await window.storage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); } catch (e) {}
-      try { const r = await window.storage.get("level-test-results"); if (r && r.value) { const arr = JSON.parse(r.value); if (arr.length > 0) setLevelResult(arr[arr.length - 1]); } } catch (e) {}
-      try { const r = await window.storage.get("srs-data"); if (r && r.value) setSrsData(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await storage.get(DK); if (r && r.value) setStore(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await storage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await storage.get("level-test-results"); if (r && r.value) { const arr = JSON.parse(r.value); if (arr.length > 0) setLevelResult(arr[arr.length - 1]); } } catch (e) {}
+      try { const r = await storage.get("srs-data"); if (r && r.value) setSrsData(JSON.parse(r.value)); } catch (e) {}
       setLoading(false);
     })();
   }, []);
 
   useEffect(() => {
     if (quizResults === null && !loading) {
-      (async () => { try { const r = await window.storage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); else setQuizResults([]); } catch (e) { setQuizResults([]); } })();
+      (async () => { try { const r = await storage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); else setQuizResults([]); } catch (e) { setQuizResults([]); } })();
     }
   }, [quizResults, loading]);
 
-  const save = useCallback(async (s) => { setStore(s); try { await window.storage.set(DK, JSON.stringify(s)); } catch (e) {} }, []);
+  const save = useCallback(async (s) => { setStore(s); try { await storage.set(DK, JSON.stringify(s)); } catch (e) {} }, []);
   const today = gtd();
   const done = store.days[today] || [];
   const toggle = useCallback((id) => {
@@ -2242,7 +2135,7 @@ export default function App() {
                       const prev2 = newSrs[srsKey] || { interval: 1, reps: 0 };
                       newSrs[srsKey] = { lastDate: gtd(), reps: (prev2.reps || 0) + 1, interval: Math.min((prev2.interval || 1) * 2, 14) };
                       setSrsData(newSrs);
-                      (async () => { try { await window.storage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
+                      (async () => { try { await storage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                     }
                   }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(52,211,153,0.06)" : isDue ? "rgba(245,158,11,0.04)" : "rgba(255,255,255,0.015)", border: "1px solid " + (r >= 5 ? "rgba(52,211,153,0.15)" : isDue ? "rgba(245,158,11,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 6, cursor: "pointer" }}>
                     <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#34d399" : r > 0 ? "#22d3ee" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div>
@@ -2289,7 +2182,7 @@ export default function App() {
                           const prev = newSrs[item.srsKey] || { interval: 1 };
                           newSrs[item.srsKey] = { lastDate: todayStr, reps: (prev.reps || 0) + 1, interval: Math.min((prev.interval || 1) * 2, 14) };
                           setSrsData(newSrs);
-                          (async () => { try { await window.storage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
+                          (async () => { try { await storage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                         }
                       }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 3 ? "rgba(52,211,153,0.06)" : "rgba(245,158,11,0.04)", border: "1px solid " + (r >= 3 ? "rgba(52,211,153,0.15)" : "rgba(245,158,11,0.1)"), marginBottom: 6, cursor: "pointer" }}>
                         <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 3 ? "#34d399" : r > 0 ? "#f59e0b" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
@@ -2401,25 +2294,25 @@ export default function App() {
                 <input
                   type="password"
                   placeholder="sk-... اتركه فاضي للمجاني"
-                  defaultValue={_openaiKey || ""}
+                  defaultValue={getOpenAIKey() || ""}
                   onBlur={async (e) => {
                     const key = e.target.value.trim();
-                    _openaiKey = key || null;
-                    try { await window.storage.set("openai-tts-key", key); } catch(ex) {}
+                    setOpenAIKey(key || null);
+                    try { await storage.set("openai-tts-key", key); } catch(ex) {}
                   }}
                   style={{ width: "100%", padding: 12, borderRadius: 10, fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(34,211,238,0.15)", color: "#e0e7f1", outline: "none" }}
                 />
               </div>
-              {_openaiKey && <div>
+              {getOpenAIKey() && <div>
                 <div style={{ fontSize: 12, color: "#5a6a80", marginBottom: 6 }}>الصوت:</div>
                 <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
                   {["nova", "alloy", "echo", "fable", "onyx", "shimmer"].map(v => (
-                    <button key={v} onClick={async () => { _ttsVoice = v; try { await window.storage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (_ttsVoice === v ? "rgba(34,211,238,0.3)" : "rgba(255,255,255,0.06)"), background: _ttsVoice === v ? "rgba(34,211,238,0.1)" : "transparent", color: _ttsVoice === v ? "#22d3ee" : "#6b7a8d", fontFamily: "'IBM Plex Mono'", fontSize: 12, cursor: "pointer" }}>{v}</button>
+                    <button key={v} onClick={async () => { setTTSVoice(v); try { await storage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (getTTSVoice() === v ? "rgba(34,211,238,0.3)" : "rgba(255,255,255,0.06)"), background: getTTSVoice() === v ? "rgba(34,211,238,0.1)" : "transparent", color: getTTSVoice() === v ? "#22d3ee" : "#6b7a8d", fontFamily: "'IBM Plex Mono'", fontSize: 12, cursor: "pointer" }}>{v}</button>
                   ))}
                 </div>
                 <div style={{ fontSize: 10, color: "#3a4a5c" }}>nova = أنثى طبيعية | onyx = ذكر واثق | shimmer = أنثى دافئة | echo = ذكر هادئ</div>
               </div>}
-              {!_openaiKey && <div style={{ fontSize: 11, color: "#34d399", background: "rgba(52,211,153,0.06)", borderRadius: 8, padding: 10 }}>💡 نصيحة: افتح التطبيق في متصفح Edge للحصول على أفضل صوت مجاني (Microsoft Neural voices)</div>}
+              {!getOpenAIKey() && <div style={{ fontSize: 11, color: "#34d399", background: "rgba(52,211,153,0.06)", borderRadius: 8, padding: 10 }}>💡 نصيحة: افتح التطبيق في متصفح Edge للحصول على أفضل صوت مجاني (Microsoft Neural voices)</div>}
             </Card>
             <div style={{ textAlign: "center", marginTop: 14 }}>
               <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(239,68,68,0.1)", background: "transparent", color: "#ef4444", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة تعيين</button>
