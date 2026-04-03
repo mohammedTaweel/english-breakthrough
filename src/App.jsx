@@ -581,6 +581,119 @@ const DAILY_SCENARIOS = [
   noticingTips: ["\"I have an issue with\" أفضل من \"There is a problem\" = تركيز على تجربتك", "وصف المشاكل بوضوح (AC + hot water) = يسرّع الحل", "\"Would it be possible to...\" = طلب مهذب جداً أقوى من \"Can I\""],
   listenQ: { q: "وش المشكلة في الغرفة؟", opts: ["المكيف والماء الحار", "التلفزيون", "الواي فاي"], ans: 0 },
   challenge: "اليوم: لو واجهت أي مشكلة — فكّر كيف تشرحها بالإنجليزي." },
+
+  // ===== WEEK 3-4 SCENARIOS =====
+  { title: "في المقهى", icon: "☕", dialogue: [
+    { speaker: "الباريستا", text: "Hi! What can I get for you today?" },
+    { speaker: "أنت", text: "I'd like a large cappuccino, please." },
+    { speaker: "الباريستا", text: "Would you like that with whole milk or oat milk?" },
+    { speaker: "أنت", text: "Oat milk, please. And could I add an extra shot?" },
+    { speaker: "الباريستا", text: "Sure! For here or to go?" },
+    { speaker: "أنت", text: "To go, please. How much is that?" },
+    { speaker: "الباريستا", text: "That'll be five fifty. Tap or cash?" },
+  ], keyPhrases: [
+    { en: "I'd like a large cappuccino, please.", ar: "أبي كابتشينو كبير لو سمحت." },
+    { en: "Could I add an extra shot?", ar: "ممكن أضيف شوت إضافي؟" },
+    { en: "To go, please.", ar: "للطريق لو سمحت." },
+  ], producePrompt: "أنت في كافيه. اطلب مشروبك بالتفصيل:", produceModel: "I'd like a large iced latte with oat milk, please. To go. Could I also get a blueberry muffin?", noticingTips: ["\"I'd like\" بدل \"I want\" = أدب أساسي", "التفاصيل (large, oat milk, extra shot) تُظهر طلاقة", "\"To go\" vs \"For here\" = مصطلح يومي لازم تعرفه"], challenge: "اليوم: اطلب من أي كافيه بالإنجليزي — حتى لو في تطبيق توصيل." },
+
+  { title: "إرجاع منتج", icon: "🔄", dialogue: [
+    { speaker: "الموظف", text: "How can I help you today?" },
+    { speaker: "أنت", text: "I'd like to return this shirt. I bought it last week." },
+    { speaker: "الموظف", text: "Do you have the receipt?" },
+    { speaker: "أنت", text: "Yes, here it is. The size doesn't fit properly." },
+    { speaker: "الموظف", text: "Would you prefer an exchange or a refund?" },
+    { speaker: "أنت", text: "I'd prefer a refund, please. Is that possible?" },
+    { speaker: "الموظف", text: "Absolutely. I'll process that for you right away." },
+  ], keyPhrases: [
+    { en: "I'd like to return this. I bought it last week.", ar: "أبي أرجع هذا. شريته الأسبوع الماضي." },
+    { en: "The size doesn't fit properly.", ar: "المقاس ما يناسب." },
+    { en: "I'd prefer a refund, please.", ar: "أفضّل استرجاع المبلغ لو سمحت." },
+  ], producePrompt: "اشتريت شيء ومقاسه غلط. ارجع المحل واشرح:", produceModel: "I'd like to return this shirt. I bought it last week but the size doesn't fit. Do you have the receipt? Yes, here it is. I'd prefer a refund if possible.", noticingTips: ["\"I'd like to return\" = الجملة القياسية للإرجاع", "ذكر السبب (doesn't fit) = يسرّع العملية", "\"I'd prefer\" أقوى من \"I want\" = أدب + وضوح"], challenge: "اليوم: لو عندك شيء تبي ترجعه — فكّر كيف تشرح بالإنجليزي." },
+
+  { title: "طلب تاكسي", icon: "🚕", dialogue: [
+    { speaker: "أنت", text: "Hi, could you take me to the airport, please?" },
+    { speaker: "السائق", text: "Sure. Which terminal?" },
+    { speaker: "أنت", text: "Terminal two, the international departures." },
+    { speaker: "السائق", text: "No problem. It should take about thirty minutes." },
+    { speaker: "أنت", text: "That's fine. Is there a lot of traffic at this time?" },
+    { speaker: "السائق", text: "A little, but we should make it in time." },
+    { speaker: "أنت", text: "Great. Could you drop me off at the main entrance?" },
+  ], keyPhrases: [
+    { en: "Could you take me to the airport, please?", ar: "ممكن توصلني المطار؟" },
+    { en: "Is there a lot of traffic at this time?", ar: "في زحمة هالوقت؟" },
+    { en: "Could you drop me off at the main entrance?", ar: "ممكن تنزلني عند المدخل الرئيسي؟" },
+  ], producePrompt: "ركبت تاكسي وتبي توصل مكان محدد:", produceModel: "Could you take me to the Hilton Hotel on King Street, please? How long will it take, and is there much traffic?", noticingTips: ["\"Could you take me to\" = الطريقة المهذبة لطلب وجهة", "\"drop me off at\" = مصطلح أساسي يعني 'نزّلني عند'", "السؤال عن الوقت والزحمة = محادثة طبيعية مع السائق"], challenge: "اليوم: لو ركبت أي وسيلة نقل — فكّر كيف توصف وجهتك بالإنجليزي." },
+
+  { title: "اشتراك نادي رياضي", icon: "💪", dialogue: [
+    { speaker: "الموظف", text: "Welcome! Are you interested in joining our gym?" },
+    { speaker: "أنت", text: "Yes, I'd like to know about your membership options." },
+    { speaker: "الموظف", text: "We have monthly and annual plans. Would you like a tour?" },
+    { speaker: "أنت", text: "That would be great. What facilities do you have?" },
+    { speaker: "الموظف", text: "We have a pool, sauna, group classes, and a personal trainer option." },
+    { speaker: "أنت", text: "Interesting. How much is the monthly plan?" },
+    { speaker: "الموظف", text: "It's two hundred per month. No contract required." },
+  ], keyPhrases: [
+    { en: "I'd like to know about your membership options.", ar: "أبي أعرف عن خيارات الاشتراك." },
+    { en: "What facilities do you have?", ar: "وش المرافق اللي عندكم؟" },
+    { en: "How much is the monthly plan?", ar: "كم الاشتراك الشهري؟" },
+  ], producePrompt: "تبي تشترك في نادي. اسأل عن الخدمات والأسعار:", produceModel: "I'm interested in joining. What membership options do you have? I'd like to know about the facilities and the monthly rate.", noticingTips: ["\"I'm interested in joining\" = بداية مهذبة أقوى من \"I want to join\"", "\"What facilities do you have?\" = سؤال شامل ذكي", "\"No contract required\" = عبارة مهمة تسمعها كثير — يعني بدون التزام"], challenge: "اليوم: ادخل موقع أي نادي رياضي واقرأ صفحة الاشتراكات بالإنجليزي." },
+
+  { title: "مقابلة عمل", icon: "👔", dialogue: [
+    { speaker: "المقابِل", text: "Thank you for coming. Tell me a little about yourself." },
+    { speaker: "أنت", text: "I have ten years of experience in project management." },
+    { speaker: "المقابِل", text: "What would you say is your biggest strength?" },
+    { speaker: "أنت", text: "I'm good at organizing teams and meeting deadlines." },
+    { speaker: "المقابِل", text: "Can you give me an example?" },
+    { speaker: "أنت", text: "Last year, I led a project that finished two weeks ahead of schedule." },
+    { speaker: "المقابِل", text: "Impressive. Do you have any questions for us?" },
+  ], keyPhrases: [
+    { en: "I have ten years of experience in project management.", ar: "عندي ١٠ سنوات خبرة في إدارة المشاريع." },
+    { en: "I'm good at organizing teams and meeting deadlines.", ar: "أجيد تنظيم الفرق والالتزام بالمواعيد." },
+    { en: "Last year, I led a project that finished ahead of schedule.", ar: "السنة الماضية، قدت مشروع خلص قبل الموعد." },
+  ], producePrompt: "المقابِل يسألك 'Tell me about yourself'. أجب:", produceModel: "I have ten years of experience in my field. I'm passionate about solving problems and leading teams. In my last role, I successfully delivered a major project ahead of schedule.", noticingTips: ["\"Tell me about yourself\" = أشهر سؤال — جهّز إجابة من 3 جمل", "ذكر رقم (ten years) + إنجاز محدد (ahead of schedule) = إجابة قوية", "\"Do you have any questions for us?\" = دائماً سأل سؤال — يُظهر اهتمام"], challenge: "اليوم: جهّز إجابة 'Tell me about yourself' من 3 جمل وقلها بصوت عالٍ." },
+
+  { title: "عند البقالة", icon: "🏪", dialogue: [
+    { speaker: "أنت", text: "Excuse me, do you have any fresh bread today?" },
+    { speaker: "البائع", text: "Yes, we just baked a new batch. White or whole wheat?" },
+    { speaker: "أنت", text: "Whole wheat, please. And I'll also take a dozen eggs." },
+    { speaker: "البائع", text: "Anything else?" },
+    { speaker: "أنت", text: "Yes, do you have any local honey?" },
+    { speaker: "البائع", text: "We do. It's on the shelf behind you." },
+    { speaker: "أنت", text: "Perfect. That's everything. How much is the total?" },
+  ], keyPhrases: [
+    { en: "Do you have any fresh bread today?", ar: "عندكم خبز طازج اليوم؟" },
+    { en: "I'll also take a dozen eggs.", ar: "وبآخذ كمان درزن بيض." },
+    { en: "That's everything. How much is the total?", ar: "هذا كل شيء. كم المجموع؟" },
+  ], producePrompt: "أنت في بقالة. اطلب ما تحتاجه:", produceModel: "Good morning. I'd like some fresh bread, a dozen eggs, and a bottle of olive oil, please. Is there anything on sale today?", noticingTips: ["\"Do you have any...\" = الطريقة المهذبة للسؤال عن توفر منتج", "\"a dozen\" = 12 — مصطلح شائع جداً في التسوق", "\"That's everything\" = طريقة أنيقة لإنهاء الطلب"], challenge: "اليوم: في أي محل، اقرأ أسماء 5 منتجات بالإنجليزي." },
+
+  { title: "حجز مطعم بالتلفون", icon: "📲", dialogue: [
+    { speaker: "الموظف", text: "Good evening, La Piazza restaurant. How may I help you?" },
+    { speaker: "أنت", text: "I'd like to make a reservation for this Saturday, please." },
+    { speaker: "الموظف", text: "Of course. How many guests and what time?" },
+    { speaker: "أنت", text: "Four guests at seven thirty in the evening." },
+    { speaker: "الموظف", text: "We have a table available. Indoor or outdoor?" },
+    { speaker: "أنت", text: "Indoor, please. And is there a kids' menu available?" },
+    { speaker: "الموظف", text: "Yes, we do. May I have a name for the reservation?" },
+  ], keyPhrases: [
+    { en: "I'd like to make a reservation for this Saturday.", ar: "أبي أحجز لهالسبت." },
+    { en: "Four guests at seven thirty.", ar: "٤ أشخاص الساعة ٧:٣٠." },
+    { en: "Is there a kids' menu available?", ar: "في قائمة أطفال؟" },
+  ], producePrompt: "اتصل بمطعم واحجز طاولة لعائلتك:", produceModel: "I'd like to make a reservation for Saturday evening at seven thirty. We'll be four guests, including two children. Do you have a kids' menu?", noticingTips: ["\"I'd like to make a reservation\" = نفس بنية حجز الفندق والعيادة", "تحديد العدد + الوقت في جملة واحدة = واضح ومباشر", "السؤال عن kids' menu = يُظهر تخطيط عملي"], challenge: "اليوم: لو بتطلع مع عائلتك — فكّر كيف تحجز بالإنجليزي." },
+
+  { title: "عند الكهربائي/السباك", icon: "🔧", dialogue: [
+    { speaker: "أنت", text: "Hi, I'm having a problem with my kitchen sink. It's leaking." },
+    { speaker: "الفني", text: "I see. How long has it been leaking?" },
+    { speaker: "أنت", text: "It started about two days ago. It gets worse when I use hot water." },
+    { speaker: "الفني", text: "It looks like the pipe needs to be replaced." },
+    { speaker: "أنت", text: "How long will that take, and how much will it cost?" },
+    { speaker: "الفني", text: "About an hour. The total would be around eighty dollars." },
+    { speaker: "أنت", text: "That sounds reasonable. Please go ahead." },
+  ], keyPhrases: [
+    { en: "I'm having a problem with my kitchen sink. It's leaking.", ar: "عندي مشكلة في مغسلة المطبخ. فيها تسريب." },
+    { en: "How long will that take, and how much will it cost?", ar: "كم يأخذ وقت وكم التكلفة؟" },
+    { en: "That sounds reasonable. Please go ahead.", ar: "يبدو معقول. تفضّل ابدأ." },
+  ], producePrompt: "عندك مشكلة بالبيت واستدعيت فني. اشرح المشكلة:", produceModel: "I'm having a problem with my air conditioning. It's making a strange noise and not cooling properly. It started yesterday.", noticingTips: ["\"I'm having a problem with...\" = بداية مثالية لأي شكوى", "وصف الأعراض بالتفصيل (leaking, strange noise) = يساعد الفني", "\"That sounds reasonable\" = موافقة مهذبة على السعر"], challenge: "اليوم: فكّر بأي جهاز في بيتك — كيف توصف مشكلته بالإنجليزي؟" },
 ];
 
 const DK = "eng-v10";
@@ -1456,7 +1569,18 @@ function DailySession({ scenario, onComplete, dayNum }) {
             <div style={{ fontSize: 16, color: "#e0e7f1", lineHeight: 2 }}>{sc.challenge}</div>
           </div>
           {!challengeAccepted ? (
-            <button onClick={() => { setChallengeAccepted(true); if (onComplete) onComplete(); }} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#34d399,#22d3ee)", color: "#060a14", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>أقبل التحدي ✓</button>
+            <button onClick={() => {
+              setChallengeAccepted(true);
+              // Save session results with recall data
+              const sessionData = { scenario: sc.title, date: gtd(), recallScore: { ...recallScore }, phrasesCount: sc.keyPhrases.length };
+              (async () => { try {
+                const r = await storage.get("session-history");
+                const hist = r && r.value ? JSON.parse(r.value) : [];
+                hist.push(sessionData);
+                await storage.set("session-history", JSON.stringify(hist));
+              } catch(e) {} })();
+              if (onComplete) onComplete();
+            }} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#34d399,#22d3ee)", color: "#060a14", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>أقبل التحدي ✓</button>
           ) : (
             <div style={{ animation: "fadeUp .4s" }}>
               <div style={{ fontSize: 40, marginBottom: 8 }}>🎉</div>
@@ -1464,6 +1588,123 @@ function DailySession({ scenario, onComplete, dayNum }) {
               <div style={{ fontSize: 13, color: "#8892a4", lineHeight: 2 }}>تمرّنت على "{sc.title}" من ٦ زوايا مختلفة. كل جلسة تبني طبقة جديدة في ذاكرتك.</div>
             </div>
           )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ===== LISTENING COMPREHENSION =====
+// ===== 4-3-2 FLUENCY TECHNIQUE =====
+// Nation (1989): Speak about the SAME topic for 4 minutes, then 3, then 2.
+// Each round forces faster retrieval = builds automaticity = real fluency.
+const FLUENCY_TOPICS = [
+  { topic: "Describe your typical day from morning to night", ar: "اوصف يومك العادي من الصبح لليل", starters: ["I usually wake up at...", "The first thing I do is...", "For lunch, I...", "In the evening, I..."] },
+  { topic: "Talk about your favorite trip or vacation", ar: "تكلم عن أحلى رحلة سويتها", starters: ["One of my best trips was to...", "I went there because...", "The best part was...", "I would go back because..."] },
+  { topic: "Describe your home and your neighborhood", ar: "وصف بيتك وحيّك", starters: ["I live in a... in...", "My home has...", "The neighborhood is...", "What I like most about it is..."] },
+  { topic: "Talk about your family", ar: "تكلم عن عائلتك", starters: ["I have... in my family.", "My oldest... is...", "We usually spend time together by...", "The best thing about my family is..."] },
+  { topic: "Describe a skill you are learning or want to learn", ar: "مهارة تتعلمها أو تبي تتعلمها", starters: ["I've been trying to learn...", "I started because...", "The hardest part is...", "I practice by..."] },
+  { topic: "Talk about something that made you happy recently", ar: "شيء فرّحك مؤخراً", starters: ["Recently, something great happened...", "It made me happy because...", "I remember feeling...", "It reminded me that..."] },
+  { topic: "Describe your dream job or project", ar: "وظيفة أو مشروع أحلامك", starters: ["If I could do anything, I would...", "The reason is...", "I think I would be good at it because...", "The first step would be..."] },
+  { topic: "Talk about your favorite food and how to make it", ar: "أكلتك المفضلة وكيف تنسوي", starters: ["My favorite dish is...", "You need... to make it.", "First, you...", "The secret is..."] },
+  { topic: "Describe a person you admire and why", ar: "شخص تحترمه وليش", starters: ["Someone I really admire is...", "I admire them because...", "One thing they taught me is...", "They inspire me to..."] },
+  { topic: "Talk about how technology changed your life", ar: "كيف التقنية غيّرت حياتك", starters: ["Technology has changed my life by...", "I use my phone to...", "Before, I used to..., but now...", "The most useful app for me is..."] },
+];
+
+function Fluency432() {
+  const [round, setRound] = useState(0); // 0=intro, 1=4min, 2=3min, 3=2min, 4=done
+  const [sec, setSec] = useState(0);
+  const [running, setRunning] = useState(false);
+  const [topicIdx, setTopicIdx] = useState(gdn() % FLUENCY_TOPICS.length);
+  const timerRef = useRef(null);
+
+  const roundTimes = [0, 240, 180, 120]; // seconds for rounds 1-3
+  const roundLabels = ["", "٤ دقائق — تكلم بحرية", "٣ دقائق — نفس الموضوع أسرع", "٢ دقائق — نفس الموضوع بأقصى سرعة"];
+  const topic = FLUENCY_TOPICS[topicIdx];
+
+  function startRound(r) {
+    setRound(r);
+    setSec(roundTimes[r]);
+    setRunning(true);
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setSec(prev => {
+        if (prev <= 1) { clearInterval(timerRef.current); setRunning(false); return 0; }
+        return prev - 1;
+      });
+    }, 1000);
+  }
+
+  function restart() {
+    clearInterval(timerRef.current);
+    setTopicIdx((topicIdx + 1) % FLUENCY_TOPICS.length);
+    setRound(0); setSec(0); setRunning(false);
+  }
+
+  useEffect(() => () => clearInterval(timerRef.current), []);
+
+  if (round === 0) return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <div style={{ fontSize: 40, marginBottom: 8 }}>🗣️</div>
+        <div style={{ fontSize: 18, fontWeight: 800, color: "#f472b6", marginBottom: 6 }}>تمرين الطلاقة 4-3-2</div>
+        <div style={{ fontSize: 13, color: "#8892a4", lineHeight: 2 }}>تكلم عن نفس الموضوع ٣ مرات — كل مرة وقت أقل<br />مخك يتعلم يسترجع الجمل أسرع = طلاقة حقيقية</div>
+      </div>
+      <div style={{ background: "rgba(244,114,182,0.06)", border: "1px solid rgba(244,114,182,0.12)", borderRadius: 14, padding: 20, textAlign: "center", marginBottom: 14 }}>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 17, color: "#f472b6", direction: "ltr", lineHeight: 1.6, marginBottom: 8 }}>{topic.topic}</div>
+        <div style={{ fontSize: 14, color: "#5a6a80" }}>{topic.ar}</div>
+      </div>
+      <div style={{ background: "rgba(167,139,250,0.06)", border: "1px solid rgba(167,139,250,0.12)", borderRadius: 12, padding: 14, marginBottom: 14 }}>
+        <div style={{ fontSize: 12, color: "#a78bfa", fontWeight: 700, marginBottom: 8 }}>💡 استخدم هالجمل كبداية:</div>
+        {topic.starters.map((st, si) => <div key={si} style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#c4b5fd", padding: "3px 0" }}>{st}</div>)}
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <button onClick={() => startRound(1)} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#f472b6,#a78bfa)", color: "#fff", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ الجولة الأولى (٤ دقائق) →</button>
+      </div>
+    </div>
+  );
+
+  if (round === 4) return (
+    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: 48, marginBottom: 12 }}>🔥</div>
+      <div style={{ fontSize: 20, fontWeight: 800, color: "#34d399", marginBottom: 8 }}>أحسنت!</div>
+      <div style={{ fontSize: 14, color: "#8892a4", lineHeight: 2, marginBottom: 16 }}>تكلمت عن نفس الموضوع ٣ مرات — كل مرة بسرعة أكبر.<br />لاحظت كيف الجمل صارت تطلع أسرع في الجولة الثالثة؟<br />هذا بالضبط كيف تُبنى الطلاقة.</div>
+      <button onClick={restart} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#f472b6", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 موضوع جديد</button>
+    </div>
+  );
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
+        {[1, 2, 3].map(r => (
+          <div key={r} style={{ flex: 1, height: 6, borderRadius: 3, background: r < round ? "#34d399" : r === round ? "#f472b6" : "#1a2236" }} />
+        ))}
+      </div>
+
+      <div style={{ textAlign: "center", marginBottom: 14 }}>
+        <div style={{ fontSize: 13, color: "#f472b6", fontWeight: 700, marginBottom: 8 }}>{"الجولة " + round + "/3 — " + roundLabels[round]}</div>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 52, fontWeight: 800, color: sec <= 10 && sec > 0 ? "#ef4444" : running ? "#f472b6" : "#34d399" }}>{String(Math.floor(sec / 60)).padStart(2, "0") + ":" + String(sec % 60).padStart(2, "0")}</div>
+        {sec === 0 && !running && <div style={{ color: "#34d399", fontWeight: 700, marginTop: 6, fontSize: 14 }}>✅ انتهى الوقت!</div>}
+      </div>
+
+      <div style={{ background: "rgba(244,114,182,0.04)", border: "1px solid rgba(244,114,182,0.08)", borderRadius: 12, padding: 14, marginBottom: 14, textAlign: "center" }}>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, color: "#e0e7f1", direction: "ltr", lineHeight: 1.6 }}>{topic.topic}</div>
+      </div>
+
+      {running && <div style={{ textAlign: "center", fontSize: 14, color: "#5a6a80", lineHeight: 2 }}>
+        {round === 1 && "خذ وقتك — تكلم بأي سرعة. الهدف: غطِّ أكبر قدر من النقاط"}
+        {round === 2 && "نفس الأفكار — لكن أسرع. لاحظ إن الجمل تطلع أسهل"}
+        {round === 3 && "آخر جولة — أقصى سرعة ممكنة. لاحظ الفرق عن أول مرة!"}
+      </div>}
+
+      {sec === 0 && !running && round < 3 && (
+        <div style={{ textAlign: "center", marginTop: 10 }}>
+          <button onClick={() => startRound(round + 1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#f472b6", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{"الجولة " + (round + 1) + " (" + (round === 1 ? "٣" : "٢") + " دقائق) →"}</button>
+        </div>
+      )}
+      {sec === 0 && !running && round === 3 && (
+        <div style={{ textAlign: "center", marginTop: 10 }}>
+          <button onClick={() => setRound(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#34d399,#22d3ee)", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🏁 النتيجة</button>
         </div>
       )}
     </div>
@@ -1967,7 +2208,8 @@ export default function App() {
   const [trainMode, setTrainMode] = useState(null);
   const [quizResults, setQuizResults] = useState(null);
   const [levelResult, setLevelResult] = useState(null);
-  const [srsData, setSrsData] = useState({}); // { "cat-idx": { lastDate, reps, interval } }
+  const [srsData, setSrsData] = useState({});
+  const [sessionHistory, setSessionHistory] = useState([]);
   const tmRef = useRef(null);
 
   useEffect(() => {
@@ -1976,6 +2218,7 @@ export default function App() {
       try { const r = await storage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); } catch (e) {}
       try { const r = await storage.get("level-test-results"); if (r && r.value) { const arr = JSON.parse(r.value); if (arr.length > 0) setLevelResult(arr[arr.length - 1]); } } catch (e) {}
       try { const r = await storage.get("srs-data"); if (r && r.value) setSrsData(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await storage.get("session-history"); if (r && r.value) setSessionHistory(JSON.parse(r.value)); } catch (e) {}
       setLoading(false);
     })();
   }, []);
@@ -2086,6 +2329,7 @@ export default function App() {
                   { id: "quiz", icon: "📊", title: "اختبار أسبوعي", desc: "١٠ أسئلة تقيس تقدمك في حفظ الجمل واستخدامها", color: "#a78bfa" },
                   { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة في الجمل — يختبر حفظك الحقيقي", color: "#06b6d4" },
                   { id: "build", icon: "🧩", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة لتكوين جمل صحيحة — يعالج مشكلة تركيب الجمل", color: "#10b981" },
+                  { id: "fluency", icon: "🗣️", title: "تمرين الطلاقة 4-3-2", desc: "تكلم عن نفس الموضوع ٣ مرات بوقت أقل — يبني طلاقة حقيقية", color: "#f472b6" },
                   { id: "listen", icon: "👂", title: "فهم الاستماع", desc: "استمع لجملة وأجب — يدرّب أذنك على فهم الإنجليزي المنطوق", color: "#8b5cf6" },
                   { id: "dictation", icon: "🎧", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته — يربط الأذن باليد والذاكرة", color: "#ec4899" },
                   { id: "recall", icon: "✍️", title: "إنتاج حر", desc: "اكتب ردك بنفسك بدون خيارات — يختبر قدرتك الحقيقية على الإنتاج", color: "#f472b6" },
@@ -2103,6 +2347,7 @@ export default function App() {
             {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} /></Card>}
             {trainMode === "fill" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FillBlank /></Card>}
             {trainMode === "build" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><SentenceBuild /></Card>}
+            {trainMode === "fluency" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><Fluency432 /></Card>}
             {trainMode === "listen" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><ListenExercise /></Card>}
             {trainMode === "dictation" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><DictationExercise /></Card>}
             {trainMode === "recall" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#5a6a80", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FreeRecall /></Card>}
@@ -2224,6 +2469,53 @@ export default function App() {
                 ))}
               </div>
             </Card>
+            {/* Smart Progress — Session History */}
+            {sessionHistory.length > 0 && <Card>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#f472b6", marginBottom: 10 }}>🧠 أداء الذاكرة</div>
+              {(() => {
+                const recent = sessionHistory.slice(-10);
+                const totalPhrases = recent.reduce((sum, s) => sum + (s.phrasesCount || 0), 0);
+                const recalled = recent.reduce((sum, s) => { const rs = s.recallScore || {}; return sum + Object.values(rs).filter(v => v === "good").length; }, 0);
+                const partial = recent.reduce((sum, s) => { const rs = s.recallScore || {}; return sum + Object.values(rs).filter(v => v === "partial").length; }, 0);
+                const forgot = recent.reduce((sum, s) => { const rs = s.recallScore || {}; return sum + Object.values(rs).filter(v => v === "forgot").length; }, 0);
+                const recallPct = totalPhrases > 0 ? Math.round((recalled / totalPhrases) * 100) : 0;
+                return (
+                  <div>
+                    <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+                      <div style={{ flex: 1, textAlign: "center", background: "rgba(52,211,153,0.06)", borderRadius: 10, padding: 10 }}>
+                        <div style={{ fontSize: 22, fontWeight: 800, color: "#34d399", fontFamily: "'IBM Plex Mono'" }}>{recalled}</div>
+                        <div style={{ fontSize: 10, color: "#5a6a80" }}>تذكّرتها</div>
+                      </div>
+                      <div style={{ flex: 1, textAlign: "center", background: "rgba(245,158,11,0.06)", borderRadius: 10, padding: 10 }}>
+                        <div style={{ fontSize: 22, fontWeight: 800, color: "#f59e0b", fontFamily: "'IBM Plex Mono'" }}>{partial}</div>
+                        <div style={{ fontSize: 10, color: "#5a6a80" }}>تقريباً</div>
+                      </div>
+                      <div style={{ flex: 1, textAlign: "center", background: "rgba(239,68,68,0.06)", borderRadius: 10, padding: 10 }}>
+                        <div style={{ fontSize: 22, fontWeight: 800, color: "#ef4444", fontFamily: "'IBM Plex Mono'" }}>{forgot}</div>
+                        <div style={{ fontSize: 10, color: "#5a6a80" }}>نسيتها</div>
+                      </div>
+                    </div>
+                    <div style={{ height: 6, borderRadius: 3, background: "#111827", overflow: "hidden", marginBottom: 8 }}>
+                      <div style={{ height: "100%", width: recallPct + "%", borderRadius: 3, background: recallPct >= 70 ? "#34d399" : recallPct >= 40 ? "#f59e0b" : "#ef4444", transition: "width .5s" }} />
+                    </div>
+                    <div style={{ fontSize: 12, color: "#8892a4", textAlign: "center" }}>{recallPct >= 70 ? "ذاكرتك قوية! الجمل ترسخ" : recallPct >= 40 ? "تتحسن — استمر بالمراجعة اليومية" : "ركّز على خطوة التذكّر — ردّد الجمل المنسية أكثر"}</div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: "#5a6a80", marginTop: 10, marginBottom: 6 }}>آخر الجلسات:</div>
+                    {recent.slice(-5).reverse().map((s, i) => {
+                      const rs = s.recallScore || {};
+                      const g = Object.values(rs).filter(v => v === "good").length;
+                      const t = s.phrasesCount || 3;
+                      return (
+                        <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: 8, borderRadius: 8, background: "rgba(255,255,255,0.02)", marginBottom: 4 }}>
+                          <div style={{ fontSize: 12, color: "#5a6a80", minWidth: 55 }}>{s.date ? s.date.slice(5) : ""}</div>
+                          <div style={{ fontSize: 13, color: "#e0e7f1", flex: 1 }}>{s.scenario}</div>
+                          <div style={{ fontSize: 12, fontWeight: 700, color: g === t ? "#34d399" : g > 0 ? "#f59e0b" : "#ef4444", fontFamily: "'IBM Plex Mono'" }}>{g + "/" + t}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
+            </Card>}
             {levelResult && <Card>
               <div style={{ fontSize: 13, fontWeight: 700, color: "#e879f9", marginBottom: 12 }}>🎯 مستوى اللغة (CEFR)</div>
               <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
