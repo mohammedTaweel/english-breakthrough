@@ -787,6 +787,24 @@ const DAILY_SCENARIOS = [
 ];
 
 
+// FIX 8: Cross-context phrase patterns — same phrase structure reused across scenarios
+// When user encounters "I'd like..." in restaurant, remind them they also used it in hotel, airport, etc.
+// This builds GENERALIZED neural pathways instead of context-specific ones.
+const PHRASE_PATTERNS = {
+  "I'd like": { pattern: "I'd like...", usage: "طلب مهذب — يعمل في أي مكان: مطعم، فندق، مطار، بنك", scenarios: ["المطعم", "الفندق", "المطار", "البنك", "الصيدلية"] },
+  "Could you": { pattern: "Could you...?", usage: "طلب مهذب بصيغة سؤال — يعمل مع أي شخص", scenarios: ["المطعم", "الفندق", "خدمة العملاء", "الاتجاهات", "التاكسي"] },
+  "Is there": { pattern: "Is there...?", usage: "سؤال عن التوفر — فنادق، مطاعم، محلات", scenarios: ["الفندق", "النادي", "السوبرماركت"] },
+  "How long": { pattern: "How long...?", usage: "سؤال عن المدة — يعمل في كل مكان", scenarios: ["الطبيب", "البريد", "التحويلات", "استئجار سيارة"] },
+  "Thank you for": { pattern: "Thank you for...", usage: "شكر محدد — أقوى بكثير من thank you لوحدها", scenarios: ["الطبيب", "الفندق", "المدرسة", "العمل"] },
+};
+function findCrossPatterns(phrase) {
+  const results = [];
+  for (const [key, val] of Object.entries(PHRASE_PATTERNS)) {
+    if (phrase.toLowerCase().includes(key.toLowerCase())) results.push(val);
+  }
+  return results;
+}
+
 const DK = "eng-v10";
 const gtd = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
 const gdn = () => { const d = new Date(); return d.getDate() + d.getMonth() * 31 + d.getFullYear(); };
@@ -1417,16 +1435,26 @@ function DailySession({ scenario, onComplete, dayNum }) {
     { icon: "🌍", title: "طبّق", desc: "تحدّي حقيقي اليوم" },
   ];
 
-  // Step 1: Play dialogue line by line with pauses
+  // FIX 5: Working Memory — play only first 3 lines initially, then expand
+  // Baddeley's Model: WM capacity = 4±1 items. 7 lines at once = overload.
+  const [listenChunk, setListenChunk] = useState(0); // 0 = first 3, 1 = next 3, 2 = last
   function playDialogueSequence() {
-    setListenIdx(0);
-    let i = 0;
+    const chunkSize = 3;
+    const startIdx = listenChunk * chunkSize;
+    const endIdx = Math.min(startIdx + chunkSize, sc.dialogue.length);
+    setListenIdx(startIdx);
+    let i = startIdx;
     function playNext() {
-      if (i >= sc.dialogue.length) { setListenDone(true); setListenIdx(-1); return; }
+      if (i >= endIdx) {
+        if (endIdx >= sc.dialogue.length) { setListenDone(true); }
+        else { setListenChunk(prev => prev + 1); } // auto-advance to next chunk
+        setListenIdx(-1);
+        return;
+      }
       setListenIdx(i);
       const u = speak(sc.dialogue[i].text, 0.8);
-      if (u) { u.onend = () => { i++; setTimeout(playNext, 800); }; }
-      else { i++; setTimeout(playNext, 1500); }
+      if (u) { u.onend = () => { i++; setTimeout(playNext, 1200); }; }
+      else { i++; setTimeout(playNext, 1800); }
     }
     playNext();
   }
@@ -1481,7 +1509,14 @@ function DailySession({ scenario, onComplete, dayNum }) {
           <div style={{ background: "rgba(139,92,246,0.06)", border: "1px solid rgba(139,92,246,0.12)", borderRadius: 14, padding: 24, textAlign: "center", marginBottom: 14 }}>
             <div style={{ fontSize: 15, color: "#8892a4", marginBottom: 16, lineHeight: 2 }}>استمع للمحادثة جملة جملة — حاول تفهم بدون ما تشوف النص</div>
             {listenIdx === -1 && !listenDone && (
-              <button onClick={playDialogueSequence} style={{ padding: "14px 32px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#8b5cf6,#6366f1)", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer" }}>🔊 ابدأ الاستماع</button>
+              <div>
+                <div style={{ fontSize: 11, color: "#5a6a80", marginBottom: 8 }}>{"مقطع " + (listenChunk + 1) + "/" + Math.ceil(sc.dialogue.length / 3) + " — ٣ جمل في كل مقطع (لتركيز أفضل)"}</div>
+                <button onClick={playDialogueSequence} style={{ padding: "14px 32px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#8b5cf6,#6366f1)", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer" }}>{"🔊 " + (listenChunk === 0 ? "ابدأ الاستماع" : "استمع المقطع التالي")}</button>
+              </div>
+            )}
+            {/* After chunk finishes but more remain */}
+            {listenIdx === -1 && !listenDone && listenChunk > 0 && (
+              <div style={{ fontSize: 12, color: "#34d399", marginTop: 8 }}>{"✓ سمعت " + (listenChunk * 3) + " جمل — كمّل؟"}</div>
             )}
             {listenIdx >= 0 && (
               <div>
@@ -1551,9 +1586,9 @@ function DailySession({ scenario, onComplete, dayNum }) {
             const r = shadowReps[i] || 0;
             const [spokenResult, setSpokenResult] = [shadowSpoken[i], (v) => setShadowSpoken(prev => ({ ...prev, [i]: v }))];
             return (
-              <div key={i} style={{ padding: 12, borderRadius: 10, background: r >= 3 ? "rgba(52,211,153,0.06)" : "rgba(255,255,255,0.02)", border: "1px solid " + (r >= 3 ? "rgba(52,211,153,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 8 }}>
+              <div key={i} style={{ padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(52,211,153,0.06)" : "rgba(255,255,255,0.02)", border: "1px solid " + (r >= 5 ? "rgba(52,211,153,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 8 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 3 ? "#34d399" : r > 0 ? "#22d3ee" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", flexShrink: 0 }}>{r >= 3 ? "✓" : r + "/3"}</div>
+                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 5 ? "#34d399" : r > 0 ? "#22d3ee" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", flexShrink: 0 }}>{r >= 5 ? "✓" : r + "/5"}</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
                     <div style={{ fontSize: 12, color: "#5a6a80", marginTop: 2 }}>{p.ar}</div>
@@ -1595,7 +1630,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
               </div>
             );
           })}
-          {Object.values(shadowReps).filter(r => r >= 3).length >= sc.keyPhrases.length && (
+          {Object.values(shadowReps).filter(r => r >= 5).length >= sc.keyPhrases.length && (
             <div style={{ textAlign: "center", marginTop: 14 }}>
               <button onClick={() => advanceStep(3)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#22d3ee", color: "#060a14", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تذكّر →</button>
             </div>
@@ -1632,11 +1667,17 @@ function DailySession({ scenario, onComplete, dayNum }) {
                       <span style={{ flex: 1 }}>{p.en}</span>
                       <SpeakBtn text={p.en} size={16} />
                     </div>
+                    {/* FIX 8: Cross-context patterns */}
+                    {(() => { const patterns = findCrossPatterns(p.en); return patterns.length > 0 ? (
+                      <div style={{ fontSize: 11, color: "#a78bfa", marginBottom: 6, lineHeight: 1.8 }}>
+                        {"🔗 " + patterns[0].pattern + " — " + patterns[0].usage}
+                      </div>
+                    ) : null; })()}
                     {!selfScore && (
                       <div style={{ display: "flex", gap: 6 }}>
                         <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "good" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(52,211,153,0.15)", color: "#34d399", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>تذكّرتها ✓</button>
                         <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "partial" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(245,158,11,0.15)", color: "#f59e0b", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>تقريباً</button>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(251,146,60,0.1)", color: "#ef4444", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>نسيتها</button>
+                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(251,146,60,0.1)", color: "#fb923c", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>لسه</button>
                       </div>
                     )}
                     {selfScore && <div style={{ fontSize: 12, color: selfScore === "good" ? "#34d399" : selfScore === "partial" ? "#f59e0b" : "#ef4444", fontWeight: 600, marginTop: 4 }}>{selfScore === "good" ? "✓ ممتاز!" : selfScore === "partial" ? "⚡ قريب — ردّدها مرة" : "🔄 لسه ما ترسّخت — بنراجعها مع بعض"}</div>}
@@ -2868,8 +2909,8 @@ export default function App() {
                           setSrsData(newSrs);
                           (async () => { try { await storage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                         }
-                      }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 3 ? "rgba(52,211,153,0.06)" : "rgba(245,158,11,0.04)", border: "1px solid " + (r >= 3 ? "rgba(52,211,153,0.15)" : "rgba(245,158,11,0.1)"), marginBottom: 6, cursor: "pointer" }}>
-                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 3 ? "#34d399" : r > 0 ? "#f59e0b" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
+                      }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(52,211,153,0.06)" : "rgba(245,158,11,0.04)", border: "1px solid " + (r >= 5 ? "rgba(52,211,153,0.15)" : "rgba(245,158,11,0.1)"), marginBottom: 6, cursor: "pointer" }}>
+                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#34d399" : r > 0 ? "#f59e0b" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: r > 0 ? "#060a14" : "#4a5568", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{item.phrase.en}</div>
                           <div style={{ fontSize: 11, color: "#5a6a80" }}>{item.phrase.ar} — {item.icon} {item.cat}</div>
