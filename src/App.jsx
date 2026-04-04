@@ -2493,7 +2493,9 @@ export default function App() {
   const [sessionHistory, setSessionHistory] = useState([]);
   const [chosenScenario, setChosenScenario] = useState(null);
   const [xp, setXp] = useState(0);
-  const [showXpPop, setShowXpPop] = useState(null); // "+15 XP" popup
+  const [showXpPop, setShowXpPop] = useState(null);
+  const [onboardStep, setOnboardStep] = useState(0);
+  const [userChallenge, setUserChallenge] = useState(null); // "+15 XP" popup
   const tmRef = useRef(null);
 
   useEffect(() => {
@@ -2531,10 +2533,7 @@ export default function App() {
 
   if (loading) return <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#060a14", fontFamily: "'Noto Kufi Arabic',sans-serif" }}><style>{CSS}</style><div style={{ textAlign: "center", color: "#fff" }}><div style={{ fontSize: 40, animation: "pulse 1.5s infinite" }}>🎯</div><div style={{ fontSize: 14, opacity: 0.5, marginTop: 8 }}>جاري التحميل...</div></div></div>;
 
-  // ===== ONBOARDING — Emotional, Trust-building, Personalized =====
-  const [onboardStep, setOnboardStep] = useState(0);
-  const [userChallenge, setUserChallenge] = useState(null);
-
+  // ===== ONBOARDING =====
   if (!store.start) return (
     <div dir="rtl" style={{ minHeight: "100vh", background: "#060a14", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
       <style>{CSS}</style>
