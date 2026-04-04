@@ -1425,6 +1425,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
   const [aiFeedback, setAiFeedback] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [stepCelebration, setStepCelebration] = useState(null);
+  const [listenChunk, setListenChunk] = useState(0);
 
   const sc = scenario;
   const steps = [
@@ -1438,7 +1439,6 @@ function DailySession({ scenario, onComplete, dayNum }) {
 
   // FIX 5: Working Memory — play only first 3 lines initially, then expand
   // Baddeley's Model: WM capacity = 4±1 items. 7 lines at once = overload.
-  const [listenChunk, setListenChunk] = useState(0); // 0 = first 3, 1 = next 3, 2 = last
   function playDialogueSequence() {
     const chunkSize = 3;
     const startIdx = listenChunk * chunkSize;
