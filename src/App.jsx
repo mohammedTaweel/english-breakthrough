@@ -1424,6 +1424,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
   const [challengeNote, setChallengeNote] = useState("");
   const [aiFeedback, setAiFeedback] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
+  const [stepCelebration, setStepCelebration] = useState(null);
 
   const sc = scenario;
   const steps = [
@@ -1460,7 +1461,6 @@ function DailySession({ scenario, onComplete, dayNum }) {
   }
 
   const stepPct = Math.round(((step + 1) / 6) * 100);
-  const [stepCelebration, setStepCelebration] = useState(null);
 
   // Micro-celebration on step change
   function advanceStep(nextStep) {
