@@ -1584,7 +1584,8 @@ function DailySession({ scenario, onComplete, dayNum }) {
           <div style={{ fontSize: 13, color: "#8892a4", marginBottom: 12, lineHeight: 2 }}>اسمع الجملة ← ردّدها بصوت عالٍ ← اضغط 🎙️ للتحقق من نطقك. الهدف: ٣ مرات.</div>
           {sc.keyPhrases.map((p, i) => {
             const r = shadowReps[i] || 0;
-            const [spokenResult, setSpokenResult] = [shadowSpoken[i], (v) => setShadowSpoken(prev => ({ ...prev, [i]: v }))];
+            const spokenResult = shadowSpoken[i];
+            const setSpokenResult = (v) => setShadowSpoken(prev => ({ ...prev, [i]: v }));
             return (
               <div key={i} style={{ padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(52,211,153,0.06)" : "rgba(255,255,255,0.02)", border: "1px solid " + (r >= 5 ? "rgba(52,211,153,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 8 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
