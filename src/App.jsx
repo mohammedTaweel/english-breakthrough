@@ -43,7 +43,7 @@ const PROMPTS = [
   { en: "Talk about a trip you took", ar: "رحلة سويتها", starters: ["A few years ago, I traveled to...", "The best part of the trip was...", "I tried... for the first time.", "One funny thing that happened was...", "I would go back because..."] },
   { en: "Describe a person who influenced you", ar: "شخص أثّر فيك", starters: ["Someone who really influenced me is...", "I met this person when...", "What I admire about them is...", "They taught me that...", "Because of them, I now..."] },
   { en: "Explain your job to a stranger", ar: "اشرح وظيفتك لشخص غريب", starters: ["I work in the field of...", "Basically, what I do is...", "A typical day looks like...", "The best part about my job is...", "The most challenging thing is..."] },
-  { en: "Talk about a goal for this year", ar: "هدف تبي تحققه هالسنة", starters: ["One of my goals this year is...", "The reason I chose this goal is...", "To achieve it, I need to...", "So far, I have...", "By the end of the year, I hope to..."] },
+  { en: "Talk about a goal for this year", ar: "هدف تبي تأكّده هالسنة", starters: ["One of my goals this year is...", "The reason I chose this goal is...", "To achieve it, I need to...", "So far, I have...", "By the end of the year, I hope to..."] },
   { en: "Describe how you spend your evenings", ar: "كيف تقضي أمسياتك", starters: ["After a long day, I usually...", "Sometimes I like to...", "My family and I often...", "If I have free time, I...", "Before I sleep, I always..."] },
   { en: "Talk about a hobby or skill you enjoy", ar: "هواية أو مهارة تستمتع فيها", starters: ["I've been doing... for about...", "I got into it because...", "What I enjoy most about it is...", "It has taught me...", "I would recommend it to anyone who..."] },
   { en: "Describe a challenge you overcame", ar: "تحدي تغلبت عليه", starters: ["A few years ago, I faced...", "The hardest part was...", "I tried to solve it by...", "What helped me the most was...", "Looking back, I learned that..."] },
@@ -735,7 +735,7 @@ const DAILY_SCENARIOS = [
 
   { title: "تحويل أموال", icon: "💸", dialogue: [{ speaker: "الموظف", text: "How can I help?" }, { speaker: "أنت", text: "I'd like to make an international transfer." }, { speaker: "الموظف", text: "Which country?" }, { speaker: "أنت", text: "The UK. Three thousand pounds." }, { speaker: "الموظف", text: "The rate is 4.7 riyals per pound." }, { speaker: "أنت", text: "How long will it take?" }, { speaker: "الموظف", text: "One to two business days." }], keyPhrases: [{ en: "I'd like to make an international transfer.", ar: "أبي حوالة دولية." }, { en: "The exchange rate is 4.7 per pound.", ar: "سعر الصرف ٤.٧ للباوند." }, { en: "How long will it take to arrive?", ar: "كم يأخذ توصل؟" }], producePrompt: "تبي تحوّل فلوس لخارج:", produceModel: "I'd like to make an international transfer to the UK. Three thousand pounds. What's the exchange rate, and how long will it take?", noticingTips: ["\"international transfer\" = تحويل دولي", "\"exchange rate\" = سعر الصرف", "\"business days\" = أيام عمل"], challenge: "اليوم: اعرف سعر صرف عملة واحدة بالإنجليزي." },
 
-  { title: "استلام توصيل", icon: "📦", dialogue: [{ speaker: "المندوب", text: "Delivery for apartment 5B?" }, { speaker: "أنت", text: "Yes, that's me. Where do I sign?" }, { speaker: "المندوب", text: "Right here. Can I see some ID?" }, { speaker: "أنت", text: "Sure. Can I check the package first?" }, { speaker: "المندوب", text: "Of course. Take your time." }, { speaker: "أنت", text: "Everything looks good. Thank you." }, { speaker: "المندوب", text: "Have a great day!" }], keyPhrases: [{ en: "Where do I sign?", ar: "وين أوقّع؟" }, { en: "Can I check the package first?", ar: "ممكن أتحقق أول؟" }, { en: "Everything looks good.", ar: "كل شيء تمام." }], producePrompt: "المندوب وصل وعنده طرد:", produceModel: "Yes, that's me. Before I sign, can I check the package? Everything looks good. Thank you!", noticingTips: ["\"Where do I sign?\" = سؤال بسيط مهم", "التحقق قبل التوقيع = حقك", "\"Everything looks good\" = تأكيد طبيعي مختصر"], challenge: "اليوم: لو وصلك توصيل — قل Thank you." },
+  { title: "استلام توصيل", icon: "📦", dialogue: [{ speaker: "المندوب", text: "Delivery for apartment 5B?" }, { speaker: "أنت", text: "Yes, that's me. Where do I sign?" }, { speaker: "المندوب", text: "Right here. Can I see some ID?" }, { speaker: "أنت", text: "Sure. Can I check the package first?" }, { speaker: "المندوب", text: "Of course. Take your time." }, { speaker: "أنت", text: "Everything looks good. Thank you." }, { speaker: "المندوب", text: "Have a great day!" }], keyPhrases: [{ en: "Where do I sign?", ar: "وين أوقّع؟" }, { en: "Can I check the package first?", ar: "ممكن أتأكّد أول؟" }, { en: "Everything looks good.", ar: "كل شيء تمام." }], producePrompt: "المندوب وصل وعنده طرد:", produceModel: "Yes, that's me. Before I sign, can I check the package? Everything looks good. Thank you!", noticingTips: ["\"Where do I sign?\" = سؤال بسيط مهم", "التأكّد قبل التوقيع = حقك", "\"Everything looks good\" = تأكيد طبيعي مختصر"], challenge: "اليوم: لو وصلك توصيل — قل Thank you." },
 
   { title: "طلب تاكسي", icon: "🚕", dialogue: [{ speaker: "أنت", text: "Could you take me to the airport, please?" }, { speaker: "السائق", text: "Sure. Which terminal?" }, { speaker: "أنت", text: "Terminal two, international departures." }, { speaker: "السائق", text: "About thirty minutes." }, { speaker: "أنت", text: "Is there much traffic now?" }, { speaker: "السائق", text: "A little, but we should make it." }, { speaker: "أنت", text: "Could you drop me off at the main entrance?" }], keyPhrases: [{ en: "Could you take me to the airport?", ar: "ممكن توصلني المطار؟" }, { en: "Is there much traffic?", ar: "في زحمة؟" }, { en: "Could you drop me off at the main entrance?", ar: "ممكن تنزلني عند المدخل الرئيسي؟" }], producePrompt: "ركبت تاكسي:", produceModel: "Could you take me to the Hilton Hotel on King Street? How long will it take?", noticingTips: ["\"Could you take me to\" = طلب مهذب للوجهة", "\"drop me off at\" = نزّلني عند", "السؤال عن الوقت = محادثة طبيعية"], challenge: "اليوم: فكّر كيف توصف وجهتك بالإنجليزي." },
   // ========== BLOCK 3: SOCIAL & RELATIONSHIPS (Weeks 5-6) ==========
@@ -770,7 +770,7 @@ const DAILY_SCENARIOS = [
   { title: "رد على إيميل صعب", icon: "📬", dialogue: [{ speaker: "الزميل", text: "I'm disappointed with the quality of the last deliverable." }, { speaker: "أنت", text: "Thank you for your feedback. I take this seriously." }, { speaker: "الزميل", text: "Several errors were found in the final document." }, { speaker: "أنت", text: "I apologize. Can you share the specific issues?" }, { speaker: "الزميل", text: "I'll send you a detailed list." }, { speaker: "أنت", text: "I'll address each point and send a corrected version within 48 hours." }, { speaker: "الزميل", text: "I appreciate your prompt response." }], keyPhrases: [{ en: "Thank you for your feedback.", ar: "شكراً على ملاحظاتك." }, { en: "I take this seriously.", ar: "آخذ الموضوع بجدية." }, { en: "I'll address each point.", ar: "بأعالج كل نقطة." }], producePrompt: "أحد ينتقد شغلك. رد باحترافية:", produceModel: "Thank you for bringing this to my attention. I take your feedback seriously. I'll review each point and send a corrected version within 48 hours.", noticingTips: ["\"Thank you for your feedback\" = يحوّل النقد لحوار بنّاء", "\"I take this seriously\" = يُظهر مسؤولية", "تحديد الموعد (48 hours) = التزام واضح"], challenge: "اليوم: اكتب رد على نقد بـ 3 جمل إنجليزية محترفة." },
   { title: "طلب ترقية", icon: "🪜", dialogue: [{ speaker: "أنت", text: "I'd like to discuss my career growth with you." }, { speaker: "المدير", text: "Of course. Where do you see yourself heading?" }, { speaker: "أنت", text: "I'm interested in moving into a senior role." }, { speaker: "المدير", text: "What makes you feel ready for that?" }, { speaker: "أنت", text: "I've consistently exceeded my targets and mentored three junior team members." }, { speaker: "المدير", text: "Those are strong qualifications." }, { speaker: "أنت", text: "I'd appreciate your guidance on what else I need to demonstrate." }], keyPhrases: [{ en: "I'd like to discuss my career growth.", ar: "أبي نتكلم عن تطوري المهني." }, { en: "I've consistently exceeded my targets.", ar: "تجاوزت أهدافي باستمرار." }, { en: "I'd appreciate your guidance.", ar: "أقدّر توجيهك." }], producePrompt: "تبي تطلب ترقية:", produceModel: "I'd like to discuss my career path. I've been exceeding my targets consistently and mentoring junior members. I believe I'm ready for a senior role and would appreciate your guidance.", noticingTips: ["\"career growth\" = تطور مهني — أفضل من \"promotion\"", "\"consistently exceeded\" = فعل + ظرف = يُظهر نمط مستمر", "\"I'd appreciate your guidance\" = طلب مهذب يُظهر تواضع"], challenge: "اليوم: اكتب 3 أسباب تستحق فيها ترقية بالإنجليزي." },
 
-  // ========== BLOCK 5: TRAVEL & EXPLORATION (Weeks 9-10) ==========
+  // ========== BLOCK 5: TRAVEL & EتمكّنLORATION (Weeks 9-10) ==========
   { title: "حجز فندق أونلاين", icon: "🖥️", dialogue: [{ speaker: "الموظف", text: "How can I help with your booking?" }, { speaker: "أنت", text: "I'd like to book a room for three nights starting March fifth." }, { speaker: "الموظف", text: "We have standard and deluxe available." }, { speaker: "أنت", text: "What's the difference in price?" }, { speaker: "الموظف", text: "Standard is one-twenty, deluxe is one-eighty per night." }, { speaker: "أنت", text: "Deluxe, please. Is there a cancellation policy?" }, { speaker: "الموظف", text: "Free cancellation up to 48 hours before check-in." }], keyPhrases: [{ en: "I'd like to book for three nights starting March fifth.", ar: "أبي أحجز ٣ ليالي من ٥ مارس." }, { en: "What's the difference in price?", ar: "وش فرق السعر؟" }, { en: "Is there a cancellation policy?", ar: "في سياسة إلغاء؟" }], producePrompt: "تبي تحجز فندق:", produceModel: "I'd like to book a deluxe room for three nights from March 5th to 8th. Is there a cancellation policy?", noticingTips: ["\"starting [date]\" = ابتداءً من", "\"cancellation policy\" = سياسة الإلغاء — مصطلح سفر أساسي"], challenge: "اليوم: ادخل أي موقع حجز واقرأ شروط الإلغاء." },
   { title: "في مكتب الجوازات", icon: "🛂", dialogue: [{ speaker: "الموظف", text: "Passport and boarding pass, please." }, { speaker: "أنت", text: "Here you go." }, { speaker: "الموظف", text: "What's the purpose of your visit?" }, { speaker: "أنت", text: "I'm here for a business conference." }, { speaker: "الموظف", text: "How long will you be staying?" }, { speaker: "أنت", text: "Five days. I'm returning next Wednesday." }, { speaker: "الموظف", text: "Welcome. Enjoy your stay." }], keyPhrases: [{ en: "What's the purpose of your visit?", ar: "وش سبب زيارتك؟" }, { en: "I'm here for a business conference.", ar: "جاي لمؤتمر عمل." }, { en: "I'm returning next Wednesday.", ar: "راجع يوم الأربعاء." }], producePrompt: "في الجوازات يسألونك:", produceModel: "I'm here for a five-day business trip. I'll be attending a conference and returning next Wednesday.", noticingTips: ["\"purpose of your visit\" = أشهر سؤال في المطار", "\"business/tourism/visiting family\" = الأجوبة الثلاث الشائعة"], challenge: "اليوم: حضّر ٣ جمل تحتاجها في المطار." },
   { title: "ضياع الشنطة في المطار", icon: "🧳", dialogue: [{ speaker: "أنت", text: "Excuse me, my luggage hasn't arrived on the carousel." }, { speaker: "الموظف", text: "I'm sorry. Can I see your baggage claim ticket?" }, { speaker: "أنت", text: "Here it is. I was on flight SA102 from Riyadh." }, { speaker: "الموظف", text: "Let me check the system. Can you describe your bag?" }, { speaker: "أنت", text: "It's a large black suitcase with a red tag." }, { speaker: "الموظف", text: "We'll locate it and deliver it to your hotel." }, { speaker: "أنت", text: "How long will that take? I need my medication." }], keyPhrases: [{ en: "My luggage hasn't arrived.", ar: "شنطتي ما وصلت." }, { en: "It's a large black suitcase with a red tag.", ar: "شنطة سوداء كبيرة عليها تاق أحمر." }, { en: "I need my medication.", ar: "أحتاج أدويتي." }], producePrompt: "شنطتك ضاعت في المطار:", produceModel: "My luggage didn't arrive on the carousel. Here's my claim ticket. It's a large black suitcase. I need it urgently because it has my medication.", noticingTips: ["\"baggage claim\" = استلام الأمتعة", "وصف الشنطة بالتفصيل = يسرّع إيجادها", "ذكر السبب (medication) = يُعطي أولوية"], challenge: "اليوم: تعلّم كيف توصف شنطتك بالإنجليزي." },
@@ -912,7 +912,7 @@ function MeetingSim() {
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>🎉</div>
       <div style={{ fontSize: 20, fontWeight: 800, color: "#e8b84b", marginBottom: 8 }}>{score}/{m.steps.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score === m.steps.length ? "ممتاز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
+      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score === m.steps.length ? "إنجاز مميز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
       <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محادثة جديدة</button>
     </div>
   );
@@ -963,10 +963,10 @@ function QuickResp() {
   useEffect(() => { startTimer(); return () => clearInterval(tRef.current); }, []);
   if (done) return (
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: 40, marginBottom: 12 }}>⚡</div>
+      <div style={{ fontSize: 40, marginBottom: 12 }}>✦</div>
       <div style={{ fontSize: 24, fontWeight: 800, color: "#e8b84b", marginBottom: 8 }}>{score}/{total}</div>
       <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 7 ? "سريع وحاسم! 🔥" : score >= 5 ? "جيد! السرعة تتحسن" : "تحتاج تحفظ الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
   const rawQ = qs.current[qi];
@@ -1036,7 +1036,7 @@ function WeeklyQuiz({ onSave }) {
         <div style={{ fontSize: 28, fontWeight: 800, color: pct >= 80 ? "#5ec4b6" : pct >= 50 ? "#e8b84b" : "#e87461", marginBottom: 4 }}>{pct + "%"}</div>
         <div style={{ fontSize: 16, color: "#9ca3b5", marginBottom: 4 }}>{score + "/" + qs.current.length}</div>
         {diff !== null && <div style={{ fontSize: 14, fontWeight: 700, color: diff >= 0 ? "#5ec4b6" : "#e87461", marginBottom: 4 }}>{diff >= 0 ? "📈 +" + diff + "% عن الاختبار السابق" : "📉 " + diff + "% عن الاختبار السابق"}</div>}
-        <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{pct >= 80 ? "ممتاز! الجمل صارت جزء منك 🔥" : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
+        <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{pct >= 80 ? "إنجاز مميز! الجمل صارت جزء منك 🔥" : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
         <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 اختبار جديد</button>
       </div>
     );
@@ -1132,8 +1132,8 @@ function FillBlank() {
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>📝</div>
       <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#5ec4b6" : score >= 4 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "ممتاز! ذاكرتك قوية 🔥" : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! ذاكرتك قوية 🔥" : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
 
@@ -1176,7 +1176,7 @@ function FillBlank() {
       </div>
       {!checked ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={check} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>✓ تحقق</button>
+          <button onClick={check} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>✓ تأكّد</button>
         </div>
       ) : (
         <div style={{ textAlign: "center" }}>
@@ -1254,8 +1254,8 @@ function SentenceBuild() {
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>🧩</div>
       <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#5ec4b6" : score >= 4 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "ممتاز! تركيب الجمل صار سهل 🔥" : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#4db5a5", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! تركيب الجمل صار سهل 🔥" : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#4db5a5", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
 
@@ -1296,7 +1296,7 @@ function SentenceBuild() {
       <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
         {!checked && selected.length > 0 && <button onClick={() => setSelected([])} style={{ padding: "8px 16px", borderRadius: 10, border: "1px solid #252836", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>↻ مسح</button>}
         {!checked ? (
-          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: selected.length > 0 ? "#4db5a5" : "#252836", color: selected.length > 0 ? "#1a1614" : "#5c6478", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>✓ تحقق</button>
+          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: selected.length > 0 ? "#4db5a5" : "#252836", color: selected.length > 0 ? "#1a1614" : "#5c6478", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>✓ تأكّد</button>
         ) : (
           <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#4db5a5", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         )}
@@ -1351,8 +1351,8 @@ function FreeRecall() {
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>✍️</div>
       <div style={{ fontSize: 24, fontWeight: 800, color: score >= 4 ? "#5ec4b6" : score >= 2 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 4 ? "ممتاز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e87461", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 4 ? "إنجاز مميز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e87461", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
 
@@ -1468,7 +1468,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
 
   // Micro-celebration on step change
   function advanceStep(nextStep) {
-    const msgs = ["ممتاز! 🔥", "أحسنت! ⚡", "يلّا كمّل! 💪", "رائع! ✨", "نص الطريق! 🎯", ""];
+    const msgs = ["إنجاز مميز! 🔥", "إنجاز رائع.. أنت تقترب من التمكّن ✦", "يلّا كمّل! 💪", "رائع! ✨", "نص الطريق! 🎯", ""];
     setStepCelebration(msgs[step] || "👏");
     setTimeout(() => { setStepCelebration(null); setStep(nextStep); }, 800);
   }
@@ -1592,7 +1592,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
       {/* Step 3: Shadow key phrases 3x */}
       {step === 2 && (
         <div>
-          <div style={{ fontSize: 13, color: "#9ca3b5", marginBottom: 12, lineHeight: 2 }}>اسمع الجملة ← ردّدها بصوت عالٍ ← اضغط 🎙️ للتحقق من نطقك. الهدف: ٣ مرات.</div>
+          <div style={{ fontSize: 13, color: "#9ca3b5", marginBottom: 12, lineHeight: 2 }}>اسمع الجملة ← ردّدها بصوت عالٍ ← اضغط 🎙️ للتأكّد من نطقك. الهدف: ٣ مرات.</div>
           {sc.keyPhrases.map((p, i) => {
             const r = shadowReps[i] || 0;
             const spokenResult = shadowSpoken[i];
@@ -1636,7 +1636,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
                 )}
                 {spokenResult !== undefined && spokenResult !== null && (
                   <div style={{ fontSize: 12, color: spokenResult >= 80 ? "#5ec4b6" : spokenResult >= 50 ? "#e8b84b" : "#e87461", fontWeight: 600, marginTop: 4 }}>
-                    {spokenResult >= 80 ? "نطق ممتاز! " + spokenResult + "%" : spokenResult >= 50 ? "جيد! " + spokenResult + "% — جرّب مرة ثانية" : "حاول مرة ثانية — ركّز على الكلمات المفتاحية"}
+                    {spokenResult >= 80 ? "نطق إنجاز مميز! " + spokenResult + "%" : spokenResult >= 50 ? "جيد! " + spokenResult + "% — جرّب مرة ثانية" : "حاول مرة ثانية — ركّز على الكلمات المفتاحية"}
                   </div>
                 )}
               </div>
@@ -1692,7 +1692,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
                         <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(232,160,64,0.1)", color: "#e8a040", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>لسه</button>
                       </div>
                     )}
-                    {selfScore && <div style={{ fontSize: 12, color: selfScore === "good" ? "#5ec4b6" : selfScore === "partial" ? "#e8b84b" : "#e87461", fontWeight: 600, marginTop: 4 }}>{selfScore === "good" ? "✓ ممتاز!" : selfScore === "partial" ? "⚡ قريب — ردّدها مرة" : "🔄 عادي تماماً! المخ يحتاج ٥-٧ تكرارات — بنراجعها سوا"}</div>}
+                    {selfScore && <div style={{ fontSize: 12, color: selfScore === "good" ? "#5ec4b6" : selfScore === "partial" ? "#e8b84b" : "#e87461", fontWeight: 600, marginTop: 4 }}>{selfScore === "good" ? "✓ إنجاز مميز!" : selfScore === "partial" ? "✦ قريب — ردّدها مرة" : "🔄 عادي تماماً! المخ يحتاج ٥-٧ تكرارات — بنراجعها سوا"}</div>}
                   </div>
                 )}
               </div>
@@ -1717,7 +1717,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
                 )}
                 {allGood && (
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: 13, color: "#5ec4b6", fontWeight: 600, marginBottom: 8 }}>✓ ممتاز! تذكّرت كل الجمل</div>
+                    <div style={{ fontSize: 13, color: "#5ec4b6", fontWeight: 600, marginBottom: 8 }}>✓ إنجاز مميز! تذكّرت كل الجمل</div>
                     <button onClick={() => advanceStep(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
                   </div>
                 )}
@@ -1762,7 +1762,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
                       });
                       const data = await res.json();
                       setAiFeedback(data.choices[0].message.content);
-                    } catch { setAiFeedback("لم أتمكن من الاتصال. تحقق من مفتاح API."); }
+                    } catch { setAiFeedback("لم أتمكن من الاتصال. تأكّد من مفتاح API."); }
                     setAiLoading(false);
                   }} style={{ padding: "6px 16px", borderRadius: 8, border: "1px solid rgba(196,154,56,0.2)", background: "transparent", color: "#c49a38", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🤖 تحليل ذكي لكتابتك</button>
                 </div>
@@ -1958,7 +1958,7 @@ function Fluency432() {
   if (round === 4) return (
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 48, marginBottom: 12 }}>🔥</div>
-      <div style={{ fontSize: 20, fontWeight: 800, color: "#5ec4b6", marginBottom: 8 }}>أحسنت!</div>
+      <div style={{ fontSize: 20, fontWeight: 800, color: "#5ec4b6", marginBottom: 8 }}>إنجاز رائع.. أنت تقترب من التمكّن</div>
       <div style={{ fontSize: 14, color: "#9ca3b5", lineHeight: 2, marginBottom: 16 }}>تكلمت عن نفس الموضوع ٣ مرات — كل مرة بسرعة أكبر.<br />لاحظت كيف الجمل صارت تطلع أسرع في الجولة الثالثة؟<br />هذا بالضبط كيف تُبنى الطلاقة.</div>
       <button onClick={restart} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e87461", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 موضوع جديد</button>
     </div>
@@ -2027,8 +2027,8 @@ function ListenExercise() {
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>👂</div>
       <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#5ec4b6" : score >= 4 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "ممتاز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#c49a38", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#c49a38", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
 
@@ -2098,8 +2098,8 @@ function DictationExercise() {
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>🎧</div>
       <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#5ec4b6" : score >= 4 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "ممتاز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e87461", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e87461", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
 
@@ -2126,7 +2126,7 @@ function DictationExercise() {
 
       {!checked ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={check} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#e87461" : "#252836", color: input.trim().length >= 3 ? "#fff" : "#5c6478", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ تحقق</button>
+          <button onClick={check} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#e87461" : "#252836", color: input.trim().length >= 3 ? "#fff" : "#5c6478", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ تأكّد</button>
         </div>
       ) : (
         <div>
@@ -2311,7 +2311,7 @@ function LevelTest({ onComplete }) {
   if (phase === "intro") return (
     <div style={{ animation: "fadeUp .4s", textAlign: "center" }}>
       <div style={{ fontSize: 48, marginBottom: 16 }}>🎯</div>
-      <div style={{ fontSize: 20, fontWeight: 800, background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: 12 }}>اختبار تحديد المستوى</div>
+      <div style={{ fontSize: 20, fontWeight: 800, background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: 12 }}>قياس مستوى التمكّن</div>
       <div style={{ fontSize: 13, color: "#9ca3b5", lineHeight: 2, marginBottom: 20 }}>
         اختبار تكيّفي يقيس مستواك الحقيقي بدقة
         <br />يغطي: القواعد، المفردات، فهم القراءة، التواصل المهني
@@ -2335,7 +2335,7 @@ function LevelTest({ onComplete }) {
         <div style={{ fontSize: 12, color: "#e8b84b", fontWeight: 600 }}>⏱️ {TOTAL_QUESTIONS} سؤال — حوالي ١٠ دقائق</div>
         <div style={{ fontSize: 12, color: "#7a8295", marginTop: 4 }}>الأسئلة تتكيّف مع مستواك — تزداد صعوبة إذا أجبت صح</div>
       </div>
-      <button onClick={startTest} style={{ padding: "12px 36px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ الاختبار 🚀</button>
+      <button onClick={startTest} style={{ padding: "12px 36px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ القياس 🚀</button>
     </div>
   );
 
@@ -2475,7 +2475,7 @@ function LevelTest({ onComplete }) {
       {picked !== null && (
         <div style={{ textAlign: "center", marginTop: 12 }}>
           <div style={{ fontSize: 12, color: picked === displayQ.ans ? "#5ec4b6" : "#e87461", marginBottom: 8, fontWeight: 600 }}>
-            {picked === displayQ.ans ? "✓ إجابة صحيحة!" : "✗ إجابة خاطئة"}
+            {picked === displayQ.ans ? "✓ إنجاز رائع!" : "✗ محاولة ممتازة — لاحظ الفرق"}
           </div>
           <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
             {qi + 1 >= TOTAL_QUESTIONS ? "🏁 عرض النتيجة" : "التالي ←"}
@@ -2506,7 +2506,7 @@ export default function App() {
   const [xp, setXp] = useState(0);
   const [showXpPop, setShowXpPop] = useState(null);
   const [onboardStep, setOnboardStep] = useState(0);
-  const [userChallenge, setUserChallenge] = useState(null); // "+15 XP" popup
+  const [userChallenge, setUserChallenge] = useState(null); // "+15 تمكّن" popup
   const tmRef = useRef(null);
 
   useEffect(() => {
@@ -2544,113 +2544,106 @@ export default function App() {
 
   if (loading) return <><style>{CSS}</style><SplashScreen /></>;
 
-  // ===== ONBOARDING =====
+  // ===== ONBOARDING — The Wise Mentor =====
   if (!store.start) return (
     <div dir="rtl" style={{ minHeight: "100vh", background: "#1a1614", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
       <style>{CSS}</style>
       <div style={{ maxWidth: 440, padding: 32, animation: "fadeUp .8s" }}>
 
-        {/* Screen 1: Emotional Hook */}
+        {/* Screen 1: The Dignified Hook */}
         {onboardStep === 0 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <div style={{ fontSize: 64, marginBottom: 20 }}>😔</div>
-          <h1 style={{ fontSize: 24, fontWeight: 800, color: "#f0f0f5", lineHeight: 1.8, marginBottom: 16 }}>تفهم كل شيء...<br/>بس لما تبي تتكلم، الكلمات ما تطلع؟</h1>
-          <p style={{ fontSize: 15, color: "#7a8295", lineHeight: 2.2, marginBottom: 24 }}>في المطعم، مع الدكتور، في المطار...<br/>تعرف الجواب في راسك بس لسانك ما يساعدك.<br/><b style={{ color: "#9ca3b5" }}>جرّبت كورسات وتطبيقات كثير وما استمريت.</b></p>
-          <button onClick={() => setOnboardStep(1)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>هذا بالضبط أنا ←</button>
+          <div style={{ marginBottom: 20 }}><TaliqLogo size={52} /></div>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#f5f0eb", lineHeight: 2, marginBottom: 16 }}>تملك المعرفة...<br/>لكن الكلمات تتوقف عند لسانك؟</h1>
+          <p style={{ fontSize: 15, color: "#a89e94", lineHeight: 2.4, marginBottom: 28 }}>تقرأ وتفهم الإنجليزي جيداً<br/>لكن عندما يحين وقت التحدث — تتردد<br/><b style={{ color: "#e8b84b" }}>ليست مشكلة قدرات. إنها مشكلة طريقة.</b></p>
+          <button onClick={() => setOnboardStep(1)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>هذا ما أعانيه بالضبط ←</button>
         </div>}
 
-        {/* Screen 2: The Promise */}
+        {/* Screen 2: The Method */}
         {onboardStep === 1 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <div style={{ fontSize: 64, marginBottom: 20 }}>💡</div>
-          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#e8b84b", lineHeight: 1.8, marginBottom: 16 }}>المشكلة مو إنجليزيك.<br/>المشكلة الطريقة.</h1>
-          <div style={{ background: "rgba(232,184,75,0.06)", borderRadius: 16, padding: 20, marginBottom: 20, textAlign: "right" }}>
-            <div style={{ fontSize: 14, color: "#f0f0f5", lineHeight: 2.4 }}>
-              <div style={{ marginBottom: 8 }}>❌ الكورسات تعلّمك <b>قواعد</b> — أنت ما تحتاج قواعد</div>
-              <div style={{ marginBottom: 8 }}>❌ التطبيقات تعلّمك <b>تترجم</b> — أنت ما تحتاج ترجمة</div>
-              <div>✅ أنت تحتاج <b>تتمرّن على مواقف حقيقية</b> حتى لسانك يتعوّد</div>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>🧠</div>
+          <h1 style={{ fontSize: 21, fontWeight: 800, color: "#e8b84b", lineHeight: 2, marginBottom: 16 }}>طَلِق مبني على علم الاكتساب<br/>— ليس الحفظ</h1>
+          <div style={{ background: "rgba(232,184,75,0.05)", borderRadius: 16, padding: 20, marginBottom: 20, textAlign: "right" }}>
+            <div style={{ fontSize: 14, color: "#f5f0eb", lineHeight: 2.6 }}>
+              <div style={{ marginBottom: 8, color: "#6d635a" }}>❌ الكورسات التقليدية تعلّمك <b>قواعد تنساها</b></div>
+              <div style={{ marginBottom: 8, color: "#6d635a" }}>❌ التطبيقات الأخرى تعلّمك <b>ترجمة لا تحتاجها</b></div>
+              <div style={{ color: "#5ec4b6" }}>✅ طَلِق يُدرّب لسانك على <b>مواقف حقيقية من حياتك</b></div>
             </div>
           </div>
-          <p style={{ fontSize: 13, color: "#7a8295", lineHeight: 2, marginBottom: 20 }}>مبني على أبحاث جامعية في اكتساب اللغة<br/>— مو ترجمة لتطبيق أجنبي</p>
-          <button onClick={() => setOnboardStep(2)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>كيف يشتغل؟ ←</button>
+          <p style={{ fontSize: 13, color: "#6d635a", lineHeight: 2, marginBottom: 20 }}>مبني على أبحاث جامعية في اكتساب اللغة الثانية للكبار</p>
+          <button onClick={() => setOnboardStep(2)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>كيف يعمل؟ ←</button>
         </div>}
 
-        {/* Screen 3: How it works */}
+        {/* Screen 3: The Daily Investment */}
         {onboardStep === 2 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#f0f0f5", lineHeight: 1.8, marginBottom: 20 }}>١٥ دقيقة باليوم<br/>جلسة واحدة — ٦ خطوات</h1>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#f5f0eb", lineHeight: 2, marginBottom: 6 }}>١٥ دقيقة يومياً</h1>
+          <p style={{ fontSize: 14, color: "#a89e94", marginBottom: 20 }}>جلسة واحدة — ست خطوات — استثمار حقيقي في نفسك</p>
           <div style={{ textAlign: "right", marginBottom: 20 }}>
             {[
-              { icon: "👂", text: "استمع — بدون نص، درّب أذنك", color: "#c49a38" },
-              { icon: "📖", text: "اقرأ — شوف النص ولاحظ اللي فاتك", color: "#e8b84b" },
-              { icon: "🔊", text: "ردّد — كرّر الجمل المهمة مع الصوت", color: "#5ec4b6" },
-              { icon: "🧠", text: "تذكّر — قلها من ذاكرتك بدون ما تشوف", color: "#e8b84b" },
-              { icon: "✍️", text: "أنتج — اكتب ردك بنفسك", color: "#e87461" },
-              { icon: "🌍", text: "طبّق — تحدّي حقيقي تسويه اليوم", color: "#e87461" },
+              { icon: "👂", text: "استمع — درّب أذنك بدون قراءة", color: "#a89e94" },
+              { icon: "📖", text: "اقرأ — لاحظ ما فاتك في الاستماع", color: "#a89e94" },
+              { icon: "🔊", text: "ردّد — دع لسانك يتعوّد على الجمل", color: "#e8b84b" },
+              { icon: "🧠", text: "تذكّر — استرجع من ذاكرتك بدون مساعدة", color: "#e8b84b" },
+              { icon: "✍️", text: "أنتج — عبّر بأسلوبك الخاص", color: "#5ec4b6" },
+              { icon: "🌍", text: "طبّق — تحدٍّ حقيقي تُنجزه اليوم", color: "#5ec4b6" },
             ].map((s, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: 10, animation: "slideIn .4s " + (i * 0.1) + "s both" }}>
-                <div style={{ fontSize: 24, flexShrink: 0 }}>{s.icon}</div>
-                <div style={{ fontSize: 14, color: s.color, fontWeight: 600 }}>{s.text}</div>
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: 12, animation: "slideIn .4s " + (i * 0.08) + "s both" }}>
+                <div style={{ fontSize: 22, flexShrink: 0, width: 32, textAlign: "center" }}>{s.icon}</div>
+                <div style={{ fontSize: 14, color: s.color, fontWeight: 600, lineHeight: 1.8 }}>{s.text}</div>
               </div>
             ))}
           </div>
-          <button onClick={() => setOnboardStep(3)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>يناسبني! ←</button>
+          <button onClick={() => setOnboardStep(3)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>هذا ما أبحث عنه ←</button>
         </div>}
 
-        {/* Screen 4: Personalization Question */}
+        {/* Screen 4: Professional Identity — "What is your goal?" */}
         {onboardStep === 3 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <div style={{ fontSize: 48, marginBottom: 16 }}>🎯</div>
-          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#f0f0f5", lineHeight: 1.8, marginBottom: 20 }}>وش أكبر تحدي عندك؟</h1>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div style={{ fontSize: 44, marginBottom: 16 }}>🎯</div>
+          <h1 style={{ fontSize: 20, fontWeight: 800, color: "#f5f0eb", lineHeight: 2, marginBottom: 6 }}>ما هو هدفك من إتقان الإنجليزية؟</h1>
+          <p style={{ fontSize: 13, color: "#6d635a", marginBottom: 20 }}>سنُصمّم رحلتك بناءً على إجابتك</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
-              { id: "speak", icon: "🗣️", text: "أفهم بس ما أقدر أتكلم", sub: "الكلمات في راسي بس ما تطلع" },
-              { id: "listen", icon: "👂", text: "ما أفهم لما يتكلمون بسرعة", sub: "أقرأ كويس بس الاستماع صعب" },
-              { id: "travel", icon: "✈️", text: "أحتاجها للسفر والتعامل مع أجانب", sub: "فنادق، مطاعم، مطارات" },
-              { id: "work", icon: "💼", text: "أحتاجها للشغل والاجتماعات", sub: "عروض، إيميلات، مكالمات" },
-              { id: "life", icon: "🌍", text: "أبي أتكلم في حياتي اليومية بثقة", sub: "جيران، مدرسة، تسوق" },
+              { id: "lead", icon: "👔", text: "قيادة الاجتماعات والعروض بثقة", sub: "التواصل المهني والقيادي" },
+              { id: "global", icon: "🌐", text: "التواصل مع شركاء وعملاء دوليين", sub: "بناء علاقات عمل عالمية" },
+              { id: "travel", icon: "✈️", text: "السفر والتعامل باستقلالية تامة", sub: "فنادق، مطارات، مطاعم، أسواق" },
+              { id: "grow", icon: "📈", text: "تطوير الذات والارتقاء المهني", sub: "كسر حاجز كان يعيقني سنوات" },
             ].map(c => (
-              <button key={c.id} onClick={() => { setUserChallenge(c.id); setOnboardStep(4); }} style={{ display: "flex", alignItems: "center", gap: 12, padding: 16, borderRadius: 14, border: "1px solid " + (userChallenge === c.id ? "rgba(232,184,75,0.3)" : "rgba(255,255,255,0.06)"), background: "rgba(255,255,255,0.02)", cursor: "pointer", textAlign: "right" }}>
+              <button key={c.id} onClick={() => { setUserChallenge(c.id); setOnboardStep(4); }} style={{ display: "flex", alignItems: "center", gap: 14, padding: 18, borderRadius: 14, border: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.03)", cursor: "pointer", textAlign: "right", transition: "all .2s" }}>
                 <div style={{ fontSize: 28, flexShrink: 0 }}>{c.icon}</div>
-                <div><div style={{ fontSize: 15, fontWeight: 700, color: "#f0f0f5" }}>{c.text}</div><div style={{ fontSize: 12, color: "#7a8295", marginTop: 2 }}>{c.sub}</div></div>
+                <div><div style={{ fontSize: 15, fontWeight: 700, color: "#f5f0eb" }}>{c.text}</div><div style={{ fontSize: 13, color: "#6d635a", marginTop: 3 }}>{c.sub}</div></div>
               </button>
             ))}
           </div>
         </div>}
 
-        {/* Screen 5: Ready — Start */}
+        {/* Screen 5: Social Proof — Success Stories */}
         {onboardStep === 4 && <div style={{ animation: "fadeUp .6s" }}>
-          {/* FIX 3: Social Proof */}
-          <div style={{ fontSize: 16, fontWeight: 700, color: "#f0f0f5", textAlign: "center", marginBottom: 16 }}>ناس زيك بدأوا ولاحظوا الفرق</div>
+          <div style={{ fontSize: 15, fontWeight: 700, color: "#a89e94", textAlign: "center", marginBottom: 16 }}>أشخاص مثلك بدأوا... ولاحظوا الفرق</div>
           {[
-            { name: "خالد، 42 سنة — مدير مشاريع", text: "كنت أخاف أتكلم في الاجتماعات. بعد أسبوعين صرت أفتح الاجتماع بثقة.", icon: "👔" },
-            { name: "نورة، 38 سنة — أم لثلاثة أطفال", text: "الآن أساعد عيالي بواجبات الإنجليزي وأتكلم مع معلماتهم بدون حرج.", icon: "👩‍👧‍👦" },
-            { name: "فهد، 45 سنة — رجل أعمال", text: "في آخر رحلة سفر، طلبت وحجزت وتفاوضت كله بالإنجليزي. شعور ما يوصف.", icon: "✈️" },
+            { name: "خالد، 42 سنة — مدير مشاريع", text: "كنت أتردد في كل اجتماع. بعد أسبوعين مع طَلِق، صرت أفتح الاجتماع وأقوده بثقة.", icon: "👔" },
+            { name: "نورة، 38 سنة — أم لثلاثة أطفال", text: "الآن أتواصل مع معلمات أطفالي بالإنجليزي. الحرج اختفى تماماً.", icon: "👩‍👧‍👦" },
+            { name: "فهد، 45 سنة — رجل أعمال", text: "في آخر رحلة عمل، تفاوضت وأنجزت كل شيء بالإنجليزي. شعور لا يُوصف.", icon: "✈️" },
           ].map((s, i) => (
-            <div key={i} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 14, marginBottom: 12, animation: "slideIn .4s " + (i * 0.15) + "s both" }}>
+            <div key={i} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 14, padding: 16, marginBottom: 12, animation: "slideIn .4s " + (i * 0.12) + "s both" }}>
               <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 8 }}>
-                <div style={{ fontSize: 24 }}>{s.icon}</div>
+                <div style={{ fontSize: 22 }}>{s.icon}</div>
                 <div style={{ fontSize: 13, fontWeight: 700, color: "#e8b84b" }}>{s.name}</div>
               </div>
-              <div style={{ fontSize: 14, color: "#9ca3b5", lineHeight: 2 }}>"{s.text}"</div>
+              <div style={{ fontSize: 14, color: "#a89e94", lineHeight: 2.2 }}>"{s.text}"</div>
             </div>
           ))}
-          <button onClick={() => setOnboardStep(5)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 8 }}>ملهم! أبي أبدأ ←</button>
+          <button onClick={() => setOnboardStep(5)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%", marginTop: 8 }}>ملهم — أنا جاهز ←</button>
         </div>}
 
-        {/* FIX 4: Commitment Question */}
+        {/* Screen 6: The Commitment — Your Pledge */}
         {onboardStep === 5 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <div style={{ fontSize: 48, marginBottom: 16 }}>🤝</div>
-          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#f0f0f5", lineHeight: 1.8, marginBottom: 16 }}>عهد مع نفسك</h1>
-          <div style={{ background: "rgba(232,184,75,0.06)", border: "1px solid rgba(232,184,75,0.12)", borderRadius: 16, padding: 24, marginBottom: 20 }}>
-            <div style={{ fontSize: 15, color: "#f0f0f5", lineHeight: 2.4, marginBottom: 16 }}>أنا ألتزم بـ <b style={{ color: "#e8b84b" }}>١٥ دقيقة يومياً</b> لمدة أسبوع واحد فقط.<br/>لن أحكم على النتائج قبل ٧ أيام.<br/>أعرف إن التغيير يحتاج صبر وممارسة.</div>
-            <div style={{ fontSize: 13, color: "#7a8295" }}>الأبحاث تقول: اللي يلتزم علناً يكمل 3x أكثر من اللي ما يلتزم</div>
+          <div style={{ fontSize: 44, marginBottom: 16 }}>🤝</div>
+          <h1 style={{ fontSize: 21, fontWeight: 800, color: "#f5f0eb", lineHeight: 2, marginBottom: 16 }}>عهد مع نفسك</h1>
+          <div style={{ background: "rgba(232,184,75,0.04)", border: "1px solid rgba(232,184,75,0.1)", borderRadius: 16, padding: 24, marginBottom: 24 }}>
+            <div style={{ fontSize: 15, color: "#f5f0eb", lineHeight: 2.6, marginBottom: 12 }}>أُعاهد نفسي أن أستثمر <b style={{ color: "#e8b84b" }}>١٥ دقيقة يومياً</b><br/>لمدة أسبوع واحد فقط.<br/>لن أحكم على النتائج قبل ٧ أيام.</div>
+            <div style={{ fontSize: 13, color: "#6d635a" }}>من يلتزم علناً يُكمل ٣ أضعاف من لا يفعل — (أبحاث سلوكية)</div>
           </div>
-          <button onClick={() => { setOnboardStep(6); save({ ...store, start: gtd(), challenge: userChallenge, committed: true }); }} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 18, fontWeight: 800, cursor: "pointer", width: "100%", animation: "glow 2s infinite" }}>أنا ملتزم — ابدأ جلستي الأولى ✓</button>
-          <button onClick={() => { setOnboardStep(6); save({ ...store, start: gtd(), challenge: userChallenge }); }} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 13, cursor: "pointer", marginTop: 12 }}>أبدأ بدون التزام</button>
-        </div>}
-
-        {onboardStep === 6 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <div style={{ fontSize: 72, marginBottom: 16, animation: "pulse 2s infinite" }}>🎉</div>
-          <h1 style={{ fontSize: 26, fontWeight: 800, marginBottom: 12, background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1.6 }}>رحلتك بدأت!</h1>
-          <p style={{ fontSize: 16, color: "#5ec4b6", fontWeight: 600, lineHeight: 2 }}>جلستك الأولى جاهزة الآن</p>
-          <p style={{ fontSize: 14, color: "#7a8295", lineHeight: 2, marginBottom: 20 }}>١٥ دقيقة فقط — وبتحس بالفرق من أول يوم</p>
+          <button onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge, committed: true }); }} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 18, fontWeight: 800, cursor: "pointer", width: "100%", animation: "glow 2s infinite" }}>أنا ملتزم — ابدأ استثماري الأول ✦</button>
+          <button onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge }); }} style={{ background: "none", border: "none", color: "#6d635a", fontFamily: "inherit", fontSize: 13, cursor: "pointer", marginTop: 14, display: "block", width: "100%" }}>أبدأ بدون التزام</button>
         </div>}
 
       </div>
@@ -2715,7 +2708,7 @@ export default function App() {
       {conf && <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 100 }}>{Array.from({ length: 25 }).map((_, i) => <div key={i} style={{ position: "absolute", top: 0, left: Math.random() * 100 + "%", width: 7, height: 7, background: ["#e8b84b", "#e8b84b", "#e8b84b", "#5ec4b6"][i % 4], borderRadius: "50%", animation: "confDrop " + (2 + Math.random() * 2) + "s linear " + Math.random() * 0.5 + "s forwards" }} />)}</div>}
 
       <div style={{ maxWidth: 680, margin: "0 auto", padding: "0 14px" }}>
-        {/* XP popup */}
+        {/* تمكّن popup */}
         {showXpPop && <div style={{ position: "fixed", top: 60, left: "50%", transform: "translateX(-50%)", zIndex: 200, padding: "8px 20px", borderRadius: 10, background: "linear-gradient(135deg,#e8b84b,#e87461)", color: "#fff", fontWeight: 800, fontSize: 16, fontFamily: "'IBM Plex Mono'", animation: "fadeUp .4s" }}>{showXpPop}</div>}
 
         <div style={{ padding: "16px 0 10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -2726,16 +2719,16 @@ export default function App() {
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             {/* Streak flame */}
             {(() => { let s = 0; const d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s > 0 ? <div style={{ display: "flex", alignItems: "center", gap: 3 }}><span style={{ fontSize: 18, animation: s >= 7 ? "firePulse 1s infinite" : "none" }}>🔥</span><span style={{ fontSize: 14, fontWeight: 800, color: "#e8b84b", fontFamily: "'IBM Plex Mono'" }}>{s}</span></div> : null; })()}
-            {/* XP */}
+            {/* تمكّن */}
             <div style={{ padding: "4px 10px", borderRadius: 8, background: "rgba(232,184,75,0.1)", display: "flex", alignItems: "center", gap: 4 }}>
-              <span style={{ fontSize: 12 }}>⚡</span>
+              <span style={{ fontSize: 12 }}>✦</span>
               <span style={{ fontSize: 13, fontWeight: 800, color: "#e8b84b", fontFamily: "'IBM Plex Mono'" }}>{xp}</span>
             </div>
           </div>
         </div>
 
         <div style={{ display: "flex", borderBottom: "1px solid rgba(255,255,255,0.04)", marginBottom: 14 }}>
-          {[["today", "📋 اليوم"], ["train", "🎭 تدريب"], ["phrases", "💬 الجمل"], ["progress", "📊 التقدم"]].map(([id, l]) => (
+          {[["today", "✦ اليوم"], ["train", "◆ تدريب"], ["phrases", "◇ الجمل"], ["progress", "❖ التقدم"]].map(([id, l]) => (
             <button key={id} onClick={() => { setTab(id); setOpenTask(null); setTrainMode(null); }} style={{ padding: "10px 14px", border: "none", background: "transparent", color: tab === id ? "#e8b84b" : "#5c6478", fontFamily: "inherit", fontSize: 14, fontWeight: 600, cursor: "pointer", borderBottom: "2px solid " + (tab === id ? "#e8b84b" : "transparent"), whiteSpace: "nowrap" }}>{l}</button>
           ))}
         </div>
@@ -2769,7 +2762,7 @@ export default function App() {
                   if (!d.includes("session")) {
                     save({ ...store, days: { ...store.days, [today]: [...d, "session"] } });
                     setConf(true); setTimeout(() => setConf(false), 3000);
-                    // Award XP + variable surprise rewards
+                    // Award تمكّن + variable surprise rewards
                     const sessCount = sessionHistory.length + 1;
                     const bonus = sessCount % 5 === 0 ? 50 : sessCount % 3 === 0 ? 15 : 0;
                     const earned = 25 + bonus;
@@ -2789,7 +2782,7 @@ export default function App() {
                       "🎖️ أسبوعين! بروكا (منطقة الكلام في دماغك) صارت أنشط",
                     ];
                     const surprise = surprises[Math.min(sessCount - 1, surprises.length - 1)];
-                    setShowXpPop(surprise || ("+" + earned + " XP ⚡" + (bonus > 0 ? " 🎁 مكافأة!" : "")));
+                    setShowXpPop(surprise || ("+" + earned + " تمكّن ✦" + (bonus > 0 ? " 🎁 مكافأة!" : "")));
                     setTimeout(() => setShowXpPop(null), surprise ? 4000 : 2000);
                     (async () => { try { await storage.set("user-xp", String(newXp)); } catch(e) {} })();
                   }
@@ -2799,8 +2792,8 @@ export default function App() {
             </Card>
             {done.includes("session") && <Card s={{ borderColor: "rgba(94,196,182,0.15)" }}>
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 14, color: "#5ec4b6", fontWeight: 700, marginBottom: 4 }}>✅ جلسة اليوم مكتملة!</div>
-                <div style={{ fontSize: 12, color: "#7a8295" }}>تبي تمارين إضافية؟ روح لتبويب "تدريب"</div>
+                <div style={{ fontSize: 14, color: "#5ec4b6", fontWeight: 700, marginBottom: 4 }}>✅ إنجاز اليوم مكتمل!</div>
+                <div style={{ fontSize: 12, color: "#7a8295" }}>هل ترغب في تمارين إضافية؟ زر تبويب التدريب</div>
               </div>
             </Card>}
             {/* FIX 6: Surprise Quiz — random phrase from past sessions */}
@@ -2810,7 +2803,7 @@ export default function App() {
               const phrase = pastSc.keyPhrases[dn % pastSc.keyPhrases.length];
               return <Card s={{ borderColor: "rgba(232,116,97,0.15)", background: "rgba(232,116,97,0.03)" }}>
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: 24, marginBottom: 8 }}>⚡</div>
+                  <div style={{ fontSize: 24, marginBottom: 8 }}>✦</div>
                   <div style={{ fontSize: 14, fontWeight: 700, color: "#e87461", marginBottom: 8 }}>اختبار مفاجئ!</div>
                   <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 12 }}>تذكر هالجملة من جلسة سابقة؟</div>
                   <div style={{ fontSize: 15, color: "#e8b84b", fontWeight: 600, marginBottom: 4 }}>{phrase.ar}</div>
@@ -2854,15 +2847,15 @@ export default function App() {
             {!trainMode && (() => {
               const allExercises = [
                 { id: "sim", icon: "🎭", title: "محادثات تفاعلية", desc: "سيناريوهات حقيقية — اختر الرد واقرأه", color: "#e8b84b" },
-                { id: "quick", icon: "⚡", title: "استجابة سريعة", desc: "مواقف يومية — اختر الرد الأنسب", color: "#e8b84b" },
-                { id: "quiz", icon: "📊", title: "اختبار أسبوعي", desc: "١٠ أسئلة تقيس تقدمك", color: "#e8b84b" },
+                { id: "quick", icon: "✦", title: "استجابة سريعة", desc: "مواقف يومية — اختر الرد الأنسب", color: "#e8b84b" },
+                { id: "quiz", icon: "📊", title: "تقييم أسبوعي", desc: "١٠ أسئلة تقيس تقدمك", color: "#e8b84b" },
                 { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة", color: "#d4a43a" },
                 { id: "build", icon: "🧩", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة", color: "#4db5a5" },
                 { id: "fluency", icon: "🗣️", title: "تمرين الطلاقة", desc: "تكلم ٣ مرات بوقت أقل", color: "#e87461" },
                 { id: "listen", icon: "👂", title: "فهم الاستماع", desc: "استمع وأجب", color: "#c49a38" },
                 { id: "dictation", icon: "🎧", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته", color: "#e87461" },
                 { id: "recall", icon: "✍️", title: "إنتاج حر", desc: "اكتب ردك بدون خيارات", color: "#e87461" },
-                { id: "level", icon: "🎯", title: "اختبار المستوى", desc: "اختبار CEFR تكيّفي", color: "#e8b84b" },
+                { id: "level", icon: "🎯", title: "قياس التمكّن", desc: "اختبار CEFR تكيّفي", color: "#e8b84b" },
               ];
               // Smart recommendations: top 3 based on user needs
               const recommended = allExercises.slice(0, 3);
@@ -3029,7 +3022,7 @@ export default function App() {
                     <div>{"✅ " + thisWeek.length + " جلسة هالأسبوع — " + scenarios.length + " موقف مختلف"}</div>
                     <div>{"💬 " + totalPh + " جملة تمرّنت عليها — تذكّرت " + recalled + " منها"}</div>
                     {uniqueWeak.length > 0 && <div style={{ color: "#e8b84b" }}>{"🔄 تحتاج مراجعة: " + uniqueWeak.slice(0, 3).join("، ")}</div>}
-                    {uniqueWeak.length === 0 && thisWeek.length >= 5 && <div style={{ color: "#5ec4b6" }}>{"🔥 أسبوع ممتاز! ما نسيت أي جملة"}</div>}
+                    {uniqueWeak.length === 0 && thisWeek.length >= 5 && <div style={{ color: "#5ec4b6" }}>{"🔥 أسبوع إنجاز مميز! ما نسيت أي جملة"}</div>}
                     {thisWeek.length < 3 && <div style={{ color: "#7a8295" }}>{"💡 حاول تسوي ٥ جلسات الأسبوع الجاي للحصول على أفضل نتيجة"}</div>}
                   </div>
                 );
@@ -3125,7 +3118,7 @@ export default function App() {
             </Card>}
             {/* Voice Settings */}
             <Card>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#e8b84b", marginBottom: 10 }}>🔊 إعدادات الصوت</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#e8b84b", marginBottom: 10 }}>🔊 تفضيلاتك الصوتية</div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
                 <div style={{ fontSize: 13, color: "#9ca3b5" }}>الحالة:</div>
                 <VoiceBadge />
@@ -3180,7 +3173,7 @@ export default function App() {
               {!getOpenAIKey() && <div style={{ fontSize: 12, color: "#5ec4b6", background: "rgba(94,196,182,0.06)", borderRadius: 8, padding: 10 }}>💡 نصيحة: افتح التطبيق في متصفح Edge للحصول على أفضل صوت مجاني (Microsoft Neural voices)</div>}
             </Card>
             <div style={{ textAlign: "center", marginTop: 14 }}>
-              <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(232,160,64,0.1)", background: "transparent", color: "#e87461", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة تعيين</button>
+              <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(232,160,64,0.1)", background: "transparent", color: "#e87461", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة ضبط</button>
             </div>
           </div>
         )}
