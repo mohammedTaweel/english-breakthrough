@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { speak, stopSpeech, getVoiceInfo, setOpenAIKey, getOpenAIKey, setTTSVoice, getTTSVoice, setAccent, getAccent, storage } from "./platform.js";
+import { TaliqLogo, TaliqIcon, SplashScreen, BRAND } from "./brand.jsx";
 
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
@@ -870,7 +871,7 @@ function Prompter({ lines, gap, color, label, withAudio }) {
     <div>
       <div style={{ display: "flex", gap: 8, marginBottom: 12, alignItems: "center" }}>
         {!on ? (
-          <button onClick={start} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "linear-gradient(135deg," + color + ",#d4a43a)", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{"▶ ابدأ " + label}</button>
+          <button onClick={start} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "linear-gradient(135deg," + color + ",#d4a43a)", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{"▶ ابدأ " + label}</button>
         ) : (
           <button onClick={stop} style={{ padding: "8px 20px", borderRadius: 10, border: "1px solid #252836", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>⏹ إيقاف</button>
         )}
@@ -912,7 +913,7 @@ function MeetingSim() {
       <div style={{ fontSize: 40, marginBottom: 12 }}>🎉</div>
       <div style={{ fontSize: 20, fontWeight: 800, color: "#e8b84b", marginBottom: 8 }}>{score}/{m.steps.length}</div>
       <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score === m.steps.length ? "ممتاز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محادثة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محادثة جديدة</button>
     </div>
   );
   return (
@@ -941,7 +942,7 @@ function MeetingSim() {
           </div>
         );
       })}
-      {picked !== null && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{step + 1 >= m.steps.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
+      {picked !== null && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{step + 1 >= m.steps.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
     </div>
   );
 }
@@ -965,7 +966,7 @@ function QuickResp() {
       <div style={{ fontSize: 40, marginBottom: 12 }}>⚡</div>
       <div style={{ fontSize: 24, fontWeight: 800, color: "#e8b84b", marginBottom: 8 }}>{score}/{total}</div>
       <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 7 ? "سريع وحاسم! 🔥" : score >= 5 ? "جيد! السرعة تتحسن" : "تحتاج تحفظ الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
     </div>
   );
   const rawQ = qs.current[qi];
@@ -993,7 +994,7 @@ function QuickResp() {
       })}
       {(picked !== null || timer === 0) && <div style={{ textAlign: "center", marginTop: 10 }}>
         {timer === 0 && picked === null && <div style={{ color: "#e87461", fontSize: 13, marginBottom: 8 }}>⏰ انتهى الوقت!</div>}
-        <button onClick={() => { if (timer === 0 && picked === null) { setTotal(total + 1); } next(); }} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>التالي ←</button>
+        <button onClick={() => { if (timer === 0 && picked === null) { setTotal(total + 1); } next(); }} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>التالي ←</button>
       </div>}
     </div>
   );
@@ -1132,7 +1133,7 @@ function FillBlank() {
       <div style={{ fontSize: 40, marginBottom: 12 }}>📝</div>
       <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#5ec4b6" : score >= 4 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "ممتاز! ذاكرتك قوية 🔥" : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
     </div>
   );
 
@@ -1175,11 +1176,11 @@ function FillBlank() {
       </div>
       {!checked ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={check} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>✓ تحقق</button>
+          <button onClick={check} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>✓ تحقق</button>
         </div>
       ) : (
         <div style={{ textAlign: "center" }}>
-          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         </div>
       )}
     </div>
@@ -1254,7 +1255,7 @@ function SentenceBuild() {
       <div style={{ fontSize: 40, marginBottom: 12 }}>🧩</div>
       <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#5ec4b6" : score >= 4 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "ممتاز! تركيب الجمل صار سهل 🔥" : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#4db5a5", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#4db5a5", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
     </div>
   );
 
@@ -1295,9 +1296,9 @@ function SentenceBuild() {
       <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
         {!checked && selected.length > 0 && <button onClick={() => setSelected([])} style={{ padding: "8px 16px", borderRadius: 10, border: "1px solid #252836", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>↻ مسح</button>}
         {!checked ? (
-          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: selected.length > 0 ? "#4db5a5" : "#252836", color: selected.length > 0 ? "#0f1119" : "#5c6478", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>✓ تحقق</button>
+          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: selected.length > 0 ? "#4db5a5" : "#252836", color: selected.length > 0 ? "#1a1614" : "#5c6478", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>✓ تحقق</button>
         ) : (
-          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#4db5a5", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#4db5a5", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         )}
       </div>
     </div>
@@ -1351,7 +1352,7 @@ function FreeRecall() {
       <div style={{ fontSize: 40, marginBottom: 12 }}>✍️</div>
       <div style={{ fontSize: 24, fontWeight: 800, color: score >= 4 ? "#5ec4b6" : score >= 2 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 4 ? "ممتاز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e87461", color: "#0f1119", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e87461", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 جولة جديدة</button>
     </div>
   );
 
@@ -1387,7 +1388,7 @@ function FreeRecall() {
 
       {!submitted ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={submit} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#e87461" : "#252836", color: input.trim().length >= 3 ? "#0f1119" : "#5c6478", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ أرسل</button>
+          <button onClick={submit} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#e87461" : "#252836", color: input.trim().length >= 3 ? "#1a1614" : "#5c6478", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ أرسل</button>
         </div>
       ) : (
         <div>
@@ -1402,7 +1403,7 @@ function FreeRecall() {
             <div style={{ fontSize: 13, color: "#e8b84b", marginBottom: 8 }}>حاول تستخدم كلمات من بنك الجمل في المرة الجاية</div>
           )}
           <div style={{ textAlign: "center" }}>
-            <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "#e87461", color: "#0f1119", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+            <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "#e87461", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
           </div>
         </div>
       )}
@@ -1563,7 +1564,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
               {(listenAnswer !== null || !sc.listenQ) && (
                 <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
                   <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} style={{ padding: "8px 16px", borderRadius: 8, border: "1px solid rgba(196,154,56,0.2)", background: "transparent", color: "#c49a38", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🔄 استمع مرة ثانية</button>
-                  <button onClick={() => advanceStep(1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#0f1119", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي →</button>
+                  <button onClick={() => advanceStep(1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي →</button>
                 </div>
               )}
             </div>
@@ -1583,7 +1584,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
             </div>
           ))}
           <div style={{ textAlign: "center", marginTop: 14 }}>
-            <button onClick={() => advanceStep(2)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#0f1119", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: ردّد الجمل →</button>
+            <button onClick={() => advanceStep(2)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: ردّد الجمل →</button>
           </div>
         </div>
       )}
@@ -1599,7 +1600,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
             return (
               <div key={i} style={{ padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(94,196,182,0.06)" : "rgba(255,255,255,0.02)", border: "1px solid " + (r >= 5 ? "rgba(94,196,182,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 8 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 5 ? "#5ec4b6" : r > 0 ? "#e8b84b" : "#252836", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#0f1119" : "#5c6478", flexShrink: 0 }}>{r >= 5 ? "✓" : r + "/5"}</div>
+                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 5 ? "#5ec4b6" : r > 0 ? "#e8b84b" : "#252836", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#1a1614" : "#5c6478", flexShrink: 0 }}>{r >= 5 ? "✓" : r + "/5"}</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
                     <div style={{ fontSize: 12, color: "#7a8295", marginTop: 2 }}>{p.ar}</div>
@@ -1643,7 +1644,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
           })}
           {Object.values(shadowReps).filter(r => r >= 5).length >= sc.keyPhrases.length && (
             <div style={{ textAlign: "center", marginTop: 14 }}>
-              <button onClick={() => advanceStep(3)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#0f1119", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تذكّر →</button>
+              <button onClick={() => advanceStep(3)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تذكّر →</button>
             </div>
           )}
         </div>
@@ -1662,7 +1663,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
                 <div style={{ fontSize: 14, color: "#e8b84b", fontWeight: 600, marginBottom: 8 }}>{p.ar}</div>
 
                 {state === "hidden" && (
-                  <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "thinking" }))} style={{ padding: "8px 20px", borderRadius: 8, border: "none", background: "#e8b84b", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>قلها بصوت عالٍ ثم اضغط هنا</button>
+                  <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "thinking" }))} style={{ padding: "8px 20px", borderRadius: 8, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>قلها بصوت عالٍ ثم اضغط هنا</button>
                 )}
 
                 {state === "thinking" && (
@@ -1711,13 +1712,13 @@ function DailySession({ scenario, onComplete, dayNum }) {
                         <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", flex: 1, color: "#f0f0f5" }}>{sc.keyPhrases[fi].en}</div>
                       </div>
                     ))}
-                    <button onClick={() => { const newState = { ...recallState }; const newScore = { ...recallScore }; forgotten.forEach(fi => { newState[fi] = "hidden"; delete newScore[fi]; }); setRecallState(newState); setRecallScore(newScore); }} style={{ marginTop: 8, padding: "8px 20px", borderRadius: 8, border: "none", background: "#e8b84b", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد اختبار الجمل المنسيّة</button>
+                    <button onClick={() => { const newState = { ...recallState }; const newScore = { ...recallScore }; forgotten.forEach(fi => { newState[fi] = "hidden"; delete newScore[fi]; }); setRecallState(newState); setRecallScore(newScore); }} style={{ marginTop: 8, padding: "8px 20px", borderRadius: 8, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد اختبار الجمل المنسيّة</button>
                   </div>
                 )}
                 {allGood && (
                   <div style={{ textAlign: "center" }}>
                     <div style={{ fontSize: 13, color: "#5ec4b6", fontWeight: 600, marginBottom: 8 }}>✓ ممتاز! تذكّرت كل الجمل</div>
-                    <button onClick={() => advanceStep(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#0f1119", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
+                    <button onClick={() => advanceStep(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
                   </div>
                 )}
               </div>
@@ -1735,7 +1736,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
           <textarea value={prodInput} onChange={(e) => !prodSubmitted && setProdInput(e.target.value)} placeholder="اكتب ردك بالإنجليزي..." disabled={prodSubmitted} style={{ width: "100%", minHeight: 80, padding: 14, borderRadius: 12, fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(232,116,97,0.2)", color: "#f0f0f5", outline: "none", resize: "vertical", marginBottom: 12 }} />
           {!prodSubmitted ? (
             <div style={{ textAlign: "center" }}>
-              <button onClick={() => setProdSubmitted(true)} disabled={prodInput.trim().length < 5} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: prodInput.trim().length >= 5 ? "#e87461" : "#252836", color: prodInput.trim().length >= 5 ? "#0f1119" : "#5c6478", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: prodInput.trim().length >= 5 ? "pointer" : "default" }}>✓ أرسل</button>
+              <button onClick={() => setProdSubmitted(true)} disabled={prodInput.trim().length < 5} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: prodInput.trim().length >= 5 ? "#e87461" : "#252836", color: prodInput.trim().length >= 5 ? "#1a1614" : "#5c6478", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: prodInput.trim().length >= 5 ? "pointer" : "default" }}>✓ أرسل</button>
             </div>
           ) : (
             <div>
@@ -1783,7 +1784,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
                 )}
               </div>
               <div style={{ textAlign: "center" }}>
-                <button onClick={() => advanceStep(5)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#0f1119", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تحدّي اليوم →</button>
+                <button onClick={() => advanceStep(5)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تحدّي اليوم →</button>
               </div>
             </div>
           )}
@@ -1809,13 +1810,13 @@ function DailySession({ scenario, onComplete, dayNum }) {
                 await storage.set("session-history", JSON.stringify(hist));
               } catch(e) {} })();
               if (onComplete) onComplete();
-            }} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#5ec4b6,#e8b84b)", color: "#0f1119", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>أقبل التحدي ✓</button>
+            }} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#5ec4b6,#e8b84b)", color: "#1a1614", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>أقبل التحدي ✓</button>
           ) : !challengeDone ? (
             <div style={{ animation: "fadeUp .4s" }}>
               {/* FIX 4: Challenge follow-up */}
               <div style={{ fontSize: 14, color: "#e8b84b", fontWeight: 700, marginBottom: 10 }}>سوّيت التحدي؟</div>
               <div style={{ display: "flex", gap: 8, justifyContent: "center", marginBottom: 10 }}>
-                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#5ec4b6", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>نعم سويته ✓</button>
+                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#5ec4b6", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>نعم سويته ✓</button>
                 <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>بسويه لاحقاً</button>
               </div>
               <input value={challengeNote} onChange={(e) => setChallengeNote(e.target.value)} placeholder="كيف كانت التجربة؟ (اختياري)" style={{ width: "100%", padding: 10, borderRadius: 10, fontFamily: "inherit", fontSize: 13, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "#f0f0f5", outline: "none", textAlign: "center" }} />
@@ -1994,7 +1995,7 @@ function Fluency432() {
       )}
       {sec === 0 && !running && round === 3 && (
         <div style={{ textAlign: "center", marginTop: 10 }}>
-          <button onClick={() => setRound(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#5ec4b6,#e8b84b)", color: "#0f1119", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🏁 النتيجة</button>
+          <button onClick={() => setRound(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#5ec4b6,#e8b84b)", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🏁 النتيجة</button>
         </div>
       )}
     </div>
@@ -2334,7 +2335,7 @@ function LevelTest({ onComplete }) {
         <div style={{ fontSize: 12, color: "#e8b84b", fontWeight: 600 }}>⏱️ {TOTAL_QUESTIONS} سؤال — حوالي ١٠ دقائق</div>
         <div style={{ fontSize: 12, color: "#7a8295", marginTop: 4 }}>الأسئلة تتكيّف مع مستواك — تزداد صعوبة إذا أجبت صح</div>
       </div>
-      <button onClick={startTest} style={{ padding: "12px 36px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#0f1119", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ الاختبار 🚀</button>
+      <button onClick={startTest} style={{ padding: "12px 36px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ الاختبار 🚀</button>
     </div>
   );
 
@@ -2417,7 +2418,7 @@ function LevelTest({ onComplete }) {
         </div>
 
         <div style={{ textAlign: "center", marginTop: 16 }}>
-          <button onClick={() => { setPhase("intro"); setQi(0); setPicked(null); setCurrentLevel(2); setHistory([]); setQuestions([]); setLevelScores({0:0,1:0,2:0,3:0,4:0,5:0}); setLevelAttempts({0:0,1:0,2:0,3:0,4:0,5:0}); setConsecutiveCorrect(0); setConsecutiveWrong(0); setFinalLevel(null); setSkillBreakdown(null); }} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد الاختبار</button>
+          <button onClick={() => { setPhase("intro"); setQi(0); setPicked(null); setCurrentLevel(2); setHistory([]); setQuestions([]); setLevelScores({0:0,1:0,2:0,3:0,4:0,5:0}); setLevelAttempts({0:0,1:0,2:0,3:0,4:0,5:0}); setConsecutiveCorrect(0); setConsecutiveWrong(0); setFinalLevel(null); setSkillBreakdown(null); }} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد الاختبار</button>
         </div>
       </div>
     );
@@ -2476,7 +2477,7 @@ function LevelTest({ onComplete }) {
           <div style={{ fontSize: 12, color: picked === displayQ.ans ? "#5ec4b6" : "#e87461", marginBottom: 8, fontWeight: 600 }}>
             {picked === displayQ.ans ? "✓ إجابة صحيحة!" : "✗ إجابة خاطئة"}
           </div>
-          <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#0f1119", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+          <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
             {qi + 1 >= TOTAL_QUESTIONS ? "🏁 عرض النتيجة" : "التالي ←"}
           </button>
         </div>
@@ -2541,11 +2542,11 @@ export default function App() {
     tmRef.current = setInterval(() => { setTmSec(p => { if (p + 1 >= m * 60) { clearInterval(tmRef.current); setTmOn(false); return m * 60; } return p + 1; }); }, 1000);
   }, []);
 
-  if (loading) return <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#0f1119", fontFamily: "'Noto Kufi Arabic',sans-serif" }}><style>{CSS}</style><div style={{ textAlign: "center", color: "#fff" }}><div style={{ fontSize: 40, animation: "pulse 1.5s infinite" }}>🎯</div><div style={{ fontSize: 14, opacity: 0.5, marginTop: 8 }}>جاري التحميل...</div></div></div>;
+  if (loading) return <><style>{CSS}</style><SplashScreen /></>;
 
   // ===== ONBOARDING =====
   if (!store.start) return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#0f1119", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", background: "#1a1614", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
       <style>{CSS}</style>
       <div style={{ maxWidth: 440, padding: 32, animation: "fadeUp .8s" }}>
 
@@ -2554,7 +2555,7 @@ export default function App() {
           <div style={{ fontSize: 64, marginBottom: 20 }}>😔</div>
           <h1 style={{ fontSize: 24, fontWeight: 800, color: "#f0f0f5", lineHeight: 1.8, marginBottom: 16 }}>تفهم كل شيء...<br/>بس لما تبي تتكلم، الكلمات ما تطلع؟</h1>
           <p style={{ fontSize: 15, color: "#7a8295", lineHeight: 2.2, marginBottom: 24 }}>في المطعم، مع الدكتور، في المطار...<br/>تعرف الجواب في راسك بس لسانك ما يساعدك.<br/><b style={{ color: "#9ca3b5" }}>جرّبت كورسات وتطبيقات كثير وما استمريت.</b></p>
-          <button onClick={() => setOnboardStep(1)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#0f1119", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>هذا بالضبط أنا ←</button>
+          <button onClick={() => setOnboardStep(1)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>هذا بالضبط أنا ←</button>
         </div>}
 
         {/* Screen 2: The Promise */}
@@ -2569,7 +2570,7 @@ export default function App() {
             </div>
           </div>
           <p style={{ fontSize: 13, color: "#7a8295", lineHeight: 2, marginBottom: 20 }}>مبني على أبحاث جامعية في اكتساب اللغة<br/>— مو ترجمة لتطبيق أجنبي</p>
-          <button onClick={() => setOnboardStep(2)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#0f1119", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>كيف يشتغل؟ ←</button>
+          <button onClick={() => setOnboardStep(2)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>كيف يشتغل؟ ←</button>
         </div>}
 
         {/* Screen 3: How it works */}
@@ -2590,7 +2591,7 @@ export default function App() {
               </div>
             ))}
           </div>
-          <button onClick={() => setOnboardStep(3)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#0f1119", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>يناسبني! ←</button>
+          <button onClick={() => setOnboardStep(3)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%" }}>يناسبني! ←</button>
         </div>}
 
         {/* Screen 4: Personalization Question */}
@@ -2630,7 +2631,7 @@ export default function App() {
               <div style={{ fontSize: 14, color: "#9ca3b5", lineHeight: 2 }}>"{s.text}"</div>
             </div>
           ))}
-          <button onClick={() => setOnboardStep(5)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#0f1119", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 8 }}>ملهم! أبي أبدأ ←</button>
+          <button onClick={() => setOnboardStep(5)} style={{ padding: "14px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 8 }}>ملهم! أبي أبدأ ←</button>
         </div>}
 
         {/* FIX 4: Commitment Question */}
@@ -2641,7 +2642,7 @@ export default function App() {
             <div style={{ fontSize: 15, color: "#f0f0f5", lineHeight: 2.4, marginBottom: 16 }}>أنا ألتزم بـ <b style={{ color: "#e8b84b" }}>١٥ دقيقة يومياً</b> لمدة أسبوع واحد فقط.<br/>لن أحكم على النتائج قبل ٧ أيام.<br/>أعرف إن التغيير يحتاج صبر وممارسة.</div>
             <div style={{ fontSize: 13, color: "#7a8295" }}>الأبحاث تقول: اللي يلتزم علناً يكمل 3x أكثر من اللي ما يلتزم</div>
           </div>
-          <button onClick={() => { setOnboardStep(6); save({ ...store, start: gtd(), challenge: userChallenge, committed: true }); }} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#0f1119", fontFamily: "inherit", fontSize: 18, fontWeight: 800, cursor: "pointer", width: "100%", animation: "glow 2s infinite" }}>أنا ملتزم — ابدأ جلستي الأولى ✓</button>
+          <button onClick={() => { setOnboardStep(6); save({ ...store, start: gtd(), challenge: userChallenge, committed: true }); }} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 18, fontWeight: 800, cursor: "pointer", width: "100%", animation: "glow 2s infinite" }}>أنا ملتزم — ابدأ جلستي الأولى ✓</button>
           <button onClick={() => { setOnboardStep(6); save({ ...store, start: gtd(), challenge: userChallenge }); }} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 13, cursor: "pointer", marginTop: 12 }}>أبدأ بدون التزام</button>
         </div>}
 
@@ -2709,7 +2710,7 @@ export default function App() {
   const Card = ({ children, s }) => <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 18, marginBottom: 12, animation: "fadeUp .4s", ...s }}>{children}</div>;
 
   return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#0f1119", color: "#f0f0f5", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", background: "#1a1614", color: "#f0f0f5", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
       <style>{CSS}</style>
       {conf && <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 100 }}>{Array.from({ length: 25 }).map((_, i) => <div key={i} style={{ position: "absolute", top: 0, left: Math.random() * 100 + "%", width: 7, height: 7, background: ["#e8b84b", "#e8b84b", "#e8b84b", "#5ec4b6"][i % 4], borderRadius: "50%", animation: "confDrop " + (2 + Math.random() * 2) + "s linear " + Math.random() * 0.5 + "s forwards" }} />)}</div>}
 
@@ -2719,7 +2720,7 @@ export default function App() {
 
         <div style={{ padding: "16px 0 10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
-            <h1 style={{ fontSize: 18, fontWeight: 800, background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>اختراق حاجز الإنجليزية</h1>
+            <TaliqLogo size={28} />
             <div style={{ fontSize: 12, color: "#5c6478", marginTop: 2 }}>{"أسبوع " + wk + "/12" + (levelResult ? " — " + levelResult.levelCode : "")}</div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -2925,7 +2926,7 @@ export default function App() {
                       (async () => { try { await storage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                     }
                   }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(94,196,182,0.06)" : isDue ? "rgba(232,184,75,0.04)" : "rgba(255,255,255,0.015)", border: "1px solid " + (r >= 5 ? "rgba(94,196,182,0.15)" : isDue ? "rgba(232,184,75,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 6, cursor: "pointer" }}>
-                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#5ec4b6" : r > 0 ? "#e8b84b" : "#252836", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#0f1119" : "#5c6478", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div>
+                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#5ec4b6" : r > 0 ? "#e8b84b" : "#252836", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#1a1614" : "#5c6478", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
                       <div style={{ fontSize: 12, color: "#7a8295", marginTop: 2 }}>{p.ar}</div>
@@ -2972,7 +2973,7 @@ export default function App() {
                           (async () => { try { await storage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                         }
                       }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(94,196,182,0.06)" : "rgba(232,184,75,0.04)", border: "1px solid " + (r >= 5 ? "rgba(94,196,182,0.15)" : "rgba(232,184,75,0.1)"), marginBottom: 6, cursor: "pointer" }}>
-                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#5ec4b6" : r > 0 ? "#e8b84b" : "#252836", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#0f1119" : "#5c6478", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
+                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#5ec4b6" : r > 0 ? "#e8b84b" : "#252836", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#1a1614" : "#5c6478", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{item.phrase.en}</div>
                           <div style={{ fontSize: 12, color: "#7a8295" }}>{item.phrase.ar} — {item.icon} {item.cat}</div>
@@ -3007,7 +3008,7 @@ export default function App() {
             <Card>
               <div style={{ display: "flex", alignItems: "center", gap: 3, justifyContent: "center", flexWrap: "wrap" }}>
                 {Array.from({ length: 12 }, (_, i) => i + 1).map((w) => (
-                  <div key={w} style={{ width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, border: "2px solid " + (w <= wk ? "#e8b84b" : "#1e2130"), background: w < wk ? "#e8b84b" : "transparent", color: w < wk ? "#0f1119" : w === wk ? "#e8b84b" : "#5c6478", animation: w === wk ? "glow 2s infinite" : "none", opacity: w > wk ? 0.2 : 1 }}>{w < wk ? "✓" : w}</div>
+                  <div key={w} style={{ width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, border: "2px solid " + (w <= wk ? "#e8b84b" : "#1e2130"), background: w < wk ? "#e8b84b" : "transparent", color: w < wk ? "#1a1614" : w === wk ? "#e8b84b" : "#5c6478", animation: w === wk ? "glow 2s infinite" : "none", opacity: w > wk ? 0.2 : 1 }}>{w < wk ? "✓" : w}</div>
                 ))}
               </div>
             </Card>
