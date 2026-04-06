@@ -327,26 +327,32 @@ const CSS = `
 
   /* ===== DESIGN TOKENS ===== */
   :root {
-    /* Colors */
-    --c-bg: #fafaf9;
+    /* Colors — warm neutral palette */
+    --c-bg: #f5f3f0;
     --c-surface: #ffffff;
-    --c-surface-hover: #f4f4f5;
-    --c-border: #e4e4e7;
-    --c-border-light: #eeeeec;
-    --c-text: #18181b;
-    --c-text-secondary: #71717a;
-    --c-text-tertiary: #a1a1aa;
-    --c-text-muted: #b0b0b0;
+    --c-surface-raised: #ffffff;
+    --c-surface-hover: #faf9f7;
+    --c-surface-sunken: #efeee9;
+    --c-border: #e0ded8;
+    --c-border-light: #eae8e4;
+    --c-text: #1c1917;
+    --c-text-secondary: #57534e;
+    --c-text-tertiary: #a8a29e;
+    --c-text-muted: #d6d3d1;
     --c-accent: #1d4ed8;
     --c-accent-hover: #1e40af;
-    --c-accent-light: rgba(29,78,216,0.08);
-    --c-accent-border: rgba(29,78,216,0.18);
-    --c-success: #059669;
-    --c-success-light: rgba(5,150,105,0.08);
+    --c-accent-soft: #dbeafe;
+    --c-accent-light: rgba(29,78,216,0.06);
+    --c-accent-border: rgba(29,78,216,0.15);
+    --c-success: #16a34a;
+    --c-success-soft: #dcfce7;
+    --c-success-light: rgba(22,163,74,0.06);
     --c-error: #dc2626;
+    --c-error-soft: #fef2f2;
     --c-error-light: rgba(220,38,38,0.06);
-    --c-warn: #d97706;
-    --c-warn-light: rgba(217,119,6,0.08);
+    --c-warn: #ca8a04;
+    --c-warn-soft: #fef9c3;
+    --c-warn-light: rgba(202,138,4,0.06);
 
     /* Typography Scale (modular — 1.2 ratio) */
     --fs-xs: 0.75rem;    /* 12px */
@@ -376,10 +382,12 @@ const CSS = `
     --r-xl: 20px;
     --r-full: 9999px;
 
-    /* Shadows */
-    --sh-sm: 0 1px 2px rgba(0,0,0,0.04);
-    --sh-md: 0 2px 8px rgba(0,0,0,0.06);
-    --sh-lg: 0 4px 16px rgba(0,0,0,0.08);
+    /* Shadows — layered for depth */
+    --sh-sm: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);
+    --sh-md: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.04);
+    --sh-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+    --sh-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.06);
+    --sh-glow: 0 0 20px rgba(29,78,216,0.12);
 
     /* Transitions */
     --tr-fast: 0.15s ease;
@@ -403,9 +411,10 @@ const CSS = `
     max-width: 640px;
     margin: 0 auto;
     padding: 0 var(--sp-5);
+    padding-bottom: var(--sp-10);
   }
   @media (max-width: 480px) {
-    .app-container { padding: 0 var(--sp-4); }
+    .app-container { padding: 0 var(--sp-4); padding-bottom: var(--sp-9); }
     :root {
       --fs-xs: 0.6875rem;
       --fs-sm: 0.75rem;
@@ -420,27 +429,44 @@ const CSS = `
     .app-container { max-width: 720px; padding: 0 var(--sp-7); }
   }
 
-  /* ===== CARD SYSTEM ===== */
+  /* ===== CARD SYSTEM — with real depth ===== */
   .card {
     background: var(--c-surface);
-    border: 1px solid var(--c-border-light);
-    border-radius: var(--r-lg);
-    padding: var(--sp-5);
-    margin-bottom: var(--sp-4);
-    box-shadow: var(--sh-sm);
+    border: none;
+    border-radius: var(--r-xl);
+    padding: var(--sp-6);
+    margin-bottom: var(--sp-5);
+    box-shadow: var(--sh-md);
     animation: fadeUp 0.3s ease;
+    transition: box-shadow var(--tr-base), transform var(--tr-base);
   }
+  .card:hover { box-shadow: var(--sh-lg); }
   .card--accent {
-    border-color: var(--c-accent-border);
-    background: var(--c-accent-light);
+    background: var(--c-accent-soft);
+    box-shadow: var(--sh-sm);
+    border: 1px solid var(--c-accent-border);
   }
   .card--success {
-    border-color: rgba(46,125,91,0.18);
-    background: var(--c-success-light);
+    background: var(--c-success-soft);
+    box-shadow: var(--sh-sm);
+    border: 1px solid rgba(22,163,74,0.12);
   }
   .card--warn {
-    border-color: rgba(161,98,7,0.15);
-    background: var(--c-warn-light);
+    background: var(--c-warn-soft);
+    box-shadow: var(--sh-sm);
+    border: 1px solid rgba(202,138,4,0.12);
+  }
+  .card--flat {
+    box-shadow: none;
+    border: 1px solid var(--c-border-light);
+    padding: var(--sp-4);
+  }
+  .card--interactive {
+    cursor: pointer;
+  }
+  .card--interactive:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sh-lg);
   }
 
   /* ===== BUTTON SYSTEM ===== */
@@ -465,27 +491,39 @@ const CSS = `
   .btn--primary {
     background: var(--c-accent);
     color: #fff;
+    box-shadow: 0 2px 4px rgba(29,78,216,0.25), 0 1px 2px rgba(29,78,216,0.15);
   }
-  .btn--primary:hover:not(:disabled) { background: var(--c-accent-hover); }
+  .btn--primary:hover:not(:disabled) {
+    background: var(--c-accent-hover);
+    box-shadow: 0 4px 8px rgba(29,78,216,0.3), 0 2px 4px rgba(29,78,216,0.2);
+    transform: translateY(-1px);
+  }
   .btn--secondary {
-    background: transparent;
+    background: var(--c-surface);
     color: var(--c-accent);
     border: 1px solid var(--c-accent-border);
+    box-shadow: var(--sh-sm);
   }
-  .btn--secondary:hover:not(:disabled) { background: var(--c-accent-light); }
+  .btn--secondary:hover:not(:disabled) {
+    background: var(--c-accent-soft);
+    box-shadow: var(--sh-md);
+  }
   .btn--ghost {
     background: transparent;
     color: var(--c-text-secondary);
   }
-  .btn--ghost:hover:not(:disabled) { background: var(--c-surface-hover); }
+  .btn--ghost:hover:not(:disabled) {
+    background: var(--c-surface-sunken);
+  }
   .btn--success {
     background: var(--c-success);
     color: #fff;
+    box-shadow: 0 2px 4px rgba(22,163,74,0.25);
   }
   .btn--danger {
     background: transparent;
     color: var(--c-error);
-    border: 1px solid rgba(197,48,48,0.2);
+    border: 1px solid rgba(220,38,38,0.15);
   }
   .btn--sm {
     font-size: var(--fs-sm);
@@ -506,18 +544,18 @@ const CSS = `
     width: 100%;
     font-family: inherit;
     font-size: var(--fs-base);
-    padding: var(--sp-3) var(--sp-4);
-    border: 1px solid var(--c-border);
-    border-radius: var(--r-md);
+    padding: var(--sp-4);
+    border: 2px solid var(--c-border);
+    border-radius: var(--r-lg);
     background: var(--c-surface);
     color: var(--c-text);
     outline: none;
     transition: border-color var(--tr-base), box-shadow var(--tr-base);
-    min-height: 48px;
+    min-height: 52px;
   }
   .input:focus {
     border-color: var(--c-accent);
-    box-shadow: 0 0 0 3px var(--c-accent-light);
+    box-shadow: 0 0 0 4px var(--c-accent-light), var(--sh-md);
   }
   .input::placeholder { color: var(--c-text-muted); }
   .input--mono {
@@ -525,15 +563,16 @@ const CSS = `
     direction: ltr;
     text-align: left;
   }
-  textarea.input { min-height: 80px; resize: vertical; line-height: 1.8; }
+  textarea.input { min-height: 100px; resize: vertical; line-height: 1.8; }
 
-  /* ===== TAB NAVIGATION ===== */
+  /* ===== TAB NAVIGATION — modern pill style ===== */
   .tabs {
     display: flex;
-    gap: var(--sp-1);
-    border-bottom: 1px solid var(--c-border-light);
-    margin-bottom: var(--sp-5);
-    padding: 0;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-6);
+    padding: var(--sp-1);
+    background: var(--c-surface-sunken);
+    border-radius: var(--r-lg);
   }
   .tab {
     flex: 1;
@@ -545,15 +584,16 @@ const CSS = `
     font-size: var(--fs-sm);
     font-weight: 600;
     cursor: pointer;
-    border-bottom: 2.5px solid transparent;
-    transition: color var(--tr-base), border-color var(--tr-base);
+    border-radius: var(--r-md);
+    transition: all var(--tr-base);
     min-height: 44px;
     text-align: center;
   }
-  .tab:hover { color: var(--c-text-secondary); }
+  .tab:hover { color: var(--c-text-secondary); background: rgba(255,255,255,0.5); }
   .tab--active {
     color: var(--c-accent);
-    border-bottom-color: var(--c-accent);
+    background: var(--c-surface);
+    box-shadow: var(--sh-sm);
   }
 
   /* ===== HEADER ===== */
@@ -561,27 +601,28 @@ const CSS = `
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--sp-4) 0 var(--sp-3);
+    padding: var(--sp-5) 0 var(--sp-4);
   }
   .header__badges {
     display: flex;
     align-items: center;
-    gap: var(--sp-3);
+    gap: var(--sp-2);
   }
   .badge {
     display: inline-flex;
     align-items: center;
     gap: var(--sp-1);
-    padding: var(--sp-1) var(--sp-3);
+    padding: 6px var(--sp-3);
     border-radius: var(--r-full);
     font-size: var(--fs-xs);
     font-weight: 600;
-    background: var(--c-accent-light);
+    background: var(--c-surface);
     color: var(--c-accent);
     font-family: 'IBM Plex Mono', monospace;
+    box-shadow: var(--sh-sm);
+    border: 1px solid var(--c-border-light);
   }
   .badge--success {
-    background: var(--c-success-light);
     color: var(--c-success);
   }
 
@@ -590,6 +631,17 @@ const CSS = `
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--sp-3);
+  }
+  .exercise-grid .card {
+    margin-bottom: 0;
+    cursor: pointer;
+    transition: transform var(--tr-base), box-shadow var(--tr-base);
+    border: 1px solid var(--c-border-light);
+  }
+  .exercise-grid .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sh-lg);
+    border-color: var(--c-accent-border);
   }
   @media (min-width: 480px) {
     .exercise-grid { grid-template-columns: 1fr 1fr; }
@@ -617,25 +669,26 @@ const CSS = `
   .pill-scroll::-webkit-scrollbar { display: none; }
   .pill {
     flex-shrink: 0;
-    padding: var(--sp-2) var(--sp-3);
+    padding: var(--sp-2) var(--sp-4);
     border-radius: var(--r-full);
-    border: 1px solid var(--c-border);
-    background: transparent;
+    border: none;
+    background: var(--c-surface);
     color: var(--c-text-secondary);
     font-family: inherit;
     font-size: var(--fs-sm);
     font-weight: 500;
     cursor: pointer;
     transition: all var(--tr-base);
-    min-height: 36px;
+    min-height: 40px;
     white-space: nowrap;
+    box-shadow: var(--sh-sm);
   }
-  .pill:hover { background: var(--c-surface-hover); }
+  .pill:hover { background: var(--c-surface-hover); box-shadow: var(--sh-md); }
   .pill--active {
-    background: var(--c-accent-light);
-    border-color: var(--c-accent-border);
-    color: var(--c-accent);
+    background: var(--c-accent);
+    color: #fff;
     font-weight: 600;
+    box-shadow: 0 2px 4px rgba(29,78,216,0.25);
   }
 
   /* ===== WEEK CIRCLES ===== */
@@ -646,8 +699,8 @@ const CSS = `
     justify-content: center;
   }
   .week-dot {
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -656,22 +709,24 @@ const CSS = `
     font-weight: 700;
     border: 2px solid var(--c-border);
     transition: all var(--tr-base);
+    background: var(--c-surface);
+    box-shadow: var(--sh-sm);
   }
-  .week-dot--done { background: var(--c-accent); border-color: var(--c-accent); color: #fff; }
-  .week-dot--current { border-color: var(--c-accent); color: var(--c-accent); }
-  .week-dot--future { opacity: 0.3; }
+  .week-dot--done { background: var(--c-accent); border-color: var(--c-accent); color: #fff; box-shadow: 0 2px 4px rgba(29,78,216,0.2); }
+  .week-dot--current { border-color: var(--c-accent); color: var(--c-accent); box-shadow: var(--sh-glow); }
+  .week-dot--future { opacity: 0.3; box-shadow: none; }
 
   /* ===== PROGRESS BAR ===== */
   .progress-bar {
-    height: 6px;
-    border-radius: 3px;
-    background: var(--c-border-light);
+    height: 8px;
+    border-radius: var(--r-full);
+    background: var(--c-surface-sunken);
     overflow: hidden;
   }
   .progress-bar__fill {
     height: 100%;
-    border-radius: 3px;
-    background: var(--c-accent);
+    border-radius: var(--r-full);
+    background: linear-gradient(90deg, var(--c-accent), #3b82f6);
     transition: width 0.4s ease;
   }
 
@@ -679,17 +734,63 @@ const CSS = `
   .steps {
     display: flex;
     gap: var(--sp-1);
-    margin-bottom: var(--sp-5);
+    margin-bottom: var(--sp-6);
   }
   .steps__bar {
     flex: 1;
-    height: 5px;
-    border-radius: 3px;
-    background: var(--c-border-light);
+    height: 6px;
+    border-radius: var(--r-full);
+    background: var(--c-surface-sunken);
     transition: background 0.3s;
+    overflow: hidden;
   }
   .steps__bar--done { background: var(--c-success); }
-  .steps__bar--active { background: var(--c-accent); }
+  .steps__bar--active { background: linear-gradient(90deg, var(--c-accent), #3b82f6); }
+
+  /* ===== SECTION HEADERS ===== */
+  .section-title {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--c-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--sp-4);
+  }
+
+  /* ===== HERO CARD (Today's session) ===== */
+  .hero-card {
+    background: linear-gradient(135deg, var(--c-accent) 0%, #3b82f6 100%);
+    color: #fff;
+    border-radius: var(--r-xl);
+    padding: var(--sp-7);
+    margin-bottom: var(--sp-5);
+    box-shadow: 0 8px 20px rgba(29,78,216,0.2), 0 4px 8px rgba(29,78,216,0.1);
+    animation: fadeUp 0.3s ease;
+  }
+  .hero-card h2 { font-size: var(--fs-lg); font-weight: 700; margin-bottom: var(--sp-2); }
+  .hero-card p { font-size: var(--fs-sm); opacity: 0.85; }
+
+  /* ===== STATS CARD ===== */
+  .stat-card {
+    background: var(--c-surface);
+    border-radius: var(--r-xl);
+    padding: var(--sp-5);
+    text-align: center;
+    box-shadow: var(--sh-md);
+  }
+  .stat-card__value {
+    font-size: var(--fs-xl);
+    font-weight: 800;
+    color: var(--c-accent);
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1;
+    margin-bottom: var(--sp-1);
+  }
+  .stat-card__label {
+    font-size: var(--fs-xs);
+    color: var(--c-text-tertiary);
+    font-weight: 500;
+  }
 
   /* ===== UTILITY CLASSES ===== */
   .text-center { text-align: center; }
@@ -3537,22 +3638,18 @@ function MainApp({ currentUser, onLogout }) {
         {/* TODAY — Deep Processing Session */}
         {tab === "today" && (
           <div>
-            <Card><div style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)", textAlign: "center", lineHeight: 1.8, fontStyle: "italic" }}>{MOTIV[dn % MOTIV.length]}</div></Card>
-            {/* FIX 1: Scenario choice — user can accept or browse */}
-            <Card s={{ padding: "var(--sp-4)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", marginBottom: "var(--sp-3)" }}>
-                <div style={{ fontSize: "var(--fs-xl)" }}>{todayScenario.icon}</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)" }}>{"جلسة اليوم: " + todayScenario.title}</div>
-                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>مقترح بناءً على تقدمك</div>
-                </div>
-              </div>
-              <div style={{ display: "flex", gap: "var(--sp-2)", overflowX: "auto", paddingBottom: 6 }}>
-                {DAILY_SCENARIOS.slice(0, 14).map((s, i) => (
-                  <button key={i} onClick={() => { setChosenScenario(s); }} style={{ padding: "4px 10px", borderRadius: "var(--r-sm)", border: "1px solid " + ((chosenScenario || todayScenario).title === s.title ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.04)"), background: (chosenScenario || todayScenario).title === s.title ? "rgba(29,78,216,0.1)" : "transparent", color: (chosenScenario || todayScenario).title === s.title ? "#1d4ed8" : "#a1a1aa", fontSize: "var(--fs-md)", cursor: "pointer", flexShrink: 0, whiteSpace: "nowrap" }} title={s.title}>{s.icon}</button>
-                ))}
-              </div>
-            </Card>
+            {/* Hero — Today's Session */}
+            <div className="hero-card">
+              <p style={{ opacity: 0.7, marginBottom: "var(--sp-4)", fontSize: "var(--fs-sm)" }}>{MOTIV[dn % MOTIV.length]}</p>
+              <h2>{"جلسة اليوم: " + todayScenario.title}</h2>
+              <p>مقترح بناءً على تقدمك — اختر سيناريو آخر أدناه</p>
+            </div>
+            {/* Scenario picker */}
+            <div className="pill-scroll" style={{ marginBottom: "var(--sp-5)" }}>
+              {DAILY_SCENARIOS.slice(0, 14).map((s, i) => (
+                <button key={i} onClick={() => { setChosenScenario(s); }} className={"pill" + ((chosenScenario || todayScenario).title === s.title ? " pill--active" : "")}>{s.title}</button>
+              ))}
+            </div>
             <Card>
               <DailySession
                 scenario={chosenScenario || todayScenario}
@@ -3788,16 +3885,14 @@ function MainApp({ currentUser, onLogout }) {
           <div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "var(--sp-2)", marginBottom: "var(--sp-3)" }}>
               {[
-                { l: "أيام", v: Object.values(store.days).filter(d => d.length >= 1).length, c: "#1d4ed8" },
-                { l: "أسبوع", v: wk + "/12", c: "#1d4ed8" },
-                { l: "سلسلة ", v: (() => { let s = 0, d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s; })(), c: "#1d4ed8" },
+                { l: "أيام التدريب", v: Object.values(store.days).filter(d => d.length >= 1).length },
+                { l: "الأسبوع الحالي", v: wk + "/12" },
+                { l: "أيام متواصلة", v: (() => { let s = 0, d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s; })() },
               ].map((s, i) => (
-                <Card key={i} s={{ padding: "var(--sp-3)" }}>
-                  <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: s.c, fontFamily: "'IBM Plex Mono'" }}>{s.v}</div>
-                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)", marginTop: "var(--sp-1)" }}>{s.l}</div>
-                  </div>
-                </Card>
+                <div key={i} className="stat-card">
+                  <div className="stat-card__value">{s.v}</div>
+                  <div className="stat-card__label">{s.l}</div>
+                </div>
               ))}
             </div>
             <Card>
