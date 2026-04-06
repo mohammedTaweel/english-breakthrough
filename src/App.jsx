@@ -984,13 +984,12 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", marginBottom: "var(--sp-4)" }}>
-        <div style={{ fontSize: "var(--fs-2xl)" }}>{sc.icon}</div>
+      <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-4)", marginBottom: "var(--sp-5)" }}>
+        <ProgressRing percent={stepPct} size={56} strokeWidth={4} />
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-accent)" }}>{"جلسة اليوم: " + sc.title}</div>
-          <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"الخطوة " + (step + 1) + "/6 — " + steps[step].title}</div>
+          <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-text)" }}>{sc.title}</div>
+          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginTop: "var(--sp-1)" }}>{"الخطوة " + (step + 1) + " من 6 — " + steps[step].title}</div>
         </div>
-        <div style={{ fontSize: "var(--fs-sm)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "inherit" }}>{stepPct + "%"}</div>
       </div>
 
       {/* Micro-celebration popup */}
