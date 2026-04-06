@@ -3779,11 +3779,11 @@ function MainApp({ currentUser, onLogout }) {
 
         {/* CRASH RECOVERY — Resume Banner */}
         {pendingCheckpoints && (
-          <div style={{ background: "rgba(29,78,216,0.08)", border: "1px solid rgba(29,78,216,0.2)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-4)", animation: "fadeUp .4s" }}>
-            <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>عندك نشاط لم يكتمل</div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--sp-2)" }}>
+          <div className="card card--accent" style={{ animation: "fadeUp .4s" }}>
+            <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>عندك نشاط لم يكتمل</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--sp-3)" }}>
               {pendingCheckpoints.session && (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: "var(--r-sm)", padding: "8px 12px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "var(--c-surface)", borderRadius: "var(--r-md)", padding: "var(--sp-3) var(--sp-4)", boxShadow: "var(--sh-sm)" }}>
                   <div>
                     <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)" }}>{"جلسة: " + pendingCheckpoints.session.scenario}</div>
                     <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"الخطوة " + (pendingCheckpoints.session.step + 1) + "/6"}</div>
@@ -3803,7 +3803,7 @@ function MainApp({ currentUser, onLogout }) {
                 </div>
               )}
               {pendingCheckpoints.quiz && (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: "var(--r-sm)", padding: "8px 12px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "var(--c-surface)", borderRadius: "var(--r-md)", padding: "var(--sp-3) var(--sp-4)", boxShadow: "var(--sh-sm)" }}>
                   <div>
                     <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)" }}>{"اختبار أسبوعي"}</div>
                     <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (pendingCheckpoints.quiz.qi + 1) + "/10 — " + pendingCheckpoints.quiz.score + " صحيح"}</div>
@@ -3821,7 +3821,7 @@ function MainApp({ currentUser, onLogout }) {
                 </div>
               )}
               {pendingCheckpoints.level && (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: "var(--r-sm)", padding: "8px 12px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "var(--c-surface)", borderRadius: "var(--r-md)", padding: "var(--sp-3) var(--sp-4)", boxShadow: "var(--sh-sm)" }}>
                   <div>
                     <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)" }}>{"اختبار المستوى"}</div>
                     <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (pendingCheckpoints.level.qi + 1) + "/25"}</div>
@@ -4057,7 +4057,7 @@ function MainApp({ currentUser, onLogout }) {
               if (dueItems.length === 0) return null;
               return (
                 <Card s={{ borderColor: "rgba(29,78,216,0.15)" }}>
-                  <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>{"🔄 مراجعة مطلوبة (" + dueItems.length + " جملة)"}</div>
+                  <div className="section-title">{"مراجعة مطلوبة — " + dueItems.length + " جملة"}</div>
                   <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)" }}>هذه الجمل حان وقت مراجعتها حسب نظام التكرار المتباعد</div>
                   {dueItems.slice(0, 5).map((item, i) => {
                     const k = "srs-" + item.srsKey;
@@ -4092,7 +4092,7 @@ function MainApp({ currentUser, onLogout }) {
         {/* PROGRESS */}
         {tab === "progress" && (
           <div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "var(--sp-2)", marginBottom: "var(--sp-3)" }}>
+            <div className="stats-grid" style={{ marginBottom: "var(--sp-5)" }}>
               {[
                 { l: "أيام التدريب", v: Object.values(store.days).filter(d => d.length >= 1).length },
                 { l: "الأسبوع الحالي", v: wk + "/12" },
@@ -4105,15 +4105,16 @@ function MainApp({ currentUser, onLogout }) {
               ))}
             </div>
             <Card>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-1)", justifyContent: "center", flexWrap: "wrap" }}>
+              <div className="section-title" style={{ marginBottom: "var(--sp-4)" }}>رحلة الـ 12 أسبوع</div>
+              <div className="week-row">
                 {Array.from({ length: 12 }, (_, i) => i + 1).map((w) => (
-                  <div key={w} style={{ width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-xs)", fontWeight: 700, border: "2px solid " + (w <= wk ? "#1d4ed8" : "#e4e4e7"), background: w < wk ? "#1d4ed8" : "transparent", color: w < wk ? "#fafaf9" : w === wk ? "#1d4ed8" : "#a1a1aa", animation: "none", opacity: w > wk ? 0.2 : 1 }}>{w < wk ? "✓" : w}</div>
+                  <div key={w} className={"week-dot" + (w < wk ? " week-dot--done" : w === wk ? " week-dot--current" : " week-dot--future")}>{w < wk ? "✓" : w}</div>
                 ))}
               </div>
             </Card>
             {/* FIX 3: Smart Weekly Summary */}
             {sessionHistory.length >= 3 && <Card s={{ borderColor: "rgba(29,78,216,0.1)" }}>
-              <div style={{ className: "section-title" }}>ملخص الأسبوع</div>
+              <div className="section-title">ملخص الأسبوع</div>
               {(() => {
                 const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
                 const weekStr = weekAgo.toISOString().slice(0, 10);
