@@ -322,19 +322,400 @@ function AuthScreen({ onLogin }) {
 }
 
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap');
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #fafaf9; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+  /* ===== DESIGN TOKENS ===== */
+  :root {
+    /* Colors */
+    --c-bg: #f7f7f5;
+    --c-surface: #ffffff;
+    --c-surface-hover: #f0f0ee;
+    --c-border: #e3e3e0;
+    --c-border-light: #eeeeec;
+    --c-text: #1a1a1a;
+    --c-text-secondary: #5c5c5c;
+    --c-text-tertiary: #8c8c8c;
+    --c-text-muted: #b0b0b0;
+    --c-accent: #2b5ea7;
+    --c-accent-hover: #234d8a;
+    --c-accent-light: rgba(43,94,167,0.08);
+    --c-accent-border: rgba(43,94,167,0.18);
+    --c-success: #2e7d5b;
+    --c-success-light: rgba(46,125,91,0.08);
+    --c-error: #c53030;
+    --c-error-light: rgba(197,48,48,0.06);
+    --c-warn: #a16207;
+    --c-warn-light: rgba(161,98,7,0.08);
+
+    /* Typography Scale (modular — 1.2 ratio) */
+    --fs-xs: 0.75rem;    /* 12px */
+    --fs-sm: 0.8125rem;  /* 13px */
+    --fs-base: 0.9375rem;/* 15px */
+    --fs-md: 1.0625rem;  /* 17px */
+    --fs-lg: 1.25rem;    /* 20px */
+    --fs-xl: 1.5rem;     /* 24px */
+    --fs-2xl: 1.875rem;  /* 30px */
+
+    /* Spacing Scale (8px base) */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 20px;
+    --sp-6: 24px;
+    --sp-7: 32px;
+    --sp-8: 40px;
+    --sp-9: 48px;
+    --sp-10: 64px;
+
+    /* Radius */
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 14px;
+    --r-xl: 20px;
+    --r-full: 9999px;
+
+    /* Shadows */
+    --sh-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --sh-md: 0 2px 8px rgba(0,0,0,0.06);
+    --sh-lg: 0 4px 16px rgba(0,0,0,0.08);
+
+    /* Transitions */
+    --tr-fast: 0.15s ease;
+    --tr-base: 0.2s ease;
+  }
+
+  /* ===== RESET ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-family: 'Noto Kufi Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: var(--fs-base);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ===== RESPONSIVE CONTAINER ===== */
+  .app-container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 var(--sp-5);
+  }
+  @media (max-width: 480px) {
+    .app-container { padding: 0 var(--sp-4); }
+    :root {
+      --fs-xs: 0.6875rem;
+      --fs-sm: 0.75rem;
+      --fs-base: 0.875rem;
+      --fs-md: 1rem;
+      --fs-lg: 1.125rem;
+      --fs-xl: 1.375rem;
+      --fs-2xl: 1.625rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .app-container { max-width: 720px; padding: 0 var(--sp-7); }
+  }
+
+  /* ===== CARD SYSTEM ===== */
+  .card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border-light);
+    border-radius: var(--r-lg);
+    padding: var(--sp-5);
+    margin-bottom: var(--sp-4);
+    box-shadow: var(--sh-sm);
+    animation: fadeUp 0.3s ease;
+  }
+  .card--accent {
+    border-color: var(--c-accent-border);
+    background: var(--c-accent-light);
+  }
+  .card--success {
+    border-color: rgba(46,125,91,0.18);
+    background: var(--c-success-light);
+  }
+  .card--warn {
+    border-color: rgba(161,98,7,0.15);
+    background: var(--c-warn-light);
+  }
+
+  /* ===== BUTTON SYSTEM ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: var(--fs-base);
+    border: none;
+    border-radius: var(--r-md);
+    cursor: pointer;
+    transition: transform var(--tr-fast), background var(--tr-base), opacity var(--tr-base);
+    min-height: 44px;
+    padding: var(--sp-3) var(--sp-5);
+    line-height: 1.4;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+  .btn--primary {
+    background: var(--c-accent);
+    color: #fff;
+  }
+  .btn--primary:hover:not(:disabled) { background: var(--c-accent-hover); }
+  .btn--secondary {
+    background: transparent;
+    color: var(--c-accent);
+    border: 1px solid var(--c-accent-border);
+  }
+  .btn--secondary:hover:not(:disabled) { background: var(--c-accent-light); }
+  .btn--ghost {
+    background: transparent;
+    color: var(--c-text-secondary);
+  }
+  .btn--ghost:hover:not(:disabled) { background: var(--c-surface-hover); }
+  .btn--success {
+    background: var(--c-success);
+    color: #fff;
+  }
+  .btn--danger {
+    background: transparent;
+    color: var(--c-error);
+    border: 1px solid rgba(197,48,48,0.2);
+  }
+  .btn--sm {
+    font-size: var(--fs-sm);
+    min-height: 36px;
+    padding: var(--sp-2) var(--sp-3);
+  }
+  .btn--lg {
+    font-size: var(--fs-md);
+    min-height: 52px;
+    padding: var(--sp-4) var(--sp-6);
+    font-weight: 700;
+    border-radius: var(--r-lg);
+  }
+  .btn--full { width: 100%; }
+
+  /* ===== INPUT SYSTEM ===== */
+  .input {
+    width: 100%;
+    font-family: inherit;
+    font-size: var(--fs-base);
+    padding: var(--sp-3) var(--sp-4);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    background: var(--c-surface);
+    color: var(--c-text);
+    outline: none;
+    transition: border-color var(--tr-base), box-shadow var(--tr-base);
+    min-height: 48px;
+  }
+  .input:focus {
+    border-color: var(--c-accent);
+    box-shadow: 0 0 0 3px var(--c-accent-light);
+  }
+  .input::placeholder { color: var(--c-text-muted); }
+  .input--mono {
+    font-family: 'IBM Plex Mono', monospace;
+    direction: ltr;
+    text-align: left;
+  }
+  textarea.input { min-height: 80px; resize: vertical; line-height: 1.8; }
+
+  /* ===== TAB NAVIGATION ===== */
+  .tabs {
+    display: flex;
+    gap: var(--sp-1);
+    border-bottom: 1px solid var(--c-border-light);
+    margin-bottom: var(--sp-5);
+    padding: 0;
+  }
+  .tab {
+    flex: 1;
+    padding: var(--sp-3) var(--sp-3);
+    border: none;
+    background: transparent;
+    color: var(--c-text-tertiary);
+    font-family: inherit;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2.5px solid transparent;
+    transition: color var(--tr-base), border-color var(--tr-base);
+    min-height: 44px;
+    text-align: center;
+  }
+  .tab:hover { color: var(--c-text-secondary); }
+  .tab--active {
+    color: var(--c-accent);
+    border-bottom-color: var(--c-accent);
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--sp-4) 0 var(--sp-3);
+  }
+  .header__badges {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-1);
+    padding: var(--sp-1) var(--sp-3);
+    border-radius: var(--r-full);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    background: var(--c-accent-light);
+    color: var(--c-accent);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .badge--success {
+    background: var(--c-success-light);
+    color: var(--c-success);
+  }
+
+  /* ===== EXERCISE GRID (Training tab) ===== */
+  .exercise-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-3);
+  }
+  @media (min-width: 480px) {
+    .exercise-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ===== PROGRESS GRID ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-3);
+  }
+  @media (max-width: 380px) {
+    .stats-grid { grid-template-columns: 1fr; gap: var(--sp-2); }
+  }
+
+  /* ===== PHRASE CATEGORIES (horizontal scroll) ===== */
+  .pill-scroll {
+    display: flex;
+    gap: var(--sp-2);
+    overflow-x: auto;
+    padding-bottom: var(--sp-2);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .pill-scroll::-webkit-scrollbar { display: none; }
+  .pill {
+    flex-shrink: 0;
+    padding: var(--sp-2) var(--sp-3);
+    border-radius: var(--r-full);
+    border: 1px solid var(--c-border);
+    background: transparent;
+    color: var(--c-text-secondary);
+    font-family: inherit;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--tr-base);
+    min-height: 36px;
+    white-space: nowrap;
+  }
+  .pill:hover { background: var(--c-surface-hover); }
+  .pill--active {
+    background: var(--c-accent-light);
+    border-color: var(--c-accent-border);
+    color: var(--c-accent);
+    font-weight: 600;
+  }
+
+  /* ===== WEEK CIRCLES ===== */
+  .week-row {
+    display: flex;
+    gap: var(--sp-2);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .week-dot {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    border: 2px solid var(--c-border);
+    transition: all var(--tr-base);
+  }
+  .week-dot--done { background: var(--c-accent); border-color: var(--c-accent); color: #fff; }
+  .week-dot--current { border-color: var(--c-accent); color: var(--c-accent); }
+  .week-dot--future { opacity: 0.3; }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--c-border-light);
+    overflow: hidden;
+  }
+  .progress-bar__fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--c-accent);
+    transition: width 0.4s ease;
+  }
+
+  /* ===== STEP INDICATOR ===== */
+  .steps {
+    display: flex;
+    gap: var(--sp-1);
+    margin-bottom: var(--sp-5);
+  }
+  .steps__bar {
+    flex: 1;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--c-border-light);
+    transition: background 0.3s;
+  }
+  .steps__bar--done { background: var(--c-success); }
+  .steps__bar--active { background: var(--c-accent); }
+
+  /* ===== UTILITY CLASSES ===== */
+  .text-center { text-align: center; }
+  .text-left { text-align: left; direction: ltr; }
+  .text-mono { font-family: 'IBM Plex Mono', monospace; }
+  .text-muted { color: var(--c-text-tertiary); }
+  .text-accent { color: var(--c-accent); }
+  .text-success { color: var(--c-success); }
+  .text-error { color: var(--c-error); }
+  .fw-600 { font-weight: 600; }
+  .fw-700 { font-weight: 700; }
+  .mb-2 { margin-bottom: var(--sp-2); }
+  .mb-3 { margin-bottom: var(--sp-3); }
+  .mb-4 { margin-bottom: var(--sp-4); }
+  .mb-5 { margin-bottom: var(--sp-5); }
+  .mt-4 { margin-top: var(--sp-4); }
+  .mt-5 { margin-top: var(--sp-5); }
+
+  /* ===== ANIMATIONS (subtle only) ===== */
   @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
   @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-  @keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
-  @keyframes stepDone { 0% { transform:scale(1); } 50% { transform:scale(1.15); } 100% { transform:scale(1); } }
-  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  @keyframes slideIn { from { opacity:0; transform:translateX(16px); } to { opacity:1; transform:translateX(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
-  button { transition: transform 0.15s, opacity 0.15s; }
-  button:active { transform: scale(0.97); }
-  button:hover { opacity: 0.85; }
+
+  /* Legacy compat — remove as inline styles get migrated */
+  button { transition: transform var(--tr-fast), opacity var(--tr-base); }
 `;
 
 const SHADOW_LINES = [
@@ -2903,106 +3284,104 @@ function MainApp({ currentUser, onLogout }) {
 
   if (loading) return <><style>{CSS}</style><SplashScreen /></>;
 
-  // ===== ONBOARDING — The Wise Mentor =====
+  // ===== ONBOARDING =====
   if (!store.start) return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#fafaf9", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
       <style>{CSS}</style>
-      <div style={{ maxWidth: 440, padding: 32, animation: "fadeUp .8s" }}>
+      <div style={{ maxWidth: 480, width: "100%", padding: "var(--sp-7)", animation: "fadeUp .5s" }}>
 
-        {/* Screen 1: The Dignified Hook */}
-        {onboardStep === 0 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <div style={{ marginBottom: 20 }}><TaliqLogo size={52} /></div>
-          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#18181b", lineHeight: 2, marginBottom: 16 }}>تملك المعرفة...<br/>لكن الكلمات تتوقف عند لسانك؟</h1>
-          <p style={{ fontSize: 15, color: "#71717a", lineHeight: 2.4, marginBottom: 28 }}>تقرأ وتفهم الإنجليزي جيداً<br/>لكن عندما يحين وقت التحدث — تتردد<br/><b style={{ color: "#1d4ed8" }}>ليست مشكلة قدرات. إنها مشكلة طريقة.</b></p>
-          <button onClick={() => setOnboardStep(1)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>هذا ما أعانيه بالضبط ←</button>
+        {/* Screen 1: Hook */}
+        {onboardStep === 0 && <div style={{ textAlign: "center", animation: "fadeUp .4s" }}>
+          <div style={{ marginBottom: "var(--sp-7)" }}><TaliqLogo size={48} /></div>
+          <h1 style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.7, marginBottom: "var(--sp-4)" }}>تملك المعرفة...<br/>لكن الكلمات تتوقف عند لسانك؟</h1>
+          <p style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)", lineHeight: 1.9, marginBottom: "var(--sp-7)" }}>تقرأ وتفهم الإنجليزي جيداً، لكن عندما يحين وقت التحدث — تتردد.<br/><b style={{ color: "var(--c-accent)" }}>ليست مشكلة قدرات. إنها مشكلة طريقة.</b></p>
+          <button className="btn btn--primary btn--lg btn--full" onClick={() => setOnboardStep(1)}>هذا ما أعانيه بالضبط</button>
         </div>}
 
-        {/* Screen 2: The Method */}
-        {onboardStep === 1 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <div style={{ fontSize: 48, marginBottom: 16 }}>🧠</div>
-          <h1 style={{ fontSize: 21, fontWeight: 800, color: "#1d4ed8", lineHeight: 2, marginBottom: 16 }}>طَلِق مبني على علم الاكتساب<br/>— ليس الحفظ</h1>
-          <div style={{ background: "rgba(29,78,216,0.05)", borderRadius: 16, padding: 20, marginBottom: 20, textAlign: "right" }}>
-            <div style={{ fontSize: 14, color: "#18181b", lineHeight: 2.6 }}>
-              <div style={{ marginBottom: 8, color: "#a1a1aa" }}>❌ الكورسات التقليدية تعلّمك <b>قواعد تنساها</b></div>
-              <div style={{ marginBottom: 8, color: "#a1a1aa" }}>❌ التطبيقات الأخرى تعلّمك <b>ترجمة لا تحتاجها</b></div>
-              <div style={{ color: "#059669" }}>✅ طَلِق يُدرّب لسانك على <b>مواقف حقيقية من حياتك</b></div>
+        {/* Screen 2: Method */}
+        {onboardStep === 1 && <div style={{ animation: "fadeUp .4s" }}>
+          <h1 style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.7, marginBottom: "var(--sp-5)", textAlign: "center" }}>طَلِق مبني على علم الاكتساب — ليس الحفظ</h1>
+          <div className="card" style={{ marginBottom: "var(--sp-5)" }}>
+            <div style={{ fontSize: "var(--fs-base)", lineHeight: 2.2 }}>
+              <div style={{ display: "flex", gap: "var(--sp-3)", alignItems: "baseline", marginBottom: "var(--sp-3)", color: "var(--c-text-tertiary)" }}><span style={{ color: "var(--c-text-muted)", flexShrink: 0 }}>—</span> الكورسات التقليدية تعلّمك <b>قواعد تنساها</b></div>
+              <div style={{ display: "flex", gap: "var(--sp-3)", alignItems: "baseline", marginBottom: "var(--sp-3)", color: "var(--c-text-tertiary)" }}><span style={{ color: "var(--c-text-muted)", flexShrink: 0 }}>—</span> التطبيقات الأخرى تعلّمك <b>ترجمة لا تحتاجها</b></div>
+              <div style={{ display: "flex", gap: "var(--sp-3)", alignItems: "baseline", color: "var(--c-success)", fontWeight: 600 }}><span style={{ flexShrink: 0 }}>+</span> طَلِق يُدرّب لسانك على <b>مواقف حقيقية من حياتك</b></div>
             </div>
           </div>
-          <p style={{ fontSize: 13, color: "#a1a1aa", lineHeight: 2, marginBottom: 20 }}>مبني على أبحاث جامعية في اكتساب اللغة الثانية للكبار</p>
-          <button onClick={() => setOnboardStep(2)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>كيف يعمل؟ ←</button>
+          <p style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)", textAlign: "center", marginBottom: "var(--sp-6)" }}>مبني على أبحاث جامعية في اكتساب اللغة الثانية للكبار</p>
+          <button className="btn btn--primary btn--lg btn--full" onClick={() => setOnboardStep(2)}>كيف يعمل؟</button>
         </div>}
 
-        {/* Screen 3: The Daily Investment */}
-        {onboardStep === 2 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#18181b", lineHeight: 2, marginBottom: 6 }}>١٥ دقيقة يومياً</h1>
-          <p style={{ fontSize: 14, color: "#71717a", marginBottom: 20 }}>جلسة واحدة — ست خطوات — استثمار حقيقي في نفسك</p>
-          <div style={{ textAlign: "right", marginBottom: 20 }}>
+        {/* Screen 3: Daily Investment */}
+        {onboardStep === 2 && <div style={{ animation: "fadeUp .4s" }}>
+          <div style={{ textAlign: "center", marginBottom: "var(--sp-6)" }}>
+            <h1 style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.7, marginBottom: "var(--sp-2)" }}>١٥ دقيقة يومياً</h1>
+            <p style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)" }}>جلسة واحدة — ست خطوات — نتائج حقيقية</p>
+          </div>
+          <div style={{ marginBottom: "var(--sp-6)" }}>
             {[
-              { icon: "👂", text: "استمع — درّب أذنك بدون قراءة", color: "#71717a" },
-              { icon: "📖", text: "اقرأ — لاحظ ما فاتك في الاستماع", color: "#71717a" },
-              { icon: "🔊", text: "ردّد — دع لسانك يتعوّد على الجمل", color: "#1d4ed8" },
-              { icon: "🧠", text: "تذكّر — استرجع من ذاكرتك بدون مساعدة", color: "#1d4ed8" },
-              { icon: "✍️", text: "أنتج — عبّر بأسلوبك الخاص", color: "#059669" },
-              { icon: "🌍", text: "طبّق — تحدٍّ حقيقي تُنجزه اليوم", color: "#059669" },
+              { num: "١", text: "استمع", desc: "درّب أذنك بدون قراءة" },
+              { num: "٢", text: "اقرأ", desc: "لاحظ ما فاتك في الاستماع" },
+              { num: "٣", text: "ردّد", desc: "دع لسانك يتعوّد على الجمل" },
+              { num: "٤", text: "تذكّر", desc: "استرجع من ذاكرتك بدون مساعدة" },
+              { num: "٥", text: "أنتج", desc: "عبّر بأسلوبك الخاص" },
+              { num: "٦", text: "طبّق", desc: "تحدٍّ حقيقي تُنجزه اليوم" },
             ].map((s, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: 12, animation: "slideIn .4s " + (i * 0.08) + "s both" }}>
-                <div style={{ fontSize: 22, flexShrink: 0, width: 32, textAlign: "center" }}>{s.icon}</div>
-                <div style={{ fontSize: 14, color: s.color, fontWeight: 600, lineHeight: 1.8 }}>{s.text}</div>
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: "var(--sp-4)", padding: "var(--sp-3) 0", borderBottom: i < 5 ? "1px solid var(--c-border-light)" : "none", animation: "slideIn .3s " + (i * 0.06) + "s both" }}>
+                <div style={{ width: 32, height: 32, borderRadius: "50%", background: "var(--c-accent-light)", color: "var(--c-accent)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-sm)", fontWeight: 700, flexShrink: 0 }}>{s.num}</div>
+                <div><span style={{ fontSize: "var(--fs-base)", fontWeight: 600, color: "var(--c-text)" }}>{s.text}</span><span style={{ color: "var(--c-text-tertiary)", marginRight: "var(--sp-2)" }}> — {s.desc}</span></div>
               </div>
             ))}
           </div>
-          <button onClick={() => setOnboardStep(3)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>هذا ما أبحث عنه ←</button>
+          <button className="btn btn--primary btn--lg btn--full" onClick={() => setOnboardStep(3)}>هذا ما أبحث عنه</button>
         </div>}
 
-        {/* Screen 4: Professional Identity — "What is your goal?" */}
-        {onboardStep === 3 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <div style={{ fontSize: 44, marginBottom: 16 }}>🎯</div>
-          <h1 style={{ fontSize: 20, fontWeight: 800, color: "#18181b", lineHeight: 2, marginBottom: 6 }}>ما هو هدفك من إتقان الإنجليزية؟</h1>
-          <p style={{ fontSize: 13, color: "#a1a1aa", marginBottom: 20 }}>سنُصمّم رحلتك بناءً على إجابتك</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {/* Screen 4: Goal Selection */}
+        {onboardStep === 3 && <div style={{ animation: "fadeUp .4s" }}>
+          <div style={{ textAlign: "center", marginBottom: "var(--sp-6)" }}>
+            <h1 style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.7, marginBottom: "var(--sp-2)" }}>ما هدفك من إتقان الإنجليزية؟</h1>
+            <p style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)" }}>سنُصمّم رحلتك بناءً على إجابتك</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--sp-3)" }}>
             {[
-              { id: "lead", icon: "👔", text: "قيادة الاجتماعات والعروض بثقة", sub: "التواصل المهني والقيادي" },
-              { id: "global", icon: "🌐", text: "التواصل مع شركاء وعملاء دوليين", sub: "بناء علاقات عمل عالمية" },
-              { id: "travel", icon: "✈️", text: "السفر والتعامل باستقلالية تامة", sub: "فنادق، مطارات، مطاعم، أسواق" },
-              { id: "grow", icon: "📈", text: "تطوير الذات والارتقاء المهني", sub: "كسر حاجز كان يعيقني سنوات" },
+              { id: "lead", text: "قيادة الاجتماعات والعروض بثقة", sub: "التواصل المهني والقيادي" },
+              { id: "global", text: "التواصل مع شركاء وعملاء دوليين", sub: "بناء علاقات عمل عالمية" },
+              { id: "travel", text: "السفر والتعامل باستقلالية تامة", sub: "فنادق، مطارات، مطاعم، أسواق" },
+              { id: "grow", text: "تطوير الذات والارتقاء المهني", sub: "كسر حاجز كان يعيقني سنوات" },
             ].map(c => (
-              <button key={c.id} onClick={() => { setUserChallenge(c.id); setOnboardStep(4); }} style={{ display: "flex", alignItems: "center", gap: 14, padding: 18, borderRadius: 14, border: "1px solid rgba(0,0,0,0.05)", background: "rgba(0,0,0,0.02)", cursor: "pointer", textAlign: "right", transition: "all .2s" }}>
-                <div style={{ fontSize: 28, flexShrink: 0 }}>{c.icon}</div>
-                <div><div style={{ fontSize: 15, fontWeight: 700, color: "#18181b" }}>{c.text}</div><div style={{ fontSize: 13, color: "#a1a1aa", marginTop: 3 }}>{c.sub}</div></div>
+              <button key={c.id} onClick={() => { setUserChallenge(c.id); setOnboardStep(4); }} className="card" style={{ cursor: "pointer", textAlign: "right", border: "1px solid var(--c-border)", padding: "var(--sp-5)", marginBottom: 0, transition: "border-color 0.2s, box-shadow 0.2s" }}>
+                <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-text)", marginBottom: "var(--sp-1)" }}>{c.text}</div>
+                <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)" }}>{c.sub}</div>
               </button>
             ))}
           </div>
         </div>}
 
-        {/* Screen 5: Social Proof — Success Stories */}
-        {onboardStep === 4 && <div style={{ animation: "fadeUp .6s" }}>
-          <div style={{ fontSize: 15, fontWeight: 700, color: "#71717a", textAlign: "center", marginBottom: 16 }}>أشخاص مثلك بدأوا... ولاحظوا الفرق</div>
+        {/* Screen 5: Social Proof */}
+        {onboardStep === 4 && <div style={{ animation: "fadeUp .4s" }}>
+          <p style={{ fontSize: "var(--fs-base)", fontWeight: 600, color: "var(--c-text-secondary)", textAlign: "center", marginBottom: "var(--sp-6)" }}>تجارب أشخاص مثلك</p>
           {[
-            { name: "خالد، 42 سنة — مدير مشاريع", text: "كنت أتردد في كل اجتماع. بعد أسبوعين مع طَلِق، صرت أفتح الاجتماع وأقوده بثقة.", icon: "👔" },
-            { name: "نورة، 38 سنة — أم لثلاثة أطفال", text: "الآن أتواصل مع معلمات أطفالي بالإنجليزي. الحرج اختفى تماماً.", icon: "👩‍👧‍👦" },
-            { name: "فهد، 45 سنة — رجل أعمال", text: "في آخر رحلة عمل، تفاوضت وأنجزت كل شيء بالإنجليزي. شعور لا يُوصف.", icon: "✈️" },
+            { name: "خالد، مدير مشاريع", text: "كنت أتردد في كل اجتماع. بعد أسبوعين مع طَلِق، صرت أفتح الاجتماع وأقوده بثقة." },
+            { name: "نورة، أم لثلاثة أطفال", text: "الآن أتواصل مع معلمات أطفالي بالإنجليزي. الحرج اختفى تماماً." },
+            { name: "فهد، رجل أعمال", text: "في آخر رحلة عمل، تفاوضت وأنجزت كل شيء بالإنجليزي. شعور لا يُوصف." },
           ].map((s, i) => (
-            <div key={i} style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: 14, padding: 16, marginBottom: 12, animation: "slideIn .4s " + (i * 0.12) + "s both" }}>
-              <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 8 }}>
-                <div style={{ fontSize: 22 }}>{s.icon}</div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8" }}>{s.name}</div>
-              </div>
-              <div style={{ fontSize: 14, color: "#71717a", lineHeight: 2.2 }}>"{s.text}"</div>
+            <div key={i} className="card" style={{ animation: "slideIn .3s " + (i * 0.1) + "s both" }}>
+              <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{s.name}</div>
+              <div style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)", lineHeight: 1.9 }}>"{s.text}"</div>
             </div>
           ))}
-          <button onClick={() => setOnboardStep(5)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%", marginTop: 8 }}>ملهم — أنا جاهز ←</button>
+          <button className="btn btn--primary btn--lg btn--full" style={{ marginTop: "var(--sp-4)" }} onClick={() => setOnboardStep(5)}>أنا جاهز</button>
         </div>}
 
-        {/* Screen 6: The Commitment — Your Pledge */}
-        {onboardStep === 5 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <div style={{ fontSize: 44, marginBottom: 16 }}>🤝</div>
-          <h1 style={{ fontSize: 21, fontWeight: 800, color: "#18181b", lineHeight: 2, marginBottom: 16 }}>عهد مع نفسك</h1>
-          <div style={{ background: "rgba(29,78,216,0.04)", border: "1px solid rgba(29,78,216,0.1)", borderRadius: 16, padding: 24, marginBottom: 24 }}>
-            <div style={{ fontSize: 15, color: "#18181b", lineHeight: 2.6, marginBottom: 12 }}>أُعاهد نفسي أن أستثمر <b style={{ color: "#1d4ed8" }}>١٥ دقيقة يومياً</b><br/>لمدة أسبوع واحد فقط.<br/>لن أحكم على النتائج قبل ٧ أيام.</div>
-            <div style={{ fontSize: 13, color: "#a1a1aa" }}>من يلتزم علناً يُكمل ٣ أضعاف من لا يفعل — (أبحاث سلوكية)</div>
+        {/* Screen 6: Commitment */}
+        {onboardStep === 5 && <div style={{ textAlign: "center", animation: "fadeUp .4s" }}>
+          <h1 style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.7, marginBottom: "var(--sp-5)" }}>عهد مع نفسك</h1>
+          <div className="card card--accent" style={{ padding: "var(--sp-6)", marginBottom: "var(--sp-6)", textAlign: "center" }}>
+            <div style={{ fontSize: "var(--fs-md)", color: "var(--c-text)", lineHeight: 2, marginBottom: "var(--sp-3)" }}>أُعاهد نفسي أن أستثمر <b style={{ color: "var(--c-accent)" }}>١٥ دقيقة يومياً</b><br/>لمدة أسبوع واحد فقط.<br/>لن أحكم على النتائج قبل ٧ أيام.</div>
+            <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)" }}>من يلتزم علناً يُكمل ٣ أضعاف من لا يفعل — أبحاث سلوكية</div>
           </div>
-          <button onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge, committed: true }); }} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 18, fontWeight: 800, cursor: "pointer", width: "100%", animation: "none" }}>أنا ملتزم — ابدأ الآن</button>
-          <button onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge }); }} style={{ background: "none", border: "none", color: "#a1a1aa", fontFamily: "inherit", fontSize: 13, cursor: "pointer", marginTop: 14, display: "block", width: "100%" }}>أبدأ بدون التزام</button>
+          <button className="btn btn--primary btn--lg btn--full" onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge, committed: true }); }}>أنا ملتزم — ابدأ الآن</button>
+          <button className="btn btn--ghost btn--full" style={{ marginTop: "var(--sp-3)" }} onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge }); }}>أبدأ بدون التزام</button>
         </div>}
 
       </div>
@@ -3059,49 +3438,46 @@ function MainApp({ currentUser, onLogout }) {
     const available = DAILY_SCENARIOS.filter(s => !todayCompleted.includes(s.title));
     return available.length > 0 ? available[dn % available.length] : DAILY_SCENARIOS[dn % DAILY_SCENARIOS.length];
   })();
-  const Card = ({ children, s }) => <div style={{ background: "#fff", border: "1px solid #e4e4e7", borderRadius: 12, padding: 18, marginBottom: 12, animation: "fadeUp .3s", boxShadow: "0 1px 3px rgba(0,0,0,0.04)", ...s }}>{children}</div>;
+  const Card = ({ children, s, cls }) => <div className={"card" + (cls ? " " + cls : "")} style={s}>{children}</div>;
 
   return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#fafaf9", color: "#18181b", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
       <style>{CSS}</style>
-      {/* Completion indicator — subtle banner instead of confetti */}
-      {conf && <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "10px 0", background: "#059669", color: "#fff", textAlign: "center", fontWeight: 700, fontSize: 14, animation: "fadeUp .3s" }}>جلسة اليوم مكتملة</div>}
+      {/* Completion toast */}
+      {conf && <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "var(--sp-3) 0", background: "var(--c-success)", color: "#fff", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-base)", animation: "fadeUp .3s" }}>جلسة اليوم مكتملة</div>}
 
-      <div style={{ maxWidth: 680, margin: "0 auto", padding: "0 14px" }}>
-        {/* تمكّن popup */}
-        {showXpPop && <div style={{ position: "fixed", top: 60, left: "50%", transform: "translateX(-50%)", zIndex: 200, padding: "8px 20px", borderRadius: 8, background: "#fff", border: "1px solid rgba(0,0,0,0.1)", boxShadow: "0 4px 12px rgba(0,0,0,0.1)", color: "#18181b", fontWeight: 700, fontSize: 14, fontFamily: "'Noto Kufi Arabic',sans-serif", animation: "fadeUp .3s" }}>{showXpPop}</div>}
+      <div className="app-container">
+        {/* Notification toast */}
+        {showXpPop && <div style={{ position: "fixed", top: 72, left: "50%", transform: "translateX(-50%)", zIndex: 200, padding: "var(--sp-3) var(--sp-5)", borderRadius: "var(--r-md)", background: "var(--c-surface)", border: "1px solid var(--c-border)", boxShadow: "var(--sh-lg)", color: "var(--c-text)", fontWeight: 600, fontSize: "var(--fs-base)", animation: "fadeUp .3s" }}>{showXpPop}</div>}
 
-        <div style={{ padding: "16px 0 10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        {/* Header */}
+        <header className="header">
           <div>
-            <TaliqLogo size={28} />
-            <div style={{ fontSize: 12, color: "#a1a1aa", marginTop: 2 }}>{"أسبوع " + wk + "/12" + (levelResult ? " — " + levelResult.levelCode : "")}</div>
+            <TaliqLogo size={32} />
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)", marginTop: 4 }}>{"الأسبوع " + wk + " من 12" + (levelResult ? " · " + levelResult.levelCode : "")}</div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            {/* Streak counter */}
-            {(() => { let s = 0; const d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s > 0 ? <div style={{ display: "flex", alignItems: "center", gap: 4, padding: "4px 10px", borderRadius: 8, background: "rgba(5,150,105,0.08)" }}><span style={{ fontSize: 13, fontWeight: 700, color: "#059669", fontFamily: "'IBM Plex Mono'" }}>{s}</span><span style={{ fontSize: 11, color: "#71717a" }}>يوم</span></div> : null; })()}
-            {/* نقاط التمكّن */}
-            <div style={{ padding: "4px 10px", borderRadius: 8, background: "rgba(29,78,216,0.06)", display: "flex", alignItems: "center", gap: 4 }}>
-              <span style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", fontFamily: "'IBM Plex Mono'" }}>{xp}</span>
-              <span style={{ fontSize: 11, color: "#71717a" }}>نقطة</span>
-            </div>
+          <div className="header__badges">
+            {(() => { let s = 0; const d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s > 0 ? <span className="badge badge--success">{s} يوم متواصل</span> : null; })()}
+            <span className="badge">{xp} نقطة</span>
           </div>
-        </div>
+        </header>
 
-        <div style={{ display: "flex", borderBottom: "1px solid rgba(0,0,0,0.03)", marginBottom: 14 }}>
+        {/* Tab Navigation */}
+        <nav className="tabs">
           {[["today", "اليوم"], ["train", "تدريب"], ["phrases", "الجمل"], ["progress", "التقدم"]].map(([id, l]) => (
-            <button key={id} onClick={() => { setTab(id); setOpenTask(null); setTrainMode(null); }} style={{ padding: "10px 14px", border: "none", background: "transparent", color: tab === id ? "#1d4ed8" : "#a1a1aa", fontFamily: "inherit", fontSize: 14, fontWeight: 600, cursor: "pointer", borderBottom: "2px solid " + (tab === id ? "#1d4ed8" : "transparent"), whiteSpace: "nowrap" }}>{l}</button>
+            <button key={id} onClick={() => { setTab(id); setOpenTask(null); setTrainMode(null); }} className={"tab" + (tab === id ? " tab--active" : "")}>{l}</button>
           ))}
-        </div>
+        </nav>
 
         {/* CRASH RECOVERY — Resume Banner */}
         {pendingCheckpoints && (
           <div style={{ background: "rgba(29,78,216,0.08)", border: "1px solid rgba(29,78,216,0.2)", borderRadius: 12, padding: 14, marginBottom: 14, animation: "fadeUp .4s" }}>
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8", marginBottom: 8 }}>⚡ عندك نشاط ما كمّلته</div>
+            <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>عندك نشاط لم يكتمل</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               {pendingCheckpoints.session && (
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: 8, padding: "8px 12px" }}>
                   <div>
-                    <div style={{ fontSize: 13, color: "#18181b" }}>{"🎯 جلسة: " + pendingCheckpoints.session.scenario}</div>
+                    <div style={{ fontSize: 13, color: "#18181b" }}>{"جلسة: " + pendingCheckpoints.session.scenario}</div>
                     <div style={{ fontSize: 11, color: "#71717a" }}>{"الخطوة " + (pendingCheckpoints.session.step + 1) + "/6"}</div>
                   </div>
                   <div style={{ display: "flex", gap: 6 }}>
@@ -3121,7 +3497,7 @@ function MainApp({ currentUser, onLogout }) {
               {pendingCheckpoints.quiz && (
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: 8, padding: "8px 12px" }}>
                   <div>
-                    <div style={{ fontSize: 13, color: "#18181b" }}>{"📊 اختبار أسبوعي"}</div>
+                    <div style={{ fontSize: 13, color: "#18181b" }}>{"اختبار أسبوعي"}</div>
                     <div style={{ fontSize: 11, color: "#71717a" }}>{"سؤال " + (pendingCheckpoints.quiz.qi + 1) + "/10 — " + pendingCheckpoints.quiz.score + " صحيح"}</div>
                   </div>
                   <div style={{ display: "flex", gap: 6 }}>
@@ -3139,7 +3515,7 @@ function MainApp({ currentUser, onLogout }) {
               {pendingCheckpoints.level && (
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: 8, padding: "8px 12px" }}>
                   <div>
-                    <div style={{ fontSize: 13, color: "#18181b" }}>{"🎓 اختبار المستوى"}</div>
+                    <div style={{ fontSize: 13, color: "#18181b" }}>{"اختبار المستوى"}</div>
                     <div style={{ fontSize: 11, color: "#71717a" }}>{"سؤال " + (pendingCheckpoints.level.qi + 1) + "/25"}</div>
                   </div>
                   <div style={{ display: "flex", gap: 6 }}>
@@ -3161,7 +3537,7 @@ function MainApp({ currentUser, onLogout }) {
         {/* TODAY — Deep Processing Session */}
         {tab === "today" && (
           <div>
-            <Card><div style={{ fontSize: 14, color: "#52525b", textAlign: "center", lineHeight: 2 }}>{"💎 " + MOTIV[dn % MOTIV.length]}</div></Card>
+            <Card><div style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)", textAlign: "center", lineHeight: 1.8, fontStyle: "italic" }}>{MOTIV[dn % MOTIV.length]}</div></Card>
             {/* FIX 1: Scenario choice — user can accept or browse */}
             <Card s={{ padding: 14 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
@@ -3216,10 +3592,10 @@ function MainApp({ currentUser, onLogout }) {
                 }}
               />
             </Card>
-            {done.includes("session") && <Card s={{ borderColor: "rgba(5,150,105,0.15)" }}>
+            {done.includes("session") && <Card cls="card--success">
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 14, color: "#059669", fontWeight: 700, marginBottom: 4 }}>✅ إنجاز اليوم مكتمل!</div>
-                <div style={{ fontSize: 12, color: "#71717a" }}>هل ترغب في تمارين إضافية؟ زر تبويب التدريب</div>
+                <div style={{ fontSize: "var(--fs-base)", color: "var(--c-success)", fontWeight: 700, marginBottom: "var(--sp-1)" }}>إنجاز اليوم مكتمل</div>
+                <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)" }}>هل ترغب في تمارين إضافية؟ زر تبويب التدريب</div>
               </div>
             </Card>}
             {/* FIX 6: Surprise Quiz — random phrase from past sessions */}
@@ -3227,16 +3603,15 @@ function MainApp({ currentUser, onLogout }) {
               const pastSc = DAILY_SCENARIOS.find(s => s.title === sessionHistory[Math.floor(Math.random() * sessionHistory.length)]?.scenario);
               if (!pastSc) return null;
               const phrase = pastSc.keyPhrases[dn % pastSc.keyPhrases.length];
-              return <Card s={{ borderColor: "rgba(220,38,38,0.15)", background: "rgba(220,38,38,0.03)" }}>
+              return <Card cls="card--warn">
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: 24, marginBottom: 8 }}>✦</div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: "#dc2626", marginBottom: 8 }}>اختبار مفاجئ!</div>
-                  <div style={{ fontSize: 14, color: "#52525b", marginBottom: 12 }}>تذكر هالجملة من جلسة سابقة؟</div>
-                  <div style={{ fontSize: 15, color: "#1d4ed8", fontWeight: 600, marginBottom: 4 }}>{phrase.ar}</div>
-                  <div style={{ fontSize: 12, color: "#71717a", marginBottom: 12 }}>حاول تقولها بالإنجليزي قبل ما تشوف الجواب</div>
+                  <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-warn)", marginBottom: "var(--sp-2)" }}>اختبار مراجعة</div>
+                  <div style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)" }}>تذكر هذه الجملة من جلسة سابقة؟</div>
+                  <div style={{ fontSize: "var(--fs-md)", color: "var(--c-accent)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>{phrase.ar}</div>
+                  <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)", marginBottom: "var(--sp-3)" }}>حاول قولها بالإنجليزي قبل الكشف</div>
                   <details>
-                    <summary style={{ fontSize: 13, color: "#059669", cursor: "pointer", fontFamily: "inherit" }}>👁 أظهر الجواب</summary>
-                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#18181b", marginTop: 8, display: "flex", alignItems: "center", gap: 8 }}>
+                    <summary style={{ fontSize: "var(--fs-sm)", color: "var(--c-success)", cursor: "pointer", fontFamily: "inherit" }}>أظهر الجواب</summary>
+                    <div className="text-mono" style={{ fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)", marginTop: "var(--sp-2)", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
                       <span style={{ flex: 1 }}>{phrase.en}</span>
                       <SpeakBtn text={phrase.en} size={16} />
                     </div>
@@ -3245,12 +3620,11 @@ function MainApp({ currentUser, onLogout }) {
               </Card>;
             })()}
             {/* FIX 2: Evening Review — 3 min before sleep = 2x consolidation */}
-            {done.includes("session") && <Card s={{ borderColor: "rgba(29,78,216,0.15)", background: "rgba(29,78,216,0.03)" }}>
+            {done.includes("session") && <Card cls="card--accent">
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 28, marginBottom: 8 }}>🌙</div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: "#1d4ed8", marginBottom: 6 }}>مراجعة ما قبل النوم</div>
-                <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2, marginBottom: 12 }}>استمع لجمل اليوم قبل ما تنام — ٣ دقائق فقط<br/>عقلك يرسّخها أثناء النوم (مثبت علمياً)</div>
-                <button onClick={() => {
+                <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>مراجعة ما قبل النوم</div>
+                <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 1.9, marginBottom: "var(--sp-4)" }}>استمع لجمل اليوم قبل النوم — ٣ دقائق فقط. عقلك يرسّخها أثناء النوم.</div>
+                <button className="btn btn--primary" onClick={() => {
                   const sc2 = chosenScenario || todayScenario;
                   let idx = 0;
                   function playNext() {
@@ -3260,8 +3634,8 @@ function MainApp({ currentUser, onLogout }) {
                     setTimeout(playNext, 4000);
                   }
                   playNext();
-                }} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#1e40af,#1d4ed8)", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔊 شغّل جمل اليوم</button>
-                <div style={{ fontSize: 12, color: "#71717a", marginTop: 8 }}>استرخِ واستمع فقط — لا تحتاج تردد</div>
+                }}>شغّل جمل اليوم</button>
+                <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)", marginTop: "var(--sp-2)" }}>استرخِ واستمع فقط</div>
               </div>
             </Card>}
           </div>
@@ -3272,61 +3646,63 @@ function MainApp({ currentUser, onLogout }) {
           <div>
             {!trainMode && (() => {
               const allExercises = [
-                { id: "sim", icon: "🎭", title: "محادثات تفاعلية", desc: "سيناريوهات حقيقية — اختر الرد واقرأه", color: "#1d4ed8" },
-                { id: "quick", icon: "✦", title: "استجابة سريعة", desc: "مواقف يومية — اختر الرد الأنسب", color: "#1d4ed8" },
-                { id: "quiz", icon: "📊", title: "تقييم أسبوعي", desc: "١٠ أسئلة تقيس تقدمك", color: "#1d4ed8" },
-                { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة", color: "#1e40af" },
-                { id: "build", icon: "🧩", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة", color: "#059669" },
-                { id: "fluency", icon: "🗣️", title: "تمرين الطلاقة", desc: "تكلم ٣ مرات بوقت أقل", color: "#dc2626" },
-                { id: "listen", icon: "👂", title: "فهم الاستماع", desc: "استمع وأجب", color: "#1e40af" },
-                { id: "dictation", icon: "🎧", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته", color: "#dc2626" },
-                { id: "recall", icon: "✍️", title: "إنتاج حر", desc: "اكتب ردك بدون خيارات", color: "#dc2626" },
-                { id: "level", icon: "🎯", title: "قياس التمكّن", desc: "اختبار CEFR تكيّفي", color: "#1d4ed8" },
+                { id: "sim", title: "محادثات تفاعلية", desc: "سيناريوهات حقيقية — اختر الرد واقرأه" },
+                { id: "quick", title: "استجابة سريعة", desc: "مواقف يومية — اختر الرد الأنسب" },
+                { id: "quiz", title: "تقييم أسبوعي", desc: "١٠ أسئلة تقيس تقدمك" },
+                { id: "fill", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة" },
+                { id: "build", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة" },
+                { id: "fluency", title: "تمرين الطلاقة", desc: "تكلم ٣ مرات بوقت أقل" },
+                { id: "listen", title: "فهم الاستماع", desc: "استمع وأجب" },
+                { id: "dictation", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته" },
+                { id: "recall", title: "إنتاج حر", desc: "اكتب ردك بدون خيارات" },
+                { id: "level", title: "قياس التمكّن", desc: "اختبار CEFR تكيّفي" },
               ];
-              // Smart recommendations: top 3 based on user needs
-              const recommended = allExercises.slice(0, 3);
-              const rest = allExercises.slice(3);
-              const ExCard = ({ m }) => (
-                <div onClick={() => setTrainMode(m.id)} style={{ display: "flex", alignItems: "center", gap: 12, padding: 14, borderRadius: 14, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", marginBottom: 8, cursor: "pointer", transition: ".3s" }}>
-                  <div style={{ fontSize: 28, flexShrink: 0 }}>{m.icon}</div>
-                  <div style={{ flex: 1 }}><div style={{ fontSize: 14, fontWeight: 700, color: m.color }}>{m.title}</div><div style={{ fontSize: 12, color: "#71717a", marginTop: 2 }}>{m.desc}</div></div>
-                  <div style={{ fontSize: 14, color: "#a1a1aa" }}>←</div>
-                </div>
-              );
               return (
                 <div>
-                  <Card><div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8", marginBottom: 8 }}>⭐ مقترح لك</div>
-                    {recommended.map(m => <ExCard key={m.id} m={m} />)}
-                  </Card>
-                  <Card><div style={{ fontSize: 13, fontWeight: 600, color: "#71717a", marginBottom: 8 }}>المزيد من التمارين</div>
-                    {rest.map(m => <ExCard key={m.id} m={m} />)}
-                  </Card>
+                  <div style={{ fontSize: "var(--fs-sm)", fontWeight: 600, color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)" }}>مقترح لك</div>
+                  <div className="exercise-grid" style={{ marginBottom: "var(--sp-5)" }}>
+                    {allExercises.slice(0, 3).map(m => (
+                      <div key={m.id} className="card" onClick={() => setTrainMode(m.id)} style={{ cursor: "pointer", marginBottom: 0, padding: "var(--sp-4)" }}>
+                        <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-text)", marginBottom: "var(--sp-1)" }}>{m.title}</div>
+                        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)" }}>{m.desc}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: "var(--fs-sm)", fontWeight: 600, color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)" }}>المزيد من التمارين</div>
+                  <div className="exercise-grid">
+                    {allExercises.slice(3).map(m => (
+                      <div key={m.id} className="card" onClick={() => setTrainMode(m.id)} style={{ cursor: "pointer", marginBottom: 0, padding: "var(--sp-4)" }}>
+                        <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-text)", marginBottom: "var(--sp-1)" }}>{m.title}</div>
+                        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)" }}>{m.desc}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               );
             })()}
-            {trainMode === "sim" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><MeetingSim /></Card>}
-            {trainMode === "quick" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><QuickResp /></Card>}
-            {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} checkpoint={pendingCheckpoints && pendingCheckpoints.quiz ? pendingCheckpoints.quiz : undefined} /></Card>}
-            {trainMode === "fill" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FillBlank /></Card>}
-            {trainMode === "build" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><SentenceBuild /></Card>}
-            {trainMode === "fluency" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><Fluency432 /></Card>}
-            {trainMode === "listen" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><ListenExercise /></Card>}
-            {trainMode === "dictation" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><DictationExercise /></Card>}
-            {trainMode === "recall" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FreeRecall /></Card>}
-            {trainMode === "level" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><LevelTest onComplete={(result) => setLevelResult(result)} checkpoint={pendingCheckpoints && pendingCheckpoints.level ? pendingCheckpoints.level : undefined} /></Card>}
+            {trainMode === "sim" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><MeetingSim /></Card>}
+            {trainMode === "quick" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><QuickResp /></Card>}
+            {trainMode === "quiz" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} checkpoint={pendingCheckpoints && pendingCheckpoints.quiz ? pendingCheckpoints.quiz : undefined} /></Card>}
+            {trainMode === "fill" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><FillBlank /></Card>}
+            {trainMode === "build" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><SentenceBuild /></Card>}
+            {trainMode === "fluency" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><Fluency432 /></Card>}
+            {trainMode === "listen" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><ListenExercise /></Card>}
+            {trainMode === "dictation" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><DictationExercise /></Card>}
+            {trainMode === "recall" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><FreeRecall /></Card>}
+            {trainMode === "level" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><LevelTest onComplete={(result) => setLevelResult(result)} checkpoint={pendingCheckpoints && pendingCheckpoints.level ? pendingCheckpoints.level : undefined} /></Card>}
           </div>
         )}
 
         {/* PHRASES */}
         {tab === "phrases" && (
           <div>
-            <div style={{ display: "flex", gap: 5, overflowX: "auto", paddingBottom: 8 }}>
+            <div className="pill-scroll" style={{ marginBottom: "var(--sp-4)" }}>
               {PHRASES.map((c, i) => (
-                <button key={i} onClick={() => setPCat(i)} style={{ padding: "7px 12px", borderRadius: 18, border: "1px solid " + (pCat === i ? "#1d4ed8" : "rgba(0,0,0,0.04)"), background: pCat === i ? "rgba(29,78,216,0.08)" : "transparent", color: pCat === i ? "#1d4ed8" : "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer", whiteSpace: "nowrap" }}>{c.icon + " " + c.cat}</button>
+                <button key={i} onClick={() => setPCat(i)} className={"pill" + (pCat === i ? " pill--active" : "")}>{c.cat}</button>
               ))}
             </div>
             <Card>
-              <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 10, color: "#1d4ed8" }}>{PHRASES[pCat].icon + " " + PHRASES[pCat].cat}</div>
+              <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, marginBottom: "var(--sp-3)", color: "var(--c-text)" }}>{PHRASES[pCat].cat}</div>
               {PHRASES[pCat].items.map((p, i) => {
                 const k = "p" + pCat + "-" + i;
                 const r = reps[k] || 0;
