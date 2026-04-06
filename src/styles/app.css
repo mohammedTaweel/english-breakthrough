@@ -87,7 +87,7 @@
 
   /* ===== RESPONSIVE CONTAINER ===== */
   .app-container {
-    max-width: 640px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 0 var(--sp-5);
     padding-bottom: var(--sp-10);
@@ -105,7 +105,13 @@
     }
   }
   @media (min-width: 768px) {
-    .app-container { max-width: 720px; padding: 0 var(--sp-7); }
+    .app-container { padding: 0 var(--sp-8); }
+  }
+  @media (min-width: 1024px) {
+    .app-container { padding: 0 var(--sp-10); }
+  }
+  @media (min-width: 1440px) {
+    .app-container { padding: 0 12%; }
   }
 
   /* ===== CARD SYSTEM — with real depth ===== */
@@ -120,6 +126,9 @@
     transition: box-shadow var(--tr-base), transform var(--tr-base);
   }
   .card:hover { box-shadow: var(--sh-lg); }
+  @media (min-width: 768px) {
+    .card { padding: var(--sp-7); margin-bottom: var(--sp-6); }
+  }
   .card--accent {
     background: var(--c-accent-soft);
     box-shadow: var(--sh-sm);
@@ -260,15 +269,18 @@
     background: transparent;
     color: var(--c-text-tertiary);
     font-family: inherit;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-base);
     font-weight: 600;
     cursor: pointer;
     border-radius: var(--r-md);
-    transition: all var(--tr-base);
-    min-height: 44px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 48px;
     text-align: center;
   }
   .tab:hover { color: var(--c-text-secondary); background: rgba(255,255,255,0.5); }
+  @media (min-width: 768px) {
+    .tab { font-size: var(--fs-md); min-height: 52px; }
+  }
   .tab--active {
     color: var(--c-accent);
     background: var(--c-surface);
@@ -441,17 +453,21 @@
     margin-bottom: var(--sp-4);
   }
 
-  /* ===== HERO CARD (Today's session) — Cambly/Preply level ===== */
+  /* ===== HERO CARD (Today's session) ===== */
   .hero-card {
     background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 50%, #3b82f6 100%);
     color: #fff;
     border-radius: var(--r-xl);
-    padding: var(--sp-8) var(--sp-7);
+    padding: var(--sp-9) var(--sp-8);
     margin-bottom: var(--sp-6);
     box-shadow: 0 12px 28px rgba(29,78,216,0.25), 0 4px 8px rgba(29,78,216,0.15);
     animation: fadeUp 0.4s ease;
     position: relative;
     overflow: hidden;
+  }
+  @media (min-width: 768px) {
+    .hero-card { padding: var(--sp-10) var(--sp-9); }
+    .hero-card h2 { font-size: var(--fs-2xl); }
   }
   .hero-card::before {
     content: '';
@@ -514,7 +530,7 @@
     padding: var(--sp-5);
   }
   .auth-card {
-    max-width: 420px; width: 100%;
+    max-width: 480px; width: 100%;
     background: var(--c-surface);
     border-radius: var(--r-xl);
     padding: var(--sp-8) var(--sp-7);
@@ -535,7 +551,7 @@
     padding: var(--sp-5);
   }
   .onboard-card {
-    max-width: 500px; width: 100%;
+    max-width: 560px; width: 100%;
     background: var(--c-surface);
     border-radius: var(--r-xl);
     padding: var(--sp-8) var(--sp-7);
@@ -680,8 +696,9 @@
     .card { padding: var(--sp-4); }
     .step-badge { width: 30px; height: 30px; font-size: var(--fs-xs); }
   }
-  @media (min-width: 1024px) {
-    .app-container { max-width: 800px; }
+  @media (min-width: 1280px) {
+    .exercise-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .stats-grid { gap: var(--sp-5); }
   }
 
   /* ===== ANIMATIONS (subtle only) ===== */
