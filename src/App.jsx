@@ -2,6 +2,187 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { speak, stopSpeech, getVoiceInfo, setOpenAIKey, getOpenAIKey, setTTSVoice, getTTSVoice, setAccent, getAccent, storage } from "./platform.js";
 import { TaliqLogo, TaliqIcon, SplashScreen, BRAND } from "./brand.jsx";
 
+// ===== USER STORAGE SYSTEM =====
+// Per-user storage: all keys prefixed with user ID
+let _currentUserId = null;
+
+const userStorage = {
+  setUser(uid) { _currentUserId = uid; },
+  getUser() { return _currentUserId; },
+  _key(key) { return _currentUserId ? "u_" + _currentUserId + "_" + key : key; },
+  async get(key) { return storage.get(userStorage._key(key)); },
+  async set(key, value) { return storage.set(userStorage._key(key), value); },
+  async delete(key) { return storage.delete(userStorage._key(key)); },
+};
+
+// Password hashing using Web Crypto (SHA-256) — no external libraries
+async function hashPassword(password, salt) {
+  const data = new TextEncoder().encode(salt + ":" + password);
+  const buf = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+// Accounts management (global, not per-user)
+async function getAccounts() {
+  try { const r = await storage.get("app-accounts"); return r && r.value ? JSON.parse(r.value) : []; } catch { return []; }
+}
+async function saveAccounts(accounts) {
+  await storage.set("app-accounts", JSON.stringify(accounts));
+}
+async function getActiveSession() {
+  try { const r = await storage.get("app-active-session"); return r && r.value ? JSON.parse(r.value) : null; } catch { return null; }
+}
+async function setActiveSession(session) {
+  if (session) await storage.set("app-active-session", JSON.stringify(session));
+  else await storage.delete("app-active-session");
+}
+
+// ===== AUTH SCREEN =====
+function AuthScreen({ onLogin }) {
+  const [mode, setMode] = useState("login"); // login, register
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [accounts, setAccountsList] = useState([]);
+  const [showProfiles, setShowProfiles] = useState(false);
+
+  useEffect(() => { (async () => { const a = await getAccounts(); setAccountsList(a); if (a.length > 0) setShowProfiles(true); })(); }, []);
+
+  async function handleRegister() {
+    setError("");
+    if (!username.trim() || !password.trim()) { setError("أدخل اسم المستخدم وكلمة المرور"); return; }
+    if (username.trim().length < 3) { setError("اسم المستخدم لازم ٣ حروف على الأقل"); return; }
+    if (password.trim().length < 4) { setError("كلمة المرور لازم ٤ حروف على الأقل"); return; }
+    setLoading(true);
+    const accs = await getAccounts();
+    if (accs.find(a => a.username.toLowerCase() === username.trim().toLowerCase())) {
+      setError("اسم المستخدم مستخدم — اختر غيره"); setLoading(false); return;
+    }
+    const uid = "u" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    const salt = crypto.getRandomValues(new Uint8Array(16)).reduce((s, b) => s + b.toString(16).padStart(2, "0"), "");
+    const hash = await hashPassword(password.trim(), salt);
+    const account = { uid, username: username.trim(), displayName: (displayName.trim() || username.trim()), hash, salt, provider: "local", created: new Date().toISOString() };
+    accs.push(account);
+    await saveAccounts(accs);
+    await setActiveSession({ uid: account.uid, username: account.username, displayName: account.displayName });
+    setLoading(false);
+    onLogin(account);
+  }
+
+  async function handleLogin() {
+    setError("");
+    if (!username.trim() || !password.trim()) { setError("أدخل اسم المستخدم وكلمة المرور"); return; }
+    setLoading(true);
+    const accs = await getAccounts();
+    const acc = accs.find(a => a.username.toLowerCase() === username.trim().toLowerCase());
+    if (!acc) { setError("المستخدم غير موجود"); setLoading(false); return; }
+    const hash = await hashPassword(password.trim(), acc.salt);
+    if (hash !== acc.hash) { setError("كلمة المرور غلط"); setLoading(false); return; }
+    await setActiveSession({ uid: acc.uid, username: acc.username, displayName: acc.displayName });
+    setLoading(false);
+    onLogin(acc);
+  }
+
+  async function quickLogin(acc) {
+    await setActiveSession({ uid: acc.uid, username: acc.username, displayName: acc.displayName });
+    onLogin(acc);
+  }
+
+  const inputStyle = { width: "100%", padding: 14, borderRadius: 12, fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 14, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "#f0f0f5", outline: "none", marginBottom: 10, textAlign: "right" };
+  const btnStyle = { width: "100%", padding: 16, borderRadius: 14, border: "none", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 700, cursor: "pointer" };
+
+  // Quick profile selection if accounts exist
+  if (showProfiles && accounts.length > 0 && mode === "login") return (
+    <div dir="rtl" style={{ minHeight: "100vh", background: "#1a1614", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+      `}</style>
+      <div style={{ maxWidth: 400, width: "100%", padding: 28, animation: "fadeUp .5s" }}>
+        <div style={{ textAlign: "center", marginBottom: 28 }}>
+          <TaliqLogo size={44} />
+          <div style={{ fontSize: 18, fontWeight: 700, color: "#f5f0eb", marginTop: 14 }}>من يتدرب اليوم؟</div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
+          {accounts.map(acc => (
+            <button key={acc.uid} onClick={() => quickLogin(acc)} style={{ display: "flex", alignItems: "center", gap: 12, padding: 16, borderRadius: 14, border: "1px solid rgba(232,184,75,0.12)", background: "rgba(232,184,75,0.04)", cursor: "pointer", textAlign: "right", fontFamily: "inherit" }}>
+              <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, fontWeight: 800, color: "#1a1614", flexShrink: 0 }}>{acc.displayName.charAt(0).toUpperCase()}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 16, fontWeight: 700, color: "#f0f0f5" }}>{acc.displayName}</div>
+                <div style={{ fontSize: 12, color: "#7a8295" }}>@{acc.username}</div>
+              </div>
+              <div style={{ fontSize: 20, color: "#e8b84b" }}>←</div>
+            </button>
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={() => setShowProfiles(false)} style={{ flex: 1, padding: 12, borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", background: "transparent", color: "#9ca3b5", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>تسجيل دخول بحساب آخر</button>
+          <button onClick={() => { setMode("register"); setShowProfiles(false); }} style={{ flex: 1, padding: 12, borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>حساب جديد</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div dir="rtl" style={{ minHeight: "100vh", background: "#1a1614", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+      `}</style>
+      <div style={{ maxWidth: 400, width: "100%", padding: 28, animation: "fadeUp .5s" }}>
+        <div style={{ textAlign: "center", marginBottom: 28 }}>
+          <TaliqLogo size={44} />
+          <div style={{ fontSize: 20, fontWeight: 800, color: "#f5f0eb", marginTop: 14 }}>{mode === "register" ? "حساب جديد" : "تسجيل الدخول"}</div>
+          <div style={{ fontSize: 13, color: "#7a8295", marginTop: 6 }}>{mode === "register" ? "سجّل وابدأ رحلتك في اكتساب الإنجليزية" : "أدخل بياناتك لمتابعة التدريب"}</div>
+        </div>
+
+        {mode === "register" && (
+          <input value={displayName} onChange={e => setDisplayName(e.target.value)} placeholder="الاسم (يظهر في ملفك الشخصي)" style={inputStyle} />
+        )}
+        <input value={username} onChange={e => setUsername(e.target.value)} placeholder="اسم المستخدم" style={{ ...inputStyle, direction: "ltr", textAlign: "left", fontFamily: "'IBM Plex Mono'" }} autoComplete="username" />
+        <input value={password} onChange={e => setPassword(e.target.value)} placeholder="كلمة المرور" type="password" style={{ ...inputStyle, direction: "ltr", textAlign: "left", fontFamily: "'IBM Plex Mono'" }} autoComplete={mode === "register" ? "new-password" : "current-password"}
+          onKeyDown={e => { if (e.key === "Enter") { mode === "register" ? handleRegister() : handleLogin(); } }}
+        />
+
+        {error && <div style={{ fontSize: 13, color: "#e87461", textAlign: "center", marginBottom: 10, padding: 8, background: "rgba(232,116,97,0.08)", borderRadius: 8 }}>{error}</div>}
+
+        <button onClick={mode === "register" ? handleRegister : handleLogin} disabled={loading} style={{ ...btnStyle, background: loading ? "#5c6478" : "linear-gradient(135deg,#e8b84b,#d4a03a)", color: "#1a1614", marginBottom: 12 }}>
+          {loading ? "..." : mode === "register" ? "إنشاء حساب" : "دخول"}
+        </button>
+
+        <div style={{ textAlign: "center" }}>
+          {mode === "login" ? (
+            <button onClick={() => { setMode("register"); setError(""); }} style={{ background: "none", border: "none", color: "#e8b84b", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>ما عندك حساب؟ <b>سجّل الآن</b></button>
+          ) : (
+            <button onClick={() => { setMode("login"); setError(""); setShowProfiles(accounts.length > 0); }} style={{ background: "none", border: "none", color: "#e8b84b", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>عندك حساب؟ <b>سجّل دخول</b></button>
+          )}
+        </div>
+
+        {/* Future OAuth providers placeholder */}
+        <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+          <div style={{ fontSize: 12, color: "#4a5166", textAlign: "center", marginBottom: 12 }}>أو سجّل عن طريق</div>
+          <div style={{ display: "flex", gap: 8 }}>
+            {[
+              { name: "Google", icon: "G", color: "#4285f4", bg: "rgba(66,133,244,0.1)" },
+              { name: "Apple", icon: "", color: "#f5f5f5", bg: "rgba(255,255,255,0.06)" },
+              { name: "Facebook", icon: "f", color: "#1877f2", bg: "rgba(24,119,242,0.1)" },
+            ].map(p => (
+              <button key={p.name} onClick={() => setError("تسجيل " + p.name + " — قريباً!")} style={{ flex: 1, padding: 12, borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)", background: p.bg, color: p.color, fontFamily: "'IBM Plex Mono'", fontSize: 16, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+                <span>{p.icon}</span>
+                <span style={{ fontSize: 11, fontFamily: "'Noto Kufi Arabic',sans-serif", fontWeight: 600 }}>{p.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap');
@@ -1015,21 +1196,21 @@ function WeeklyQuiz({ onSave, checkpoint }) {
   useEffect(() => {
     if (done) return;
     const cpData = { type: "quiz", qi, score, questions: qs.current, date: gtd() };
-    (async () => { try { await storage.set("checkpoint-quiz", JSON.stringify(cpData)); } catch(e) {} })();
+    (async () => { try { await userStorage.set("checkpoint-quiz", JSON.stringify(cpData)); } catch(e) {} })();
   }, [qi, score, done]);
-  function restart() { qs.current = shuffle(QUIZ_BANK, Date.now()); setQi(0); setPicked(null); setScore(0); setDone(false); saved.current = false; setPrevPct(null); (async () => { try { await storage.delete("checkpoint-quiz"); } catch(e) {} })(); }
+  function restart() { qs.current = shuffle(QUIZ_BANK, Date.now()); setQi(0); setPicked(null); setScore(0); setDone(false); saved.current = false; setPrevPct(null); (async () => { try { await userStorage.delete("checkpoint-quiz"); } catch(e) {} })(); }
   useEffect(() => {
     if (done && !saved.current) {
       saved.current = true;
       const pct = Math.round((score / qs.current.length) * 100);
       (async () => {
         try {
-          const r = await storage.get("quiz-results");
+          const r = await userStorage.get("quiz-results");
           const results = r && r.value ? JSON.parse(r.value) : [];
           if (results.length > 0) setPrevPct(results[results.length - 1].pct);
           results.push({ date: gtd(), pct, score, total: qs.current.length });
-          await storage.set("quiz-results", JSON.stringify(results));
-          await storage.delete("checkpoint-quiz"); // clear checkpoint on completion
+          await userStorage.set("quiz-results", JSON.stringify(results));
+          await userStorage.delete("checkpoint-quiz"); // clear checkpoint on completion
           if (onSave) onSave();
         } catch (e) {}
       })();
@@ -1454,7 +1635,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
   useEffect(() => {
     if (challengeAccepted) return; // session completed, no need to checkpoint
     const cpData = { type: "session", scenario: sc.title, step, listenDone, listenAnswer, shadowReps, shadowSpoken, recallState, recallScore, prodInput, prodSubmitted, challengeAccepted, challengeDone, challengeNote, listenChunk, date: gtd() };
-    (async () => { try { await storage.set("checkpoint-session", JSON.stringify(cpData)); } catch(e) {} })();
+    (async () => { try { await userStorage.set("checkpoint-session", JSON.stringify(cpData)); } catch(e) {} })();
   }, [step, listenDone, listenAnswer, shadowReps, shadowSpoken, recallState, recallScore, prodInput, prodSubmitted, challengeAccepted, challengeDone, challengeNote, listenChunk]);
 
   // FIX 5: Working Memory — play only first 3 lines initially, then expand
@@ -1820,11 +2001,11 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
               setChallengeAccepted(true);
               const sessionData = { scenario: sc.title, date: gtd(), recallScore: { ...recallScore }, phrasesCount: sc.keyPhrases.length };
               (async () => { try {
-                const r = await storage.get("session-history");
+                const r = await userStorage.get("session-history");
                 const hist = r && r.value ? JSON.parse(r.value) : [];
                 hist.push(sessionData);
-                await storage.set("session-history", JSON.stringify(hist));
-                await storage.delete("checkpoint-session"); // clear checkpoint on completion
+                await userStorage.set("session-history", JSON.stringify(hist));
+                await userStorage.delete("checkpoint-session"); // clear checkpoint on completion
               } catch(e) {} })();
               if (onComplete) onComplete();
             }} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#5ec4b6,#e8b84b)", color: "#1a1614", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>أقبل التحدي ✓</button>
@@ -2188,7 +2369,7 @@ function LevelTest({ onComplete, checkpoint }) {
   useEffect(() => {
     if (phase !== "testing" || !questions.length) return;
     const cpData = { type: "level", phase, qi, currentLevel, history, questions, startTime, levelScores, levelAttempts, consecutiveCorrect, consecutiveWrong, date: gtd() };
-    (async () => { try { await storage.set("checkpoint-level", JSON.stringify(cpData)); } catch(e) {} })();
+    (async () => { try { await userStorage.set("checkpoint-level", JSON.stringify(cpData)); } catch(e) {} })();
   }, [qi, history, phase]);
 
   function startTest() {
@@ -2323,11 +2504,11 @@ function LevelTest({ onComplete, checkpoint }) {
     };
     (async () => {
       try {
-        const r = await storage.get("level-test-results");
+        const r = await userStorage.get("level-test-results");
         const results = r && r.value ? JSON.parse(r.value) : [];
         results.push(result);
-        await storage.set("level-test-results", JSON.stringify(results));
-        await storage.delete("checkpoint-level"); // clear checkpoint on completion
+        await userStorage.set("level-test-results", JSON.stringify(results));
+        await userStorage.delete("checkpoint-level"); // clear checkpoint on completion
         if (onComplete) onComplete(result);
       } catch (e) {}
     })();
@@ -2512,7 +2693,7 @@ function LevelTest({ onComplete, checkpoint }) {
   );
 }
 
-export default function App() {
+function MainApp({ currentUser, onLogout }) {
   const [store, setStore] = useState({ start: null, days: {} });
   const [tab, setTab] = useState("today");
   const [loading, setLoading] = useState(true);
@@ -2538,18 +2719,18 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      try { const r = await storage.get(DK); if (r && r.value) setStore(JSON.parse(r.value)); } catch (e) {}
-      try { const r = await storage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); } catch (e) {}
-      try { const r = await storage.get("level-test-results"); if (r && r.value) { const arr = JSON.parse(r.value); if (arr.length > 0) setLevelResult(arr[arr.length - 1]); } } catch (e) {}
-      try { const r = await storage.get("srs-data"); if (r && r.value) setSrsData(JSON.parse(r.value)); } catch (e) {}
-      try { const r = await storage.get("session-history"); if (r && r.value) setSessionHistory(JSON.parse(r.value)); } catch (e) {}
-      try { const r = await storage.get("user-xp"); if (r && r.value) setXp(parseInt(r.value) || 0); } catch (e) {}
-      try { const r = await storage.get("phrase-reps"); if (r && r.value) setReps(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await userStorage.get(DK); if (r && r.value) setStore(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await userStorage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await userStorage.get("level-test-results"); if (r && r.value) { const arr = JSON.parse(r.value); if (arr.length > 0) setLevelResult(arr[arr.length - 1]); } } catch (e) {}
+      try { const r = await userStorage.get("srs-data"); if (r && r.value) setSrsData(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await userStorage.get("session-history"); if (r && r.value) setSessionHistory(JSON.parse(r.value)); } catch (e) {}
+      try { const r = await userStorage.get("user-xp"); if (r && r.value) setXp(parseInt(r.value) || 0); } catch (e) {}
+      try { const r = await userStorage.get("phrase-reps"); if (r && r.value) setReps(JSON.parse(r.value)); } catch (e) {}
       // Load any pending checkpoints for crash recovery
       const cps = {};
-      try { const r = await storage.get("checkpoint-session"); if (r && r.value) { const d = JSON.parse(r.value); if (d.date === gtd()) cps.session = d; else await storage.delete("checkpoint-session"); } } catch (e) {}
-      try { const r = await storage.get("checkpoint-quiz"); if (r && r.value) { const d = JSON.parse(r.value); if (d.date === gtd()) cps.quiz = d; else await storage.delete("checkpoint-quiz"); } } catch (e) {}
-      try { const r = await storage.get("checkpoint-level"); if (r && r.value) { const d = JSON.parse(r.value); if (d.date === gtd()) cps.level = d; else await storage.delete("checkpoint-level"); } } catch (e) {}
+      try { const r = await userStorage.get("checkpoint-session"); if (r && r.value) { const d = JSON.parse(r.value); if (d.date === gtd()) cps.session = d; else await userStorage.delete("checkpoint-session"); } } catch (e) {}
+      try { const r = await userStorage.get("checkpoint-quiz"); if (r && r.value) { const d = JSON.parse(r.value); if (d.date === gtd()) cps.quiz = d; else await userStorage.delete("checkpoint-quiz"); } } catch (e) {}
+      try { const r = await userStorage.get("checkpoint-level"); if (r && r.value) { const d = JSON.parse(r.value); if (d.date === gtd()) cps.level = d; else await userStorage.delete("checkpoint-level"); } } catch (e) {}
       if (cps.session || cps.quiz || cps.level) setPendingCheckpoints(cps);
       setLoading(false);
     })();
@@ -2557,7 +2738,7 @@ export default function App() {
 
   useEffect(() => {
     if (quizResults === null && !loading) {
-      (async () => { try { const r = await storage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); else setQuizResults([]); } catch (e) { setQuizResults([]); } })();
+      (async () => { try { const r = await userStorage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); else setQuizResults([]); } catch (e) { setQuizResults([]); } })();
     }
   }, [quizResults, loading]);
 
@@ -2566,10 +2747,10 @@ export default function App() {
   useEffect(() => {
     if (!repsInitRef.current) { repsInitRef.current = true; return; } // skip initial render
     if (Object.keys(reps).length === 0) return;
-    (async () => { try { await storage.set("phrase-reps", JSON.stringify(reps)); } catch(e) {} })();
+    (async () => { try { await userStorage.set("phrase-reps", JSON.stringify(reps)); } catch(e) {} })();
   }, [reps]);
 
-  const save = useCallback(async (s) => { setStore(s); try { await storage.set(DK, JSON.stringify(s)); } catch (e) {} }, []);
+  const save = useCallback(async (s) => { setStore(s); try { await userStorage.set(DK, JSON.stringify(s)); } catch (e) {} }, []);
   const today = gtd();
   const done = store.days[today] || [];
   const toggle = useCallback((id) => {
@@ -2794,7 +2975,7 @@ export default function App() {
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
                     }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
                     <button onClick={() => {
-                      (async () => { try { await storage.delete("checkpoint-session"); } catch(e) {} })();
+                      (async () => { try { await userStorage.delete("checkpoint-session"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
                     }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
                   </div>
@@ -2812,7 +2993,7 @@ export default function App() {
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
                     }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
                     <button onClick={() => {
-                      (async () => { try { await storage.delete("checkpoint-quiz"); } catch(e) {} })();
+                      (async () => { try { await userStorage.delete("checkpoint-quiz"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
                     }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
                   </div>
@@ -2830,7 +3011,7 @@ export default function App() {
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
                     }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
                     <button onClick={() => {
-                      (async () => { try { await storage.delete("checkpoint-level"); } catch(e) {} })();
+                      (async () => { try { await userStorage.delete("checkpoint-level"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
                     }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
                   </div>
@@ -2892,9 +3073,9 @@ export default function App() {
                     const surprise = surprises[Math.min(sessCount - 1, surprises.length - 1)];
                     setShowXpPop(surprise || ("+" + earned + " تمكّن ✦" + (bonus > 0 ? " 🎁 مكافأة!" : "")));
                     setTimeout(() => setShowXpPop(null), surprise ? 4000 : 2000);
-                    (async () => { try { await storage.set("user-xp", String(newXp)); } catch(e) {} })();
+                    (async () => { try { await userStorage.set("user-xp", String(newXp)); } catch(e) {} })();
                   }
-                  (async () => { try { const r = await storage.get("session-history"); if (r && r.value) setSessionHistory(JSON.parse(r.value)); } catch(e) {} })();
+                  (async () => { try { const r = await userStorage.get("session-history"); if (r && r.value) setSessionHistory(JSON.parse(r.value)); } catch(e) {} })();
                 }}
               />
             </Card>
@@ -3024,7 +3205,7 @@ export default function App() {
                       const prev2 = newSrs[srsKey] || { interval: 1, reps: 0 };
                       newSrs[srsKey] = { lastDate: gtd(), reps: (prev2.reps || 0) + 1, interval: Math.min((prev2.interval || 1) * 2, 14) };
                       setSrsData(newSrs);
-                      (async () => { try { await storage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
+                      (async () => { try { await userStorage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                     }
                   }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(94,196,182,0.06)" : isDue ? "rgba(232,184,75,0.04)" : "rgba(255,255,255,0.015)", border: "1px solid " + (r >= 5 ? "rgba(94,196,182,0.15)" : isDue ? "rgba(232,184,75,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 6, cursor: "pointer" }}>
                     <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#5ec4b6" : r > 0 ? "#e8b84b" : "#252836", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#1a1614" : "#5c6478", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div>
@@ -3071,7 +3252,7 @@ export default function App() {
                           const prev = newSrs[item.srsKey] || { interval: 1 };
                           newSrs[item.srsKey] = { lastDate: todayStr, reps: (prev.reps || 0) + 1, interval: Math.min((prev.interval || 1) * 2, 14) };
                           setSrsData(newSrs);
-                          (async () => { try { await storage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
+                          (async () => { try { await userStorage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                         }
                       }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(94,196,182,0.06)" : "rgba(232,184,75,0.04)", border: "1px solid " + (r >= 5 ? "rgba(94,196,182,0.15)" : "rgba(232,184,75,0.1)"), marginBottom: 6, cursor: "pointer" }}>
                         <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#5ec4b6" : r > 0 ? "#e8b84b" : "#252836", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#1a1614" : "#5c6478", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
@@ -3264,7 +3445,7 @@ export default function App() {
                   onBlur={async (e) => {
                     const key = e.target.value.trim();
                     setOpenAIKey(key || null);
-                    try { await storage.set("openai-tts-key", key); } catch(ex) {}
+                    try { await userStorage.set("openai-tts-key", key); } catch(ex) {}
                   }}
                   style={{ width: "100%", padding: 12, borderRadius: 10, fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(232,184,75,0.15)", color: "#f0f0f5", outline: "none" }}
                 />
@@ -3273,13 +3454,24 @@ export default function App() {
                 <div style={{ fontSize: 12, color: "#7a8295", marginBottom: 6 }}>الصوت:</div>
                 <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
                   {["nova", "alloy", "echo", "fable", "onyx", "shimmer"].map(v => (
-                    <button key={v} onClick={async () => { setTTSVoice(v); try { await storage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (getTTSVoice() === v ? "rgba(232,184,75,0.3)" : "rgba(255,255,255,0.06)"), background: getTTSVoice() === v ? "rgba(232,184,75,0.1)" : "transparent", color: getTTSVoice() === v ? "#e8b84b" : "#7a8295", fontFamily: "'IBM Plex Mono'", fontSize: 12, cursor: "pointer" }}>{v}</button>
+                    <button key={v} onClick={async () => { setTTSVoice(v); try { await userStorage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (getTTSVoice() === v ? "rgba(232,184,75,0.3)" : "rgba(255,255,255,0.06)"), background: getTTSVoice() === v ? "rgba(232,184,75,0.1)" : "transparent", color: getTTSVoice() === v ? "#e8b84b" : "#7a8295", fontFamily: "'IBM Plex Mono'", fontSize: 12, cursor: "pointer" }}>{v}</button>
                   ))}
                 </div>
                 <div style={{ fontSize: 12, color: "#4a5166" }}>nova = أنثى طبيعية | onyx = ذكر واثق | shimmer = أنثى دافئة | echo = ذكر هادئ</div>
               </div>}
               {!getOpenAIKey() && <div style={{ fontSize: 12, color: "#5ec4b6", background: "rgba(94,196,182,0.06)", borderRadius: 8, padding: 10 }}>💡 نصيحة: افتح التطبيق في متصفح Edge للحصول على أفضل صوت مجاني (Microsoft Neural voices)</div>}
             </Card>
+            {/* Profile & Logout */}
+            {currentUser && <Card>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
+                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, fontWeight: 800, color: "#1a1614", flexShrink: 0 }}>{currentUser.displayName.charAt(0).toUpperCase()}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: "#f0f0f5" }}>{currentUser.displayName}</div>
+                  <div style={{ fontSize: 12, color: "#7a8295" }}>@{currentUser.username}</div>
+                </div>
+              </div>
+              <button onClick={() => { if (confirm("تسجيل خروج؟")) onLogout(); }} style={{ width: "100%", padding: 10, borderRadius: 10, border: "1px solid rgba(232,184,75,0.15)", background: "transparent", color: "#e8b84b", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>تسجيل خروج ←</button>
+            </Card>}
             <div style={{ textAlign: "center", marginTop: 14 }}>
               <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(232,160,64,0.1)", background: "transparent", color: "#e87461", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة ضبط</button>
             </div>
@@ -3292,3 +3484,44 @@ export default function App() {
   );
 }
 
+// ===== AUTH GATE — Wraps MainApp with authentication =====
+export default function App() {
+  const [authState, setAuthState] = useState("loading"); // loading, auth, app
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const session = await getActiveSession();
+      if (session && session.uid) {
+        // Verify account still exists
+        const accs = await getAccounts();
+        const acc = accs.find(a => a.uid === session.uid);
+        if (acc) {
+          userStorage.setUser(acc.uid);
+          setCurrentUser(acc);
+          setAuthState("app");
+          return;
+        }
+        await setActiveSession(null);
+      }
+      setAuthState("auth");
+    })();
+  }, []);
+
+  function handleLogin(account) {
+    userStorage.setUser(account.uid);
+    setCurrentUser(account);
+    setAuthState("app");
+  }
+
+  function handleLogout() {
+    userStorage.setUser(null);
+    setCurrentUser(null);
+    setAuthState("auth");
+    (async () => { await setActiveSession(null); })();
+  }
+
+  if (authState === "loading") return <><style>{CSS}</style><SplashScreen /></>;
+  if (authState === "auth") return <AuthScreen onLogin={handleLogin} />;
+  return <MainApp currentUser={currentUser} onLogout={handleLogout} />;
+}
