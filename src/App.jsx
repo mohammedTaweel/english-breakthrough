@@ -2555,7 +2555,7 @@ function MainApp({ currentUser, onLogout }) {
               if (dueItems.length === 0) return null;
               return (
                 <Card s={{ borderColor: "rgba(29,78,216,0.15)" }}>
-                  <div className="section-title">{"مراجعة مطلوبة — " + dueItems.length + " جملة"}</div>
+                  <SectionTitle>{"مراجعة مطلوبة — " + dueItems.length + " جملة"}</SectionTitle>
                   <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)" }}>هذه الجمل حان وقت مراجعتها حسب نظام التكرار المتباعد</div>
                   {dueItems.slice(0, 5).map((item, i) => {
                     const k = "srs-" + item.srsKey;
@@ -2603,7 +2603,7 @@ function MainApp({ currentUser, onLogout }) {
               ))}
             </div>
             <Card>
-              <div className="section-title" style={{ marginBottom: "var(--sp-4)" }}>رحلة الـ 12 أسبوع</div>
+              <SectionTitle>رحلة الـ 12 أسبوع</SectionTitle>
               <div className="week-row">
                 {Array.from({ length: 12 }, (_, i) => i + 1).map((w) => (
                   <div key={w} className={"week-dot" + (w < wk ? " week-dot--done" : w === wk ? " week-dot--current" : " week-dot--future")}>{w < wk ? "✓" : w}</div>
@@ -2612,7 +2612,7 @@ function MainApp({ currentUser, onLogout }) {
             </Card>
             {/* FIX 3: Smart Weekly Summary */}
             {sessionHistory.length >= 3 && <Card s={{ borderColor: "rgba(29,78,216,0.1)" }}>
-              <div className="section-title">ملخص الأسبوع</div>
+              <SectionTitle>ملخص الأسبوع</SectionTitle>
               {(() => {
                 const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
                 const weekStr = weekAgo.toISOString().slice(0, 10);
@@ -2635,7 +2635,7 @@ function MainApp({ currentUser, onLogout }) {
             </Card>}
             {/* Smart Progress — Session History */}
             {sessionHistory.length > 0 && <Card>
-              <div style={{ className: "section-title" }}>أداء الذاكرة</div>
+              <SectionTitle>أداء الذاكرة</SectionTitle>
               {(() => {
                 const recent = sessionHistory.slice(-10);
                 const totalPhrases = recent.reduce((sum, s) => sum + (s.phrasesCount || 0), 0);
