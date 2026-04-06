@@ -816,13 +816,126 @@ const CSS = `
   .mt-4 { margin-top: var(--sp-4); }
   .mt-5 { margin-top: var(--sp-5); }
 
+  /* ===== CHAT BUBBLES ===== */
+  .chat-row { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-3); align-items: flex-start; }
+  .chat-row--sent { flex-direction: row-reverse; }
+  .chat-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: var(--fs-xs); font-weight: 700; flex-shrink: 0;
+    background: var(--c-surface-sunken); color: var(--c-text-secondary);
+  }
+  .chat-avatar--sent { background: var(--c-accent); color: #fff; }
+  .bubble {
+    max-width: 80%; padding: var(--sp-3) var(--sp-4);
+    font-size: var(--fs-sm); direction: ltr; text-align: left; line-height: 1.7;
+    box-shadow: var(--sh-sm);
+  }
+  .bubble--sent { background: var(--c-accent); color: #fff; border-radius: var(--r-lg) var(--r-lg) var(--r-sm) var(--r-lg); }
+  .bubble--received { background: var(--c-surface); color: var(--c-text); border-radius: var(--r-lg) var(--r-lg) var(--r-lg) var(--r-sm); }
+
+  /* ===== SHADOW LINE (Shadowing exercise) ===== */
+  .shadow-line {
+    padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md);
+    margin-bottom: var(--sp-2); font-size: var(--fs-sm);
+    direction: ltr; text-align: left; line-height: 1.7;
+    transition: all 0.3s; display: flex; align-items: center; gap: var(--sp-2);
+    background: rgba(0,0,0,0.015); border: 1px solid rgba(0,0,0,0.03);
+    color: var(--c-text-secondary);
+  }
+  .shadow-line--current {
+    background: var(--c-accent-light); border-color: var(--c-accent-border);
+    color: var(--c-accent-hover); font-weight: 600; font-size: var(--fs-base);
+    transform: scale(1.01); box-shadow: var(--sh-sm);
+  }
+  .shadow-line--past { color: var(--c-text-tertiary); }
+
+  /* ===== TOGGLE BUTTON (Settings) ===== */
+  .toggle-btn {
+    padding: var(--sp-2) var(--sp-3); border-radius: var(--r-sm);
+    border: 1px solid var(--c-border); background: transparent;
+    color: var(--c-text-secondary); font-family: inherit;
+    font-size: var(--fs-sm); cursor: pointer; transition: all var(--tr-base);
+    min-height: 36px;
+  }
+  .toggle-btn:hover { background: var(--c-surface-hover); }
+  .toggle-btn--active {
+    border-color: var(--c-accent-border); background: var(--c-accent-light);
+    color: var(--c-accent); font-weight: 600;
+  }
+
+  /* ===== WORD OPTION (Sentence building) ===== */
+  .word-btn {
+    padding: var(--sp-2) var(--sp-3); border-radius: var(--r-md);
+    border: 1px solid var(--c-border-light); background: var(--c-surface);
+    cursor: pointer; transition: all 0.2s; font-family: inherit;
+    font-size: var(--fs-sm); direction: ltr; box-shadow: var(--sh-sm);
+  }
+  .word-btn:hover { border-color: var(--c-accent-border); box-shadow: var(--sh-md); }
+  .word-btn--selected { opacity: 0.4; border-color: var(--c-success); background: var(--c-success-light); }
+
+  /* ===== STEP BADGE (Daily session) ===== */
+  .step-badge {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: var(--fs-sm); font-weight: 700; transition: all 0.3s;
+    background: var(--c-surface-sunken); color: var(--c-text-tertiary);
+  }
+  .step-badge--done { background: var(--c-success); color: #fff; box-shadow: 0 2px 4px rgba(22,163,74,0.2); }
+  .step-badge--active { background: var(--c-accent); color: #fff; box-shadow: 0 0 12px rgba(29,78,216,0.3); }
+
+  /* ===== PHRASE ITEM ===== */
+  .phrase-item {
+    display: flex; align-items: center; gap: var(--sp-3);
+    padding: var(--sp-3); border-radius: var(--r-md);
+    margin-bottom: var(--sp-2); cursor: pointer; transition: all var(--tr-base);
+    background: rgba(0,0,0,0.015); border: 1px solid rgba(0,0,0,0.03);
+  }
+  .phrase-item:hover { background: rgba(0,0,0,0.03); }
+  .phrase-item--done { background: var(--c-success-light); border-color: rgba(22,163,74,0.12); }
+  .phrase-item--review { background: var(--c-accent-light); border-color: var(--c-accent-border); }
+  .phrase-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: var(--fs-xs); font-weight: 700; flex-shrink: 0;
+    background: var(--c-border); color: var(--c-text-tertiary);
+    transition: all var(--tr-base);
+  }
+  .phrase-circle--active { background: var(--c-accent); color: #fff; }
+  .phrase-circle--done { background: var(--c-success); color: #fff; }
+
+  /* ===== OPTION ITEM (Quiz, exercises) ===== */
+  .option-item {
+    padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md);
+    margin-bottom: var(--sp-2); cursor: pointer;
+    font-size: var(--fs-sm); direction: ltr; text-align: left; line-height: 1.7;
+    transition: all 0.2s; border: 1px solid rgba(0,0,0,0.04);
+    background: rgba(0,0,0,0.015);
+  }
+  .option-item:hover { background: rgba(0,0,0,0.04); border-color: var(--c-accent-border); }
+  .option-item--correct { background: var(--c-success-light); border-color: rgba(22,163,74,0.3); }
+  .option-item--wrong { background: var(--c-error-light); border-color: rgba(220,38,38,0.3); }
+  .option-item--picked { box-shadow: var(--sh-sm); }
+  .option-item--dim { opacity: 0.3; }
+
+  /* ===== RESPONSIVE FIXES ===== */
+  @media (max-width: 380px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .hero-card { padding: var(--sp-5); }
+    .card { padding: var(--sp-4); }
+    .step-badge { width: 30px; height: 30px; font-size: var(--fs-xs); }
+  }
+  @media (min-width: 1024px) {
+    .app-container { max-width: 800px; }
+  }
+
   /* ===== ANIMATIONS (subtle only) ===== */
   @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
   @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
   @keyframes slideIn { from { opacity:0; transform:translateX(16px); } to { opacity:1; transform:translateX(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Legacy compat — remove as inline styles get migrated */
+  /* Global button base */
   button { transition: transform var(--tr-fast), opacity var(--tr-base); }
 `;
 
@@ -1679,7 +1792,7 @@ function Prompter({ lines, gap, color, label, withAudio }) {
         {!on ? (
           <button onClick={start} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg," + color + ",#1e40af)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{"▶ ابدأ " + label}</button>
         ) : (
-          <button onClick={stop} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "1px solid #e4e4e7", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 600, cursor: "pointer" }}>إيقاف</button>
+          <button onClick={stop} className="btn btn--secondary btn--sm">إيقاف</button>
         )}
         {on && phase === "listen" && <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 600 }}>استمع...</div>}
         {on && phase === "repeat" && sec > 0 && <div style={{ fontFamily: "inherit", fontSize: "var(--fs-xl)", fontWeight: 700, color: color }}>{sec}</div>}
@@ -1689,7 +1802,7 @@ function Prompter({ lines, gap, color, label, withAudio }) {
         const cur = on && i === idx;
         const past = on && i < idx;
         return (
-          <div key={i} style={{ padding: "10px 14px", borderRadius: "var(--r-md)", marginBottom: "var(--sp-1)", fontFamily: "inherit", fontSize: cur ? 16 : 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, transition: "all .4s", background: cur ? color + "18" : "rgba(0,0,0,0.015)", border: "1px solid " + (cur ? color + "40" : "rgba(0,0,0,0.03)"), color: cur ? "#1e40af" : past ? "#a1a1aa" : "#52525b", fontWeight: cur ? 600 : 400, transform: cur ? "scale(1.01)" : "none", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
+          <div key={i} className={"shadow-line" + (cur ? " shadow-line--current" : past ? " shadow-line--past" : "")}>
             <div style={{ flex: 1 }}>{line}</div>
             <SpeakBtn text={line} size={cur ? 18 : 14} color={cur ? color : "#71717a"} />
             {cur && phase === "repeat" && <span style={{ fontSize: "var(--fs-xs)", color: color, flexShrink: 0 }}>← ردّد!</span>}
@@ -1719,7 +1832,7 @@ function MeetingSim() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-success)" }}>إنجاز</div>
       <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{m.steps.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score === m.steps.length ? "إنجاز مميز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محادثة جديدة</button>
+      <button onClick={restart} className="btn btn--primary btn--sm">محادثة جديدة</button>
     </div>
   );
   return (
@@ -1748,7 +1861,7 @@ function MeetingSim() {
           </div>
         );
       })}
-      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{step + 1 >= m.steps.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
+      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><button onClick={next} className="btn btn--primary btn--sm">{step + 1 >= m.steps.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
     </div>
   );
 }
@@ -1772,7 +1885,7 @@ function QuickResp() {
       <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{total}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 7 ? "سريع وحاسم! " : score >= 5 ? "جيد! السرعة تتحسن" : "تحتاج تحفظ الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
+      <button onClick={restart} className="btn btn--primary btn--sm">محاولة جديدة</button>
     </div>
   );
   const rawQ = qs.current[qi];
@@ -1794,13 +1907,13 @@ function QuickResp() {
         let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
-        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: "var(--r-md)", marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+        return <div key={oi} onClick={() => !show && pick(oi)} className={"option-item" + (show && isCorrect ? " option-item--correct" : show && isPicked ? " option-item--wrong" : "") + (show && !isCorrect && !isPicked ? " option-item--dim" : "") + (isPicked ? " option-item--picked" : "")} style={{ cursor: show ? "default" : "pointer" }}>
           {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> ✓ اقرأها!</span>}
         </div>;
       })}
       {(picked !== null || timer === 0) && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
         {timer === 0 && picked === null && <div style={{ color: "var(--c-error)", fontSize: "var(--fs-sm)", marginBottom: "var(--sp-2)" }}>⏰ انتهى الوقت!</div>}
-        <button onClick={() => { if (timer === 0 && picked === null) { setTotal(total + 1); } next(); }} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي ←</button>
+        <button onClick={() => { if (timer === 0 && picked === null) { setTotal(total + 1); } next(); }} className="btn btn--primary btn--sm">التالي ←</button>
       </div>}
     </div>
   );
@@ -1851,7 +1964,7 @@ function WeeklyQuiz({ onSave, checkpoint }) {
         <div style={{ fontSize: "var(--fs-md)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-1)" }}>{score + "/" + qs.current.length}</div>
         {diff !== null && <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: diff >= 0 ? "#059669" : "#dc2626", marginBottom: "var(--sp-1)" }}>{diff >= 0 ? "+" + diff + "% عن الاختبار السابق" : "" + diff + "% عن الاختبار السابق"}</div>}
         <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{pct >= 80 ? "إنجاز مميز! الجمل صارت جزء منك " : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
-        <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>اختبار جديد</button>
+        <button onClick={restart} className="btn btn--primary btn--sm">اختبار جديد</button>
       </div>
     );
   }
@@ -1874,11 +1987,11 @@ function WeeklyQuiz({ onSave, checkpoint }) {
         let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
-        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: "var(--r-md)", marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+        return <div key={oi} onClick={() => !show && pick(oi)} className={"option-item" + (show && isCorrect ? " option-item--correct" : show && isPicked ? " option-item--wrong" : "") + (show && !isCorrect && !isPicked ? " option-item--dim" : "") + (isPicked ? " option-item--picked" : "")} style={{ cursor: show ? "default" : "pointer" }}>
           {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> </span>}
         </div>;
       })}
-      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
+      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><button onClick={next} className="btn btn--primary btn--sm">{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
     </div>
   );
 }
@@ -1947,7 +2060,7 @@ function FillBlank() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>أكمل الفراغ</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! ذاكرتك قوية " : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
+      <button onClick={restart} className="btn btn--primary btn--sm">محاولة جديدة</button>
     </div>
   );
 
@@ -1990,11 +2103,11 @@ function FillBlank() {
       </div>
       {!checked ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={check} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>تأكّد</button>
+          <button onClick={check} className="btn btn--primary btn--sm">تأكّد</button>
         </div>
       ) : (
         <div style={{ textAlign: "center" }}>
-          <button onClick={next} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          <button onClick={next} className="btn btn--primary btn--sm">{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         </div>
       )}
     </div>
@@ -2069,7 +2182,7 @@ function SentenceBuild() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>بناء جمل</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! تركيب الجمل صار سهل " : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-success)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
+      <button onClick={restart} className="btn btn--success btn--sm">محاولة جديدة</button>
     </div>
   );
 
@@ -2108,11 +2221,11 @@ function SentenceBuild() {
         })}
       </div>
       <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center" }}>
-        {!checked && selected.length > 0 && <button onClick={() => setSelected([])} style={{ padding: "8px 16px", borderRadius: "var(--r-md)", border: "1px solid #e4e4e7", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>مسح</button>}
+        {!checked && selected.length > 0 && <button onClick={() => setSelected([])} className="btn btn--ghost btn--sm">مسح</button>}
         {!checked ? (
           <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: selected.length > 0 ? "#059669" : "#e4e4e7", color: selected.length > 0 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>تأكّد</button>
         ) : (
-          <button onClick={next} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-success)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          <button onClick={next} className="btn btn--success btn--sm">{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         )}
       </div>
     </div>
@@ -2166,7 +2279,7 @@ function FreeRecall() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إنتاج حر</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 4 ? "#059669" : score >= 2 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 4 ? "إنجاز مميز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
+      <button onClick={restart} className="btn btn--danger btn--sm">محاولة جديدة</button>
     </div>
   );
 
@@ -2217,7 +2330,7 @@ function FreeRecall() {
             <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>حاول تستخدم كلمات من بنك الجمل في المرة الجاية</div>
           )}
           <div style={{ textAlign: "center" }}>
-            <button onClick={next} style={{ padding: "8px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+            <button onClick={next} className="btn btn--danger btn--sm">{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
           </div>
         </div>
       )}
@@ -2317,7 +2430,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
         <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-3)" }}>
           {steps.map((s, i) => (
             <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--sp-1)" }}>
-              <div style={{ width: 36, height: 36, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-sm)", fontWeight: 700, background: i < step ? "var(--c-success)" : i === step ? "var(--c-accent)" : "var(--c-surface-sunken)", color: i <= step ? "#fff" : "var(--c-text-tertiary)", transition: "all 0.3s", boxShadow: i === step ? "0 0 12px rgba(29,78,216,0.3)" : i < step ? "0 2px 4px rgba(22,163,74,0.2)" : "none" }}>{i < step ? "✓" : s.num}</div>
+              <div className={"step-badge" + (i < step ? " step-badge--done" : i === step ? " step-badge--active" : "")}>{i < step ? "✓" : s.num}</div>
               <div style={{ fontSize: "var(--fs-xs)", color: i === step ? "var(--c-accent)" : i < step ? "var(--c-success)" : "var(--c-text-tertiary)", fontWeight: i === step ? 600 : 400, whiteSpace: "nowrap" }}>{s.title}</div>
             </div>
           ))}
@@ -2390,8 +2503,8 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
               )}
               {(listenAnswer !== null || !sc.listenQ) && (
                 <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center" }}>
-                  <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} style={{ padding: "8px 16px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "var(--c-accent-hover)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>استمع مرة ثانية</button>
-                  <button onClick={() => advanceStep(1)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي →</button>
+                  <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} className="btn btn--secondary btn--sm">استمع مرة ثانية</button>
+                  <button onClick={() => advanceStep(1)} className="btn btn--primary">التالي →</button>
                 </div>
               )}
             </div>
@@ -2406,16 +2519,16 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
           {sc.dialogue.map((d, i) => {
             const isMe = d.speaker === "أنت";
             return (
-            <div key={i} style={{ display: "flex", flexDirection: isMe ? "row-reverse" : "row", gap: "var(--sp-2)", marginBottom: "var(--sp-3)", alignItems: "flex-start" }}>
-              <div style={{ width: 32, height: 32, borderRadius: "50%", background: isMe ? "var(--c-accent)" : "var(--c-surface-sunken)", color: isMe ? "#fff" : "var(--c-text-secondary)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-xs)", fontWeight: 700, flexShrink: 0 }}>{isMe ? "أنا" : d.speaker.charAt(0)}</div>
-              <div style={{ maxWidth: "80%", padding: "var(--sp-3) var(--sp-4)", borderRadius: isMe ? "var(--r-lg) var(--r-lg) var(--r-sm) var(--r-lg)" : "var(--r-lg) var(--r-lg) var(--r-lg) var(--r-sm)", background: isMe ? "var(--c-accent)" : "var(--c-surface)", color: isMe ? "#fff" : "var(--c-text)", boxShadow: "var(--sh-sm)", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>
+            <div key={i} className={"chat-row" + (isMe ? " chat-row--sent" : "")}>
+              <div className={"chat-avatar" + (isMe ? " chat-avatar--sent" : "")}>{isMe ? "أنا" : d.speaker.charAt(0)}</div>
+              <div className={"bubble" + (isMe ? " bubble--sent" : " bubble--received")}>
                 {!isMe && <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)", marginBottom: 2 }}>{d.speaker}</div>}
                 <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)" }}><span style={{ flex: 1 }}>{d.text}</span><SpeakBtn text={d.text} size={14} color={isMe ? "#fff" : undefined} /></div>
               </div>
             </div>
           );})}
           <div style={{ textAlign: "center", marginTop: "var(--sp-4)" }}>
-            <button onClick={() => advanceStep(2)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي: ردّد الجمل →</button>
+            <button onClick={() => advanceStep(2)} className="btn btn--primary">التالي: ردّد الجمل →</button>
           </div>
         </div>
       )}
@@ -2475,7 +2588,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
           })}
           {Object.values(shadowReps).filter(r => r >= 5).length >= sc.keyPhrases.length && (
             <div style={{ textAlign: "center", marginTop: "var(--sp-4)" }}>
-              <button onClick={() => advanceStep(3)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي: تذكّر →</button>
+              <button onClick={() => advanceStep(3)} className="btn btn--primary">التالي: تذكّر →</button>
             </div>
           )}
         </div>
@@ -2494,13 +2607,13 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                 <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>{p.ar}</div>
 
                 {state === "hidden" && (
-                  <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "thinking" }))} style={{ padding: "8px 20px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>قلها بصوت عالٍ ثم اضغط هنا</button>
+                  <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "thinking" }))} className="btn btn--primary btn--sm">قلها بصوت عالٍ ثم اضغط هنا</button>
                 )}
 
                 {state === "thinking" && (
                   <div>
                     <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>قلت الجملة؟ اضغط "أظهر" وقارن:</div>
-                    <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "revealed" }))} style={{ padding: "8px 20px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>أظهر الجملة</button>
+                    <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "revealed" }))} className="btn btn--primary btn--sm">أظهر الجملة</button>
                   </div>
                 )}
 
@@ -2518,9 +2631,9 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                     ) : null; })()}
                     {!selfScore && (
                       <div style={{ display: "flex", gap: "var(--sp-2)" }}>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "good" }))} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "none", background: "rgba(5,150,105,0.15)", color: "var(--c-success)", fontSize: "var(--fs-xs)", fontWeight: 600, cursor: "pointer" }}>تذكّرتها </button>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "partial" }))} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "none", background: "rgba(29,78,216,0.15)", color: "var(--c-accent)", fontSize: "var(--fs-xs)", fontWeight: 600, cursor: "pointer" }}>تقريباً</button>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "none", background: "rgba(217,119,6,0.1)", color: "var(--c-warn)", fontSize: "var(--fs-xs)", fontWeight: 600, cursor: "pointer" }}>لسه</button>
+                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "good" }))} className="toggle-btn toggle-btn--active" style={{ background: "var(--c-success-light)", color: "var(--c-success)" }}>تذكّرتها </button>
+                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "partial" }))} className="toggle-btn toggle-btn--active">تقريباً</button>
+                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} className="toggle-btn" style={{ background: "var(--c-warn-light)", color: "var(--c-warn)" }}>لسه</button>
                       </div>
                     )}
                     {selfScore && <div style={{ fontSize: "var(--fs-xs)", color: selfScore === "good" ? "#059669" : selfScore === "partial" ? "#1d4ed8" : "#dc2626", fontWeight: 600, marginTop: "var(--sp-1)" }}>{selfScore === "good" ? "✓ إنجاز مميز!" : selfScore === "partial" ? " قريب — ردّدها مرة" : "🔄 عادي تماماً! المخ يحتاج ٥-٧ تكرارات — بنراجعها سوا"}</div>}
@@ -2549,7 +2662,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                 {allGood && (
                   <div style={{ textAlign: "center" }}>
                     <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-success)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>إنجاز مميز! تذكّرت كل الجمل</div>
-                    <button onClick={() => advanceStep(4)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
+                    <button onClick={() => advanceStep(4)} className="btn btn--primary">التالي: أنتج بنفسك →</button>
                   </div>
                 )}
               </div>
@@ -2595,7 +2708,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                       setAiFeedback(data.choices[0].message.content);
                     } catch { setAiFeedback("لم أتمكن من الاتصال. تأكّد من مفتاح API."); }
                     setAiLoading(false);
-                  }} style={{ padding: "6px 16px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "var(--c-accent-hover)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>تحليل ذكي لكتابتك</button>
+                  }} className="btn btn--secondary btn--sm">تحليل ذكي لكتابتك</button>
                 </div>
               )}
               {aiLoading && <div style={{ textAlign: "center", fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", marginBottom: "var(--sp-2)" }}>جاري التحليل...</div>}
@@ -2615,7 +2728,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                 )}
               </div>
               <div style={{ textAlign: "center" }}>
-                <button onClick={() => advanceStep(5)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي: تحدّي اليوم →</button>
+                <button onClick={() => advanceStep(5)} className="btn btn--primary">التالي: تحدّي اليوم →</button>
               </div>
             </div>
           )}
@@ -2648,7 +2761,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
               {/* FIX 4: Challenge follow-up */}
               <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 700, marginBottom: "var(--sp-3)" }}>سوّيت التحدي؟</div>
               <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center", marginBottom: "var(--sp-3)" }}>
-                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-success)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>نعم سويته </button>
+                <button onClick={() => setChallengeDone(true)} className="btn btn--success btn--sm">نعم سويته </button>
                 <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "1px solid rgba(0,0,0,0.06)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-sm)", cursor: "pointer" }}>بسويه لاحقاً</button>
               </div>
               <input value={challengeNote} onChange={(e) => setChallengeNote(e.target.value)} placeholder="كيف كانت التجربة؟ (اختياري)" style={{ width: "100%", padding: "var(--sp-3)", borderRadius: "var(--r-md)", fontFamily: "inherit", fontSize: "var(--fs-sm)", background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", color: "var(--c-text)", outline: "none", textAlign: "center" }} />
@@ -2782,7 +2895,7 @@ function Fluency432() {
         {topic.starters.map((st, si) => <div key={si} style={{ fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text-secondary)", padding: "3px 0" }}>{st}</div>)}
       </div>
       <div style={{ textAlign: "center" }}>
-        <button onClick={() => startRound(1)} style={{ padding: "12px 28px", borderRadius: "var(--r-lg)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-base)", fontWeight: 700, cursor: "pointer" }}>ابدأ الجولة الأولى (٤ دقائق) →</button>
+        <button onClick={() => startRound(1)} className="btn btn--primary btn--lg">ابدأ الجولة الأولى (٤ دقائق) →</button>
       </div>
     </div>
   );
@@ -2792,7 +2905,7 @@ function Fluency432() {
       <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
       <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-success)", marginBottom: "var(--sp-2)" }}>إنجاز رائع.. أنت تقترب من التمكّن</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, marginBottom: "var(--sp-4)" }}>تكلمت عن نفس الموضوع ٣ مرات — كل مرة بسرعة أكبر.<br />لاحظت كيف الجمل صارت تطلع أسرع في الجولة الثالثة؟<br />هذا بالضبط كيف تُبنى الطلاقة.</div>
-      <button onClick={restart} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>موضوع جديد</button>
+      <button onClick={restart} className="btn btn--danger">موضوع جديد</button>
     </div>
   );
 
@@ -2822,7 +2935,7 @@ function Fluency432() {
 
       {sec === 0 && !running && round < 3 && (
         <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
-          <button onClick={() => startRound(round + 1)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{"الجولة " + (round + 1) + " (" + (round === 1 ? "٣" : "٢") + " دقائق) →"}</button>
+          <button onClick={() => startRound(round + 1)} className="btn btn--danger">{"الجولة " + (round + 1) + " (" + (round === 1 ? "٣" : "٢") + " دقائق) →"}</button>
         </div>
       )}
       {sec === 0 && !running && round === 3 && (
@@ -2860,7 +2973,7 @@ function ListenExercise() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>الاستماع</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
+      <button onClick={restart} className="btn btn--primary btn--sm">محاولة جديدة</button>
     </div>
   );
 
@@ -2931,7 +3044,7 @@ function DictationExercise() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إملاء صوتي</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
+      <button onClick={restart} className="btn btn--danger btn--sm">محاولة جديدة</button>
     </div>
   );
 
@@ -2973,7 +3086,7 @@ function DictationExercise() {
             })}
           </div>
           <div style={{ textAlign: "center" }}>
-            <button onClick={next} style={{ padding: "8px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+            <button onClick={next} className="btn btn--danger btn--sm">{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
           </div>
         </div>
       )}
@@ -3291,7 +3404,7 @@ function LevelTest({ onComplete, checkpoint }) {
       {/* Question */}
       <div style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-4)" }}>
         <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.9, color: "var(--c-text)" }}>{displayQ.q}</div>
-        {currentQ.audio && <div style={{ textAlign: "center", marginTop: "var(--sp-2)" }}><button onClick={() => speak(currentQ.audio, 0.85)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>استمع مرة ثانية</button></div>}
+        {currentQ.audio && <div style={{ textAlign: "center", marginTop: "var(--sp-2)" }}><button onClick={() => speak(currentQ.audio, 0.85)} className="btn btn--primary btn--sm">استمع مرة ثانية</button></div>}
       </div>
 
       {/* Options */}
@@ -3609,11 +3722,11 @@ function MainApp({ currentUser, onLogout }) {
                       const sc = DAILY_SCENARIOS.find(s => s.title === cp.scenario);
                       if (sc) { setChosenScenario(sc); setTab("today"); }
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-xs)", fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    }} className="btn btn--primary btn--sm">كمّل</button>
                     <button onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-session"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>ابدأ من جديد</button>
+                    }} className="btn btn--ghost btn--sm">ابدأ من جديد</button>
                   </div>
                 </div>
               )}
@@ -3627,11 +3740,11 @@ function MainApp({ currentUser, onLogout }) {
                     <button onClick={() => {
                       setTab("train"); setTrainMode("quiz");
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-xs)", fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    }} className="btn btn--primary btn--sm">كمّل</button>
                     <button onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-quiz"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>ابدأ من جديد</button>
+                    }} className="btn btn--ghost btn--sm">ابدأ من جديد</button>
                   </div>
                 </div>
               )}
@@ -3645,11 +3758,11 @@ function MainApp({ currentUser, onLogout }) {
                     <button onClick={() => {
                       setTab("train"); setTrainMode("level");
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-xs)", fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    }} className="btn btn--primary btn--sm">كمّل</button>
                     <button onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-level"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>ابدأ من جديد</button>
+                    }} className="btn btn--ghost btn--sm">ابدأ من جديد</button>
                   </div>
                 </div>
               )}
@@ -3841,8 +3954,8 @@ function MainApp({ currentUser, onLogout }) {
                       setSrsData(newSrs);
                       (async () => { try { await userStorage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                     }
-                  }} style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", padding: "var(--sp-3)", borderRadius: "var(--r-md)", background: r >= 5 ? "rgba(5,150,105,0.06)" : isDue ? "rgba(29,78,216,0.04)" : "rgba(0,0,0,0.015)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : isDue ? "rgba(29,78,216,0.15)" : "rgba(0,0,0,0.03)"), marginBottom: "var(--sp-2)", cursor: "pointer" }}>
-                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-xs)", fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div>
+                  }} className={"phrase-item" + (r >= 5 ? " phrase-item--done" : isDue ? " phrase-item--review" : "")}>
+                    <div className={"phrase-circle" + (r >= 5 ? " phrase-circle--done" : r > 0 ? " phrase-circle--active" : "")}>{r >= 5 ? "✓" : r}</div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
                       <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginTop: "var(--sp-1)" }}>{p.ar}</div>
@@ -4053,7 +4166,7 @@ function MainApp({ currentUser, onLogout }) {
               <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>اللهجة:</div>
               <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-4)" }}>
                 {[{ code: "en-US", label: "أمريكي" }, { code: "en-GB", label: "بريطاني" }, { code: "en-AU", label: "أسترالي" }].map(a => (
-                  <button key={a.code} onClick={() => { setAccent(a.code); speak("Hello! How are you today?", 0.9); }} style={{ padding: "6px 12px", borderRadius: "var(--r-sm)", border: "1px solid " + (getAccent() === a.code ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)"), background: getAccent() === a.code ? "rgba(29,78,216,0.1)" : "transparent", color: getAccent() === a.code ? "#1d4ed8" : "#71717a", fontSize: "var(--fs-xs)", cursor: "pointer" }}>{a.label}</button>
+                  <button key={a.code} onClick={() => { setAccent(a.code); speak("Hello! How are you today?", 0.9); }} className={"toggle-btn" + (getAccent() === a.code ? " toggle-btn--active" : "")}>{a.label}</button>
                 ))}
               </div>
 
@@ -4086,7 +4199,7 @@ function MainApp({ currentUser, onLogout }) {
                 <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>الصوت:</div>
                 <div style={{ display: "flex", gap: "var(--sp-2)", flexWrap: "wrap", marginBottom: "var(--sp-2)" }}>
                   {["nova", "alloy", "echo", "fable", "onyx", "shimmer"].map(v => (
-                    <button key={v} onClick={async () => { setTTSVoice(v); try { await userStorage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: "var(--r-sm)", border: "1px solid " + (getTTSVoice() === v ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)"), background: getTTSVoice() === v ? "rgba(29,78,216,0.1)" : "transparent", color: getTTSVoice() === v ? "#1d4ed8" : "#71717a", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>{v}</button>
+                    <button key={v} onClick={async () => { setTTSVoice(v); try { await userStorage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} className={"toggle-btn" + (getTTSVoice() === v ? " toggle-btn--active" : "")}>{v}</button>
                   ))}
                 </div>
                 <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)" }}>nova = أنثى طبيعية | onyx = ذكر واثق | shimmer = أنثى دافئة | echo = ذكر هادئ</div>
