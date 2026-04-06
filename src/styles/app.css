@@ -745,11 +745,18 @@
     to { stroke-dashoffset: 0; }
   }
 
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
   /* Success state animation */
   .animate-success { animation: successPulse 0.5s ease; }
   .animate-bounce { animation: bounceIn 0.5s ease; }
   .animate-slide-up { animation: slideUp 0.3s ease; }
   .animate-slide-down { animation: slideDown 0.3s ease; }
+  .animate-shake { animation: shake 0.3s ease; }
 
   /* Skeleton loading */
   .skeleton {
@@ -793,6 +800,11 @@
     text-align: center;
     padding: var(--sp-2) 0;
     animation: fadeIn 2s ease;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-card .social-proof {
+    color: rgba(255,255,255,0.6);
   }
 
   /* Option item hover feedback */

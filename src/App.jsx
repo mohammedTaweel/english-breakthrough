@@ -5,6 +5,8 @@ import "./styles/app.css";
 import { SHADOW_LINES, STORIES, PROMPTS, PHRASES, MOTIV, CONVERSATIONS, QUICK_RESP, QUIZ_BANK, CEFR_LEVELS, LEVEL_TEST, LEVEL_IDX, TYPE_LABELS, TYPE_ICONS, LISTEN_ITEMS, DICTATION_ITEMS, DAILY_SCENARIOS, FILL_BLANKS, SENTENCE_BUILD, RECALL_SCENARIOS, FLUENCY_TOPICS, PHRASE_PATTERNS } from "./data.js";
 import { IconVolume, IconRefresh, IconCheck, IconEye, IconMic, IconPlay, IconStop, IconArrowLeft, IconTarget, IconBook, IconPen, IconBrain, IconGlobe, IconChart, IconUser, IconSettings, IconLogout, IconHeadphones, IconMessageCircle, IconTrendingUp, IconAward, IconZap, IconClock, IconStar } from "./icons.jsx";
 import { Button, Card as UICard, Badge, ProgressRing, ProgressBar, StatCard, SectionTitle, WeekProgress, EmptyState, Toast } from "./components/ui/index.jsx";
+import { BarChart, MemoryDonut, TrendLine, SkillRadar } from "./components/charts.jsx";
+import { IllustrationOnboard, IllustrationListen, IllustrationSpeak, IllustrationSuccess, IllustrationEmpty, IllustrationProgress, IllustrationMeeting, IllustrationTravel } from "./components/illustrations.jsx";
 
 // ===== USER STORAGE SYSTEM =====
 // Per-user storage: all keys prefixed with user ID
@@ -449,8 +451,8 @@ function MeetingSim() {
   function restart() { setMi((mi + 1) % CONVERSATIONS.length); setStep(0); setPicked(null); setScore(0); setDone(false); }
   if (done) return (
     <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-success)" }}>إنجاز</div>
-      <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{m.steps.length}</div>
+      <div className="animate-success" style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-success)" }}>إنجاز</div>
+      <div className="animate-bounce" style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{m.steps.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score === m.steps.length ? "إنجاز مميز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
       <Button size="sm" onClick={restart}><IconRefresh size={16}/>محادثة جديدة</Button>
     </div>
@@ -474,7 +476,7 @@ function MeetingSim() {
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
         return (
-          <div key={oi} onClick={() => picked === null && pick(oi)} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: "var(--sp-2)", cursor: picked === null ? "pointer" : "default", fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, transition: ".3s", opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+          <div key={oi} onClick={() => picked === null && pick(oi)} className={show && isCorrect ? "animate-success" : show && isPicked && !isCorrect ? "animate-shake" : ""} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: "var(--sp-2)", cursor: picked === null ? "pointer" : "default", fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, transition: ".3s", opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
             {o}
             {show && isCorrect && <span style={{ marginRight: 8, fontSize: "var(--fs-xs)", color: "var(--c-success)" }}> ✓ صحيح — اقرأها بصوت عالٍ!</span>}
             {show && isPicked && !isCorrect && <span style={{ marginRight: 8, fontSize: "var(--fs-xs)", color: "var(--c-error)" }}> ✗</span>}
@@ -502,8 +504,8 @@ function QuickResp() {
   useEffect(() => { startTimer(); return () => clearInterval(tRef.current); }, []);
   if (done) return (
     <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
-      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{total}</div>
+      <div className="animate-success" style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
+      <div className="animate-bounce" style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{total}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 7 ? "سريع وحاسم! " : score >= 5 ? "جيد! السرعة تتحسن" : "تحتاج تحفظ الجمل أكثر"}</div>
       <Button size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
@@ -527,7 +529,7 @@ function QuickResp() {
         let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
-        return <div key={oi} onClick={() => !show && pick(oi)} className={"option-item" + (show && isCorrect ? " option-item--correct" : show && isPicked ? " option-item--wrong" : "") + (show && !isCorrect && !isPicked ? " option-item--dim" : "") + (isPicked ? " option-item--picked" : "")} style={{ cursor: show ? "default" : "pointer" }}>
+        return <div key={oi} onClick={() => !show && pick(oi)} className={"option-item" + (show && isCorrect ? " option-item--correct animate-success" : show && isPicked ? " option-item--wrong animate-shake" : "") + (show && !isCorrect && !isPicked ? " option-item--dim" : "") + (isPicked ? " option-item--picked" : "")} style={{ cursor: show ? "default" : "pointer" }}>
           {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> ✓ اقرأها!</span>}
         </div>;
       })}
@@ -579,8 +581,8 @@ function WeeklyQuiz({ onSave, checkpoint }) {
     const diff = prevPct !== null ? pct - prevPct : null;
     return (
       <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
-        <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>التقييم</div>
-        <div style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: pct >= 80 ? "#059669" : pct >= 50 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-1)" }}>{pct + "%"}</div>
+        <div className="animate-success" style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>التقييم</div>
+        <div className="animate-bounce" style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: pct >= 80 ? "#059669" : pct >= 50 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-1)" }}>{pct + "%"}</div>
         <div style={{ fontSize: "var(--fs-md)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-1)" }}>{score + "/" + qs.current.length}</div>
         {diff !== null && <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: diff >= 0 ? "#059669" : "#dc2626", marginBottom: "var(--sp-1)" }}>{diff >= 0 ? "+" + diff + "% عن الاختبار السابق" : "" + diff + "% عن الاختبار السابق"}</div>}
         <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{pct >= 80 ? "إنجاز مميز! الجمل صارت جزء منك " : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
@@ -607,7 +609,7 @@ function WeeklyQuiz({ onSave, checkpoint }) {
         let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
-        return <div key={oi} onClick={() => !show && pick(oi)} className={"option-item" + (show && isCorrect ? " option-item--correct" : show && isPicked ? " option-item--wrong" : "") + (show && !isCorrect && !isPicked ? " option-item--dim" : "") + (isPicked ? " option-item--picked" : "")} style={{ cursor: show ? "default" : "pointer" }}>
+        return <div key={oi} onClick={() => !show && pick(oi)} className={"option-item" + (show && isCorrect ? " option-item--correct animate-success" : show && isPicked ? " option-item--wrong animate-shake" : "") + (show && !isCorrect && !isPicked ? " option-item--dim" : "") + (isPicked ? " option-item--picked" : "")} style={{ cursor: show ? "default" : "pointer" }}>
           {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> </span>}
         </div>;
       })}
@@ -659,8 +661,8 @@ function FillBlank() {
 
   if (done) return (
     <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>أكمل الفراغ</div>
-      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div className="animate-success" style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>أكمل الفراغ</div>
+      <div className="animate-bounce" style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! ذاكرتك قوية " : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
       <Button size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
@@ -763,8 +765,8 @@ function SentenceBuild() {
 
   if (done) return (
     <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>بناء جمل</div>
-      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div className="animate-success" style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>بناء جمل</div>
+      <div className="animate-bounce" style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! تركيب الجمل صار سهل " : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
       <Button variant="success" size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
@@ -849,8 +851,8 @@ function FreeRecall() {
 
   if (done) return (
     <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إنتاج حر</div>
-      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 4 ? "#059669" : score >= 2 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div className="animate-success" style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إنتاج حر</div>
+      <div className="animate-bounce" style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 4 ? "#059669" : score >= 2 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 4 ? "إنجاز مميز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
       <Button variant="danger" size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
@@ -912,7 +914,7 @@ function FreeRecall() {
 }
 
 // ===== DAILY DEEP PROCESSING SESSION =====
-function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
+function DailySession({ scenario, onComplete, dayNum, checkpoint, sessionHistory }) {
   const cp = checkpoint || {};
   const [step, setStep] = useState(cp.step || 0);
   const [listenIdx, setListenIdx] = useState(-1);
@@ -931,14 +933,52 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
   const [aiLoading, setAiLoading] = useState(false);
   const [stepCelebration, setStepCelebration] = useState(null);
   const [listenChunk, setListenChunk] = useState(cp.listenChunk || 0);
+  // Flip card state for Remember step
+  const [recallCardIdx, setRecallCardIdx] = useState(0);
+  const [recallFlipped, setRecallFlipped] = useState(false);
+  // Produce step: choice-based
+  const [prodChoice, setProdChoice] = useState(null);
+  const [prodRevealed, setProdRevealed] = useState(false);
+  // Apply step: celebration animation
+  const [applyCelebration, setApplyCelebration] = useState(false);
 
   const sc = scenario;
+
+  // Generate produce choices: model answer + 2 inferior alternatives
+  const produceChoicesRef = useRef(null);
+  if (!produceChoicesRef.current && sc) {
+    const model = sc.produceModel;
+    const alt1 = model.replace(/Could I get|Could you|Could we/gi, "Give me").replace(/, please/gi, "").replace(/\?$/, ".");
+    const alt2Words = model.split(" ");
+    const alt2 = alt2Words.length > 4
+      ? alt2Words.slice(0, Math.ceil(alt2Words.length / 2)).join(" ") + "."
+      : "I want that one.";
+    const choices = [
+      { text: model, correct: true, label: "الأفضل — مهذب وواضح ومحدد" },
+      { text: alt1 !== model ? alt1 : "Give me that. Thanks.", correct: false, label: "مباشر جداً — ينقصه الأدب والوضوح" },
+      { text: alt2, correct: false, label: "ناقص — ما يوصل المعنى كامل" },
+    ];
+    // Shuffle deterministically
+    const seed = (dayNum || 1) * 7;
+    const shuffled = [...choices];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = (seed + i * 3) % (i + 1);
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    produceChoicesRef.current = shuffled;
+  }
+  const produceChoices = produceChoicesRef.current || [];
+
+  // Step time estimates (minutes)
+  const stepTimes = [2, 1, 2, 1, 1, 0.5];
+  const totalMinutes = Math.round(stepTimes.reduce((a, b) => a + b, 0));
+
   const steps = [
     { num: "١", title: "استمع", desc: "استمع جملة جملة — بدون نص" },
     { num: "٢", title: "استمع واقرأ", desc: "استمع مع النص — لاحظ اللي فاتك" },
     { num: "٣", title: "ردّد", desc: "ردّد الجمل المفتاحية ٣ مرات" },
     { num: "٤", title: "تذكّر", desc: "شوف الترجمة — قل الجملة من ذاكرتك" },
-    { num: "٥", title: "أنتج", desc: "اكتب ردك بنفسك" },
+    { num: "٥", title: "أنتج", desc: "اختر الرد الأفضل" },
     { num: "٦", title: "طبّق", desc: "تحدّي حقيقي اليوم" },
   ];
 
@@ -988,12 +1028,12 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
         <ProgressRing percent={stepPct} size={56} strokeWidth={4} />
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-text)" }}>{sc.title}</div>
-          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginTop: "var(--sp-1)" }}>{"الخطوة " + (step + 1) + " من 6 — " + steps[step].title}</div>
+          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginTop: "var(--sp-1)" }}>{"الخطوة " + (step + 1) + " من 6 — " + steps[step].title + " — ~" + totalMinutes + " دقائق"}</div>
         </div>
       </div>
 
       {/* Micro-celebration popup */}
-      {stepCelebration && <div style={{ textAlign: "center", padding: "var(--sp-4)", animation: "stepDone .6s" }}>
+      {stepCelebration && <div className="animate-bounce" style={{ textAlign: "center", padding: "var(--sp-4)", animation: "stepDone .6s" }}>
         <div style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: "var(--c-success)" }}>{stepCelebration}</div>
       </div>}
 
@@ -1166,75 +1206,98 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
         </div>
       )}
 
-      {/* Step 4: Recall — show Arabic, hide English, reveal to check */}
+      {/* Step 4: Recall — FLIP CARD approach: one card at a time */}
       {step === 3 && (
         <div>
-          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)", lineHeight: 2 }}>شوف الترجمة العربية فقط — حاول تقول الجملة الإنجليزية من ذاكرتك — ثم اضغط "أظهر" وقارن.</div>
-          {sc.keyPhrases.map((p, i) => {
-            const state = recallState[i] || "hidden";
-            const selfScore = recallScore[i]; // undefined, "good", "partial", "forgot"
+          {/* Card counter */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--sp-3)" }}>
+            <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>شوف الترجمة — حاول تقول الجملة الإنجليزية — ثم اقلب البطاقة</div>
+            <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", whiteSpace: "nowrap", marginRight: "var(--sp-2)" }}>
+              {(recallCardIdx + 1) + " / " + sc.keyPhrases.length}
+            </div>
+          </div>
+
+          {/* Progress dots */}
+          <div style={{ display: "flex", gap: "var(--sp-1)", justifyContent: "center", marginBottom: "var(--sp-4)" }}>
+            {sc.keyPhrases.map((_, i) => (
+              <div key={i} style={{ width: 10, height: 10, borderRadius: "50%", background: recallScore[i] === "good" ? "#059669" : recallScore[i] === "partial" ? "#1d4ed8" : recallScore[i] === "forgot" ? "#f59e0b" : i === recallCardIdx ? "var(--c-accent)" : "var(--c-surface-sunken)", transition: "all 0.3s" }} />
+            ))}
+          </div>
+
+          {/* The flip card */}
+          {(() => {
+            const p = sc.keyPhrases[recallCardIdx];
+            const selfScore = recallScore[recallCardIdx];
+            if (!p) return null;
             return (
-              <div key={i} style={{ background: "rgba(29,78,216,0.06)", border: "1px solid " + (selfScore === "good" ? "rgba(5,150,105,0.2)" : selfScore === "forgot" ? "rgba(220,38,38,0.15)" : "rgba(29,78,216,0.1)"), borderRadius: "var(--r-md)", padding: "var(--sp-4)", marginBottom: "var(--sp-2)" }}>
-                {/* Always show Arabic */}
-                <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>{p.ar}</div>
-
-                {state === "hidden" && (
-                  <Button size="sm" onClick={() => setRecallState(prev => ({ ...prev, [i]: "thinking" }))}><IconMic size={16}/>قلها بصوت عالٍ ثم اضغط هنا</Button>
-                )}
-
-                {state === "thinking" && (
+              <div onClick={() => { if (!recallFlipped && !selfScore) setRecallFlipped(true); }} style={{ cursor: !recallFlipped && !selfScore ? "pointer" : "default", minHeight: 180, borderRadius: "var(--r-xl)", padding: "var(--sp-6)", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: recallFlipped || selfScore ? "rgba(29,78,216,0.04)" : "linear-gradient(135deg, rgba(29,78,216,0.08), rgba(5,150,105,0.06))", border: "2px solid " + (selfScore === "good" ? "rgba(5,150,105,0.3)" : selfScore === "partial" ? "rgba(29,78,216,0.2)" : selfScore === "forgot" ? "rgba(245,158,11,0.2)" : "rgba(29,78,216,0.15)"), transition: "all 0.3s", animation: "fadeUp .3s" }}>
+                {/* Front: Arabic */}
+                {!recallFlipped && !selfScore && (
                   <div>
-                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>قلت الجملة؟ اضغط "أظهر" وقارن:</div>
-                    <Button size="sm" onClick={() => setRecallState(prev => ({ ...prev, [i]: "revealed" }))}><IconEye size={16}/>أظهر الجملة</Button>
+                    <div style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: "var(--c-text)", marginBottom: "var(--sp-4)", lineHeight: 1.8 }}>{p.ar}</div>
+                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)" }}>قلها بصوت عالٍ ثم اضغط لقلب البطاقة</div>
                   </div>
                 )}
 
-                {state === "revealed" && (
-                  <div>
-                    <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "var(--c-text)", marginBottom: "var(--sp-2)", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
-                      <span style={{ flex: 1 }}>{p.en}</span>
-                      <SpeakBtn text={p.en} size={16} />
+                {/* Back: English + rating */}
+                {(recallFlipped || selfScore) && (
+                  <div style={{ width: "100%" }}>
+                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)", marginBottom: "var(--sp-2)" }}>{p.ar}</div>
+                    <div style={{ fontFamily: "inherit", fontSize: "var(--fs-xl)", direction: "ltr", textAlign: "center", lineHeight: 1.8, color: "var(--c-text)", marginBottom: "var(--sp-2)", display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--sp-2)" }}>
+                      <span>{p.en}</span>
+                      <SpeakBtn text={p.en} size={18} />
                     </div>
-                    {/* FIX 8: Cross-context patterns */}
+                    {/* Cross-context patterns */}
                     {(() => { const patterns = findCrossPatterns(p.en); return patterns.length > 0 ? (
-                      <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", marginBottom: "var(--sp-2)", lineHeight: 1.8 }}>
+                      <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", marginBottom: "var(--sp-3)", lineHeight: 1.8 }}>
                         {"" + patterns[0].pattern + " — " + patterns[0].usage}
                       </div>
                     ) : null; })()}
+
+                    {/* Rating buttons */}
                     {!selfScore && (
-                      <div style={{ display: "flex", gap: "var(--sp-2)" }}>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "good" }))} className="toggle-btn toggle-btn--active" style={{ background: "var(--c-success-light)", color: "var(--c-success)" }}>تذكّرتها </button>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "partial" }))} className="toggle-btn toggle-btn--active">تقريباً</button>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} className="toggle-btn" style={{ background: "var(--c-warn-light)", color: "var(--c-warn)" }}>لسه</button>
+                      <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center", marginTop: "var(--sp-3)" }}>
+                        <button onClick={(e) => { e.stopPropagation(); setRecallScore(prev => ({ ...prev, [recallCardIdx]: "good" })); }} style={{ padding: "10px 18px", borderRadius: "var(--r-md)", border: "none", background: "#059669", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>تذكّرتها</button>
+                        <button onClick={(e) => { e.stopPropagation(); setRecallScore(prev => ({ ...prev, [recallCardIdx]: "partial" })); }} style={{ padding: "10px 18px", borderRadius: "var(--r-md)", border: "none", background: "#1d4ed8", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>تقريبا</button>
+                        <button onClick={(e) => { e.stopPropagation(); setRecallScore(prev => ({ ...prev, [recallCardIdx]: "forgot" })); }} style={{ padding: "10px 18px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-surface-sunken)", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>مرة ثانية</button>
                       </div>
                     )}
-                    {selfScore && <div style={{ fontSize: "var(--fs-xs)", color: selfScore === "good" ? "#059669" : selfScore === "partial" ? "#1d4ed8" : "#dc2626", fontWeight: 600, marginTop: "var(--sp-1)" }}>{selfScore === "good" ? "✓ إنجاز مميز!" : selfScore === "partial" ? " قريب — ردّدها مرة" : "🔄 عادي تماماً! المخ يحتاج ٥-٧ تكرارات — بنراجعها سوا"}</div>}
+
+                    {/* After rating: feedback + next */}
+                    {selfScore && (
+                      <div style={{ marginTop: "var(--sp-3)" }}>
+                        <div style={{ fontSize: "var(--fs-xs)", color: selfScore === "good" ? "#059669" : selfScore === "partial" ? "#1d4ed8" : "#f59e0b", fontWeight: 600, marginBottom: "var(--sp-3)" }}>
+                          {selfScore === "good" ? "إنجاز مميز! تذكّرتها" : selfScore === "partial" ? "قريب — ردّدها مرة وبتثبت" : "عادي! المخ يحتاج تكرار — بنراجعها"}
+                        </div>
+                        {recallCardIdx < sc.keyPhrases.length - 1 ? (
+                          <button onClick={(e) => { e.stopPropagation(); setRecallCardIdx(prev => prev + 1); setRecallFlipped(false); }} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>البطاقة التالية</button>
+                        ) : null}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
             );
-          })}
+          })()}
+
+          {/* All cards done — summary + retry forgotten + advance */}
           {Object.keys(recallScore).length >= sc.keyPhrases.length && (() => {
             const forgotten = sc.keyPhrases.map((_, i) => i).filter(i => recallScore[i] === "forgot" || recallScore[i] === "partial");
             const allGood = forgotten.length === 0;
             return (
-              <div style={{ marginTop: "var(--sp-4)" }}>
+              <div style={{ marginTop: "var(--sp-4)", animation: "fadeUp .3s" }}>
                 {!allGood && (
-                  <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(217,119,6,0.1)", borderRadius: "var(--r-md)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)", textAlign: "center" }}>
-                    <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-error)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>{"🔄 " + forgotten.length + " جملة تحتاج مراجعة — ردّدها ثم أعد التقييم"}</div>
-                    {forgotten.map(fi => (
-                      <div key={fi} style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)", padding: "var(--sp-3)", borderRadius: "var(--r-sm)", background: "rgba(0,0,0,0.02)", marginBottom: "var(--sp-1)" }}>
-                        <SpeakBtn text={sc.keyPhrases[fi].en} size={18} color="#1d4ed8" />
-                        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", flex: 1, color: "var(--c-text)" }}>{sc.keyPhrases[fi].en}</div>
-                      </div>
-                    ))}
-                    <button onClick={() => { const newState = { ...recallState }; const newScore = { ...recallScore }; forgotten.forEach(fi => { newState[fi] = "hidden"; delete newScore[fi]; }); setRecallState(newState); setRecallScore(newScore); }} style={{ marginTop: "var(--sp-2)", padding: "8px 20px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>أعد اختبار الجمل المنسيّة</button>
+                  <div style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.15)", borderRadius: "var(--r-md)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)", textAlign: "center" }}>
+                    <div style={{ fontSize: "var(--fs-sm)", color: "#d97706", fontWeight: 600, marginBottom: "var(--sp-2)" }}>
+                      {forgotten.length + " جملة تحتاج مراجعة — اضغط لإعادة عرضها"}
+                    </div>
+                    <button onClick={() => { const newScore = { ...recallScore }; forgotten.forEach(fi => { delete newScore[fi]; }); setRecallScore(newScore); setRecallCardIdx(forgotten[0]); setRecallFlipped(false); }} style={{ marginTop: "var(--sp-2)", padding: "8px 20px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>أعرضها مرة ثانية</button>
                   </div>
                 )}
                 {allGood && (
                   <div style={{ textAlign: "center" }}>
                     <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-success)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>إنجاز مميز! تذكّرت كل الجمل</div>
-                    <Button onClick={() => advanceStep(4)}>التالي: أنتج بنفسك →</Button>
+                    <Button onClick={() => advanceStep(4)}>التالي: اختر الرد الأفضل</Button>
                   </div>
                 )}
               </div>
@@ -1461,8 +1524,8 @@ function Fluency432() {
 
   if (round === 4) return (
     <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
-      <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-success)", marginBottom: "var(--sp-2)" }}>إنجاز رائع.. أنت تقترب من التمكّن</div>
+      <div className="animate-success" style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
+      <div className="animate-bounce" style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-success)", marginBottom: "var(--sp-2)" }}>إنجاز رائع.. أنت تقترب من التمكّن</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, marginBottom: "var(--sp-4)" }}>تكلمت عن نفس الموضوع ٣ مرات — كل مرة بسرعة أكبر.<br />لاحظت كيف الجمل صارت تطلع أسرع في الجولة الثالثة؟<br />هذا بالضبط كيف تُبنى الطلاقة.</div>
       <Button variant="danger" onClick={restart}><IconRefresh size={16}/>موضوع جديد</Button>
     </div>
@@ -1529,8 +1592,8 @@ function ListenExercise() {
 
   if (done) return (
     <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>الاستماع</div>
-      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div className="animate-success" style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>الاستماع</div>
+      <div className="animate-bounce" style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
       <Button size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
@@ -1561,7 +1624,7 @@ function ListenExercise() {
         let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
-        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: 5, cursor: show ? "default" : "pointer", fontSize: "var(--fs-sm)", lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+        return <div key={oi} onClick={() => !show && pick(oi)} className={show && isCorrect ? "animate-success" : show && isPicked && !isCorrect ? "animate-shake" : ""} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: 5, cursor: show ? "default" : "pointer", fontSize: "var(--fs-sm)", lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
           {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> </span>}
         </div>;
       })}
@@ -1600,8 +1663,8 @@ function DictationExercise() {
 
   if (done) return (
     <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إملاء صوتي</div>
-      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div className="animate-success" style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إملاء صوتي</div>
+      <div className="animate-bounce" style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
       <Button variant="danger" size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
@@ -2087,7 +2150,8 @@ function MainApp({ currentUser, onLogout }) {
 
         {/* Screen 1: Hook */}
         {onboardStep === 0 && <div style={{ textAlign: "center", animation: "fadeUp .4s" }}>
-          <div style={{ marginBottom: "var(--sp-7)" }}><TaliqLogo size={48} /></div>
+          <div style={{ marginBottom: "var(--sp-5)" }}><IllustrationOnboard size={180} /></div>
+          <div style={{ marginBottom: "var(--sp-4)" }}><TaliqLogo size={40} /></div>
           <h1 style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.7, marginBottom: "var(--sp-4)" }}>تملك المعرفة...<br/>لكن الكلمات تتوقف عند لسانك؟</h1>
           <p style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)", lineHeight: 1.9, marginBottom: "var(--sp-7)" }}>تقرأ وتفهم الإنجليزي جيداً، لكن عندما يحين وقت التحدث — تتردد.<br/><b style={{ color: "var(--c-accent)" }}>ليست مشكلة قدرات. إنها مشكلة طريقة.</b></p>
           <Button size="lg" full onClick={() => setOnboardStep(1)}>هذا ما أعانيه بالضبط</Button>
@@ -2095,6 +2159,7 @@ function MainApp({ currentUser, onLogout }) {
 
         {/* Screen 2: Method */}
         {onboardStep === 1 && <div style={{ animation: "fadeUp .4s" }}>
+          <div style={{ textAlign: "center", marginBottom: "var(--sp-4)" }}><IllustrationSpeak size={120} /></div>
           <h1 style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.7, marginBottom: "var(--sp-5)", textAlign: "center" }}>طَلِق مبني على علم الاكتساب — ليس الحفظ</h1>
           <div className="card" style={{ marginBottom: "var(--sp-5)" }}>
             <div style={{ fontSize: "var(--fs-base)", lineHeight: 2.2 }}>
@@ -2113,7 +2178,7 @@ function MainApp({ currentUser, onLogout }) {
             <h1 style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.7, marginBottom: "var(--sp-2)" }}>١٥ دقيقة يومياً</h1>
             <p style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)" }}>جلسة واحدة — ست خطوات — نتائج حقيقية</p>
           </div>
-          <div style={{ marginBottom: "var(--sp-6)" }}>
+          <div className="stagger" style={{ marginBottom: "var(--sp-6)" }}>
             {[
               { num: "١", text: "استمع", desc: "درّب أذنك بدون قراءة" },
               { num: "٢", text: "اقرأ", desc: "لاحظ ما فاتك في الاستماع" },
@@ -2137,7 +2202,7 @@ function MainApp({ currentUser, onLogout }) {
             <h1 style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.7, marginBottom: "var(--sp-2)" }}>ما هدفك من إتقان الإنجليزية؟</h1>
             <p style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)" }}>سنُصمّم رحلتك بناءً على إجابتك</p>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--sp-3)" }}>
+          <div className="stagger" style={{ display: "flex", flexDirection: "column", gap: "var(--sp-3)" }}>
             {[
               { id: "lead", text: "قيادة الاجتماعات والعروض بثقة", sub: "التواصل المهني والقيادي" },
               { id: "global", text: "التواصل مع شركاء وعملاء دوليين", sub: "بناء علاقات عمل عالمية" },
@@ -2154,22 +2219,24 @@ function MainApp({ currentUser, onLogout }) {
 
         {/* Screen 5: Social Proof */}
         {onboardStep === 4 && <div style={{ animation: "fadeUp .4s" }}>
+          <div style={{ textAlign: "center", marginBottom: "var(--sp-4)" }}><IllustrationMeeting size={120} /></div>
           <p style={{ fontSize: "var(--fs-base)", fontWeight: 600, color: "var(--c-text-secondary)", textAlign: "center", marginBottom: "var(--sp-6)" }}>تجارب أشخاص مثلك</p>
-          {[
+          <div className="stagger">{[
             { name: "خالد، مدير مشاريع", text: "كنت أتردد في كل اجتماع. بعد أسبوعين مع طَلِق، صرت أفتح الاجتماع وأقوده بثقة." },
             { name: "نورة، أم لثلاثة أطفال", text: "الآن أتواصل مع معلمات أطفالي بالإنجليزي. الحرج اختفى تماماً." },
             { name: "فهد، رجل أعمال", text: "في آخر رحلة عمل، تفاوضت وأنجزت كل شيء بالإنجليزي. شعور لا يُوصف." },
           ].map((s, i) => (
-            <div key={i} className="card" style={{ animation: "slideIn .3s " + (i * 0.1) + "s both" }}>
+            <div key={i} className="card">
               <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{s.name}</div>
               <div style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)", lineHeight: 1.9 }}>"{s.text}"</div>
             </div>
-          ))}
+          ))}</div>
           <Button size="lg" full style={{ marginTop: "var(--sp-4)" }} onClick={() => setOnboardStep(5)}>أنا جاهز</Button>
         </div>}
 
         {/* Screen 6: Commitment */}
         {onboardStep === 5 && <div style={{ textAlign: "center", animation: "fadeUp .4s" }}>
+          <div style={{ marginBottom: "var(--sp-4)" }}><IllustrationSuccess size={120} /></div>
           <h1 style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.7, marginBottom: "var(--sp-5)" }}>عهد مع نفسك</h1>
           <div className="card card--accent" style={{ padding: "var(--sp-6)", marginBottom: "var(--sp-6)", textAlign: "center" }}>
             <div style={{ fontSize: "var(--fs-md)", color: "var(--c-text)", lineHeight: 2, marginBottom: "var(--sp-3)" }}>أُعاهد نفسي أن أستثمر <b style={{ color: "var(--c-accent)" }}>١٥ دقيقة يومياً</b><br/>لمدة أسبوع واحد فقط.<br/>لن أحكم على النتائج قبل ٧ أيام.</div>
@@ -2243,7 +2310,7 @@ function MainApp({ currentUser, onLogout }) {
 
       <div className="app-container">
         {/* Notification toast */}
-        {showXpPop && <div style={{ position: "fixed", top: 72, left: "50%", transform: "translateX(-50%)", zIndex: 200, padding: "var(--sp-3) var(--sp-5)", borderRadius: "var(--r-md)", background: "var(--c-surface)", border: "1px solid var(--c-border)", boxShadow: "var(--sh-lg)", color: "var(--c-text)", fontWeight: 600, fontSize: "var(--fs-base)", animation: "fadeUp .3s" }}>{showXpPop}</div>}
+        {showXpPop && <div className="animate-slide-down" style={{ position: "fixed", top: 72, left: "50%", transform: "translateX(-50%)", zIndex: 200, padding: "var(--sp-3) var(--sp-5)", borderRadius: "var(--r-md)", background: "var(--c-surface)", border: "1px solid var(--c-border)", boxShadow: "var(--sh-lg)", color: "var(--c-text)", fontWeight: 600, fontSize: "var(--fs-base)" }}>{showXpPop}</div>}
 
         {/* Header */}
         <header className="header">
@@ -2337,6 +2404,7 @@ function MainApp({ currentUser, onLogout }) {
               <p className="hero-quote">{MOTIV[dn % MOTIV.length]}</p>
               <h2>{"جلسة اليوم: " + todayScenario.title}</h2>
               <p>مقترح بناءً على تقدمك — اختر سيناريو آخر أدناه</p>
+              <div className="social-proof" style={{ marginTop: "var(--sp-4)" }}>٢٣٠+ شخص يتدرب الآن</div>
             </div>
             {/* Scenario picker */}
             <div className="pill-scroll" style={{ marginBottom: "var(--sp-5)" }}>
@@ -2463,11 +2531,11 @@ function MainApp({ currentUser, onLogout }) {
               return (
                 <div>
                   <SectionTitle>مقترح لك</SectionTitle>
-                  <div className="exercise-grid" style={{ marginBottom: "var(--sp-6)" }}>
+                  <div className="exercise-grid stagger" style={{ marginBottom: "var(--sp-6)" }}>
                     {allExercises.slice(0, 3).map(m => <ExCard key={m.id} m={m} />)}
                   </div>
                   <SectionTitle>المزيد من التمارين</SectionTitle>
-                  <div className="exercise-grid">
+                  <div className="exercise-grid stagger">
                     {allExercises.slice(3).map(m => <ExCard key={m.id} m={m} />)}
                   </div>
                 </div>
@@ -2496,7 +2564,7 @@ function MainApp({ currentUser, onLogout }) {
             </div>
             <Card>
               <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, marginBottom: "var(--sp-3)", color: "var(--c-text)" }}>{PHRASES[pCat].cat}</div>
-              {PHRASES[pCat].items.map((p, i) => {
+              <div className="stagger">{PHRASES[pCat].items.map((p, i) => {
                 const k = "p" + pCat + "-" + i;
                 const r = reps[k] || 0;
                 const srsKey = pCat + "-" + i;
@@ -2522,7 +2590,7 @@ function MainApp({ currentUser, onLogout }) {
                     {isDue && <div style={{ fontSize: "var(--fs-xs)", padding: "2px 6px", borderRadius: "var(--r-sm)", background: "rgba(29,78,216,0.15)", color: "var(--c-accent)", fontWeight: 600 }}>مراجعة</div>}
                   </div>
                 );
-              })}
+              })}</div>
               <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", textAlign: "center", marginTop: "var(--sp-3)" }}>اضغط على الدائرة كل مرة ترددّ — الهدف ٥ لكل جملة</div>
             </Card>
             {/* SRS Review Section */}
@@ -2622,29 +2690,25 @@ function MainApp({ currentUser, onLogout }) {
                 const recent = sessionHistory.slice(-10);
                 const totalPhrases = recent.reduce((sum, s) => sum + (s.phrasesCount || 0), 0);
                 const recalled = recent.reduce((sum, s) => { const rs = s.recallScore || {}; return sum + Object.values(rs).filter(v => v === "good").length; }, 0);
-                const partial = recent.reduce((sum, s) => { const rs = s.recallScore || {}; return sum + Object.values(rs).filter(v => v === "partial").length; }, 0);
+                const partialCount = recent.reduce((sum, s) => { const rs = s.recallScore || {}; return sum + Object.values(rs).filter(v => v === "partial").length; }, 0);
                 const forgot = recent.reduce((sum, s) => { const rs = s.recallScore || {}; return sum + Object.values(rs).filter(v => v === "forgot").length; }, 0);
                 const recallPct = totalPhrases > 0 ? Math.round((recalled / totalPhrases) * 100) : 0;
+                const trendData = recent.map((s, i) => {
+                  const rs = s.recallScore || {};
+                  const g = Object.values(rs).filter(v => v === "good").length;
+                  const t = s.phrasesCount || 3;
+                  return { x: i, y: t > 0 ? Math.round((g / t) * 100) : 0 };
+                });
                 return (
                   <div>
-                    <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-3)" }}>
-                      <div style={{ flex: 1, textAlign: "center", background: "rgba(5,150,105,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)" }}>
-                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-success)", fontFamily: "inherit" }}>{recalled}</div>
-                        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>تذكّرتها</div>
-                      </div>
-                      <div style={{ flex: 1, textAlign: "center", background: "rgba(29,78,216,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)" }}>
-                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "inherit" }}>{partial}</div>
-                        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>تقريباً</div>
-                      </div>
-                      <div style={{ flex: 1, textAlign: "center", background: "rgba(220,38,38,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)" }}>
-                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-error)", fontFamily: "inherit" }}>{forgot}</div>
-                        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>نسيتها</div>
-                      </div>
+                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "var(--sp-3)" }}>
+                      <MemoryDonut remembered={recalled} partial={partialCount} forgot={forgot} size={140} />
                     </div>
-                    <div style={{ height: 6, borderRadius: "var(--r-sm)", background: "var(--c-border)", overflow: "hidden", marginBottom: "var(--sp-2)" }}>
-                      <div style={{ height: "100%", width: recallPct + "%", borderRadius: "var(--r-sm)", background: recallPct >= 70 ? "#059669" : recallPct >= 40 ? "#1d4ed8" : "#dc2626", transition: "width .5s" }} />
-                    </div>
-                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", textAlign: "center" }}>{recallPct >= 70 ? "ذاكرتك قوية! الجمل ترسخ" : recallPct >= 40 ? "تتحسن — استمر بالمراجعة اليومية" : "ركّز على خطوة التذكّر — ردّد الجمل المنسية أكثر"}</div>
+                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", textAlign: "center", marginBottom: "var(--sp-3)" }}>{recallPct >= 70 ? "ذاكرتك قوية! الجمل ترسخ" : recallPct >= 40 ? "تتحسن — استمر بالمراجعة اليومية" : "ركّز على خطوة التذكّر — ردّد الجمل المنسية أكثر"}</div>
+                    {trendData.length >= 2 && <div style={{ marginBottom: "var(--sp-3)" }}>
+                      <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>تطور الأداء:</div>
+                      <TrendLine data={trendData} height={80} />
+                    </div>}
                     <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: "var(--c-text-secondary)", marginTop: "var(--sp-3)", marginBottom: "var(--sp-2)" }}>آخر الجلسات:</div>
                     {recent.slice(-5).reverse().map((s, i) => {
                       const rs = s.recallScore || {};
@@ -2671,13 +2735,8 @@ function MainApp({ currentUser, onLogout }) {
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-text)" }}>{CEFR_LEVELS[levelResult.level].name}</div>
                   <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{CEFR_LEVELS[levelResult.level].nameEn} — {levelResult.date}</div>
-                  {levelResult.skills && <div style={{ display: "flex", gap: "var(--sp-2)", marginTop: "var(--sp-2)", flexWrap: "wrap" }}>
-                    {Object.keys(levelResult.skills).map(sk => {
-                      const s = levelResult.skills[sk];
-                      if (!s || s.total === 0) return null;
-                      const pct = Math.round((s.correct / s.total) * 100);
-                      return <div key={sk} style={{ fontSize: "var(--fs-xs)", padding: "2px 6px", borderRadius: "var(--r-sm)", background: (pct >= 60 ? "rgba(5,150,105,0.1)" : "rgba(217,119,6,0.1)"), color: pct >= 60 ? "#059669" : "#dc2626" }}>{TYPE_ICONS[sk]} {pct}%</div>;
-                    })}
+                  {levelResult.skills && <div style={{ marginTop: "var(--sp-3)" }}>
+                    <SkillRadar skills={levelResult.skills} />
                   </div>}
                 </div>
               </div>
@@ -2687,15 +2746,13 @@ function MainApp({ currentUser, onLogout }) {
             </Card>}
             {quizResults && quizResults.length > 0 && <Card>
               <SectionTitle>نتائج الاختبارات</SectionTitle>
-              <div style={{ display: "flex", alignItems: "flex-end", gap: "var(--sp-2)", height: 100, padding: "0 4px" }}>
-                {quizResults.slice(-10).map((r, i) => (
-                  <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--sp-1)" }}>
-                    <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: r.pct >= 80 ? "#059669" : r.pct >= 50 ? "#1d4ed8" : "#dc2626" }}>{r.pct + "%"}</div>
-                    <div style={{ width: "100%", height: Math.max(r.pct * 0.8, 4), borderRadius: "var(--r-sm)", background: r.pct >= 80 ? "#059669" : r.pct >= 50 ? "#1d4ed8" : "#dc2626", transition: "height .3s" }} />
-                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)" }}>{r.date ? r.date.slice(5) : ""}</div>
-                  </div>
-                ))}
-              </div>
+              <BarChart
+                data={quizResults.slice(-10).map(r => ({
+                  label: r.date ? r.date.slice(5) : "",
+                  value: r.pct,
+                }))}
+                height={160}
+              />
               {quizResults.length >= 2 && (() => {
                 const last = quizResults[quizResults.length - 1].pct;
                 const prev = quizResults[quizResults.length - 2].pct;
