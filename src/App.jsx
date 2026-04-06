@@ -1911,7 +1911,7 @@ function LevelTest({ onComplete, checkpoint }) {
 
         {/* Level breakdown */}
         <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
-          <div style={{ className: "section-title" }}>الأداء حسب المستوى</div>
+          <SectionTitle>الأداء حسب المستوى</SectionTitle>
           <div style={{ display: "flex", gap: "var(--sp-2)", alignItems: "flex-end" }}>
             {CEFR_LEVELS.map((l, i) => {
               const att = levelAttempts[i];
@@ -2596,10 +2596,7 @@ function MainApp({ currentUser, onLogout }) {
                 { l: "الأسبوع الحالي", v: wk + "/12" },
                 { l: "أيام متواصلة", v: (() => { let s = 0, d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s; })() },
               ].map((s, i) => (
-                <div key={i} className="stat-card">
-                  <div className="stat-card__value">{s.v}</div>
-                  <div className="stat-card__label">{s.l}</div>
-                </div>
+                <StatCard key={i} value={s.v} label={s.l} />
               ))}
             </div>
             <Card>
@@ -2704,7 +2701,7 @@ function MainApp({ currentUser, onLogout }) {
               </div>
             </Card>}
             {quizResults && quizResults.length > 0 && <Card>
-              <div className="section-title">نتائج الاختبارات</div>
+              <SectionTitle>نتائج الاختبارات</SectionTitle>
               <div style={{ display: "flex", alignItems: "flex-end", gap: "var(--sp-2)", height: 100, padding: "0 4px" }}>
                 {quizResults.slice(-10).map((r, i) => (
                   <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--sp-1)" }}>
@@ -2723,7 +2720,7 @@ function MainApp({ currentUser, onLogout }) {
             </Card>}
             {/* Voice Settings */}
             <Card>
-              <div className="section-title">الصوت والنطق</div>
+              <SectionTitle><IconVolume size={14}/> الصوت والنطق</SectionTitle>
               <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)", marginBottom: "var(--sp-3)" }}>
                 <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)" }}>الحالة:</div>
                 <VoiceBadge />
