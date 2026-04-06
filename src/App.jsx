@@ -39,7 +39,7 @@ async function setActiveSession(session) {
 
 // OAuth Configuration — set via environment variables or hardcode below
 const OAUTH_CONFIG = {
-  google: import.meta.env.VITE_GOOGLE_CLIENT_ID || "972075058278-3gn7ggjsiojm1gtd1of1qsetq50iofng.apps.googleusercontent.com",
+  google: "972075058278-3gn7ggjsiojm1gtd1of1qsetq50iofng.apps.googleusercontent.com",
   facebook: import.meta.env.VITE_FACEBOOK_APP_ID || "",
   apple: import.meta.env.VITE_APPLE_CLIENT_ID || "",
 };
