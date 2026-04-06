@@ -218,11 +218,6 @@ function AuthScreen({ onLogin }) {
   // Quick profile selection if accounts exist
   if (showProfiles && accounts.length > 0 && mode === "login") return (
     <div dir="rtl" className="auth-wrapper" style={{ fontFamily: "inherit" }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-      `}</style>
       <div className="auth-card">
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <TaliqLogo size={44} />
@@ -250,11 +245,6 @@ function AuthScreen({ onLogin }) {
 
   return (
     <div dir="rtl" className="auth-wrapper" style={{ fontFamily: "inherit" }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-      `}</style>
       <div className="auth-card">
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <TaliqLogo size={44} />
