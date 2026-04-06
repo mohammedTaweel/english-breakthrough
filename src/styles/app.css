@@ -1,789 +1,687 @@
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+  );
+}
 
-  /* ===== DESIGN TOKENS ===== */
-  :root {
-    /* Colors — warm neutral palette */
-    --c-bg: #f5f3f0;
-    --c-surface: #ffffff;
-    --c-surface-raised: #ffffff;
-    --c-surface-hover: #faf9f7;
-    --c-surface-sunken: #efeee9;
-    --c-border: #e0ded8;
-    --c-border-light: #eae8e4;
-    --c-text: #1c1917;
-    --c-text-secondary: #57534e;
-    --c-text-tertiary: #a8a29e;
-    --c-text-muted: #d6d3d1;
-    --c-accent: #1d4ed8;
-    --c-accent-hover: #1e40af;
-    --c-accent-soft: #dbeafe;
-    --c-accent-light: rgba(29,78,216,0.06);
-    --c-accent-border: rgba(29,78,216,0.15);
-    --c-success: #16a34a;
-    --c-success-soft: #dcfce7;
-    --c-success-light: rgba(22,163,74,0.06);
-    --c-error: #dc2626;
-    --c-error-soft: #fef2f2;
-    --c-error-light: rgba(220,38,38,0.06);
-    --c-warn: #ca8a04;
-    --c-warn-soft: #fef9c3;
-    --c-warn-light: rgba(202,138,4,0.06);
 
-    /* Typography Scale (modular — 1.2 ratio) */
-    --fs-xs: 0.75rem;    /* 12px */
-    --fs-sm: 0.8125rem;  /* 13px */
-    --fs-base: 0.9375rem;/* 15px */
-    --fs-md: 1.0625rem;  /* 17px */
-    --fs-lg: 1.25rem;    /* 20px */
-    --fs-xl: 1.5rem;     /* 24px */
-    --fs-2xl: 1.875rem;  /* 30px */
 
-    /* Spacing Scale (8px base) */
-    --sp-1: 4px;
-    --sp-2: 8px;
-    --sp-3: 12px;
-    --sp-4: 16px;
-    --sp-5: 20px;
-    --sp-6: 24px;
-    --sp-7: 32px;
-    --sp-8: 40px;
-    --sp-9: 48px;
-    --sp-10: 64px;
+// ===== SPEECH UI COMPONENTS (engine is in platform.js) =====
+function SpeakBtn({ text, rate, size, color }) {
+  const [playing, setPlaying] = useState(false);
+  function play() {
+    setPlaying(true);
+    const u = speak(text, rate || 0.85);
+    if (u) {
+      u.onend = () => setPlaying(false);
+      setTimeout(() => setPlaying(false), 15000);
+    } else setPlaying(false);
+  }
+  return (
+    <button onClick={(e) => { e.stopPropagation(); play(); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: size || 16, padding: 2, opacity: playing ? 1 : 0.5, color: color || "#1d4ed8", transition: ".2s", flexShrink: 0 }} title="استمع">{playing ? "♪" : "♪"}</button>
+  );
+}
 
-    /* Radius */
-    --r-sm: 6px;
-    --r-md: 10px;
-    --r-lg: 14px;
-    --r-xl: 20px;
-    --r-full: 9999px;
+function VoiceBadge() {
+  const info = getVoiceInfo();
+  const colors = { openai: "#059669", native: "#059669", neural: "#1d4ed8", basic: "#1d4ed8" };
+  const bgs = { openai: "rgba(5,150,105,0.15)", native: "rgba(5,150,105,0.15)", neural: "rgba(29,78,216,0.15)", basic: "rgba(29,78,216,0.15)" };
+  return <span style={{ fontSize: "var(--fs-xs)", padding: "2px 6px", borderRadius: "var(--r-sm)", background: bgs[info.tier], color: colors[info.tier], fontWeight: 600 }}>{info.label}</span>;
+}
 
-    /* Shadows — layered for depth */
-    --sh-sm: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);
-    --sh-md: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.04);
-    --sh-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
-    --sh-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.06);
-    --sh-glow: 0 0 20px rgba(29,78,216,0.12);
+function findCrossPatterns(phrase) {
+  const results = [];
+  for (const [key, val] of Object.entries(PHRASE_PATTERNS)) {
+    if (phrase.toLowerCase().includes(key.toLowerCase())) results.push(val);
+  }
+  return results;
+}
 
-    /* Transitions */
-    --tr-fast: 0.15s ease;
-    --tr-base: 0.2s ease;
+const DK = "eng-v10";
+const gtd = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
+const gdn = () => { const d = new Date(); return d.getDate() + d.getMonth() * 31 + d.getFullYear(); };
+const gdow = () => new Date().getDay();
+const getWk = (s) => { const x = Math.floor((new Date(gtd()) - new Date(s)) / 864e5); return x < 0 ? 0 : Math.min(Math.floor(x / 7) + 1, 12); };
+const getPh = (w) => w <= 4 ? { n: 1, nm: "بناء الأساس", c: "#1d4ed8", gap: "var(--sp-2)" } : w <= 8 ? { n: 2, nm: "التسريع", c: "#1d4ed8", gap: "var(--sp-1)" } : { n: 3, nm: "الإطلاق", c: "#1d4ed8", gap: "var(--sp-1)" };
+function shuffle(arr, seed) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = (seed * (i + 1) * 9301 + 49297) % 233280; const k = Math.floor((j / 233280) * (i + 1)); [a[i], a[k]] = [a[k], a[i]]; } return a; }
+function shuffleOpts(opts, correctIndex, seed) {
+  const correct = opts[correctIndex];
+  const indices = opts.map((_, i) => i);
+  const shuffled = shuffle(indices, seed);
+  return { opts: shuffled.map(i => opts[i]), correctIndex: shuffled.indexOf(correctIndex) };
+}
+
+function Prompter({ lines, gap, color, label, withAudio }) {
+  const [on, setOn] = useState(false);
+  const [idx, setIdx] = useState(0);
+  const [sec, setSec] = useState(0);
+  const [phase, setPhase] = useState("listen"); // "listen" or "repeat"
+  const ref = useRef(null);
+  const iRef = useRef(0);
+
+  function stop() { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); iRef.current = 0; setPhase("listen"); stopSpeech(); }
+  function start() {
+    stop(); setOn(true); iRef.current = 0;
+    // Play audio first, then start countdown for repeating
+    if (withAudio && window.speechSynthesis) {
+      setPhase("listen");
+      const u = speak(lines[0], 0.8);
+      if (u) {
+        u.onend = () => { setPhase("repeat"); setSec(gap); startCountdown(); };
+      } else { setPhase("repeat"); setSec(gap); startCountdown(); }
+    } else { setPhase("repeat"); setSec(gap); startCountdown(); }
+  }
+  function startCountdown() {
+    let c = gap;
+    ref.current = setInterval(() => {
+      c--;
+      if (c <= 0) {
+        iRef.current++;
+        if (iRef.current >= lines.length) { clearInterval(ref.current); setOn(false); setIdx(0); setSec(0); setPhase("listen"); return; }
+        setIdx(iRef.current);
+        // Play next line audio
+        if (withAudio && window.speechSynthesis) {
+          setPhase("listen");
+          clearInterval(ref.current);
+          const u2 = speak(lines[iRef.current], 0.8);
+          if (u2) { u2.onend = () => { setPhase("repeat"); c = gap; setSec(gap); startCountdown(); }; }
+          else { setPhase("repeat"); c = gap; setSec(gap); startCountdown(); }
+          return;
+        }
+        c = gap;
+      }
+      setSec(c);
+    }, 1000);
+  }
+  useEffect(() => () => { clearInterval(ref.current); stopSpeech(); }, []);
+
+  return (
+    <div>
+      <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-3)", alignItems: "center" }}>
+        {!on ? (
+          <button onClick={start} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg," + color + ",#1e40af)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{"▶ ابدأ " + label}</button>
+        ) : (
+          <Button variant="secondary" size="sm" onClick={stop}><IconStop size={16}/>إيقاف</Button>
+        )}
+        {on && phase === "listen" && <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 600 }}>استمع...</div>}
+        {on && phase === "repeat" && sec > 0 && <div style={{ fontFamily: "inherit", fontSize: "var(--fs-xl)", fontWeight: 700, color: color }}>{sec}</div>}
+        {on && phase === "repeat" && sec > 0 && <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>ردّد بصوت عالٍ!</div>}
+      </div>
+      {lines.map((line, i) => {
+        const cur = on && i === idx;
+        const past = on && i < idx;
+        return (
+          <div key={i} className={"shadow-line" + (cur ? " shadow-line--current" : past ? " shadow-line--past" : "")}>
+            <div style={{ flex: 1 }}>{line}</div>
+            <SpeakBtn text={line} size={cur ? 18 : 14} color={cur ? color : "#71717a"} />
+            {cur && phase === "repeat" && <span style={{ fontSize: "var(--fs-xs)", color: color, flexShrink: 0 }}>← ردّد!</span>}
+            {cur && phase === "listen" && <span style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", flexShrink: 0 }}>← استمع</span>}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function MeetingSim() {
+  const [mi, setMi] = useState(0);
+  const [step, setStep] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const m = CONVERSATIONS[mi];
+  const raw = m.steps[step];
+  const { opts: sOpts, correctIndex: sAns } = shuffleOpts(raw.opts, raw.ans, mi * 1000 + step * 7 + 31);
+  const s = { ...raw, opts: sOpts, ans: sAns };
+  function pick(oi) { setPicked(oi); if (oi === s.ans) setScore(score + 1); }
+  function next() { if (step + 1 >= m.steps.length) { setDone(true); return; } setStep(step + 1); setPicked(null); }
+  function restart() { setMi((mi + 1) % CONVERSATIONS.length); setStep(0); setPicked(null); setScore(0); setDone(false); }
+  if (done) return (
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-success)" }}>إنجاز</div>
+      <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{m.steps.length}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score === m.steps.length ? "إنجاز مميز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
+      <Button size="sm" onClick={restart}><IconRefresh size={16}/>محادثة جديدة</Button>
+    </div>
+  );
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)" }}>{m.title}</div>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"خطوة " + (step + 1) + "/" + m.steps.length}</div>
+      </div>
+      <div style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", marginBottom: "var(--sp-1)" }}>{": " + s.speaker + ":"}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)" }}><div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "var(--c-text)", flex: 1 }}>{s.text}</div><SpeakBtn text={s.text} size={18} /></div>
+      </div>
+      <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>{" " + s.prompt + " — اختر الرد الأنسب واقرأه بصوت عالٍ:"}</div>
+      {s.opts.map((o, oi) => {
+        const show = picked !== null;
+        const isCorrect = oi === s.ans;
+        const isPicked = picked === oi;
+        let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
+        if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
+        return (
+          <div key={oi} onClick={() => picked === null && pick(oi)} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: "var(--sp-2)", cursor: picked === null ? "pointer" : "default", fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, transition: ".3s", opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+            {o}
+            {show && isCorrect && <span style={{ marginRight: 8, fontSize: "var(--fs-xs)", color: "var(--c-success)" }}> ✓ صحيح — اقرأها بصوت عالٍ!</span>}
+            {show && isPicked && !isCorrect && <span style={{ marginRight: 8, fontSize: "var(--fs-xs)", color: "var(--c-error)" }}> ✗</span>}
+          </div>
+        );
+      })}
+      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><Button size="sm" onClick={next}>{step + 1 >= m.steps.length ? <><IconTarget size={16}/>النتيجة</> : "التالي ←"}</Button></div>}
+    </div>
+  );
+}
+
+function QuickResp() {
+  const [qi, setQi] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [score, setScore] = useState(0);
+  const [timer, setTimer] = useState(10);
+  const [total, setTotal] = useState(0);
+  const [done, setDone] = useState(false);
+  const tRef = useRef(null);
+  const qs = useRef(shuffle(QUICK_RESP, gdn()).slice(0, 8));
+  function startTimer() { setTimer(10); clearInterval(tRef.current); tRef.current = setInterval(() => setTimer(p => { if (p <= 1) { clearInterval(tRef.current); return 0; } return p - 1; }), 1000); }
+  function pick(oi) { clearInterval(tRef.current); setPicked(oi); const { correctIndex } = shuffleOpts(qs.current[qi].opts, qs.current[qi].ans, qi * 13 + 47); if (oi === correctIndex) setScore(score + 1); setTotal(total + 1); }
+  function next() { if (qi + 1 >= qs.current.length) { setDone(true); return; } setQi(qi + 1); setPicked(null); startTimer(); }
+  function restart() { qs.current = shuffle(QUICK_RESP, Date.now()); setQi(0); setPicked(null); setScore(0); setTotal(0); setDone(false); startTimer(); }
+  useEffect(() => { startTimer(); return () => clearInterval(tRef.current); }, []);
+  if (done) return (
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
+      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{total}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 7 ? "سريع وحاسم! " : score >= 5 ? "جيد! السرعة تتحسن" : "تحتاج تحفظ الجمل أكثر"}</div>
+      <Button size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
+    </div>
+  );
+  const rawQ = qs.current[qi];
+  const { opts: qOpts, correctIndex: qAns } = shuffleOpts(rawQ.opts, rawQ.ans, qi * 13 + 47);
+  const q = { ...rawQ, opts: qOpts, ans: qAns };
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-md)", fontWeight: 700, color: timer <= 3 ? "#dc2626" : "#1d4ed8" }}>{timer > 0 && picked === null ? timer + "s" : ""}</div>
+      </div>
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)", lineHeight: 1.8 }}>{" " + q.sit}</div>
+      </div>
+      {q.opts.map((o, oi) => {
+        const show = picked !== null;
+        const isCorrect = oi === q.ans;
+        const isPicked = picked === oi;
+        let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
+        if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
+        return <div key={oi} onClick={() => !show && pick(oi)} className={"option-item" + (show && isCorrect ? " option-item--correct" : show && isPicked ? " option-item--wrong" : "") + (show && !isCorrect && !isPicked ? " option-item--dim" : "") + (isPicked ? " option-item--picked" : "")} style={{ cursor: show ? "default" : "pointer" }}>
+          {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> ✓ اقرأها!</span>}
+        </div>;
+      })}
+      {(picked !== null || timer === 0) && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
+        {timer === 0 && picked === null && <div style={{ color: "var(--c-error)", fontSize: "var(--fs-sm)", marginBottom: "var(--sp-2)" }}>⏰ انتهى الوقت!</div>}
+        <Button size="sm" onClick={() => { if (timer === 0 && picked === null) { setTotal(total + 1); } next(); }}>التالي ←</Button>
+      </div>}
+    </div>
+  );
+}
+
+function WeeklyQuiz({ onSave, checkpoint }) {
+  const cp = checkpoint || {};
+  const [qi, setQi] = useState(cp.qi || 0);
+  const [picked, setPicked] = useState(null);
+  const [score, setScore] = useState(cp.score || 0);
+  const [done, setDone] = useState(false);
+  const [prevPct, setPrevPct] = useState(null);
+  const qs = useRef(cp.questions || shuffle(QUIZ_BANK, gdn()).slice(0, 10));
+  const saved = useRef(false);
+  function pick(oi) { setPicked(oi); const { correctIndex } = shuffleOpts(qs.current[qi].opts, qs.current[qi].ans, qi * 17 + 59); if (oi === correctIndex) setScore(score + 1); }
+  function next() { if (qi + 1 >= qs.current.length) { setDone(true); return; } setQi(qi + 1); setPicked(null); }
+  // Checkpoint: save quiz progress on each question change
+  useEffect(() => {
+    if (done) return;
+    const cpData = { type: "quiz", qi, score, questions: qs.current, date: gtd() };
+    (async () => { try { await userStorage.set("checkpoint-quiz", JSON.stringify(cpData)); } catch(e) {} })();
+  }, [qi, score, done]);
+  function restart() { qs.current = shuffle(QUIZ_BANK, Date.now()); setQi(0); setPicked(null); setScore(0); setDone(false); saved.current = false; setPrevPct(null); (async () => { try { await userStorage.delete("checkpoint-quiz"); } catch(e) {} })(); }
+  useEffect(() => {
+    if (done && !saved.current) {
+      saved.current = true;
+      const pct = Math.round((score / qs.current.length) * 100);
+      (async () => {
+        try {
+          const r = await userStorage.get("quiz-results");
+          const results = r && r.value ? JSON.parse(r.value) : [];
+          if (results.length > 0) setPrevPct(results[results.length - 1].pct);
+          results.push({ date: gtd(), pct, score, total: qs.current.length });
+          await userStorage.set("quiz-results", JSON.stringify(results));
+          await userStorage.delete("checkpoint-quiz"); // clear checkpoint on completion
+          if (onSave) onSave();
+        } catch (e) {}
+      })();
+    }
+  }, [done, score, onSave]);
+  if (done) {
+    const pct = Math.round((score / qs.current.length) * 100);
+    const diff = prevPct !== null ? pct - prevPct : null;
+    return (
+      <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+        <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>التقييم</div>
+        <div style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: pct >= 80 ? "#059669" : pct >= 50 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-1)" }}>{pct + "%"}</div>
+        <div style={{ fontSize: "var(--fs-md)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-1)" }}>{score + "/" + qs.current.length}</div>
+        {diff !== null && <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: diff >= 0 ? "#059669" : "#dc2626", marginBottom: "var(--sp-1)" }}>{diff >= 0 ? "+" + diff + "% عن الاختبار السابق" : "" + diff + "% عن الاختبار السابق"}</div>}
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{pct >= 80 ? "إنجاز مميز! الجمل صارت جزء منك " : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
+        <Button size="sm" onClick={restart}><IconRefresh size={16}/>اختبار جديد</Button>
+      </div>
+    );
+  }
+  const rawQz = qs.current[qi];
+  const { opts: qzOpts, correctIndex: qzAns } = shuffleOpts(rawQz.opts, rawQz.ans, qi * 17 + 59);
+  const q = { ...rawQz, opts: qzOpts, ans: qzAns };
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (qi + 1) + "/10"}</div>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", fontWeight: 600 }}>{score + " صحيح"}</div>
+      </div>
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)", lineHeight: 1.8 }}>{q.q}</div>
+      </div>
+      {q.opts.map((o, oi) => {
+        const show = picked !== null;
+        const isCorrect = oi === q.ans;
+        const isPicked = picked === oi;
+        let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
+        if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
+        return <div key={oi} onClick={() => !show && pick(oi)} className={"option-item" + (show && isCorrect ? " option-item--correct" : show && isPicked ? " option-item--wrong" : "") + (show && !isCorrect && !isPicked ? " option-item--dim" : "") + (isPicked ? " option-item--picked" : "")} style={{ cursor: show ? "default" : "pointer" }}>
+          {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> </span>}
+        </div>;
+      })}
+      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><Button size="sm" onClick={next}>{qi + 1 >= qs.current.length ? <><IconTarget size={16}/>النتيجة</> : "التالي ←"}</Button></div>}
+    </div>
+  );
+}
+
+function FillBlank() {
+  const [qi, setQi] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [checked, setChecked] = useState(false);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const qs = useRef(shuffle(FILL_BLANKS, gdn()).slice(0, 8));
+
+  function getSentenceWithBlanks(item) {
+    let sentence = item.full;
+    const parts = [];
+    let remaining = sentence;
+    item.blanks.forEach((blank, bi) => {
+      const idx = remaining.toLowerCase().indexOf(blank.toLowerCase());
+      if (idx >= 0) {
+        parts.push({ type: "text", value: remaining.slice(0, idx) });
+        parts.push({ type: "blank", index: bi, word: blank });
+        remaining = remaining.slice(idx + blank.length);
+      }
+    });
+    if (remaining) parts.push({ type: "text", value: remaining });
+    return parts;
   }
 
-  /* ===== RESET ===== */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--c-bg);
-    background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.03) 1px, transparent 0);
-    background-size: 24px 24px;
-    color: var(--c-text);
-    font-family: 'Noto Kufi Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: var(--fs-base);
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  function check() {
+    setChecked(true);
+    const item = qs.current[qi];
+    let correct = 0;
+    item.blanks.forEach((blank, bi) => {
+      if ((answers[bi] || "").trim().toLowerCase() === blank.toLowerCase()) correct++;
+    });
+    if (correct === item.blanks.length) setScore(score + 1);
   }
 
-  /* ===== RESPONSIVE CONTAINER ===== */
-  .app-container {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 0 var(--sp-5);
-    padding-bottom: var(--sp-10);
+  function next() {
+    if (qi + 1 >= qs.current.length) { setDone(true); return; }
+    setQi(qi + 1); setAnswers({}); setChecked(false);
   }
-  @media (max-width: 480px) {
-    .app-container { padding: 0 var(--sp-4); padding-bottom: var(--sp-9); }
-    :root {
-      --fs-xs: 0.6875rem;
-      --fs-sm: 0.75rem;
-      --fs-base: 0.875rem;
-      --fs-md: 1rem;
-      --fs-lg: 1.125rem;
-      --fs-xl: 1.375rem;
-      --fs-2xl: 1.625rem;
+
+  function restart() { qs.current = shuffle(FILL_BLANKS, Date.now()); setQi(0); setAnswers({}); setChecked(false); setScore(0); setDone(false); }
+
+  if (done) return (
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>أكمل الفراغ</div>
+      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! ذاكرتك قوية " : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
+      <Button size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
+    </div>
+  );
+
+  const item = qs.current[qi];
+  const parts = getSentenceWithBlanks(item);
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", fontWeight: 600 }}>{score + " صحيح"}</div>
+      </div>
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 2.2, display: "flex", flexWrap: "wrap", alignItems: "center", gap: "var(--sp-1)" }}>
+          {parts.map((p, pi) => p.type === "text" ? (
+            <span key={pi} style={{ color: "var(--c-text)" }}>{p.value}</span>
+          ) : (
+            <span key={pi} style={{ display: "inline-block" }}>
+              <input
+                type="text"
+                value={answers[p.index] || ""}
+                onChange={(e) => !checked && setAnswers({ ...answers, [p.index]: e.target.value })}
+                style={{
+                  width: Math.max(p.word.length * 11, 60),
+                  padding: "4px 8px", borderRadius: "var(--r-sm)", fontSize: "var(--fs-sm)",
+                  fontFamily: "inherit", textAlign: "center",
+                  background: checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(5,150,105,0.15)" : "rgba(220,38,38,0.15)") : "rgba(0,0,0,0.05)",
+                  border: "1px solid " + (checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(5,150,105,0.4)" : "rgba(220,38,38,0.4)") : "rgba(29,78,216,0.3)"),
+                  color: "#fff", outline: "none"
+                }}
+                placeholder="..."
+                disabled={checked}
+              />
+              {checked && (answers[p.index] || "").trim().toLowerCase() !== p.word.toLowerCase() && (
+                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", textAlign: "center" }}>{p.word}</div>
+              )}
+            </span>
+          ))}
+        </div>
+      </div>
+      {!checked ? (
+        <div style={{ textAlign: "center" }}>
+          <Button size="sm" onClick={check}><IconCheck size={16}/>تأكّد</Button>
+        </div>
+      ) : (
+        <div style={{ textAlign: "center" }}>
+          <Button size="sm" onClick={next}>{qi + 1 >= qs.current.length ? <><IconTarget size={16}/>النتيجة</> : "التالي ←"}</Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SentenceBuild() {
+  const [qi, setQi] = useState(0);
+  const [selected, setSelected] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const qs = useRef(shuffle(SENTENCE_BUILD, gdn()).slice(0, 8));
+
+  function getWords(sentence) {
+    return sentence.replace(/[.,!?]/g, "").split(" ").filter(Boolean);
+  }
+
+  const words = getWords(qs.current[qi]);
+  const shuffledWords = useRef(shuffle(words, qi * 31 + 11));
+
+  useEffect(() => {
+    shuffledWords.current = shuffle(getWords(qs.current[qi]), qi * 31 + 11);
+  }, [qi]);
+
+  function toggleWord(wi) {
+    if (checked) return;
+    if (selected.includes(wi)) {
+      setSelected(selected.filter(i => i !== wi));
+    } else {
+      setSelected([...selected, wi]);
     }
   }
-  @media (min-width: 768px) {
-    .app-container { max-width: 720px; padding: 0 var(--sp-7); }
+
+  function check() {
+    setChecked(true);
+    const builtSentence = selected.map(i => shuffledWords.current[i]).join(" ").toLowerCase();
+    const correctSentence = words.join(" ").toLowerCase();
+    if (builtSentence === correctSentence) setScore(score + 1);
   }
 
-  /* ===== CARD SYSTEM — with real depth ===== */
-  .card {
-    background: var(--c-surface);
-    border: none;
-    border-radius: var(--r-xl);
-    padding: var(--sp-6);
-    margin-bottom: var(--sp-5);
-    box-shadow: var(--sh-md);
-    animation: fadeUp 0.3s ease;
-    transition: box-shadow var(--tr-base), transform var(--tr-base);
-  }
-  .card:hover { box-shadow: var(--sh-lg); }
-  .card--accent {
-    background: var(--c-accent-soft);
-    box-shadow: var(--sh-sm);
-    border: 1px solid var(--c-accent-border);
-  }
-  .card--success {
-    background: var(--c-success-soft);
-    box-shadow: var(--sh-sm);
-    border: 1px solid rgba(22,163,74,0.12);
-  }
-  .card--warn {
-    background: var(--c-warn-soft);
-    box-shadow: var(--sh-sm);
-    border: 1px solid rgba(202,138,4,0.12);
-  }
-  .card--flat {
-    box-shadow: none;
-    border: 1px solid var(--c-border-light);
-    padding: var(--sp-4);
-  }
-  .card--interactive {
-    cursor: pointer;
-  }
-  .card--interactive:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--sh-lg);
+  function next() {
+    if (qi + 1 >= qs.current.length) { setDone(true); return; }
+    setQi(qi + 1); setSelected([]); setChecked(false);
   }
 
-  /* ===== BUTTON SYSTEM ===== */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--sp-2);
-    font-family: inherit;
-    font-weight: 600;
-    font-size: var(--fs-base);
-    border: none;
-    border-radius: var(--r-md);
-    cursor: pointer;
-    transition: transform var(--tr-fast), background var(--tr-base), opacity var(--tr-base);
-    min-height: 44px;
-    padding: var(--sp-3) var(--sp-5);
-    line-height: 1.4;
-  }
-  .btn:active { transform: scale(0.97); }
-  .btn:disabled { opacity: 0.5; cursor: default; }
-  .btn--primary {
-    background: var(--c-accent);
-    color: #fff;
-    box-shadow: 0 2px 4px rgba(29,78,216,0.25), 0 1px 2px rgba(29,78,216,0.15);
-  }
-  .btn--primary:hover:not(:disabled) {
-    background: var(--c-accent-hover);
-    box-shadow: 0 4px 8px rgba(29,78,216,0.3), 0 2px 4px rgba(29,78,216,0.2);
-    transform: translateY(-1px);
-  }
-  .btn--secondary {
-    background: var(--c-surface);
-    color: var(--c-accent);
-    border: 1px solid var(--c-accent-border);
-    box-shadow: var(--sh-sm);
-  }
-  .btn--secondary:hover:not(:disabled) {
-    background: var(--c-accent-soft);
-    box-shadow: var(--sh-md);
-  }
-  .btn--ghost {
-    background: transparent;
-    color: var(--c-text-secondary);
-  }
-  .btn--ghost:hover:not(:disabled) {
-    background: var(--c-surface-sunken);
-  }
-  .btn--success {
-    background: var(--c-success);
-    color: #fff;
-    box-shadow: 0 2px 4px rgba(22,163,74,0.25);
-  }
-  .btn--danger {
-    background: transparent;
-    color: var(--c-error);
-    border: 1px solid rgba(220,38,38,0.15);
-  }
-  .btn--sm {
-    font-size: var(--fs-sm);
-    min-height: 36px;
-    padding: var(--sp-2) var(--sp-3);
-  }
-  .btn--lg {
-    font-size: var(--fs-md);
-    min-height: 52px;
-    padding: var(--sp-4) var(--sp-6);
-    font-weight: 700;
-    border-radius: var(--r-lg);
-  }
-  .btn--full { width: 100%; }
-
-  /* ===== INPUT SYSTEM ===== */
-  .input {
-    width: 100%;
-    font-family: inherit;
-    font-size: var(--fs-base);
-    padding: var(--sp-4);
-    border: 2px solid var(--c-border);
-    border-radius: var(--r-lg);
-    background: var(--c-surface);
-    color: var(--c-text);
-    outline: none;
-    transition: border-color var(--tr-base), box-shadow var(--tr-base);
-    min-height: 52px;
-  }
-  .input:focus {
-    border-color: var(--c-accent);
-    box-shadow: 0 0 0 4px var(--c-accent-light), var(--sh-md);
-  }
-  .input::placeholder { color: var(--c-text-muted); }
-  .input--mono {
-    font-family: 'IBM Plex Mono', monospace;
-    direction: ltr;
-    text-align: left;
-  }
-  textarea.input { min-height: 100px; resize: vertical; line-height: 1.8; }
-
-  /* ===== TAB NAVIGATION — modern pill style ===== */
-  .tabs {
-    display: flex;
-    gap: var(--sp-2);
-    margin-bottom: var(--sp-6);
-    padding: var(--sp-1);
-    background: var(--c-surface-sunken);
-    border-radius: var(--r-lg);
-  }
-  .tab {
-    flex: 1;
-    padding: var(--sp-3) var(--sp-3);
-    border: none;
-    background: transparent;
-    color: var(--c-text-tertiary);
-    font-family: inherit;
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: var(--r-md);
-    transition: all var(--tr-base);
-    min-height: 44px;
-    text-align: center;
-  }
-  .tab:hover { color: var(--c-text-secondary); background: rgba(255,255,255,0.5); }
-  .tab--active {
-    color: var(--c-accent);
-    background: var(--c-surface);
-    box-shadow: var(--sh-sm);
+  function restart() {
+    qs.current = shuffle(SENTENCE_BUILD, Date.now());
+    setQi(0); setSelected([]); setChecked(false); setScore(0); setDone(false);
   }
 
-  /* ===== HEADER ===== */
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--sp-5) 0 var(--sp-4);
-  }
-  .header__badges {
-    display: flex;
-    align-items: center;
-    gap: var(--sp-2);
-  }
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--sp-1);
-    padding: 6px var(--sp-3);
-    border-radius: var(--r-full);
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    background: var(--c-surface);
-    color: var(--c-accent);
-    font-family: 'IBM Plex Mono', monospace;
-    box-shadow: var(--sh-sm);
-    border: 1px solid var(--c-border-light);
-  }
-  .badge--success {
-    color: var(--c-success);
+  if (done) return (
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>بناء جمل</div>
+      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! تركيب الجمل صار سهل " : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
+      <Button variant="success" size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
+    </div>
+  );
+
+  const builtSentence = selected.map(i => shuffledWords.current[i]).join(" ").toLowerCase();
+  const correctSentence = words.join(" ").toLowerCase();
+  const isCorrect = checked && builtSentence === correctSentence;
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 600 }}>{score + " صحيح"}</div>
+      </div>
+      <div style={{ background: "rgba(77,181,165,0.06)", border: "1px solid rgba(77,181,165,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)", minHeight: 50 }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>الجملة المُركّبة:</div>
+        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: checked ? (isCorrect ? "#059669" : "#dc2626") : "#18181b", minHeight: 24 }}>
+          {selected.length > 0 ? selected.map(i => shuffledWords.current[i]).join(" ") : <span style={{ color: "var(--c-text-tertiary)" }}>اضغط على الكلمات بالترتيب الصحيح...</span>}
+        </div>
+        {checked && !isCorrect && <div style={{ fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-success)", marginTop: "var(--sp-2)" }}>{"✓ " + qs.current[qi]}</div>}
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--sp-2)", marginBottom: "var(--sp-4)" }}>
+        {shuffledWords.current.map((w, wi) => {
+          const isSelected = selected.includes(wi);
+          return (
+            <button key={wi} onClick={() => toggleWord(wi)} style={{
+              padding: "8px 14px", borderRadius: "var(--r-sm)",
+              fontFamily: "inherit", fontSize: "var(--fs-sm)",
+              border: "1px solid " + (isSelected ? "rgba(77,181,165,0.4)" : "rgba(0,0,0,0.06)"),
+              background: isSelected ? "rgba(77,181,165,0.15)" : "rgba(0,0,0,0.02)",
+              color: isSelected ? "#059669" : "#18181b",
+              cursor: checked ? "default" : "pointer",
+              opacity: isSelected ? 0.5 : 1,
+              transition: ".2s"
+            }}>{w}</button>
+          );
+        })}
+      </div>
+      <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center" }}>
+        {!checked && selected.length > 0 && <Button variant="ghost" size="sm" onClick={() => setSelected([])}>مسح</Button>}
+        {!checked ? (
+          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: selected.length > 0 ? "#059669" : "#e4e4e7", color: selected.length > 0 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>تأكّد</button>
+        ) : (
+          <Button variant="success" size="sm" onClick={next}>{qi + 1 >= qs.current.length ? <><IconTarget size={16}/>النتيجة</> : "التالي ←"}</Button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ===== FREE RECALL PRODUCTION EXERCISE =====
+function FreeRecall() {
+  const [qi, setQi] = useState(0);
+  const [input, setInput] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const [matchedWords, setMatchedWords] = useState([]);
+  const qs = useRef(shuffle(RECALL_SCENARIOS, gdn()).slice(0, 6));
+
+  function submit() {
+    setSubmitted(true);
+    const words = input.toLowerCase().split(/\s+/);
+    const scenario = qs.current[qi];
+    const matched = scenario.keywords.filter(kw => words.some(w => w.includes(kw.toLowerCase())));
+    setMatchedWords(matched);
+    // Score: any reasonable English response with key words
+    if (input.trim().split(/\s+/).length >= 4 && matched.length >= 1) {
+      setScore(score + 1);
+    }
   }
 
-  /* ===== EXERCISE GRID (Training tab) ===== */
-  .exercise-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--sp-3);
-  }
-  .exercise-grid .card {
-    margin-bottom: 0;
-    cursor: pointer;
-    transition: transform var(--tr-base), box-shadow var(--tr-base);
-    border: 1px solid var(--c-border-light);
-  }
-  .exercise-grid .card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--sh-lg);
-    border-color: var(--c-accent-border);
-  }
-  @media (min-width: 480px) {
-    .exercise-grid { grid-template-columns: 1fr 1fr; }
+  function next() {
+    if (qi + 1 >= qs.current.length) { setDone(true); return; }
+    setQi(qi + 1); setInput(""); setSubmitted(false); setMatchedWords([]);
   }
 
-  /* ===== PROGRESS GRID ===== */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--sp-3);
-  }
-  @media (max-width: 380px) {
-    .stats-grid { grid-template-columns: 1fr; gap: var(--sp-2); }
+  function restart() {
+    qs.current = shuffle(RECALL_SCENARIOS, Date.now()); setQi(0); setInput(""); setSubmitted(false); setScore(0); setDone(false); setMatchedWords([]);
   }
 
-  /* ===== PHRASE CATEGORIES (horizontal scroll) ===== */
-  .pill-scroll {
-    display: flex;
-    gap: var(--sp-2);
-    overflow-x: auto;
-    padding-bottom: var(--sp-2);
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .pill-scroll::-webkit-scrollbar { display: none; }
-  .pill {
-    flex-shrink: 0;
-    padding: var(--sp-2) var(--sp-4);
-    border-radius: var(--r-full);
-    border: none;
-    background: var(--c-surface);
-    color: var(--c-text-secondary);
-    font-family: inherit;
-    font-size: var(--fs-sm);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--tr-base);
-    min-height: 40px;
-    white-space: nowrap;
-    box-shadow: var(--sh-sm);
-  }
-  .pill:hover { background: var(--c-surface-hover); box-shadow: var(--sh-md); }
-  .pill--active {
-    background: var(--c-accent);
-    color: #fff;
-    font-weight: 600;
-    box-shadow: 0 2px 4px rgba(29,78,216,0.25);
+  if (done) return (
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إنتاج حر</div>
+      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 4 ? "#059669" : score >= 2 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 4 ? "إنجاز مميز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
+      <Button variant="danger" size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
+    </div>
+  );
+
+  const scenario = qs.current[qi];
+
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)" }}>{"موقف " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-error)", fontWeight: 600 }}>{score + " صحيح"}</div>
+      </div>
+
+      <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-base)", color: "var(--c-text)", lineHeight: 2, marginBottom: "var(--sp-2)" }}>{scenario.sit}</div>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-error)", fontWeight: 600 }}>{scenario.hint}</div>
+      </div>
+
+      <div style={{ marginBottom: "var(--sp-3)" }}>
+        <textarea
+          value={input}
+          onChange={(e) => !submitted && setInput(e.target.value)}
+          placeholder="اكتب ردك بالإنجليزي هنا..."
+          disabled={submitted}
+          style={{
+            width: "100%", minHeight: 80, padding: "var(--sp-4)", borderRadius: "var(--r-lg)",
+            fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left",
+            lineHeight: 1.8, background: "rgba(0,0,0,0.02)",
+            border: "1px solid rgba(220,38,38,0.2)", color: "var(--c-text)",
+            outline: "none", resize: "vertical"
+          }}
+        />
+      </div>
+
+      {!submitted ? (
+        <div style={{ textAlign: "center" }}>
+          <button onClick={submit} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: input.trim().length >= 3 ? "#dc2626" : "#e4e4e7", color: input.trim().length >= 3 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>أرسل</button>
+        </div>
+      ) : (
+        <div>
+          <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>الجواب المثالي:</div>
+            <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)" }}>{scenario.model}</div>
+          </div>
+          {matchedWords.length > 0 && (
+            <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-success)", marginBottom: "var(--sp-2)" }}>{"كلمات مفتاحية استخدمتها: " + matchedWords.join(", ")}</div>
+          )}
+          {matchedWords.length === 0 && (
+            <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>حاول تستخدم كلمات من بنك الجمل في المرة الجاية</div>
+          )}
+          <div style={{ textAlign: "center" }}>
+            <Button variant="danger" size="sm" onClick={next}>{qi + 1 >= qs.current.length ? <><IconTarget size={16}/>النتيجة</> : "التالي ←"}</Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ===== DAILY DEEP PROCESSING SESSION =====
+function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
+  const cp = checkpoint || {};
+  const [step, setStep] = useState(cp.step || 0);
+  const [listenIdx, setListenIdx] = useState(-1);
+  const [listenDone, setListenDone] = useState(cp.listenDone || false);
+  const [listenAnswer, setListenAnswer] = useState(cp.listenAnswer || null);
+  const [shadowReps, setShadowReps] = useState(cp.shadowReps || {});
+  const [shadowSpoken, setShadowSpoken] = useState(cp.shadowSpoken || {});
+  const [recallState, setRecallState] = useState(cp.recallState || {});
+  const [recallScore, setRecallScore] = useState(cp.recallScore || {});
+  const [prodInput, setProdInput] = useState(cp.prodInput || "");
+  const [prodSubmitted, setProdSubmitted] = useState(cp.prodSubmitted || false);
+  const [challengeAccepted, setChallengeAccepted] = useState(cp.challengeAccepted || false);
+  const [challengeDone, setChallengeDone] = useState(cp.challengeDone || false);
+  const [challengeNote, setChallengeNote] = useState(cp.challengeNote || "");
+  const [aiFeedback, setAiFeedback] = useState(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [stepCelebration, setStepCelebration] = useState(null);
+  const [listenChunk, setListenChunk] = useState(cp.listenChunk || 0);
+
+  const sc = scenario;
+  const steps = [
+    { num: "١", title: "استمع", desc: "استمع جملة جملة — بدون نص" },
+    { num: "٢", title: "استمع واقرأ", desc: "استمع مع النص — لاحظ اللي فاتك" },
+    { num: "٣", title: "ردّد", desc: "ردّد الجمل المفتاحية ٣ مرات" },
+    { num: "٤", title: "تذكّر", desc: "شوف الترجمة — قل الجملة من ذاكرتك" },
+    { num: "٥", title: "أنتج", desc: "اكتب ردك بنفسك" },
+    { num: "٦", title: "طبّق", desc: "تحدّي حقيقي اليوم" },
+  ];
+
+  // Checkpoint: save session state on every meaningful change
+  useEffect(() => {
+    if (challengeAccepted) return; // session completed, no need to checkpoint
+    const cpData = { type: "session", scenario: sc.title, step, listenDone, listenAnswer, shadowReps, shadowSpoken, recallState, recallScore, prodInput, prodSubmitted, challengeAccepted, challengeDone, challengeNote, listenChunk, date: gtd() };
+    (async () => { try { await userStorage.set("checkpoint-session", JSON.stringify(cpData)); } catch(e) {} })();
+  }, [step, listenDone, listenAnswer, shadowReps, shadowSpoken, recallState, recallScore, prodInput, prodSubmitted, challengeAccepted, challengeDone, challengeNote, listenChunk]);
+
+  // FIX 5: Working Memory — play only first 3 lines initially, then expand
+  // Baddeley's Model: WM capacity = 4±1 items. 7 lines at once = overload.
+  function playDialogueSequence() {
+    const chunkSize = 3;
+    const startIdx = listenChunk * chunkSize;
+    const endIdx = Math.min(startIdx + chunkSize, sc.dialogue.length);
+    setListenIdx(startIdx);
+    let i = startIdx;
+    function playNext() {
+      if (i >= endIdx) {
+        if (endIdx >= sc.dialogue.length) { setListenDone(true); }
+        else { setListenChunk(prev => prev + 1); } // auto-advance to next chunk
+        setListenIdx(-1);
+        return;
+      }
+      setListenIdx(i);
+      const u = speak(sc.dialogue[i].text, 0.8);
+      if (u) { u.onend = () => { i++; setTimeout(playNext, 1200); }; }
+      else { i++; setTimeout(playNext, 1800); }
+    }
+    playNext();
   }
 
-  /* ===== WEEK CIRCLES ===== */
-  .week-row {
-    display: flex;
-    gap: var(--sp-2);
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .week-dot {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--fs-xs);
-    font-weight: 700;
-    border: 2px solid var(--c-border);
-    transition: all var(--tr-base);
-    background: var(--c-surface);
-    box-shadow: var(--sh-sm);
-  }
-  .week-dot--done { background: var(--c-accent); border-color: var(--c-accent); color: #fff; box-shadow: 0 2px 4px rgba(29,78,216,0.2); }
-  .week-dot--current { border-color: var(--c-accent); color: var(--c-accent); box-shadow: var(--sh-glow); }
-  .week-dot--future { opacity: 0.3; box-shadow: none; }
+  const stepPct = Math.round(((step + 1) / 6) * 100);
 
-  /* ===== PROGRESS BAR ===== */
-  .progress-bar {
-    height: 8px;
-    border-radius: var(--r-full);
-    background: var(--c-surface-sunken);
-    overflow: hidden;
-  }
-  .progress-bar__fill {
-    height: 100%;
-    border-radius: var(--r-full);
-    background: linear-gradient(90deg, var(--c-accent), #3b82f6);
-    transition: width 0.4s ease;
+  // Micro-celebration on step change
+  function advanceStep(nextStep) {
+    const msgs = ["إنجاز مميز! ", "إنجاز رائع.. أنت تقترب من التمكّن ", "يلّا كمّل! ", "رائع! ", "نص الطريق! ", ""];
+    setStepCelebration(msgs[step] || "👏");
+    setTimeout(() => { setStepCelebration(null); setStep(nextStep); }, 800);
   }
 
-  /* ===== STEP INDICATOR ===== */
-  .steps {
-    display: flex;
-    gap: var(--sp-1);
-    margin-bottom: var(--sp-6);
-  }
-  .steps__bar {
-    flex: 1;
-    height: 6px;
-    border-radius: var(--r-full);
-    background: var(--c-surface-sunken);
-    transition: background 0.3s;
-    overflow: hidden;
-  }
-  .steps__bar--done { background: var(--c-success); }
-  .steps__bar--active { background: linear-gradient(90deg, var(--c-accent), #3b82f6); }
+  return (
+    <div style={{ animation: "fadeUp .4s" }}>
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", marginBottom: "var(--sp-4)" }}>
+        <div style={{ fontSize: "var(--fs-2xl)" }}>{sc.icon}</div>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-accent)" }}>{"جلسة اليوم: " + sc.title}</div>
+          <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"الخطوة " + (step + 1) + "/6 — " + steps[step].title}</div>
+        </div>
+        <div style={{ fontSize: "var(--fs-sm)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "inherit" }}>{stepPct + "%"}</div>
+      </div>
 
-  /* ===== SECTION HEADERS ===== */
-  .section-title {
-    font-size: var(--fs-sm);
-    font-weight: 700;
-    color: var(--c-text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--sp-4);
-  }
+      {/* Micro-celebration popup */}
+      {stepCelebration && <div style={{ textAlign: "center", padding: "var(--sp-4)", animation: "stepDone .6s" }}>
+        <div style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: "var(--c-success)" }}>{stepCelebration}</div>
+      </div>}
 
-  /* ===== HERO CARD (Today's session) — Cambly/Preply level ===== */
-  .hero-card {
-    background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 50%, #3b82f6 100%);
-    color: #fff;
-    border-radius: var(--r-xl);
-    padding: var(--sp-8) var(--sp-7);
-    margin-bottom: var(--sp-6);
-    box-shadow: 0 12px 28px rgba(29,78,216,0.25), 0 4px 8px rgba(29,78,216,0.15);
-    animation: fadeUp 0.4s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-card::before {
-    content: '';
-    position: absolute;
-    top: -40%; right: -20%;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .hero-card::after {
-    content: '';
-    position: absolute;
-    bottom: -30%; left: -10%;
-    width: 200px; height: 200px;
-    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .hero-card h2 { font-size: var(--fs-xl); font-weight: 800; margin-bottom: var(--sp-2); position: relative; z-index: 1; }
-  .hero-card p { font-size: var(--fs-base); opacity: 0.8; position: relative; z-index: 1; line-height: 1.6; }
-  .hero-card .hero-quote {
-    font-size: var(--fs-sm); opacity: 0.6; font-style: italic;
-    margin-bottom: var(--sp-5); position: relative; z-index: 1;
-    border-right: 2px solid rgba(255,255,255,0.3); padding-right: var(--sp-3);
-  }
-
-  /* ===== STATS CARD ===== */
-  .stat-card {
-    background: var(--c-surface);
-    border-radius: var(--r-xl);
-    padding: var(--sp-5) var(--sp-4);
-    text-align: center;
-    box-shadow: var(--sh-md);
-    position: relative;
-    overflow: hidden;
-  }
-  .stat-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--c-accent), #3b82f6);
-  }
-  .stat-card__value {
-    font-size: var(--fs-2xl);
-    font-weight: 800;
-    color: var(--c-accent);
-    font-family: 'IBM Plex Mono', monospace;
-    line-height: 1;
-    margin-bottom: var(--sp-2);
-  }
-  .stat-card__label {
-    font-size: var(--fs-xs);
-    color: var(--c-text-tertiary);
-    font-weight: 500;
-  }
-
-  /* ===== AUTH SCREEN ===== */
-  .auth-wrapper {
-    min-height: 100vh; min-height: 100dvh;
-    display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(160deg, #1e3a5f 0%, #1d4ed8 100%);
-    padding: var(--sp-5);
-  }
-  .auth-card {
-    max-width: 420px; width: 100%;
-    background: var(--c-surface);
-    border-radius: var(--r-xl);
-    padding: var(--sp-8) var(--sp-7);
-    box-shadow: var(--sh-xl);
-    animation: fadeUp 0.5s ease;
-  }
-  @media (max-width: 480px) {
-    .auth-card { padding: var(--sp-6) var(--sp-5); border-radius: var(--r-lg); }
-  }
-
-  /* ===== ONBOARDING ===== */
-  .onboard-wrapper {
-    min-height: 100vh; min-height: 100dvh;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--c-bg);
-    background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.03) 1px, transparent 0);
-    background-size: 24px 24px;
-    padding: var(--sp-5);
-  }
-  .onboard-card {
-    max-width: 500px; width: 100%;
-    background: var(--c-surface);
-    border-radius: var(--r-xl);
-    padding: var(--sp-8) var(--sp-7);
-    box-shadow: var(--sh-xl);
-    animation: fadeUp 0.4s ease;
-  }
-  @media (max-width: 480px) {
-    .onboard-card { padding: var(--sp-6) var(--sp-5); }
-  }
-
-  /* ===== ENGLISH TEXT — readable sans-serif ===== */
-  [dir="ltr"], [style*="direction: ltr"], [style*="direction:ltr"] {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    letter-spacing: -0.01em;
-  }
-
-  /* ===== UTILITY CLASSES ===== */
-  .text-center { text-align: center; }
-  .text-left { text-align: left; direction: ltr; }
-  .text-mono { font-family: 'IBM Plex Mono', monospace; }
-  .text-muted { color: var(--c-text-tertiary); }
-  .text-accent { color: var(--c-accent); }
-  .text-success { color: var(--c-success); }
-  .text-error { color: var(--c-error); }
-  .fw-600 { font-weight: 600; }
-  .fw-700 { font-weight: 700; }
-  .mb-2 { margin-bottom: var(--sp-2); }
-  .mb-3 { margin-bottom: var(--sp-3); }
-  .mb-4 { margin-bottom: var(--sp-4); }
-  .mb-5 { margin-bottom: var(--sp-5); }
-  .mt-4 { margin-top: var(--sp-4); }
-  .mt-5 { margin-top: var(--sp-5); }
-
-  /* ===== CHAT BUBBLES ===== */
-  .chat-row { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-3); align-items: flex-start; }
-  .chat-row--sent { flex-direction: row-reverse; }
-  .chat-avatar {
-    width: 32px; height: 32px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: var(--fs-xs); font-weight: 700; flex-shrink: 0;
-    background: var(--c-surface-sunken); color: var(--c-text-secondary);
-  }
-  .chat-avatar--sent { background: var(--c-accent); color: #fff; }
-  .bubble {
-    max-width: 80%; padding: var(--sp-3) var(--sp-4);
-    font-size: var(--fs-sm); direction: ltr; text-align: left; line-height: 1.7;
-    box-shadow: var(--sh-sm);
-  }
-  .bubble--sent { background: var(--c-accent); color: #fff; border-radius: var(--r-lg) var(--r-lg) var(--r-sm) var(--r-lg); }
-  .bubble--received { background: var(--c-surface); color: var(--c-text); border-radius: var(--r-lg) var(--r-lg) var(--r-lg) var(--r-sm); }
-
-  /* ===== SHADOW LINE (Shadowing exercise) ===== */
-  .shadow-line {
-    padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md);
-    margin-bottom: var(--sp-2); font-size: var(--fs-sm);
-    direction: ltr; text-align: left; line-height: 1.7;
-    transition: all 0.3s; display: flex; align-items: center; gap: var(--sp-2);
-    background: rgba(0,0,0,0.015); border: 1px solid rgba(0,0,0,0.03);
-    color: var(--c-text-secondary);
-  }
-  .shadow-line--current {
-    background: var(--c-accent-light); border-color: var(--c-accent-border);
-    color: var(--c-accent-hover); font-weight: 600; font-size: var(--fs-base);
-    transform: scale(1.01); box-shadow: var(--sh-sm);
-  }
-  .shadow-line--past { color: var(--c-text-tertiary); }
-
-  /* ===== TOGGLE BUTTON (Settings) ===== */
-  .toggle-btn {
-    padding: var(--sp-2) var(--sp-3); border-radius: var(--r-sm);
-    border: 1px solid var(--c-border); background: transparent;
-    color: var(--c-text-secondary); font-family: inherit;
-    font-size: var(--fs-sm); cursor: pointer; transition: all var(--tr-base);
-    min-height: 36px;
-  }
-  .toggle-btn:hover { background: var(--c-surface-hover); }
-  .toggle-btn--active {
-    border-color: var(--c-accent-border); background: var(--c-accent-light);
-    color: var(--c-accent); font-weight: 600;
-  }
-
-  /* ===== WORD OPTION (Sentence building) ===== */
-  .word-btn {
-    padding: var(--sp-2) var(--sp-3); border-radius: var(--r-md);
-    border: 1px solid var(--c-border-light); background: var(--c-surface);
-    cursor: pointer; transition: all 0.2s; font-family: inherit;
-    font-size: var(--fs-sm); direction: ltr; box-shadow: var(--sh-sm);
-  }
-  .word-btn:hover { border-color: var(--c-accent-border); box-shadow: var(--sh-md); }
-  .word-btn--selected { opacity: 0.4; border-color: var(--c-success); background: var(--c-success-light); }
-
-  /* ===== STEP BADGE (Daily session) ===== */
-  .step-badge {
-    width: 36px; height: 36px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: var(--fs-sm); font-weight: 700; transition: all 0.3s;
-    background: var(--c-surface-sunken); color: var(--c-text-tertiary);
-  }
-  .step-badge--done { background: var(--c-success); color: #fff; box-shadow: 0 2px 4px rgba(22,163,74,0.2); }
-  .step-badge--active { background: var(--c-accent); color: #fff; box-shadow: 0 0 12px rgba(29,78,216,0.3); }
-
-  /* ===== PHRASE ITEM ===== */
-  .phrase-item {
-    display: flex; align-items: center; gap: var(--sp-3);
-    padding: var(--sp-3); border-radius: var(--r-md);
-    margin-bottom: var(--sp-2); cursor: pointer; transition: all var(--tr-base);
-    background: rgba(0,0,0,0.015); border: 1px solid rgba(0,0,0,0.03);
-  }
-  .phrase-item:hover { background: rgba(0,0,0,0.03); }
-  .phrase-item--done { background: var(--c-success-light); border-color: rgba(22,163,74,0.12); }
-  .phrase-item--review { background: var(--c-accent-light); border-color: var(--c-accent-border); }
-  .phrase-circle {
-    width: 32px; height: 32px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: var(--fs-xs); font-weight: 700; flex-shrink: 0;
-    background: var(--c-border); color: var(--c-text-tertiary);
-    transition: all var(--tr-base);
-  }
-  .phrase-circle--active { background: var(--c-accent); color: #fff; }
-  .phrase-circle--done { background: var(--c-success); color: #fff; }
-
-  /* ===== OPTION ITEM (Quiz, exercises) ===== */
-  .option-item {
-    padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md);
-    margin-bottom: var(--sp-2); cursor: pointer;
-    font-size: var(--fs-sm); direction: ltr; text-align: left; line-height: 1.7;
-    transition: all 0.2s; border: 1px solid rgba(0,0,0,0.04);
-    background: rgba(0,0,0,0.015);
-  }
-  .option-item:hover { background: rgba(0,0,0,0.04); border-color: var(--c-accent-border); }
-  .option-item--correct { background: var(--c-success-light); border-color: rgba(22,163,74,0.3); }
-  .option-item--wrong { background: var(--c-error-light); border-color: rgba(220,38,38,0.3); }
-  .option-item--picked { box-shadow: var(--sh-sm); }
-  .option-item--dim { opacity: 0.3; }
-
-  /* ===== RESPONSIVE FIXES ===== */
-  @media (max-width: 380px) {
-    .stats-grid { grid-template-columns: 1fr 1fr; }
-    .hero-card { padding: var(--sp-5); }
-    .card { padding: var(--sp-4); }
-    .step-badge { width: 30px; height: 30px; font-size: var(--fs-xs); }
-  }
-  @media (min-width: 1024px) {
-    .app-container { max-width: 800px; }
-  }
-
-  /* ===== ANIMATIONS (subtle only) ===== */
-  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-  @keyframes slideIn { from { opacity:0; transform:translateX(16px); } to { opacity:1; transform:translateX(0); } }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* Global button base */
-  button { transition: transform var(--tr-fast), opacity var(--tr-base); }
-
-  /* ===== PHASE 3: MICRO-INTERACTIONS & ANIMATIONS ===== */
-  
-  @keyframes successPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-    100% { transform: scale(1); }
-  }
-  @keyframes bounceIn {
-    0% { transform: scale(0.3); opacity: 0; }
-    50% { transform: scale(1.05); }
-    70% { transform: scale(0.95); }
-    100% { transform: scale(1); opacity: 1; }
-  }
-  @keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  @keyframes slideDown {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  @keyframes shimmerBg {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-  @keyframes pulse-ring {
-    0% { transform: scale(0.8); opacity: 0.5; }
-    50% { transform: scale(1); opacity: 0.3; }
-    100% { transform: scale(0.8); opacity: 0.5; }
-  }
-  @keyframes checkDraw {
-    from { stroke-dashoffset: 20; }
-    to { stroke-dashoffset: 0; }
-  }
-
-  /* Success state animation */
-  .animate-success { animation: successPulse 0.5s ease; }
-  .animate-bounce { animation: bounceIn 0.5s ease; }
-  .animate-slide-up { animation: slideUp 0.3s ease; }
-  .animate-slide-down { animation: slideDown 0.3s ease; }
-
-  /* Skeleton loading */
-  .skeleton {
-    background: linear-gradient(90deg, var(--c-surface-sunken) 25%, var(--c-border-light) 50%, var(--c-surface-sunken) 75%);
-    background-size: 200% 100%;
-    animation: shimmerBg 1.5s infinite;
-    border-radius: var(--r-md);
-  }
-  .skeleton-text { height: 14px; margin-bottom: 8px; border-radius: 4px; }
-  .skeleton-circle { border-radius: 50%; }
-
-  /* Recording pulse indicator */
-  .recording-pulse {
-    position: relative;
-  }
-  .recording-pulse::before {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    background: rgba(220,38,38,0.15);
-    animation: pulse-ring 1.5s infinite;
-  }
-
-  /* Smooth tab transition */
-  .tab { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
-  
-  /* Card hover lift */
-  .card { transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease; }
-  
-  /* Button press feedback */
-  button:active { transform: scale(0.96); transition: transform 0.1s; }
-
-  /* Smooth progress transitions */
-  .progress-bar__fill { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-
-  /* Social proof ticker (subtle) */
-  .social-proof {
-    font-size: var(--fs-xs);
-    color: var(--c-text-tertiary);
-    text-align: center;
-    padding: var(--sp-2) 0;
-    animation: fadeIn 2s ease;
-  }
-
-  /* Option item hover feedback */
-  .option-item { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-  .option-item:hover { transform: translateX(-2px); }
-
-  /* Staggered list animation */
-  .stagger > * { animation: slideUp 0.3s ease backwards; }
-  .stagger > *:nth-child(1) { animation-delay: 0s; }
-  .stagger > *:nth-child(2) { animation-delay: 0.05s; }
-  .stagger > *:nth-child(3) { animation-delay: 0.1s; }
-  .stagger > *:nth-child(4) { animation-delay: 0.15s; }
-  .stagger > *:nth-child(5) { animation-delay: 0.2s; }
-  .stagger > *:nth-child(6) { animation-delay: 0.25s; }
-  .stagger > *:nth-child(7) { animation-delay: 0.3s; }
-  .stagger > *:nth-child(8) { animation-delay: 0.35s; }
-  .stagger > *:nth-child(9) { animation-delay: 0.4s; }
-  .stagger > *:nth-child(10) { animation-delay: 0.45s; }
+      {/* Progress — step indicator */}

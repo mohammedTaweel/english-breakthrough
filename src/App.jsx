@@ -2601,11 +2601,7 @@ function MainApp({ currentUser, onLogout }) {
             </div>
             <Card>
               <SectionTitle>رحلة الـ 12 أسبوع</SectionTitle>
-              <div className="week-row">
-                {Array.from({ length: 12 }, (_, i) => i + 1).map((w) => (
-                  <div key={w} className={"week-dot" + (w < wk ? " week-dot--done" : w === wk ? " week-dot--current" : " week-dot--future")}>{w < wk ? "✓" : w}</div>
-                ))}
-              </div>
+              <WeekProgress current={wk} total={12} />
             </Card>
             {/* FIX 3: Smart Weekly Summary */}
             {sessionHistory.length >= 3 && <Card s={{ borderColor: "rgba(29,78,216,0.1)" }}>
@@ -2731,7 +2727,7 @@ function MainApp({ currentUser, onLogout }) {
                 <button className="btn btn--secondary btn--sm" onClick={() => speak("Hello! Nice to meet you. How are you today?", 0.9)}>جرّب الصوت الحالي</button>
               </div>
               {/* FIX 8: Accent selection */}
-              <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>اللهجة:</div>
+              <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)", display: "flex", alignItems: "center", gap: 4 }}><IconGlobe size={14}/>اللهجة:</div>
               <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-4)" }}>
                 {[{ code: "en-US", label: "أمريكي" }, { code: "en-GB", label: "بريطاني" }, { code: "en-AU", label: "أسترالي" }].map(a => (
                   <button key={a.code} onClick={() => { setAccent(a.code); speak("Hello! How are you today?", 0.9); }} className={"toggle-btn" + (getAccent() === a.code ? " toggle-btn--active" : "")}>{a.label}</button>
@@ -2764,7 +2760,7 @@ function MainApp({ currentUser, onLogout }) {
                 />
               </div>
               {getOpenAIKey() && <div>
-                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>الصوت:</div>
+                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)", display: "flex", alignItems: "center", gap: 4 }}><IconHeadphones size={14}/>الصوت:</div>
                 <div style={{ display: "flex", gap: "var(--sp-2)", flexWrap: "wrap", marginBottom: "var(--sp-2)" }}>
                   {["nova", "alloy", "echo", "fable", "onyx", "shimmer"].map(v => (
                     <button key={v} onClick={async () => { setTTSVoice(v); try { await userStorage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} className={"toggle-btn" + (getTTSVoice() === v ? " toggle-btn--active" : "")}>{v}</button>
