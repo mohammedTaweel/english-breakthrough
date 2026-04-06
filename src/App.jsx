@@ -3,6 +3,8 @@ import { speak, stopSpeech, getVoiceInfo, setOpenAIKey, getOpenAIKey, setTTSVoic
 import { TaliqLogo, TaliqIcon, SplashScreen, BRAND } from "./brand.jsx";
 import "./styles/app.css";
 import { SHADOW_LINES, STORIES, PROMPTS, PHRASES, MOTIV, CONVERSATIONS, QUICK_RESP, QUIZ_BANK, CEFR_LEVELS, LEVEL_TEST, LEVEL_IDX, TYPE_LABELS, TYPE_ICONS, LISTEN_ITEMS, DICTATION_ITEMS, DAILY_SCENARIOS, FILL_BLANKS, SENTENCE_BUILD, RECALL_SCENARIOS, FLUENCY_TOPICS, PHRASE_PATTERNS } from "./data.js";
+import { IconVolume, IconRefresh, IconCheck, IconEye, IconMic, IconPlay, IconStop, IconArrowLeft, IconTarget, IconBook, IconPen, IconBrain, IconGlobe, IconChart, IconUser, IconSettings, IconLogout, IconHeadphones, IconMessageCircle, IconTrendingUp, IconAward, IconZap, IconClock, IconStar } from "./icons.jsx";
+import { Button, Card as UICard, Badge, ProgressRing, ProgressBar, StatCard, SectionTitle, WeekProgress, EmptyState, Toast } from "./components/ui/index.jsx";
 
 // ===== USER STORAGE SYSTEM =====
 // Per-user storage: all keys prefixed with user ID
@@ -420,7 +422,7 @@ function Prompter({ lines, gap, color, label, withAudio }) {
         {!on ? (
           <button onClick={start} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg," + color + ",#1e40af)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{"▶ ابدأ " + label}</button>
         ) : (
-          <button onClick={stop} className="btn btn--secondary btn--sm">إيقاف</button>
+          <Button variant="secondary" size="sm" onClick={stop}><IconStop size={16}/>إيقاف</Button>
         )}
         {on && phase === "listen" && <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 600 }}>استمع...</div>}
         {on && phase === "repeat" && sec > 0 && <div style={{ fontFamily: "inherit", fontSize: "var(--fs-xl)", fontWeight: 700, color: color }}>{sec}</div>}
@@ -460,7 +462,7 @@ function MeetingSim() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-success)" }}>إنجاز</div>
       <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{m.steps.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score === m.steps.length ? "إنجاز مميز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
-      <button onClick={restart} className="btn btn--primary btn--sm">محادثة جديدة</button>
+      <Button size="sm" onClick={restart}><IconRefresh size={16}/>محادثة جديدة</Button>
     </div>
   );
   return (
@@ -489,7 +491,7 @@ function MeetingSim() {
           </div>
         );
       })}
-      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><button onClick={next} className="btn btn--primary btn--sm">{step + 1 >= m.steps.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
+      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><Button size="sm" onClick={next}>{step + 1 >= m.steps.length ? <><IconTarget size={16}/>النتيجة</> : "التالي ←"}</Button></div>}
     </div>
   );
 }
@@ -513,7 +515,7 @@ function QuickResp() {
       <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{total}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 7 ? "سريع وحاسم! " : score >= 5 ? "جيد! السرعة تتحسن" : "تحتاج تحفظ الجمل أكثر"}</div>
-      <button onClick={restart} className="btn btn--primary btn--sm">محاولة جديدة</button>
+      <Button size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
   );
   const rawQ = qs.current[qi];
@@ -541,7 +543,7 @@ function QuickResp() {
       })}
       {(picked !== null || timer === 0) && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
         {timer === 0 && picked === null && <div style={{ color: "var(--c-error)", fontSize: "var(--fs-sm)", marginBottom: "var(--sp-2)" }}>⏰ انتهى الوقت!</div>}
-        <button onClick={() => { if (timer === 0 && picked === null) { setTotal(total + 1); } next(); }} className="btn btn--primary btn--sm">التالي ←</button>
+        <Button size="sm" onClick={() => { if (timer === 0 && picked === null) { setTotal(total + 1); } next(); }}>التالي ←</Button>
       </div>}
     </div>
   );
@@ -592,7 +594,7 @@ function WeeklyQuiz({ onSave, checkpoint }) {
         <div style={{ fontSize: "var(--fs-md)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-1)" }}>{score + "/" + qs.current.length}</div>
         {diff !== null && <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: diff >= 0 ? "#059669" : "#dc2626", marginBottom: "var(--sp-1)" }}>{diff >= 0 ? "+" + diff + "% عن الاختبار السابق" : "" + diff + "% عن الاختبار السابق"}</div>}
         <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{pct >= 80 ? "إنجاز مميز! الجمل صارت جزء منك " : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
-        <button onClick={restart} className="btn btn--primary btn--sm">اختبار جديد</button>
+        <Button size="sm" onClick={restart}><IconRefresh size={16}/>اختبار جديد</Button>
       </div>
     );
   }
@@ -619,7 +621,7 @@ function WeeklyQuiz({ onSave, checkpoint }) {
           {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> </span>}
         </div>;
       })}
-      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><button onClick={next} className="btn btn--primary btn--sm">{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
+      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><Button size="sm" onClick={next}>{qi + 1 >= qs.current.length ? <><IconTarget size={16}/>النتيجة</> : "التالي ←"}</Button></div>}
     </div>
   );
 }
@@ -670,7 +672,7 @@ function FillBlank() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>أكمل الفراغ</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! ذاكرتك قوية " : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
-      <button onClick={restart} className="btn btn--primary btn--sm">محاولة جديدة</button>
+      <Button size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
   );
 
@@ -713,11 +715,11 @@ function FillBlank() {
       </div>
       {!checked ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={check} className="btn btn--primary btn--sm">تأكّد</button>
+          <Button size="sm" onClick={check}><IconCheck size={16}/>تأكّد</Button>
         </div>
       ) : (
         <div style={{ textAlign: "center" }}>
-          <button onClick={next} className="btn btn--primary btn--sm">{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          <Button size="sm" onClick={next}>{qi + 1 >= qs.current.length ? <><IconTarget size={16}/>النتيجة</> : "التالي ←"}</Button>
         </div>
       )}
     </div>
@@ -774,7 +776,7 @@ function SentenceBuild() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>بناء جمل</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! تركيب الجمل صار سهل " : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
-      <button onClick={restart} className="btn btn--success btn--sm">محاولة جديدة</button>
+      <Button variant="success" size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
   );
 
@@ -813,11 +815,11 @@ function SentenceBuild() {
         })}
       </div>
       <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center" }}>
-        {!checked && selected.length > 0 && <button onClick={() => setSelected([])} className="btn btn--ghost btn--sm">مسح</button>}
+        {!checked && selected.length > 0 && <Button variant="ghost" size="sm" onClick={() => setSelected([])}>مسح</Button>}
         {!checked ? (
           <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: selected.length > 0 ? "#059669" : "#e4e4e7", color: selected.length > 0 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>تأكّد</button>
         ) : (
-          <button onClick={next} className="btn btn--success btn--sm">{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          <Button variant="success" size="sm" onClick={next}>{qi + 1 >= qs.current.length ? <><IconTarget size={16}/>النتيجة</> : "التالي ←"}</Button>
         )}
       </div>
     </div>
@@ -860,7 +862,7 @@ function FreeRecall() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إنتاج حر</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 4 ? "#059669" : score >= 2 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 4 ? "إنجاز مميز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
-      <button onClick={restart} className="btn btn--danger btn--sm">محاولة جديدة</button>
+      <Button variant="danger" size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
   );
 
@@ -911,7 +913,7 @@ function FreeRecall() {
             <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>حاول تستخدم كلمات من بنك الجمل في المرة الجاية</div>
           )}
           <div style={{ textAlign: "center" }}>
-            <button onClick={next} className="btn btn--danger btn--sm">{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+            <Button variant="danger" size="sm" onClick={next}>{qi + 1 >= qs.current.length ? <><IconTarget size={16}/>النتيجة</> : "التالي ←"}</Button>
           </div>
         </div>
       )}
@@ -1084,8 +1086,8 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
               )}
               {(listenAnswer !== null || !sc.listenQ) && (
                 <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center" }}>
-                  <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} className="btn btn--secondary btn--sm">استمع مرة ثانية</button>
-                  <button onClick={() => advanceStep(1)} className="btn btn--primary">التالي →</button>
+                  <Button variant="secondary" size="sm" onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }}><IconVolume size={16}/>استمع مرة ثانية</Button>
+                  <Button onClick={() => advanceStep(1)}>التالي →</Button>
                 </div>
               )}
             </div>
@@ -1109,7 +1111,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
             </div>
           );})}
           <div style={{ textAlign: "center", marginTop: "var(--sp-4)" }}>
-            <button onClick={() => advanceStep(2)} className="btn btn--primary">التالي: ردّد الجمل →</button>
+            <Button onClick={() => advanceStep(2)}>التالي: ردّد الجمل →</Button>
           </div>
         </div>
       )}
@@ -1169,7 +1171,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
           })}
           {Object.values(shadowReps).filter(r => r >= 5).length >= sc.keyPhrases.length && (
             <div style={{ textAlign: "center", marginTop: "var(--sp-4)" }}>
-              <button onClick={() => advanceStep(3)} className="btn btn--primary">التالي: تذكّر →</button>
+              <Button onClick={() => advanceStep(3)}>التالي: تذكّر →</Button>
             </div>
           )}
         </div>
@@ -1188,13 +1190,13 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                 <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>{p.ar}</div>
 
                 {state === "hidden" && (
-                  <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "thinking" }))} className="btn btn--primary btn--sm">قلها بصوت عالٍ ثم اضغط هنا</button>
+                  <Button size="sm" onClick={() => setRecallState(prev => ({ ...prev, [i]: "thinking" }))}><IconMic size={16}/>قلها بصوت عالٍ ثم اضغط هنا</Button>
                 )}
 
                 {state === "thinking" && (
                   <div>
                     <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>قلت الجملة؟ اضغط "أظهر" وقارن:</div>
-                    <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "revealed" }))} className="btn btn--primary btn--sm">أظهر الجملة</button>
+                    <Button size="sm" onClick={() => setRecallState(prev => ({ ...prev, [i]: "revealed" }))}><IconEye size={16}/>أظهر الجملة</Button>
                   </div>
                 )}
 
@@ -1243,7 +1245,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                 {allGood && (
                   <div style={{ textAlign: "center" }}>
                     <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-success)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>إنجاز مميز! تذكّرت كل الجمل</div>
-                    <button onClick={() => advanceStep(4)} className="btn btn--primary">التالي: أنتج بنفسك →</button>
+                    <Button onClick={() => advanceStep(4)}>التالي: أنتج بنفسك →</Button>
                   </div>
                 )}
               </div>
@@ -1275,7 +1277,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
               {/* FIX 7: AI feedback on writing */}
               {getOpenAIKey() && !aiFeedback && !aiLoading && (
                 <div style={{ textAlign: "center", marginBottom: "var(--sp-2)" }}>
-                  <button onClick={async () => {
+                  <Button variant="secondary" size="sm" onClick={async () => {
                     setAiLoading(true);
                     try {
                       const res = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -1289,7 +1291,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                       setAiFeedback(data.choices[0].message.content);
                     } catch { setAiFeedback("لم أتمكن من الاتصال. تأكّد من مفتاح API."); }
                     setAiLoading(false);
-                  }} className="btn btn--secondary btn--sm">تحليل ذكي لكتابتك</button>
+                  }}><IconBrain size={16}/>تحليل ذكي لكتابتك</Button>
                 </div>
               )}
               {aiLoading && <div style={{ textAlign: "center", fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", marginBottom: "var(--sp-2)" }}>جاري التحليل...</div>}
@@ -1309,7 +1311,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                 )}
               </div>
               <div style={{ textAlign: "center" }}>
-                <button onClick={() => advanceStep(5)} className="btn btn--primary">التالي: تحدّي اليوم →</button>
+                <Button onClick={() => advanceStep(5)}>التالي: تحدّي اليوم →</Button>
               </div>
             </div>
           )}
@@ -1342,7 +1344,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
               {/* FIX 4: Challenge follow-up */}
               <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 700, marginBottom: "var(--sp-3)" }}>سوّيت التحدي؟</div>
               <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center", marginBottom: "var(--sp-3)" }}>
-                <button onClick={() => setChallengeDone(true)} className="btn btn--success btn--sm">نعم سويته </button>
+                <Button variant="success" size="sm" onClick={() => setChallengeDone(true)}><IconCheck size={16}/>نعم سويته </Button>
                 <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "1px solid rgba(0,0,0,0.06)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-sm)", cursor: "pointer" }}>بسويه لاحقاً</button>
               </div>
               <input value={challengeNote} onChange={(e) => setChallengeNote(e.target.value)} placeholder="كيف كانت التجربة؟ (اختياري)" style={{ width: "100%", padding: "var(--sp-3)", borderRadius: "var(--r-md)", fontFamily: "inherit", fontSize: "var(--fs-sm)", background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", color: "var(--c-text)", outline: "none", textAlign: "center" }} />
@@ -1463,7 +1465,7 @@ function Fluency432() {
         {topic.starters.map((st, si) => <div key={si} style={{ fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text-secondary)", padding: "3px 0" }}>{st}</div>)}
       </div>
       <div style={{ textAlign: "center" }}>
-        <button onClick={() => startRound(1)} className="btn btn--primary btn--lg">ابدأ الجولة الأولى (٤ دقائق) →</button>
+        <Button size="lg" onClick={() => startRound(1)}><IconPlay size={16}/>ابدأ الجولة الأولى (٤ دقائق) →</Button>
       </div>
     </div>
   );
@@ -1473,7 +1475,7 @@ function Fluency432() {
       <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
       <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-success)", marginBottom: "var(--sp-2)" }}>إنجاز رائع.. أنت تقترب من التمكّن</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, marginBottom: "var(--sp-4)" }}>تكلمت عن نفس الموضوع ٣ مرات — كل مرة بسرعة أكبر.<br />لاحظت كيف الجمل صارت تطلع أسرع في الجولة الثالثة؟<br />هذا بالضبط كيف تُبنى الطلاقة.</div>
-      <button onClick={restart} className="btn btn--danger">موضوع جديد</button>
+      <Button variant="danger" onClick={restart}><IconRefresh size={16}/>موضوع جديد</Button>
     </div>
   );
 
@@ -1503,7 +1505,7 @@ function Fluency432() {
 
       {sec === 0 && !running && round < 3 && (
         <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
-          <button onClick={() => startRound(round + 1)} className="btn btn--danger">{"الجولة " + (round + 1) + " (" + (round === 1 ? "٣" : "٢") + " دقائق) →"}</button>
+          <Button variant="danger" onClick={() => startRound(round + 1)}>{"الجولة " + (round + 1) + " (" + (round === 1 ? "٣" : "٢") + " دقائق) →"}</Button>
         </div>
       )}
       {sec === 0 && !running && round === 3 && (
@@ -1541,7 +1543,7 @@ function ListenExercise() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>الاستماع</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
-      <button onClick={restart} className="btn btn--primary btn--sm">محاولة جديدة</button>
+      <Button size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
   );
 
@@ -1612,7 +1614,7 @@ function DictationExercise() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إملاء صوتي</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
-      <button onClick={restart} className="btn btn--danger btn--sm">محاولة جديدة</button>
+      <Button variant="danger" size="sm" onClick={restart}><IconRefresh size={16}/>محاولة جديدة</Button>
     </div>
   );
 
@@ -1654,7 +1656,7 @@ function DictationExercise() {
             })}
           </div>
           <div style={{ textAlign: "center" }}>
-            <button onClick={next} className="btn btn--danger btn--sm">{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+            <Button variant="danger" size="sm" onClick={next}>{qi + 1 >= qs.current.length ? <><IconTarget size={16}/>النتيجة</> : "التالي ←"}</Button>
           </div>
         </div>
       )}
@@ -1972,7 +1974,7 @@ function LevelTest({ onComplete, checkpoint }) {
       {/* Question */}
       <div style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-4)" }}>
         <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.9, color: "var(--c-text)" }}>{displayQ.q}</div>
-        {currentQ.audio && <div style={{ textAlign: "center", marginTop: "var(--sp-2)" }}><button onClick={() => speak(currentQ.audio, 0.85)} className="btn btn--primary btn--sm">استمع مرة ثانية</button></div>}
+        {currentQ.audio && <div style={{ textAlign: "center", marginTop: "var(--sp-2)" }}><Button size="sm" onClick={() => speak(currentQ.audio, 0.85)}><IconVolume size={16}/>استمع مرة ثانية</Button></div>}
       </div>
 
       {/* Options */}
@@ -2099,7 +2101,7 @@ function MainApp({ currentUser, onLogout }) {
           <div style={{ marginBottom: "var(--sp-7)" }}><TaliqLogo size={48} /></div>
           <h1 style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.7, marginBottom: "var(--sp-4)" }}>تملك المعرفة...<br/>لكن الكلمات تتوقف عند لسانك؟</h1>
           <p style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)", lineHeight: 1.9, marginBottom: "var(--sp-7)" }}>تقرأ وتفهم الإنجليزي جيداً، لكن عندما يحين وقت التحدث — تتردد.<br/><b style={{ color: "var(--c-accent)" }}>ليست مشكلة قدرات. إنها مشكلة طريقة.</b></p>
-          <button className="btn btn--primary btn--lg btn--full" onClick={() => setOnboardStep(1)}>هذا ما أعانيه بالضبط</button>
+          <Button size="lg" full onClick={() => setOnboardStep(1)}>هذا ما أعانيه بالضبط</Button>
         </div>}
 
         {/* Screen 2: Method */}
@@ -2113,7 +2115,7 @@ function MainApp({ currentUser, onLogout }) {
             </div>
           </div>
           <p style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)", textAlign: "center", marginBottom: "var(--sp-6)" }}>مبني على أبحاث جامعية في اكتساب اللغة الثانية للكبار</p>
-          <button className="btn btn--primary btn--lg btn--full" onClick={() => setOnboardStep(2)}>كيف يعمل؟</button>
+          <Button size="lg" full onClick={() => setOnboardStep(2)}>كيف يعمل؟</Button>
         </div>}
 
         {/* Screen 3: Daily Investment */}
@@ -2137,7 +2139,7 @@ function MainApp({ currentUser, onLogout }) {
               </div>
             ))}
           </div>
-          <button className="btn btn--primary btn--lg btn--full" onClick={() => setOnboardStep(3)}>هذا ما أبحث عنه</button>
+          <Button size="lg" full onClick={() => setOnboardStep(3)}>هذا ما أبحث عنه</Button>
         </div>}
 
         {/* Screen 4: Goal Selection */}
@@ -2174,7 +2176,7 @@ function MainApp({ currentUser, onLogout }) {
               <div style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)", lineHeight: 1.9 }}>"{s.text}"</div>
             </div>
           ))}
-          <button className="btn btn--primary btn--lg btn--full" style={{ marginTop: "var(--sp-4)" }} onClick={() => setOnboardStep(5)}>أنا جاهز</button>
+          <Button size="lg" full style={{ marginTop: "var(--sp-4)" }} onClick={() => setOnboardStep(5)}>أنا جاهز</Button>
         </div>}
 
         {/* Screen 6: Commitment */}
@@ -2184,7 +2186,7 @@ function MainApp({ currentUser, onLogout }) {
             <div style={{ fontSize: "var(--fs-md)", color: "var(--c-text)", lineHeight: 2, marginBottom: "var(--sp-3)" }}>أُعاهد نفسي أن أستثمر <b style={{ color: "var(--c-accent)" }}>١٥ دقيقة يومياً</b><br/>لمدة أسبوع واحد فقط.<br/>لن أحكم على النتائج قبل ٧ أيام.</div>
             <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)" }}>من يلتزم علناً يُكمل ٣ أضعاف من لا يفعل — أبحاث سلوكية</div>
           </div>
-          <button className="btn btn--primary btn--lg btn--full" onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge, committed: true }); }}>أنا ملتزم — ابدأ الآن</button>
+          <Button size="lg" full onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge, committed: true }); }}>أنا ملتزم — ابدأ الآن</Button>
           <button className="btn btn--ghost btn--full" style={{ marginTop: "var(--sp-3)" }} onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge }); }}>أبدأ بدون التزام</button>
         </div>}
 
@@ -2482,16 +2484,16 @@ function MainApp({ currentUser, onLogout }) {
                 </div>
               );
             })()}
-            {trainMode === "sim" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><MeetingSim /></Card>}
-            {trainMode === "quick" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><QuickResp /></Card>}
-            {trainMode === "quiz" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} checkpoint={pendingCheckpoints && pendingCheckpoints.quiz ? pendingCheckpoints.quiz : undefined} /></Card>}
-            {trainMode === "fill" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><FillBlank /></Card>}
-            {trainMode === "build" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><SentenceBuild /></Card>}
-            {trainMode === "fluency" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><Fluency432 /></Card>}
-            {trainMode === "listen" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><ListenExercise /></Card>}
-            {trainMode === "dictation" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><DictationExercise /></Card>}
-            {trainMode === "recall" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><FreeRecall /></Card>}
-            {trainMode === "level" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><button className="btn btn--ghost btn--sm" onClick={() => setTrainMode(null)}>رجوع</button></div><LevelTest onComplete={(result) => setLevelResult(result)} checkpoint={pendingCheckpoints && pendingCheckpoints.level ? pendingCheckpoints.level : undefined} /></Card>}
+            {trainMode === "sim" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><Button variant="ghost" size="sm" onClick={() => setTrainMode(null)}><IconArrowLeft size={16}/>رجوع</Button></div><MeetingSim /></Card>}
+            {trainMode === "quick" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><Button variant="ghost" size="sm" onClick={() => setTrainMode(null)}><IconArrowLeft size={16}/>رجوع</Button></div><QuickResp /></Card>}
+            {trainMode === "quiz" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><Button variant="ghost" size="sm" onClick={() => setTrainMode(null)}><IconArrowLeft size={16}/>رجوع</Button></div><WeeklyQuiz onSave={() => setQuizResults(null)} checkpoint={pendingCheckpoints && pendingCheckpoints.quiz ? pendingCheckpoints.quiz : undefined} /></Card>}
+            {trainMode === "fill" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><Button variant="ghost" size="sm" onClick={() => setTrainMode(null)}><IconArrowLeft size={16}/>رجوع</Button></div><FillBlank /></Card>}
+            {trainMode === "build" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><Button variant="ghost" size="sm" onClick={() => setTrainMode(null)}><IconArrowLeft size={16}/>رجوع</Button></div><SentenceBuild /></Card>}
+            {trainMode === "fluency" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><Button variant="ghost" size="sm" onClick={() => setTrainMode(null)}><IconArrowLeft size={16}/>رجوع</Button></div><Fluency432 /></Card>}
+            {trainMode === "listen" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><Button variant="ghost" size="sm" onClick={() => setTrainMode(null)}><IconArrowLeft size={16}/>رجوع</Button></div><ListenExercise /></Card>}
+            {trainMode === "dictation" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><Button variant="ghost" size="sm" onClick={() => setTrainMode(null)}><IconArrowLeft size={16}/>رجوع</Button></div><DictationExercise /></Card>}
+            {trainMode === "recall" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><Button variant="ghost" size="sm" onClick={() => setTrainMode(null)}><IconArrowLeft size={16}/>رجوع</Button></div><FreeRecall /></Card>}
+            {trainMode === "level" && <Card><div style={{ marginBottom: "var(--sp-4)" }}><Button variant="ghost" size="sm" onClick={() => setTrainMode(null)}><IconArrowLeft size={16}/>رجوع</Button></div><LevelTest onComplete={(result) => setLevelResult(result)} checkpoint={pendingCheckpoints && pendingCheckpoints.level ? pendingCheckpoints.level : undefined} /></Card>}
           </div>
         )}
 
