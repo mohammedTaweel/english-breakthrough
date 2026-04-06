@@ -2287,16 +2287,16 @@ function MainApp({ currentUser, onLogout }) {
                     <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"الخطوة " + (pendingCheckpoints.session.step + 1) + "/6"}</div>
                   </div>
                   <div style={{ display: "flex", gap: "var(--sp-2)" }}>
-                    <button onClick={() => {
+                    <Button size="sm" onClick={() => {
                       const cp = pendingCheckpoints.session;
                       const sc = DAILY_SCENARIOS.find(s => s.title === cp.scenario);
                       if (sc) { setChosenScenario(sc); setTab("today"); }
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
-                    }} className="btn btn--primary btn--sm">كمّل</button>
-                    <button onClick={() => {
+                    }}>كمّل</Button>
+                    <Button variant="ghost" size="sm" onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-session"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
-                    }} className="btn btn--ghost btn--sm">ابدأ من جديد</button>
+                    }}><IconRefresh size={16}/>ابدأ من جديد</Button>
                   </div>
                 </div>
               )}
@@ -2307,14 +2307,14 @@ function MainApp({ currentUser, onLogout }) {
                     <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (pendingCheckpoints.quiz.qi + 1) + "/10 — " + pendingCheckpoints.quiz.score + " صحيح"}</div>
                   </div>
                   <div style={{ display: "flex", gap: "var(--sp-2)" }}>
-                    <button onClick={() => {
+                    <Button size="sm" onClick={() => {
                       setTab("train"); setTrainMode("quiz");
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
-                    }} className="btn btn--primary btn--sm">كمّل</button>
-                    <button onClick={() => {
+                    }}>كمّل</Button>
+                    <Button variant="ghost" size="sm" onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-quiz"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
-                    }} className="btn btn--ghost btn--sm">ابدأ من جديد</button>
+                    }}><IconRefresh size={16}/>ابدأ من جديد</Button>
                   </div>
                 </div>
               )}
@@ -2325,14 +2325,14 @@ function MainApp({ currentUser, onLogout }) {
                     <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (pendingCheckpoints.level.qi + 1) + "/25"}</div>
                   </div>
                   <div style={{ display: "flex", gap: "var(--sp-2)" }}>
-                    <button onClick={() => {
+                    <Button size="sm" onClick={() => {
                       setTab("train"); setTrainMode("level");
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
-                    }} className="btn btn--primary btn--sm">كمّل</button>
-                    <button onClick={() => {
+                    }}>كمّل</Button>
+                    <Button variant="ghost" size="sm" onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-level"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
-                    }} className="btn btn--ghost btn--sm">ابدأ من جديد</button>
+                    }}><IconRefresh size={16}/>ابدأ من جديد</Button>
                   </div>
                 </div>
               )}
@@ -2426,7 +2426,7 @@ function MainApp({ currentUser, onLogout }) {
               <div style={{ textAlign: "center" }}>
                 <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>مراجعة ما قبل النوم</div>
                 <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 1.9, marginBottom: "var(--sp-4)" }}>استمع لجمل اليوم قبل النوم — ٣ دقائق فقط. عقلك يرسّخها أثناء النوم.</div>
-                <button className="btn btn--primary" onClick={() => {
+                <Button onClick={() => {
                   const sc2 = chosenScenario || todayScenario;
                   let idx = 0;
                   function playNext() {
@@ -2436,7 +2436,7 @@ function MainApp({ currentUser, onLogout }) {
                     setTimeout(playNext, 4000);
                   }
                   playNext();
-                }}>شغّل جمل اليوم</button>
+                }}><IconVolume size={16}/>شغّل جمل اليوم</Button>
                 <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)", marginTop: "var(--sp-2)" }}>استرخِ واستمع فقط</div>
               </div>
             </Card>}
@@ -2473,11 +2473,11 @@ function MainApp({ currentUser, onLogout }) {
               );
               return (
                 <div>
-                  <div className="section-title">مقترح لك</div>
+                  <SectionTitle>مقترح لك</SectionTitle>
                   <div className="exercise-grid" style={{ marginBottom: "var(--sp-6)" }}>
                     {allExercises.slice(0, 3).map(m => <ExCard key={m.id} m={m} />)}
                   </div>
-                  <div className="section-title">المزيد من التمارين</div>
+                  <SectionTitle>المزيد من التمارين</SectionTitle>
                   <div className="exercise-grid">
                     {allExercises.slice(3).map(m => <ExCard key={m.id} m={m} />)}
                   </div>
