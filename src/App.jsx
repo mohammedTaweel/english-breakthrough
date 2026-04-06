@@ -37,6 +37,124 @@ async function setActiveSession(session) {
   else await storage.delete("app-active-session");
 }
 
+// OAuth Configuration — set via environment variables or hardcode below
+const OAUTH_CONFIG = {
+  google: import.meta.env.VITE_GOOGLE_CLIENT_ID || "",
+  facebook: import.meta.env.VITE_FACEBOOK_APP_ID || "",
+  apple: import.meta.env.VITE_APPLE_CLIENT_ID || "",
+};
+
+// Decode JWT payload (Google ID token) without external libraries
+function decodeJwtPayload(token) {
+  try {
+    const base64 = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+    return JSON.parse(atob(base64));
+  } catch { return null; }
+}
+
+// Load external script dynamically (cached)
+const _loadedScripts = {};
+function loadScript(src, id) {
+  if (_loadedScripts[id]) return _loadedScripts[id];
+  _loadedScripts[id] = new Promise((resolve, reject) => {
+    if (document.getElementById(id)) { resolve(); return; }
+    const s = document.createElement("script");
+    s.id = id; s.src = src; s.async = true; s.defer = true;
+    s.onload = resolve; s.onerror = reject;
+    document.head.appendChild(s);
+  });
+  return _loadedScripts[id];
+}
+
+// Google Sign-In using Google Identity Services
+async function googleSignIn() {
+  if (!OAUTH_CONFIG.google) throw new Error("Google Client ID غير مُعدّ");
+  await loadScript("https://accounts.google.com/gsi/client", "google-gsi");
+  return new Promise((resolve, reject) => {
+    window.google.accounts.id.initialize({
+      client_id: OAUTH_CONFIG.google,
+      callback: (response) => {
+        const payload = decodeJwtPayload(response.credential);
+        if (payload) resolve({ uid: "g_" + payload.sub, displayName: payload.name || payload.email, email: payload.email, provider: "google", avatar: payload.picture });
+        else reject(new Error("فشل قراءة بيانات Google"));
+      },
+    });
+    window.google.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        // Fallback: open popup manually
+        window.google.accounts.id.renderButton(document.createElement("div"), { type: "standard" });
+        // Use the OAuth2 popup flow instead
+        const popup = window.open(
+          "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + encodeURIComponent(OAUTH_CONFIG.google) + "&redirect_uri=" + encodeURIComponent(window.location.origin) + "&response_type=id_token&scope=openid%20profile%20email&nonce=" + Date.now(),
+          "google-login", "width=500,height=600"
+        );
+        if (!popup) reject(new Error("المتصفح منع النافذة المنبثقة — فعّل pop-ups"));
+        // Listen for redirect
+        const interval = setInterval(() => {
+          try {
+            if (popup.closed) { clearInterval(interval); reject(new Error("تم إغلاق نافذة تسجيل الدخول")); return; }
+            const url = popup.location.href;
+            if (url.startsWith(window.location.origin)) {
+              clearInterval(interval); popup.close();
+              const hash = new URL(url).hash.substring(1);
+              const params = new URLSearchParams(hash);
+              const idToken = params.get("id_token");
+              if (idToken) {
+                const payload = decodeJwtPayload(idToken);
+                if (payload) resolve({ uid: "g_" + payload.sub, displayName: payload.name || payload.email, email: payload.email, provider: "google", avatar: payload.picture });
+                else reject(new Error("فشل قراءة بيانات Google"));
+              } else reject(new Error("لم يتم الحصول على التوكن"));
+            }
+          } catch { /* cross-origin, keep waiting */ }
+        }, 500);
+      }
+    });
+  });
+}
+
+// Facebook Login using Facebook SDK
+async function facebookSignIn() {
+  if (!OAUTH_CONFIG.facebook) throw new Error("Facebook App ID غير مُعدّ");
+  await loadScript("https://connect.facebook.net/en_US/sdk.js", "facebook-sdk");
+  if (!window.FB._initialized) {
+    window.FB.init({ appId: OAUTH_CONFIG.facebook, cookie: true, xfbml: false, version: "v19.0" });
+    window.FB._initialized = true;
+  }
+  return new Promise((resolve, reject) => {
+    window.FB.login((loginResponse) => {
+      if (loginResponse.authResponse) {
+        window.FB.api("/me", { fields: "id,name,email,picture.width(100)" }, (user) => {
+          resolve({ uid: "fb_" + user.id, displayName: user.name, email: user.email || "", provider: "facebook", avatar: user.picture?.data?.url });
+        });
+      } else reject(new Error("تم إلغاء تسجيل الدخول بفيسبوك"));
+    }, { scope: "public_profile,email" });
+  });
+}
+
+// Apple Sign-In using Apple JS SDK
+async function appleSignIn() {
+  if (!OAUTH_CONFIG.apple) throw new Error("Apple Client ID غير مُعدّ");
+  await loadScript("https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js", "apple-signin");
+  window.AppleID.auth.init({
+    clientId: OAUTH_CONFIG.apple,
+    scope: "name email",
+    redirectURI: window.location.origin,
+    usePopup: true,
+  });
+  const response = await window.AppleID.auth.signIn();
+  const payload = decodeJwtPayload(response.authorization.id_token);
+  const name = response.user ? (response.user.name.firstName + " " + response.user.name.lastName) : (payload?.email || "Apple User");
+  return { uid: "ap_" + payload.sub, displayName: name, email: payload?.email || "", provider: "apple" };
+}
+
+// Unified OAuth handler
+async function oauthSignIn(provider) {
+  if (provider === "google") return googleSignIn();
+  if (provider === "facebook") return facebookSignIn();
+  if (provider === "apple") return appleSignIn();
+  throw new Error("مزود غير معروف");
+}
+
 // ===== AUTH SCREEN =====
 function AuthScreen({ onLogin }) {
   const [mode, setMode] = useState("login"); // login, register
@@ -162,16 +280,36 @@ function AuthScreen({ onLogin }) {
           )}
         </div>
 
-        {/* Future OAuth providers placeholder */}
+        {/* OAuth providers */}
         <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid rgba(255,255,255,0.05)" }}>
           <div style={{ fontSize: 12, color: "#4a5166", textAlign: "center", marginBottom: 12 }}>أو سجّل عن طريق</div>
           <div style={{ display: "flex", gap: 8 }}>
             {[
-              { name: "Google", icon: "G", color: "#4285f4", bg: "rgba(66,133,244,0.1)" },
-              { name: "Apple", icon: "", color: "#f5f5f5", bg: "rgba(255,255,255,0.06)" },
-              { name: "Facebook", icon: "f", color: "#1877f2", bg: "rgba(24,119,242,0.1)" },
+              { name: "Google", key: "google", icon: "G", color: "#4285f4", bg: "rgba(66,133,244,0.1)", configured: !!OAUTH_CONFIG.google },
+              { name: "Apple", key: "apple", icon: "", color: "#f5f5f5", bg: "rgba(255,255,255,0.06)", configured: !!OAUTH_CONFIG.apple },
+              { name: "Facebook", key: "facebook", icon: "f", color: "#1877f2", bg: "rgba(24,119,242,0.1)", configured: !!OAUTH_CONFIG.facebook },
             ].map(p => (
-              <button key={p.name} onClick={() => setError("تسجيل " + p.name + " — قريباً!")} style={{ flex: 1, padding: 12, borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)", background: p.bg, color: p.color, fontFamily: "'IBM Plex Mono'", fontSize: 16, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+              <button key={p.name} disabled={loading} onClick={async () => {
+                if (!p.configured) { setError(p.name + " غير مُعدّ — أضف VITE_" + p.key.toUpperCase() + "_CLIENT_ID"); return; }
+                setError(""); setLoading(true);
+                try {
+                  const oauthUser = await oauthSignIn(p.key);
+                  // Find or create account
+                  const accs = await getAccounts();
+                  let acc = accs.find(a => a.provider === oauthUser.provider && a.uid === oauthUser.uid);
+                  if (!acc) {
+                    acc = { uid: oauthUser.uid, username: oauthUser.uid, displayName: oauthUser.displayName, email: oauthUser.email || "", provider: oauthUser.provider, avatar: oauthUser.avatar || "", hash: "", salt: "", created: new Date().toISOString() };
+                    accs.push(acc);
+                    await saveAccounts(accs);
+                  }
+                  await setActiveSession({ uid: acc.uid, username: acc.username, displayName: acc.displayName });
+                  setLoading(false);
+                  onLogin(acc);
+                } catch (err) {
+                  setLoading(false);
+                  setError(err.message || "فشل تسجيل الدخول");
+                }
+              }} style={{ flex: 1, padding: 12, borderRadius: 10, border: "1px solid " + (p.configured ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.03)"), background: p.configured ? p.bg : "rgba(255,255,255,0.02)", color: p.configured ? p.color : "#4a5166", fontFamily: "'IBM Plex Mono'", fontSize: 16, fontWeight: 700, cursor: p.configured ? "pointer" : "default", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, opacity: p.configured ? 1 : 0.5 }}>
                 <span>{p.icon}</span>
                 <span style={{ fontSize: 11, fontFamily: "'Noto Kufi Arabic',sans-serif", fontWeight: 600 }}>{p.name}</span>
               </button>
