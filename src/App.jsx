@@ -208,12 +208,12 @@ function AuthScreen({ onLogin }) {
     onLogin(acc);
   }
 
-  const inputStyle = { width: "100%", padding: 14, borderRadius: 12, fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 14, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "#f0f0f5", outline: "none", marginBottom: 10, textAlign: "right" };
+  const inputStyle = { width: "100%", padding: 14, borderRadius: 12, fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 14, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", color: "#18181b", outline: "none", marginBottom: 10, textAlign: "right" };
   const btnStyle = { width: "100%", padding: 16, borderRadius: 14, border: "none", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 700, cursor: "pointer" };
 
   // Quick profile selection if accounts exist
   if (showProfiles && accounts.length > 0 && mode === "login") return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#1a1614", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", background: "#fafaf9", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -222,30 +222,30 @@ function AuthScreen({ onLogin }) {
       <div style={{ maxWidth: 400, width: "100%", padding: 28, animation: "fadeUp .5s" }}>
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <TaliqLogo size={44} />
-          <div style={{ fontSize: 18, fontWeight: 700, color: "#f5f0eb", marginTop: 14 }}>من يتدرب اليوم؟</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: "#18181b", marginTop: 14 }}>من يتدرب اليوم؟</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
           {accounts.map(acc => (
-            <button key={acc.uid} onClick={() => quickLogin(acc)} style={{ display: "flex", alignItems: "center", gap: 12, padding: 16, borderRadius: 14, border: "1px solid rgba(232,184,75,0.12)", background: "rgba(232,184,75,0.04)", cursor: "pointer", textAlign: "right", fontFamily: "inherit" }}>
-              <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, fontWeight: 800, color: "#1a1614", flexShrink: 0 }}>{acc.displayName.charAt(0).toUpperCase()}</div>
+            <button key={acc.uid} onClick={() => quickLogin(acc)} style={{ display: "flex", alignItems: "center", gap: 12, padding: 16, borderRadius: 14, border: "1px solid rgba(29,78,216,0.12)", background: "rgba(29,78,216,0.04)", cursor: "pointer", textAlign: "right", fontFamily: "inherit" }}>
+              <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#1d4ed8,#059669)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, fontWeight: 800, color: "#fafaf9", flexShrink: 0 }}>{acc.displayName.charAt(0).toUpperCase()}</div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 16, fontWeight: 700, color: "#f0f0f5" }}>{acc.displayName}</div>
-                <div style={{ fontSize: 12, color: "#7a8295" }}>@{acc.username}</div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: "#18181b" }}>{acc.displayName}</div>
+                <div style={{ fontSize: 12, color: "#71717a" }}>@{acc.username}</div>
               </div>
-              <div style={{ fontSize: 20, color: "#e8b84b" }}>←</div>
+              <div style={{ fontSize: 20, color: "#1d4ed8" }}>←</div>
             </button>
           ))}
         </div>
         <div style={{ display: "flex", gap: 8 }}>
-          <button onClick={() => setShowProfiles(false)} style={{ flex: 1, padding: 12, borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", background: "transparent", color: "#9ca3b5", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>تسجيل دخول بحساب آخر</button>
-          <button onClick={() => { setMode("register"); setShowProfiles(false); }} style={{ flex: 1, padding: 12, borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>حساب جديد</button>
+          <button onClick={() => setShowProfiles(false)} style={{ flex: 1, padding: 12, borderRadius: 10, border: "1px solid rgba(0,0,0,0.06)", background: "transparent", color: "#52525b", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>تسجيل دخول بحساب آخر</button>
+          <button onClick={() => { setMode("register"); setShowProfiles(false); }} style={{ flex: 1, padding: 12, borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>حساب جديد</button>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#1a1614", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", background: "#fafaf9", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -254,8 +254,8 @@ function AuthScreen({ onLogin }) {
       <div style={{ maxWidth: 400, width: "100%", padding: 28, animation: "fadeUp .5s" }}>
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <TaliqLogo size={44} />
-          <div style={{ fontSize: 20, fontWeight: 800, color: "#f5f0eb", marginTop: 14 }}>{mode === "register" ? "حساب جديد" : "تسجيل الدخول"}</div>
-          <div style={{ fontSize: 13, color: "#7a8295", marginTop: 6 }}>{mode === "register" ? "سجّل وابدأ رحلتك في اكتساب الإنجليزية" : "أدخل بياناتك لمتابعة التدريب"}</div>
+          <div style={{ fontSize: 20, fontWeight: 800, color: "#18181b", marginTop: 14 }}>{mode === "register" ? "حساب جديد" : "تسجيل الدخول"}</div>
+          <div style={{ fontSize: 13, color: "#71717a", marginTop: 6 }}>{mode === "register" ? "سجّل وابدأ رحلتك في اكتساب الإنجليزية" : "أدخل بياناتك لمتابعة التدريب"}</div>
         </div>
 
         {mode === "register" && (
@@ -266,27 +266,27 @@ function AuthScreen({ onLogin }) {
           onKeyDown={e => { if (e.key === "Enter") { mode === "register" ? handleRegister() : handleLogin(); } }}
         />
 
-        {error && <div style={{ fontSize: 13, color: "#e87461", textAlign: "center", marginBottom: 10, padding: 8, background: "rgba(232,116,97,0.08)", borderRadius: 8 }}>{error}</div>}
+        {error && <div style={{ fontSize: 13, color: "#dc2626", textAlign: "center", marginBottom: 10, padding: 8, background: "rgba(220,38,38,0.08)", borderRadius: 8 }}>{error}</div>}
 
-        <button onClick={mode === "register" ? handleRegister : handleLogin} disabled={loading} style={{ ...btnStyle, background: loading ? "#5c6478" : "linear-gradient(135deg,#e8b84b,#d4a03a)", color: "#1a1614", marginBottom: 12 }}>
+        <button onClick={mode === "register" ? handleRegister : handleLogin} disabled={loading} style={{ ...btnStyle, background: loading ? "#a1a1aa" : "linear-gradient(135deg,#1d4ed8,#1e40af)", color: "#fafaf9", marginBottom: 12 }}>
           {loading ? "..." : mode === "register" ? "إنشاء حساب" : "دخول"}
         </button>
 
         <div style={{ textAlign: "center" }}>
           {mode === "login" ? (
-            <button onClick={() => { setMode("register"); setError(""); }} style={{ background: "none", border: "none", color: "#e8b84b", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>ما عندك حساب؟ <b>سجّل الآن</b></button>
+            <button onClick={() => { setMode("register"); setError(""); }} style={{ background: "none", border: "none", color: "#1d4ed8", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>ما عندك حساب؟ <b>سجّل الآن</b></button>
           ) : (
-            <button onClick={() => { setMode("login"); setError(""); setShowProfiles(accounts.length > 0); }} style={{ background: "none", border: "none", color: "#e8b84b", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>عندك حساب؟ <b>سجّل دخول</b></button>
+            <button onClick={() => { setMode("login"); setError(""); setShowProfiles(accounts.length > 0); }} style={{ background: "none", border: "none", color: "#1d4ed8", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>عندك حساب؟ <b>سجّل دخول</b></button>
           )}
         </div>
 
         {/* OAuth providers */}
-        <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-          <div style={{ fontSize: 12, color: "#4a5166", textAlign: "center", marginBottom: 12 }}>أو سجّل عن طريق</div>
+        <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,0.04)" }}>
+          <div style={{ fontSize: 12, color: "#a1a1aa", textAlign: "center", marginBottom: 12 }}>أو سجّل عن طريق</div>
           <div style={{ display: "flex", gap: 8 }}>
             {[
               { name: "Google", key: "google", icon: "G", color: "#4285f4", bg: "rgba(66,133,244,0.1)", configured: !!OAUTH_CONFIG.google },
-              { name: "Apple", key: "apple", icon: "", color: "#f5f5f5", bg: "rgba(255,255,255,0.06)", configured: !!OAUTH_CONFIG.apple },
+              { name: "Apple", key: "apple", icon: "", color: "#18181b", bg: "rgba(0,0,0,0.04)", configured: !!OAUTH_CONFIG.apple },
               { name: "Facebook", key: "facebook", icon: "f", color: "#1877f2", bg: "rgba(24,119,242,0.1)", configured: !!OAUTH_CONFIG.facebook },
             ].map(p => (
               <button key={p.name} disabled={loading} onClick={async () => {
@@ -309,7 +309,7 @@ function AuthScreen({ onLogin }) {
                   setLoading(false);
                   setError(err.message || "فشل تسجيل الدخول");
                 }
-              }} style={{ flex: 1, padding: 12, borderRadius: 10, border: "1px solid " + (p.configured ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.03)"), background: p.configured ? p.bg : "rgba(255,255,255,0.02)", color: p.configured ? p.color : "#4a5166", fontFamily: "'IBM Plex Mono'", fontSize: 16, fontWeight: 700, cursor: p.configured ? "pointer" : "default", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, opacity: p.configured ? 1 : 0.5 }}>
+              }} style={{ flex: 1, padding: 12, borderRadius: 10, border: "1px solid " + (p.configured ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.02)"), background: p.configured ? p.bg : "rgba(0,0,0,0.02)", color: p.configured ? p.color : "#a1a1aa", fontFamily: "'IBM Plex Mono'", fontSize: 16, fontWeight: 700, cursor: p.configured ? "pointer" : "default", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, opacity: p.configured ? 1 : 0.5 }}>
                 <span>{p.icon}</span>
                 <span style={{ fontSize: 11, fontFamily: "'Noto Kufi Arabic',sans-serif", fontWeight: 600 }}>{p.name}</span>
               </button>
@@ -325,18 +325,16 @@ const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  body { background: #fafaf9; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
   @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-  @keyframes pulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.06); } }
-  @keyframes glow { 0%,100% { box-shadow:0 0 10px rgba(232,184,75,0.1); } 50% { box-shadow:0 0 25px rgba(232,184,75,0.2); } }
-  @keyframes confDrop { 0% { transform:translateY(-100vh) rotate(0); opacity:1; } 100% { transform:translateY(100vh) rotate(720deg); opacity:0; } }
-  @keyframes slideIn { from { opacity:0; transform:translateX(30px); } to { opacity:1; transform:translateX(0); } }
-  @keyframes firePulse { 0%,100% { transform:scale(1); filter:brightness(1); } 50% { transform:scale(1.2); filter:brightness(1.3); } }
-  @keyframes stepDone { 0% { transform:scale(1); } 50% { transform:scale(1.3); } 100% { transform:scale(1); } }
+  @keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes stepDone { 0% { transform:scale(1); } 50% { transform:scale(1.15); } 100% { transform:scale(1); } }
   @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-  button { transition: transform 0.15s, opacity 0.15s, box-shadow 0.2s; }
-  button:active { transform: scale(0.96); }
-  button:hover { opacity: 0.9; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  button { transition: transform 0.15s, opacity 0.15s; }
+  button:active { transform: scale(0.97); }
+  button:hover { opacity: 0.85; }
 `;
 
 const SHADOW_LINES = [
@@ -500,12 +498,12 @@ const QUIZ_BANK = [
 // Levels: A1 (Beginner) → C2 (Mastery)
 
 const CEFR_LEVELS = [
-  { code: "A1", name: "مبتدئ", nameEn: "Beginner", color: "#e87461", desc: "تعرف كلمات وجمل بسيطة جداً. تقدر تعرّف نفسك وتسأل أسئلة أساسية.", tip: "ركّز على حفظ الجمل الأساسية والمفردات اليومية. ابدأ بتمارين الظل مع الجمل القصيرة." },
-  { code: "A2", name: "ما قبل المتوسط", nameEn: "Elementary", color: "#e8a040", desc: "تفهم جمل متكررة في مواضيع يومية. تقدر تتواصل في مواقف بسيطة ومباشرة.", tip: "وسّع مفرداتك وركّز على تركيب جمل بسيطة. استخدم تمرين 'تفكير بصوت عالٍ' يومياً." },
-  { code: "B1", name: "متوسط", nameEn: "Intermediate", color: "#e8b84b", desc: "تفهم النقاط الرئيسية في محادثات واضحة. تقدر تتعامل مع أغلب المواقف اليومية.", tip: "ابدأ بالمحادثات التفاعلية وركّز على ربط الأفكار. تمرّن على الجمل الجاهزة لمواقف الحياة." },
-  { code: "B2", name: "فوق المتوسط", nameEn: "Upper-Intermediate", color: "#e8b84b", desc: "تفهم أفكار معقدة وتقدر تتفاعل بطلاقة مع متحدثين أصليين بدون جهد كبير.", tip: "ركّز على الدقة في التعبير والمصطلحات المتخصصة. تمرّن على العروض التقديمية والتفاوض." },
-  { code: "C1", name: "متقدم", nameEn: "Advanced", color: "#e8b84b", desc: "تفهم نصوص طويلة ومعقدة وتقدر تعبّر عن نفسك بطلاقة وعفوية في أي موقف مهني.", tip: "ركّز على الفروق الدقيقة في اللغة والتعابير الاصطلاحية. تمرّن على المحادثات المتقدمة." },
-  { code: "C2", name: "إتقان", nameEn: "Mastery", color: "#5ec4b6", desc: "تفهم كل شيء تقريباً وتقدر تعبّر بدقة عالية حتى في المواقف الأكثر تعقيداً.", tip: "حافظ على مستواك بالممارسة المستمرة. ركّز على الأسلوب والبلاغة في التواصل المهني." },
+  { code: "A1", name: "مبتدئ", nameEn: "Beginner", color: "#dc2626", desc: "تعرف كلمات وجمل بسيطة جداً. تقدر تعرّف نفسك وتسأل أسئلة أساسية.", tip: "ركّز على حفظ الجمل الأساسية والمفردات اليومية. ابدأ بتمارين الظل مع الجمل القصيرة." },
+  { code: "A2", name: "ما قبل المتوسط", nameEn: "Elementary", color: "#d97706", desc: "تفهم جمل متكررة في مواضيع يومية. تقدر تتواصل في مواقف بسيطة ومباشرة.", tip: "وسّع مفرداتك وركّز على تركيب جمل بسيطة. استخدم تمرين 'تفكير بصوت عالٍ' يومياً." },
+  { code: "B1", name: "متوسط", nameEn: "Intermediate", color: "#1d4ed8", desc: "تفهم النقاط الرئيسية في محادثات واضحة. تقدر تتعامل مع أغلب المواقف اليومية.", tip: "ابدأ بالمحادثات التفاعلية وركّز على ربط الأفكار. تمرّن على الجمل الجاهزة لمواقف الحياة." },
+  { code: "B2", name: "فوق المتوسط", nameEn: "Upper-Intermediate", color: "#1d4ed8", desc: "تفهم أفكار معقدة وتقدر تتفاعل بطلاقة مع متحدثين أصليين بدون جهد كبير.", tip: "ركّز على الدقة في التعبير والمصطلحات المتخصصة. تمرّن على العروض التقديمية والتفاوض." },
+  { code: "C1", name: "متقدم", nameEn: "Advanced", color: "#1d4ed8", desc: "تفهم نصوص طويلة ومعقدة وتقدر تعبّر عن نفسك بطلاقة وعفوية في أي موقف مهني.", tip: "ركّز على الفروق الدقيقة في اللغة والتعابير الاصطلاحية. تمرّن على المحادثات المتقدمة." },
+  { code: "C2", name: "إتقان", nameEn: "Mastery", color: "#059669", desc: "تفهم كل شيء تقريباً وتقدر تعبّر بدقة عالية حتى في المواقف الأكثر تعقيداً.", tip: "حافظ على مستواك بالممارسة المستمرة. ركّز على الأسلوب والبلاغة في التواصل المهني." },
 ];
 
 const LEVEL_TEST = [
@@ -594,14 +592,14 @@ function SpeakBtn({ text, rate, size, color }) {
     } else setPlaying(false);
   }
   return (
-    <button onClick={(e) => { e.stopPropagation(); play(); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: size || 16, padding: 2, opacity: playing ? 1 : 0.5, color: color || "#e8b84b", transition: ".2s", flexShrink: 0 }} title="استمع">{playing ? "🔊" : "🔈"}</button>
+    <button onClick={(e) => { e.stopPropagation(); play(); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: size || 16, padding: 2, opacity: playing ? 1 : 0.5, color: color || "#1d4ed8", transition: ".2s", flexShrink: 0 }} title="استمع">{playing ? "🔊" : "🔈"}</button>
   );
 }
 
 function VoiceBadge() {
   const info = getVoiceInfo();
-  const colors = { openai: "#5ec4b6", native: "#5ec4b6", neural: "#e8b84b", basic: "#e8b84b" };
-  const bgs = { openai: "rgba(94,196,182,0.15)", native: "rgba(94,196,182,0.15)", neural: "rgba(232,184,75,0.15)", basic: "rgba(232,184,75,0.15)" };
+  const colors = { openai: "#059669", native: "#059669", neural: "#1d4ed8", basic: "#1d4ed8" };
+  const bgs = { openai: "rgba(5,150,105,0.15)", native: "rgba(5,150,105,0.15)", neural: "rgba(29,78,216,0.15)", basic: "rgba(29,78,216,0.15)" };
   return <span style={{ fontSize: 12, padding: "2px 6px", borderRadius: 4, background: bgs[info.tier], color: colors[info.tier], fontWeight: 600 }}>{info.label}</span>;
 }
 
@@ -1133,7 +1131,7 @@ const gtd = () => { const d = new Date(); return d.getFullYear() + "-" + String(
 const gdn = () => { const d = new Date(); return d.getDate() + d.getMonth() * 31 + d.getFullYear(); };
 const gdow = () => new Date().getDay();
 const getWk = (s) => { const x = Math.floor((new Date(gtd()) - new Date(s)) / 864e5); return x < 0 ? 0 : Math.min(Math.floor(x / 7) + 1, 12); };
-const getPh = (w) => w <= 4 ? { n: 1, nm: "بناء الأساس", c: "#e8b84b", gap: 6 } : w <= 8 ? { n: 2, nm: "التسريع", c: "#e8b84b", gap: 4 } : { n: 3, nm: "الإطلاق", c: "#e8b84b", gap: 3 };
+const getPh = (w) => w <= 4 ? { n: 1, nm: "بناء الأساس", c: "#1d4ed8", gap: 6 } : w <= 8 ? { n: 2, nm: "التسريع", c: "#1d4ed8", gap: 4 } : { n: 3, nm: "الإطلاق", c: "#1d4ed8", gap: 3 };
 function shuffle(arr, seed) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = (seed * (i + 1) * 9301 + 49297) % 233280; const k = Math.floor((j / 233280) * (i + 1)); [a[i], a[k]] = [a[k], a[i]]; } return a; }
 function shuffleOpts(opts, correctIndex, seed) {
   const correct = opts[correctIndex];
@@ -1190,23 +1188,23 @@ function Prompter({ lines, gap, color, label, withAudio }) {
     <div>
       <div style={{ display: "flex", gap: 8, marginBottom: 12, alignItems: "center" }}>
         {!on ? (
-          <button onClick={start} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "linear-gradient(135deg," + color + ",#d4a43a)", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{"▶ ابدأ " + label}</button>
+          <button onClick={start} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "linear-gradient(135deg," + color + ",#1e40af)", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{"▶ ابدأ " + label}</button>
         ) : (
-          <button onClick={stop} style={{ padding: "8px 20px", borderRadius: 10, border: "1px solid #252836", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>⏹ إيقاف</button>
+          <button onClick={stop} style={{ padding: "8px 20px", borderRadius: 10, border: "1px solid #e4e4e7", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>⏹ إيقاف</button>
         )}
-        {on && phase === "listen" && <div style={{ fontSize: 13, color: "#e8b84b", fontWeight: 600 }}>🔊 استمع...</div>}
+        {on && phase === "listen" && <div style={{ fontSize: 13, color: "#1d4ed8", fontWeight: 600 }}>🔊 استمع...</div>}
         {on && phase === "repeat" && sec > 0 && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 22, fontWeight: 700, color: color }}>{sec}</div>}
-        {on && phase === "repeat" && sec > 0 && <div style={{ fontSize: 12, color: "#7a8295" }}>ردّد بصوت عالٍ!</div>}
+        {on && phase === "repeat" && sec > 0 && <div style={{ fontSize: 12, color: "#71717a" }}>ردّد بصوت عالٍ!</div>}
       </div>
       {lines.map((line, i) => {
         const cur = on && i === idx;
         const past = on && i < idx;
         return (
-          <div key={i} style={{ padding: "10px 14px", borderRadius: 10, marginBottom: 4, fontFamily: "'IBM Plex Mono',monospace", fontSize: cur ? 16 : 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, transition: "all .4s", background: cur ? color + "18" : "rgba(255,255,255,0.015)", border: "1px solid " + (cur ? color + "40" : "rgba(255,255,255,0.04)"), color: cur ? "#fff" : past ? "#4a5166" : "#9ca3b5", fontWeight: cur ? 600 : 400, transform: cur ? "scale(1.01)" : "none", display: "flex", alignItems: "center", gap: 8 }}>
+          <div key={i} style={{ padding: "10px 14px", borderRadius: 10, marginBottom: 4, fontFamily: "'IBM Plex Mono',monospace", fontSize: cur ? 16 : 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, transition: "all .4s", background: cur ? color + "18" : "rgba(0,0,0,0.015)", border: "1px solid " + (cur ? color + "40" : "rgba(0,0,0,0.03)"), color: cur ? "#1e40af" : past ? "#a1a1aa" : "#52525b", fontWeight: cur ? 600 : 400, transform: cur ? "scale(1.01)" : "none", display: "flex", alignItems: "center", gap: 8 }}>
             <div style={{ flex: 1 }}>{line}</div>
-            <SpeakBtn text={line} size={cur ? 18 : 14} color={cur ? color : "#7a8295"} />
+            <SpeakBtn text={line} size={cur ? 18 : 14} color={cur ? color : "#71717a"} />
             {cur && phase === "repeat" && <span style={{ fontSize: 12, color: color, flexShrink: 0 }}>← ردّد!</span>}
-            {cur && phase === "listen" && <span style={{ fontSize: 12, color: "#e8b84b", flexShrink: 0 }}>← استمع</span>}
+            {cur && phase === "listen" && <span style={{ fontSize: 12, color: "#1d4ed8", flexShrink: 0 }}>← استمع</span>}
           </div>
         );
       })}
@@ -1230,38 +1228,38 @@ function MeetingSim() {
   if (done) return (
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>🎉</div>
-      <div style={{ fontSize: 20, fontWeight: 800, color: "#e8b84b", marginBottom: 8 }}>{score}/{m.steps.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score === m.steps.length ? "إنجاز مميز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محادثة جديدة</button>
+      <div style={{ fontSize: 20, fontWeight: 800, color: "#1d4ed8", marginBottom: 8 }}>{score}/{m.steps.length}</div>
+      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score === m.steps.length ? "إنجاز مميز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محادثة جديدة</button>
     </div>
   );
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: "#e8b84b" }}>{(m.icon || "🎭") + " " + m.title}</div>
-        <div style={{ fontSize: 12, color: "#7a8295" }}>{"خطوة " + (step + 1) + "/" + m.steps.length}</div>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8" }}>{(m.icon || "🎭") + " " + m.title}</div>
+        <div style={{ fontSize: 12, color: "#71717a" }}>{"خطوة " + (step + 1) + "/" + m.steps.length}</div>
       </div>
-      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
-        <div style={{ fontSize: 12, color: "#e8b84b", marginBottom: 4 }}>{"💬 " + s.speaker + ":"}</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "#f0f0f5", flex: 1 }}>{s.text}</div><SpeakBtn text={s.text} size={18} /></div>
+      <div style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
+        <div style={{ fontSize: 12, color: "#1d4ed8", marginBottom: 4 }}>{"💬 " + s.speaker + ":"}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "#18181b", flex: 1 }}>{s.text}</div><SpeakBtn text={s.text} size={18} /></div>
       </div>
-      <div style={{ fontSize: 12, color: "#e8b84b", fontWeight: 600, marginBottom: 8 }}>{"🎯 " + s.prompt + " — اختر الرد الأنسب واقرأه بصوت عالٍ:"}</div>
+      <div style={{ fontSize: 12, color: "#1d4ed8", fontWeight: 600, marginBottom: 8 }}>{"🎯 " + s.prompt + " — اختر الرد الأنسب واقرأه بصوت عالٍ:"}</div>
       {s.opts.map((o, oi) => {
         const show = picked !== null;
         const isCorrect = oi === s.ans;
         const isPicked = picked === oi;
-        let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
-        if (show && isCorrect) { bg = "rgba(94,196,182,0.1)"; brd = "rgba(94,196,182,0.3)"; }
-        else if (show && isPicked && !isCorrect) { bg = "rgba(232,160,64,0.1)"; brd = "rgba(232,160,64,0.3)"; }
+        let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
+        if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
         return (
           <div key={oi} onClick={() => picked === null && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 6, cursor: picked === null ? "pointer" : "default", fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, transition: ".3s", opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
             {o}
-            {show && isCorrect && <span style={{ marginRight: 8, fontSize: 12, color: "#5ec4b6" }}> ✓ صحيح — اقرأها بصوت عالٍ!</span>}
-            {show && isPicked && !isCorrect && <span style={{ marginRight: 8, fontSize: 12, color: "#e87461" }}> ✗</span>}
+            {show && isCorrect && <span style={{ marginRight: 8, fontSize: 12, color: "#059669" }}> ✓ صحيح — اقرأها بصوت عالٍ!</span>}
+            {show && isPicked && !isCorrect && <span style={{ marginRight: 8, fontSize: 12, color: "#dc2626" }}> ✗</span>}
           </div>
         );
       })}
-      {picked !== null && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{step + 1 >= m.steps.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
+      {picked !== null && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{step + 1 >= m.steps.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
     </div>
   );
 }
@@ -1283,9 +1281,9 @@ function QuickResp() {
   if (done) return (
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>✦</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: "#e8b84b", marginBottom: 8 }}>{score}/{total}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 7 ? "سريع وحاسم! 🔥" : score >= 5 ? "جيد! السرعة تتحسن" : "تحتاج تحفظ الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+      <div style={{ fontSize: 24, fontWeight: 800, color: "#1d4ed8", marginBottom: 8 }}>{score}/{total}</div>
+      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 7 ? "سريع وحاسم! 🔥" : score >= 5 ? "جيد! السرعة تتحسن" : "تحتاج تحفظ الجمل أكثر"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
   const rawQ = qs.current[qi];
@@ -1294,26 +1292,26 @@ function QuickResp() {
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 12, color: "#7a8295" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 18, fontWeight: 700, color: timer <= 3 ? "#e87461" : "#e8b84b" }}>{timer > 0 && picked === null ? timer + "s" : ""}</div>
+        <div style={{ fontSize: 12, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 18, fontWeight: 700, color: timer <= 3 ? "#dc2626" : "#1d4ed8" }}>{timer > 0 && picked === null ? timer + "s" : ""}</div>
       </div>
-      <div style={{ background: "rgba(232,184,75,0.06)", border: "1px solid rgba(232,184,75,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
-        <div style={{ fontSize: 14, color: "#f0f0f5", lineHeight: 1.8 }}>{"🎯 " + q.sit}</div>
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
+        <div style={{ fontSize: 14, color: "#18181b", lineHeight: 1.8 }}>{"🎯 " + q.sit}</div>
       </div>
       {q.opts.map((o, oi) => {
         const show = picked !== null;
         const isCorrect = oi === q.ans;
         const isPicked = picked === oi;
-        let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
-        if (show && isCorrect) { bg = "rgba(94,196,182,0.1)"; brd = "rgba(94,196,182,0.3)"; }
-        else if (show && isPicked && !isCorrect) { bg = "rgba(232,160,64,0.1)"; brd = "rgba(232,160,64,0.3)"; }
+        let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
+        if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
         return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: 10, marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
-          {o}{show && isCorrect && <span style={{ color: "#5ec4b6", fontSize: 12 }}> ✓ اقرأها!</span>}
+          {o}{show && isCorrect && <span style={{ color: "#059669", fontSize: 12 }}> ✓ اقرأها!</span>}
         </div>;
       })}
       {(picked !== null || timer === 0) && <div style={{ textAlign: "center", marginTop: 10 }}>
-        {timer === 0 && picked === null && <div style={{ color: "#e87461", fontSize: 13, marginBottom: 8 }}>⏰ انتهى الوقت!</div>}
-        <button onClick={() => { if (timer === 0 && picked === null) { setTotal(total + 1); } next(); }} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>التالي ←</button>
+        {timer === 0 && picked === null && <div style={{ color: "#dc2626", fontSize: 13, marginBottom: 8 }}>⏰ انتهى الوقت!</div>}
+        <button onClick={() => { if (timer === 0 && picked === null) { setTotal(total + 1); } next(); }} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>التالي ←</button>
       </div>}
     </div>
   );
@@ -1360,11 +1358,11 @@ function WeeklyQuiz({ onSave, checkpoint }) {
     return (
       <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
         <div style={{ fontSize: 40, marginBottom: 12 }}>📊</div>
-        <div style={{ fontSize: 28, fontWeight: 800, color: pct >= 80 ? "#5ec4b6" : pct >= 50 ? "#e8b84b" : "#e87461", marginBottom: 4 }}>{pct + "%"}</div>
-        <div style={{ fontSize: 16, color: "#9ca3b5", marginBottom: 4 }}>{score + "/" + qs.current.length}</div>
-        {diff !== null && <div style={{ fontSize: 14, fontWeight: 700, color: diff >= 0 ? "#5ec4b6" : "#e87461", marginBottom: 4 }}>{diff >= 0 ? "📈 +" + diff + "% عن الاختبار السابق" : "📉 " + diff + "% عن الاختبار السابق"}</div>}
-        <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{pct >= 80 ? "إنجاز مميز! الجمل صارت جزء منك 🔥" : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
-        <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 اختبار جديد</button>
+        <div style={{ fontSize: 28, fontWeight: 800, color: pct >= 80 ? "#059669" : pct >= 50 ? "#1d4ed8" : "#dc2626", marginBottom: 4 }}>{pct + "%"}</div>
+        <div style={{ fontSize: 16, color: "#52525b", marginBottom: 4 }}>{score + "/" + qs.current.length}</div>
+        {diff !== null && <div style={{ fontSize: 14, fontWeight: 700, color: diff >= 0 ? "#059669" : "#dc2626", marginBottom: 4 }}>{diff >= 0 ? "📈 +" + diff + "% عن الاختبار السابق" : "📉 " + diff + "% عن الاختبار السابق"}</div>}
+        <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{pct >= 80 ? "إنجاز مميز! الجمل صارت جزء منك 🔥" : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
+        <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 اختبار جديد</button>
       </div>
     );
   }
@@ -1374,24 +1372,24 @@ function WeeklyQuiz({ onSave, checkpoint }) {
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 12, color: "#7a8295" }}>{"سؤال " + (qi + 1) + "/10"}</div>
-        <div style={{ fontSize: 12, color: "#e8b84b", fontWeight: 600 }}>{score + " صحيح"}</div>
+        <div style={{ fontSize: 12, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/10"}</div>
+        <div style={{ fontSize: 12, color: "#1d4ed8", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
-      <div style={{ background: "rgba(232,184,75,0.06)", border: "1px solid rgba(232,184,75,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
-        <div style={{ fontSize: 14, color: "#f0f0f5", lineHeight: 1.8 }}>{q.q}</div>
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
+        <div style={{ fontSize: 14, color: "#18181b", lineHeight: 1.8 }}>{q.q}</div>
       </div>
       {q.opts.map((o, oi) => {
         const show = picked !== null;
         const isCorrect = oi === q.ans;
         const isPicked = picked === oi;
-        let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
-        if (show && isCorrect) { bg = "rgba(94,196,182,0.1)"; brd = "rgba(94,196,182,0.3)"; }
-        else if (show && isPicked && !isCorrect) { bg = "rgba(232,160,64,0.1)"; brd = "rgba(232,160,64,0.3)"; }
+        let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
+        if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
         return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: 10, marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
-          {o}{show && isCorrect && <span style={{ color: "#5ec4b6", fontSize: 12 }}> ✓</span>}
+          {o}{show && isCorrect && <span style={{ color: "#059669", fontSize: 12 }}> ✓</span>}
         </div>;
       })}
-      {picked !== null && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
+      {picked !== null && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
     </div>
   );
 }
@@ -1458,9 +1456,9 @@ function FillBlank() {
   if (done) return (
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>📝</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#5ec4b6" : score >= 4 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! ذاكرتك قوية 🔥" : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! ذاكرتك قوية 🔥" : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
 
@@ -1470,13 +1468,13 @@ function FillBlank() {
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 12, color: "#7a8295" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontSize: 12, color: "#d4a43a", fontWeight: 600 }}>{score + " صحيح"}</div>
+        <div style={{ fontSize: 12, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: 12, color: "#1e40af", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
-      <div style={{ background: "rgba(232,184,75,0.06)", border: "1px solid rgba(232,184,75,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
         <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 2.2, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 4 }}>
           {parts.map((p, pi) => p.type === "text" ? (
-            <span key={pi} style={{ color: "#f0f0f5" }}>{p.value}</span>
+            <span key={pi} style={{ color: "#18181b" }}>{p.value}</span>
           ) : (
             <span key={pi} style={{ display: "inline-block" }}>
               <input
@@ -1487,15 +1485,15 @@ function FillBlank() {
                   width: Math.max(p.word.length * 11, 60),
                   padding: "4px 8px", borderRadius: 6, fontSize: 14,
                   fontFamily: "'IBM Plex Mono'", textAlign: "center",
-                  background: checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(94,196,182,0.15)" : "rgba(232,116,97,0.15)") : "rgba(255,255,255,0.06)",
-                  border: "1px solid " + (checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(94,196,182,0.4)" : "rgba(232,116,97,0.4)") : "rgba(232,184,75,0.3)"),
+                  background: checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(5,150,105,0.15)" : "rgba(220,38,38,0.15)") : "rgba(0,0,0,0.05)",
+                  border: "1px solid " + (checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(5,150,105,0.4)" : "rgba(220,38,38,0.4)") : "rgba(29,78,216,0.3)"),
                   color: "#fff", outline: "none"
                 }}
                 placeholder="..."
                 disabled={checked}
               />
               {checked && (answers[p.index] || "").trim().toLowerCase() !== p.word.toLowerCase() && (
-                <div style={{ fontSize: 12, color: "#5ec4b6", textAlign: "center" }}>{p.word}</div>
+                <div style={{ fontSize: 12, color: "#059669", textAlign: "center" }}>{p.word}</div>
               )}
             </span>
           ))}
@@ -1503,11 +1501,11 @@ function FillBlank() {
       </div>
       {!checked ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={check} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>✓ تأكّد</button>
+          <button onClick={check} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>✓ تأكّد</button>
         </div>
       ) : (
         <div style={{ textAlign: "center" }}>
-          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#d4a43a", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         </div>
       )}
     </div>
@@ -1580,9 +1578,9 @@ function SentenceBuild() {
   if (done) return (
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>🧩</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#5ec4b6" : score >= 4 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! تركيب الجمل صار سهل 🔥" : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#4db5a5", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! تركيب الجمل صار سهل 🔥" : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#059669", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
 
@@ -1593,15 +1591,15 @@ function SentenceBuild() {
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 12, color: "#7a8295" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontSize: 12, color: "#4db5a5", fontWeight: 600 }}>{score + " صحيح"}</div>
+        <div style={{ fontSize: 12, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: 12, color: "#059669", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
       <div style={{ background: "rgba(77,181,165,0.06)", border: "1px solid rgba(77,181,165,0.12)", borderRadius: 12, padding: 14, marginBottom: 12, minHeight: 50 }}>
-        <div style={{ fontSize: 12, color: "#4db5a5", fontWeight: 600, marginBottom: 8 }}>🔗 الجملة المُركّبة:</div>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: checked ? (isCorrect ? "#5ec4b6" : "#e87461") : "#f0f0f5", minHeight: 24 }}>
-          {selected.length > 0 ? selected.map(i => shuffledWords.current[i]).join(" ") : <span style={{ color: "#4a5166" }}>اضغط على الكلمات بالترتيب الصحيح...</span>}
+        <div style={{ fontSize: 12, color: "#059669", fontWeight: 600, marginBottom: 8 }}>🔗 الجملة المُركّبة:</div>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: checked ? (isCorrect ? "#059669" : "#dc2626") : "#18181b", minHeight: 24 }}>
+          {selected.length > 0 ? selected.map(i => shuffledWords.current[i]).join(" ") : <span style={{ color: "#a1a1aa" }}>اضغط على الكلمات بالترتيب الصحيح...</span>}
         </div>
-        {checked && !isCorrect && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#5ec4b6", marginTop: 8 }}>{"✓ " + qs.current[qi]}</div>}
+        {checked && !isCorrect && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#059669", marginTop: 8 }}>{"✓ " + qs.current[qi]}</div>}
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
         {shuffledWords.current.map((w, wi) => {
@@ -1610,9 +1608,9 @@ function SentenceBuild() {
             <button key={wi} onClick={() => toggleWord(wi)} style={{
               padding: "8px 14px", borderRadius: 8,
               fontFamily: "'IBM Plex Mono'", fontSize: 14,
-              border: "1px solid " + (isSelected ? "rgba(77,181,165,0.4)" : "rgba(255,255,255,0.08)"),
-              background: isSelected ? "rgba(77,181,165,0.15)" : "rgba(255,255,255,0.03)",
-              color: isSelected ? "#5ec4b6" : "#f0f0f5",
+              border: "1px solid " + (isSelected ? "rgba(77,181,165,0.4)" : "rgba(0,0,0,0.06)"),
+              background: isSelected ? "rgba(77,181,165,0.15)" : "rgba(0,0,0,0.02)",
+              color: isSelected ? "#059669" : "#18181b",
               cursor: checked ? "default" : "pointer",
               opacity: isSelected ? 0.5 : 1,
               transition: ".2s"
@@ -1621,11 +1619,11 @@ function SentenceBuild() {
         })}
       </div>
       <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
-        {!checked && selected.length > 0 && <button onClick={() => setSelected([])} style={{ padding: "8px 16px", borderRadius: 10, border: "1px solid #252836", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>↻ مسح</button>}
+        {!checked && selected.length > 0 && <button onClick={() => setSelected([])} style={{ padding: "8px 16px", borderRadius: 10, border: "1px solid #e4e4e7", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>↻ مسح</button>}
         {!checked ? (
-          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: selected.length > 0 ? "#4db5a5" : "#252836", color: selected.length > 0 ? "#1a1614" : "#5c6478", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>✓ تأكّد</button>
+          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: selected.length > 0 ? "#059669" : "#e4e4e7", color: selected.length > 0 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>✓ تأكّد</button>
         ) : (
-          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#4db5a5", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#059669", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         )}
       </div>
     </div>
@@ -1677,9 +1675,9 @@ function FreeRecall() {
   if (done) return (
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>✍️</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 4 ? "#5ec4b6" : score >= 2 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 4 ? "إنجاز مميز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e87461", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 4 ? "#059669" : score >= 2 ? "#1d4ed8" : "#dc2626", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 4 ? "إنجاز مميز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
 
@@ -1688,13 +1686,13 @@ function FreeRecall() {
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 13, color: "#7a8295" }}>{"موقف " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontSize: 13, color: "#e87461", fontWeight: 600 }}>{score + " صحيح"}</div>
+        <div style={{ fontSize: 13, color: "#71717a" }}>{"موقف " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: 13, color: "#dc2626", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
 
-      <div style={{ background: "rgba(232,116,97,0.06)", border: "1px solid rgba(232,116,97,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-        <div style={{ fontSize: 15, color: "#f0f0f5", lineHeight: 2, marginBottom: 8 }}>{scenario.sit}</div>
-        <div style={{ fontSize: 13, color: "#e87461", fontWeight: 600 }}>{"💡 " + scenario.hint}</div>
+      <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+        <div style={{ fontSize: 15, color: "#18181b", lineHeight: 2, marginBottom: 8 }}>{scenario.sit}</div>
+        <div style={{ fontSize: 13, color: "#dc2626", fontWeight: 600 }}>{"💡 " + scenario.hint}</div>
       </div>
 
       <div style={{ marginBottom: 12 }}>
@@ -1706,8 +1704,8 @@ function FreeRecall() {
           style={{
             width: "100%", minHeight: 80, padding: 14, borderRadius: 12,
             fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left",
-            lineHeight: 1.8, background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(232,116,97,0.2)", color: "#f0f0f5",
+            lineHeight: 1.8, background: "rgba(0,0,0,0.02)",
+            border: "1px solid rgba(220,38,38,0.2)", color: "#18181b",
             outline: "none", resize: "vertical"
           }}
         />
@@ -1715,22 +1713,22 @@ function FreeRecall() {
 
       {!submitted ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={submit} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#e87461" : "#252836", color: input.trim().length >= 3 ? "#1a1614" : "#5c6478", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ أرسل</button>
+          <button onClick={submit} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#dc2626" : "#e4e4e7", color: input.trim().length >= 3 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ أرسل</button>
         </div>
       ) : (
         <div>
-          <div style={{ background: "rgba(94,196,182,0.06)", border: "1px solid rgba(94,196,182,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
-            <div style={{ fontSize: 12, color: "#5ec4b6", fontWeight: 700, marginBottom: 6 }}>✓ الجواب المثالي:</div>
-            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#f0f0f5" }}>{scenario.model}</div>
+          <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
+            <div style={{ fontSize: 12, color: "#059669", fontWeight: 700, marginBottom: 6 }}>✓ الجواب المثالي:</div>
+            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#18181b" }}>{scenario.model}</div>
           </div>
           {matchedWords.length > 0 && (
-            <div style={{ fontSize: 13, color: "#5ec4b6", marginBottom: 8 }}>{"كلمات مفتاحية استخدمتها: " + matchedWords.join(", ")}</div>
+            <div style={{ fontSize: 13, color: "#059669", marginBottom: 8 }}>{"كلمات مفتاحية استخدمتها: " + matchedWords.join(", ")}</div>
           )}
           {matchedWords.length === 0 && (
-            <div style={{ fontSize: 13, color: "#e8b84b", marginBottom: 8 }}>حاول تستخدم كلمات من بنك الجمل في المرة الجاية</div>
+            <div style={{ fontSize: 13, color: "#1d4ed8", marginBottom: 8 }}>حاول تستخدم كلمات من بنك الجمل في المرة الجاية</div>
           )}
           <div style={{ textAlign: "center" }}>
-            <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "#e87461", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+            <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
           </div>
         </div>
       )}
@@ -1814,23 +1812,23 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
         <div style={{ fontSize: 28 }}>{sc.icon}</div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 16, fontWeight: 700, color: "#e8b84b" }}>{"جلسة اليوم: " + sc.title}</div>
-          <div style={{ fontSize: 12, color: "#7a8295" }}>{"الخطوة " + (step + 1) + "/6 — " + steps[step].title}</div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: "#1d4ed8" }}>{"جلسة اليوم: " + sc.title}</div>
+          <div style={{ fontSize: 12, color: "#71717a" }}>{"الخطوة " + (step + 1) + "/6 — " + steps[step].title}</div>
         </div>
-        <div style={{ fontSize: 14, fontWeight: 800, color: "#e8b84b", fontFamily: "'IBM Plex Mono'" }}>{stepPct + "%"}</div>
+        <div style={{ fontSize: 14, fontWeight: 800, color: "#1d4ed8", fontFamily: "'IBM Plex Mono'" }}>{stepPct + "%"}</div>
       </div>
 
       {/* Micro-celebration popup */}
       {stepCelebration && <div style={{ textAlign: "center", padding: 16, animation: "stepDone .6s" }}>
-        <div style={{ fontSize: 28, fontWeight: 800, color: "#5ec4b6" }}>{stepCelebration}</div>
+        <div style={{ fontSize: 28, fontWeight: 800, color: "#059669" }}>{stepCelebration}</div>
       </div>}
 
       {/* Progress */}
       {!stepCelebration && <div style={{ display: "flex", gap: 4, marginBottom: 16 }}>
         {steps.map((s, i) => (
           <div key={i} style={{ flex: 1, textAlign: "center" }}>
-            <div style={{ height: 5, borderRadius: 3, background: i < step ? "linear-gradient(90deg,#5ec4b6,#e8b84b)" : i === step ? "#e8b84b" : "#1e2130", transition: ".3s", marginBottom: 4 }} />
-            <div style={{ fontSize: 12, color: i === step ? "#e8b84b" : i < step ? "#5ec4b6" : "#4a5166" }}>{i < step ? "✓" : s.icon}</div>
+            <div style={{ height: 5, borderRadius: 3, background: i < step ? "linear-gradient(90deg,#059669,#1d4ed8)" : i === step ? "#1d4ed8" : "#e4e4e7", transition: ".3s", marginBottom: 4 }} />
+            <div style={{ fontSize: 12, color: i === step ? "#1d4ed8" : i < step ? "#059669" : "#a1a1aa" }}>{i < step ? "✓" : s.icon}</div>
           </div>
         ))}
       </div>}
@@ -1839,40 +1837,40 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {step === 0 && (
         <div>
           {/* FIX 2: Breathing focus — 5 seconds before session */}
-          {listenIdx === -1 && !listenDone && listenChunk === 0 && <div style={{ background: "linear-gradient(135deg, rgba(94,196,182,0.08), rgba(232,184,75,0.08))", border: "1px solid rgba(94,196,182,0.12)", borderRadius: 16, padding: 24, marginBottom: 14, textAlign: "center" }}>
+          {listenIdx === -1 && !listenDone && listenChunk === 0 && <div style={{ background: "linear-gradient(135deg, rgba(5,150,105,0.08), rgba(29,78,216,0.08))", border: "1px solid rgba(5,150,105,0.12)", borderRadius: 16, padding: 24, marginBottom: 14, textAlign: "center" }}>
             <div style={{ fontSize: 32, marginBottom: 12 }}>🧘</div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: "#5ec4b6", marginBottom: 8 }}>خذ نفس عميق...</div>
-            <div style={{ fontSize: 14, color: "#9ca3b5", lineHeight: 2.2, marginBottom: 12 }}>شهيق... ٣... ٢... ١... زفير...<br/>الآن عقلك جاهز يستقبل اللغة</div>
-            <div style={{ fontSize: 12, color: "#7a8295" }}>التنفس العميق يرفع الانتباه 40% ويفتح مراكز التعلّم</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: "#059669", marginBottom: 8 }}>خذ نفس عميق...</div>
+            <div style={{ fontSize: 14, color: "#52525b", lineHeight: 2.2, marginBottom: 12 }}>شهيق... ٣... ٢... ١... زفير...<br/>الآن عقلك جاهز يستقبل اللغة</div>
+            <div style={{ fontSize: 12, color: "#71717a" }}>التنفس العميق يرفع الانتباه 40% ويفتح مراكز التعلّم</div>
           </div>}
           {/* Mental imagery prompt */}
-          {listenIdx === -1 && !listenDone && <div style={{ background: "rgba(232,184,75,0.06)", border: "1px solid rgba(232,184,75,0.1)", borderRadius: 14, padding: 20, marginBottom: 14, textAlign: "center" }}>
+          {listenIdx === -1 && !listenDone && <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.1)", borderRadius: 14, padding: 20, marginBottom: 14, textAlign: "center" }}>
             <div style={{ fontSize: 24, marginBottom: 8 }}>{sc.icon}</div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: "#e8b84b", marginBottom: 8 }}>أغمض عينك لحظة...</div>
-            <div style={{ fontSize: 14, color: "#9ca3b5", lineHeight: 2.2 }}>تخيّل نفسك فعلاً {sc.title === "في المطعم" ? "جالس في مطعم... النادل يجي ويسألك عن طلبك" : sc.title === "عند الدكتور" ? "في عيادة الدكتور... يسألك عن صحتك" : sc.title === "في الفندق" ? "واقف أمام موظف الاستقبال... تسوي check-in" : "في هالموقف... وتحتاج تتكلم إنجليزي"}</div>
-            <div style={{ fontSize: 12, color: "#7a8295", marginTop: 8 }}>التخيّل يُنشئ ارتباط في ذاكرتك = تتذكر الجمل أسرع 5x</div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#1d4ed8", marginBottom: 8 }}>أغمض عينك لحظة...</div>
+            <div style={{ fontSize: 14, color: "#52525b", lineHeight: 2.2 }}>تخيّل نفسك فعلاً {sc.title === "في المطعم" ? "جالس في مطعم... النادل يجي ويسألك عن طلبك" : sc.title === "عند الدكتور" ? "في عيادة الدكتور... يسألك عن صحتك" : sc.title === "في الفندق" ? "واقف أمام موظف الاستقبال... تسوي check-in" : "في هالموقف... وتحتاج تتكلم إنجليزي"}</div>
+            <div style={{ fontSize: 12, color: "#71717a", marginTop: 8 }}>التخيّل يُنشئ ارتباط في ذاكرتك = تتذكر الجمل أسرع 5x</div>
           </div>}
-          <div style={{ background: "rgba(196,154,56,0.06)", border: "1px solid rgba(196,154,56,0.12)", borderRadius: 14, padding: 24, textAlign: "center", marginBottom: 14 }}>
-            <div style={{ fontSize: 15, color: "#9ca3b5", marginBottom: 16, lineHeight: 2 }}>استمع للمحادثة جملة جملة — حاول تفهم بدون ما تشوف النص</div>
+          <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 14, padding: 24, textAlign: "center", marginBottom: 14 }}>
+            <div style={{ fontSize: 15, color: "#52525b", marginBottom: 16, lineHeight: 2 }}>استمع للمحادثة جملة جملة — حاول تفهم بدون ما تشوف النص</div>
             {listenIdx === -1 && !listenDone && (
               <div>
-                <div style={{ fontSize: 12, color: "#7a8295", marginBottom: 8 }}>{"مقطع " + (listenChunk + 1) + "/" + Math.ceil(sc.dialogue.length / 3) + " — ٣ جمل في كل مقطع (لتركيز أفضل)"}</div>
-                <button onClick={playDialogueSequence} style={{ padding: "14px 32px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#c49a38,#c49a38)", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer" }}>{"🔊 " + (listenChunk === 0 ? "ابدأ الاستماع" : "استمع المقطع التالي")}</button>
+                <div style={{ fontSize: 12, color: "#71717a", marginBottom: 8 }}>{"مقطع " + (listenChunk + 1) + "/" + Math.ceil(sc.dialogue.length / 3) + " — ٣ جمل في كل مقطع (لتركيز أفضل)"}</div>
+                <button onClick={playDialogueSequence} style={{ padding: "14px 32px", borderRadius: 12, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer" }}>{"🔊 " + (listenChunk === 0 ? "ابدأ الاستماع" : "استمع المقطع التالي")}</button>
               </div>
             )}
             {/* After chunk finishes but more remain */}
             {listenIdx === -1 && !listenDone && listenChunk > 0 && (
-              <div style={{ fontSize: 12, color: "#5ec4b6", marginTop: 8 }}>{"✓ سمعت " + (listenChunk * 3) + " جمل — كمّل؟"}</div>
+              <div style={{ fontSize: 12, color: "#059669", marginTop: 8 }}>{"✓ سمعت " + (listenChunk * 3) + " جمل — كمّل؟"}</div>
             )}
             {listenIdx >= 0 && (
               <div>
                 <div style={{ fontSize: 40, marginBottom: 8 }}>🔊</div>
                 <div style={{ display: "flex", gap: 4, justifyContent: "center", marginBottom: 8 }}>
                   {sc.dialogue.map((_, di) => (
-                    <div key={di} style={{ width: 12, height: 12, borderRadius: "50%", background: di < listenIdx ? "#5ec4b6" : di === listenIdx ? "#c49a38" : "#1e2130", transition: ".3s", border: di === listenIdx ? "2px solid #fff" : "none" }} />
+                    <div key={di} style={{ width: 12, height: 12, borderRadius: "50%", background: di < listenIdx ? "#059669" : di === listenIdx ? "#1e40af" : "#e4e4e7", transition: ".3s", border: di === listenIdx ? "2px solid #1d4ed8" : "none" }} />
                   ))}
                 </div>
-                <div style={{ fontSize: 14, color: "#e8b84b" }}>{"جملة " + (listenIdx + 1) + "/" + sc.dialogue.length + " — " + sc.dialogue[listenIdx].speaker}</div>
+                <div style={{ fontSize: 14, color: "#1d4ed8" }}>{"جملة " + (listenIdx + 1) + "/" + sc.dialogue.length + " — " + sc.dialogue[listenIdx].speaker}</div>
               </div>
             )}
           </div>
@@ -1880,26 +1878,26 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
             <div style={{ animation: "fadeUp .3s" }}>
               {/* Comprehension check */}
               {sc.listenQ && listenAnswer === null && (
-                <div style={{ background: "rgba(196,154,56,0.06)", border: "1px solid rgba(196,154,56,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-                  <div style={{ fontSize: 14, color: "#e8b84b", fontWeight: 700, marginBottom: 10 }}>🤔 سؤال سريع — {sc.listenQ.q}</div>
+                <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+                  <div style={{ fontSize: 14, color: "#1d4ed8", fontWeight: 700, marginBottom: 10 }}>🤔 سؤال سريع — {sc.listenQ.q}</div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                     {sc.listenQ.opts.map((o, oi) => (
-                      <div key={oi} onClick={() => setListenAnswer(oi)} style={{ padding: 12, borderRadius: 10, cursor: "pointer", fontSize: 14, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", transition: ".2s" }}>{o}</div>
+                      <div key={oi} onClick={() => setListenAnswer(oi)} style={{ padding: 12, borderRadius: 10, cursor: "pointer", fontSize: 14, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", transition: ".2s" }}>{o}</div>
                     ))}
                   </div>
                 </div>
               )}
               {listenAnswer !== null && (
                 <div style={{ textAlign: "center", marginBottom: 12 }}>
-                  <div style={{ fontSize: 14, color: listenAnswer === (sc.listenQ ? sc.listenQ.ans : 0) ? "#5ec4b6" : "#e8b84b", fontWeight: 700, marginBottom: 4 }}>
+                  <div style={{ fontSize: 14, color: listenAnswer === (sc.listenQ ? sc.listenQ.ans : 0) ? "#059669" : "#1d4ed8", fontWeight: 700, marginBottom: 4 }}>
                     {listenAnswer === (sc.listenQ ? sc.listenQ.ans : 0) ? "✓ صح! فهمت المحادثة" : "تقريباً — في الخطوة الجاية بتشوف النص وتلاحظ اللي فاتك"}
                   </div>
                 </div>
               )}
               {(listenAnswer !== null || !sc.listenQ) && (
                 <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
-                  <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} style={{ padding: "8px 16px", borderRadius: 8, border: "1px solid rgba(196,154,56,0.2)", background: "transparent", color: "#c49a38", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🔄 استمع مرة ثانية</button>
-                  <button onClick={() => advanceStep(1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي →</button>
+                  <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} style={{ padding: "8px 16px", borderRadius: 8, border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "#1e40af", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🔄 استمع مرة ثانية</button>
+                  <button onClick={() => advanceStep(1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي →</button>
                 </div>
               )}
             </div>
@@ -1910,16 +1908,16 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {/* Step 2: Listen + Read */}
       {step === 1 && (
         <div>
-          <div style={{ fontSize: 13, color: "#9ca3b5", marginBottom: 12, lineHeight: 2 }}>اضغط 🔈 على كل جملة واقرأها. لاحظ الكلمات اللي ما فهمتها أول مرة.</div>
+          <div style={{ fontSize: 13, color: "#52525b", marginBottom: 12, lineHeight: 2 }}>اضغط 🔈 على كل جملة واقرأها. لاحظ الكلمات اللي ما فهمتها أول مرة.</div>
           {sc.dialogue.map((d, i) => (
-            <div key={i} style={{ display: "flex", gap: 10, padding: 10, marginBottom: 4, borderRadius: 10, background: d.speaker === "أنت" ? "rgba(232,184,75,0.06)" : "rgba(255,255,255,0.02)", border: "1px solid " + (d.speaker === "أنت" ? "rgba(232,184,75,0.1)" : "rgba(255,255,255,0.04)") }}>
-              <div style={{ fontSize: 12, color: d.speaker === "أنت" ? "#e8b84b" : "#e8b84b", fontWeight: 700, minWidth: 50, flexShrink: 0 }}>{d.speaker}</div>
-              <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, flex: 1, color: "#f0f0f5" }}>{d.text}</div>
+            <div key={i} style={{ display: "flex", gap: 10, padding: 10, marginBottom: 4, borderRadius: 10, background: d.speaker === "أنت" ? "rgba(29,78,216,0.06)" : "rgba(0,0,0,0.02)", border: "1px solid " + (d.speaker === "أنت" ? "rgba(29,78,216,0.1)" : "rgba(0,0,0,0.03)") }}>
+              <div style={{ fontSize: 12, color: d.speaker === "أنت" ? "#1d4ed8" : "#1d4ed8", fontWeight: 700, minWidth: 50, flexShrink: 0 }}>{d.speaker}</div>
+              <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, flex: 1, color: "#18181b" }}>{d.text}</div>
               <SpeakBtn text={d.text} size={16} />
             </div>
           ))}
           <div style={{ textAlign: "center", marginTop: 14 }}>
-            <button onClick={() => advanceStep(2)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: ردّد الجمل →</button>
+            <button onClick={() => advanceStep(2)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: ردّد الجمل →</button>
           </div>
         </div>
       )}
@@ -1927,18 +1925,18 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {/* Step 3: Shadow key phrases 3x */}
       {step === 2 && (
         <div>
-          <div style={{ fontSize: 13, color: "#9ca3b5", marginBottom: 12, lineHeight: 2 }}>اسمع الجملة ← ردّدها بصوت عالٍ ← اضغط 🎙️ للتأكّد من نطقك. الهدف: ٣ مرات.</div>
+          <div style={{ fontSize: 13, color: "#52525b", marginBottom: 12, lineHeight: 2 }}>اسمع الجملة ← ردّدها بصوت عالٍ ← اضغط 🎙️ للتأكّد من نطقك. الهدف: ٣ مرات.</div>
           {sc.keyPhrases.map((p, i) => {
             const r = shadowReps[i] || 0;
             const spokenResult = shadowSpoken[i];
             const setSpokenResult = (v) => setShadowSpoken(prev => ({ ...prev, [i]: v }));
             return (
-              <div key={i} style={{ padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(94,196,182,0.06)" : "rgba(255,255,255,0.02)", border: "1px solid " + (r >= 5 ? "rgba(94,196,182,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 8 }}>
+              <div key={i} style={{ padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(5,150,105,0.06)" : "rgba(0,0,0,0.02)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : "rgba(0,0,0,0.03)"), marginBottom: 8 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 5 ? "#5ec4b6" : r > 0 ? "#e8b84b" : "#252836", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#1a1614" : "#5c6478", flexShrink: 0 }}>{r >= 5 ? "✓" : r + "/5"}</div>
+                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 5 ? "✓" : r + "/5"}</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
-                    <div style={{ fontSize: 12, color: "#7a8295", marginTop: 2 }}>{p.ar}</div>
+                    <div style={{ fontSize: 12, color: "#71717a", marginTop: 2 }}>{p.ar}</div>
                   </div>
                   <SpeakBtn text={p.en} size={18} />
                 </div>
@@ -1966,11 +1964,11 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                           setShadowReps(prev => ({ ...prev, [i]: (prev[i] || 0) + 1 }));
                         }
                       }, 2500);
-                    }} style={{ flex: 1, padding: "10px 16px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#c49a38,#c49a38)", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔊 استمع ثم 🎙️ ردّد</button>
+                    }} style={{ flex: 1, padding: "10px 16px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔊 استمع ثم 🎙️ ردّد</button>
                   </div>
                 )}
                 {spokenResult !== undefined && spokenResult !== null && (
-                  <div style={{ fontSize: 12, color: spokenResult >= 80 ? "#5ec4b6" : spokenResult >= 50 ? "#e8b84b" : "#e87461", fontWeight: 600, marginTop: 4 }}>
+                  <div style={{ fontSize: 12, color: spokenResult >= 80 ? "#059669" : spokenResult >= 50 ? "#1d4ed8" : "#dc2626", fontWeight: 600, marginTop: 4 }}>
                     {spokenResult >= 80 ? "نطق إنجاز مميز! " + spokenResult + "%" : spokenResult >= 50 ? "جيد! " + spokenResult + "% — جرّب مرة ثانية" : "حاول مرة ثانية — ركّز على الكلمات المفتاحية"}
                   </div>
                 )}
@@ -1979,7 +1977,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
           })}
           {Object.values(shadowReps).filter(r => r >= 5).length >= sc.keyPhrases.length && (
             <div style={{ textAlign: "center", marginTop: 14 }}>
-              <button onClick={() => advanceStep(3)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تذكّر →</button>
+              <button onClick={() => advanceStep(3)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تذكّر →</button>
             </div>
           )}
         </div>
@@ -1988,46 +1986,46 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {/* Step 4: Recall — show Arabic, hide English, reveal to check */}
       {step === 3 && (
         <div>
-          <div style={{ fontSize: 13, color: "#9ca3b5", marginBottom: 12, lineHeight: 2 }}>شوف الترجمة العربية فقط — حاول تقول الجملة الإنجليزية من ذاكرتك — ثم اضغط "أظهر" وقارن.</div>
+          <div style={{ fontSize: 13, color: "#52525b", marginBottom: 12, lineHeight: 2 }}>شوف الترجمة العربية فقط — حاول تقول الجملة الإنجليزية من ذاكرتك — ثم اضغط "أظهر" وقارن.</div>
           {sc.keyPhrases.map((p, i) => {
             const state = recallState[i] || "hidden";
             const selfScore = recallScore[i]; // undefined, "good", "partial", "forgot"
             return (
-              <div key={i} style={{ background: "rgba(232,184,75,0.06)", border: "1px solid " + (selfScore === "good" ? "rgba(94,196,182,0.2)" : selfScore === "forgot" ? "rgba(232,116,97,0.15)" : "rgba(232,184,75,0.1)"), borderRadius: 10, padding: 14, marginBottom: 8 }}>
+              <div key={i} style={{ background: "rgba(29,78,216,0.06)", border: "1px solid " + (selfScore === "good" ? "rgba(5,150,105,0.2)" : selfScore === "forgot" ? "rgba(220,38,38,0.15)" : "rgba(29,78,216,0.1)"), borderRadius: 10, padding: 14, marginBottom: 8 }}>
                 {/* Always show Arabic */}
-                <div style={{ fontSize: 14, color: "#e8b84b", fontWeight: 600, marginBottom: 8 }}>{p.ar}</div>
+                <div style={{ fontSize: 14, color: "#1d4ed8", fontWeight: 600, marginBottom: 8 }}>{p.ar}</div>
 
                 {state === "hidden" && (
-                  <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "thinking" }))} style={{ padding: "8px 20px", borderRadius: 8, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>قلها بصوت عالٍ ثم اضغط هنا</button>
+                  <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "thinking" }))} style={{ padding: "8px 20px", borderRadius: 8, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>قلها بصوت عالٍ ثم اضغط هنا</button>
                 )}
 
                 {state === "thinking" && (
                   <div>
-                    <div style={{ fontSize: 12, color: "#9ca3b5", marginBottom: 8 }}>قلت الجملة؟ اضغط "أظهر" وقارن:</div>
-                    <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "revealed" }))} style={{ padding: "8px 20px", borderRadius: 8, border: "none", background: "#e8b84b", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>👁 أظهر الجملة</button>
+                    <div style={{ fontSize: 12, color: "#52525b", marginBottom: 8 }}>قلت الجملة؟ اضغط "أظهر" وقارن:</div>
+                    <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "revealed" }))} style={{ padding: "8px 20px", borderRadius: 8, border: "none", background: "#1d4ed8", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>👁 أظهر الجملة</button>
                   </div>
                 )}
 
                 {state === "revealed" && (
                   <div>
-                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "#f0f0f5", marginBottom: 8, display: "flex", alignItems: "center", gap: 8 }}>
+                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "#18181b", marginBottom: 8, display: "flex", alignItems: "center", gap: 8 }}>
                       <span style={{ flex: 1 }}>{p.en}</span>
                       <SpeakBtn text={p.en} size={16} />
                     </div>
                     {/* FIX 8: Cross-context patterns */}
                     {(() => { const patterns = findCrossPatterns(p.en); return patterns.length > 0 ? (
-                      <div style={{ fontSize: 12, color: "#e8b84b", marginBottom: 6, lineHeight: 1.8 }}>
+                      <div style={{ fontSize: 12, color: "#1d4ed8", marginBottom: 6, lineHeight: 1.8 }}>
                         {"🔗 " + patterns[0].pattern + " — " + patterns[0].usage}
                       </div>
                     ) : null; })()}
                     {!selfScore && (
                       <div style={{ display: "flex", gap: 6 }}>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "good" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(94,196,182,0.15)", color: "#5ec4b6", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>تذكّرتها ✓</button>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "partial" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(232,184,75,0.15)", color: "#e8b84b", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>تقريباً</button>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(232,160,64,0.1)", color: "#e8a040", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>لسه</button>
+                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "good" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(5,150,105,0.15)", color: "#059669", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>تذكّرتها ✓</button>
+                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "partial" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(29,78,216,0.15)", color: "#1d4ed8", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>تقريباً</button>
+                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(217,119,6,0.1)", color: "#d97706", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>لسه</button>
                       </div>
                     )}
-                    {selfScore && <div style={{ fontSize: 12, color: selfScore === "good" ? "#5ec4b6" : selfScore === "partial" ? "#e8b84b" : "#e87461", fontWeight: 600, marginTop: 4 }}>{selfScore === "good" ? "✓ إنجاز مميز!" : selfScore === "partial" ? "✦ قريب — ردّدها مرة" : "🔄 عادي تماماً! المخ يحتاج ٥-٧ تكرارات — بنراجعها سوا"}</div>}
+                    {selfScore && <div style={{ fontSize: 12, color: selfScore === "good" ? "#059669" : selfScore === "partial" ? "#1d4ed8" : "#dc2626", fontWeight: 600, marginTop: 4 }}>{selfScore === "good" ? "✓ إنجاز مميز!" : selfScore === "partial" ? "✦ قريب — ردّدها مرة" : "🔄 عادي تماماً! المخ يحتاج ٥-٧ تكرارات — بنراجعها سوا"}</div>}
                   </div>
                 )}
               </div>
@@ -2039,21 +2037,21 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
             return (
               <div style={{ marginTop: 14 }}>
                 {!allGood && (
-                  <div style={{ background: "rgba(232,116,97,0.06)", border: "1px solid rgba(232,160,64,0.1)", borderRadius: 10, padding: 14, marginBottom: 10, textAlign: "center" }}>
-                    <div style={{ fontSize: 13, color: "#e87461", fontWeight: 600, marginBottom: 8 }}>{"🔄 " + forgotten.length + " جملة تحتاج مراجعة — ردّدها ثم أعد التقييم"}</div>
+                  <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(217,119,6,0.1)", borderRadius: 10, padding: 14, marginBottom: 10, textAlign: "center" }}>
+                    <div style={{ fontSize: 13, color: "#dc2626", fontWeight: 600, marginBottom: 8 }}>{"🔄 " + forgotten.length + " جملة تحتاج مراجعة — ردّدها ثم أعد التقييم"}</div>
                     {forgotten.map(fi => (
-                      <div key={fi} style={{ display: "flex", alignItems: "center", gap: 8, padding: 10, borderRadius: 8, background: "rgba(255,255,255,0.02)", marginBottom: 4 }}>
-                        <SpeakBtn text={sc.keyPhrases[fi].en} size={18} color="#e8b84b" />
-                        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", flex: 1, color: "#f0f0f5" }}>{sc.keyPhrases[fi].en}</div>
+                      <div key={fi} style={{ display: "flex", alignItems: "center", gap: 8, padding: 10, borderRadius: 8, background: "rgba(0,0,0,0.02)", marginBottom: 4 }}>
+                        <SpeakBtn text={sc.keyPhrases[fi].en} size={18} color="#1d4ed8" />
+                        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", flex: 1, color: "#18181b" }}>{sc.keyPhrases[fi].en}</div>
                       </div>
                     ))}
-                    <button onClick={() => { const newState = { ...recallState }; const newScore = { ...recallScore }; forgotten.forEach(fi => { newState[fi] = "hidden"; delete newScore[fi]; }); setRecallState(newState); setRecallScore(newScore); }} style={{ marginTop: 8, padding: "8px 20px", borderRadius: 8, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد اختبار الجمل المنسيّة</button>
+                    <button onClick={() => { const newState = { ...recallState }; const newScore = { ...recallScore }; forgotten.forEach(fi => { newState[fi] = "hidden"; delete newScore[fi]; }); setRecallState(newState); setRecallScore(newScore); }} style={{ marginTop: 8, padding: "8px 20px", borderRadius: 8, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد اختبار الجمل المنسيّة</button>
                   </div>
                 )}
                 {allGood && (
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: 13, color: "#5ec4b6", fontWeight: 600, marginBottom: 8 }}>✓ إنجاز مميز! تذكّرت كل الجمل</div>
-                    <button onClick={() => advanceStep(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
+                    <div style={{ fontSize: 13, color: "#059669", fontWeight: 600, marginBottom: 8 }}>✓ إنجاز مميز! تذكّرت كل الجمل</div>
+                    <button onClick={() => advanceStep(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
                   </div>
                 )}
               </div>
@@ -2065,19 +2063,19 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {/* Step 5: Produce + feedback */}
       {step === 4 && (
         <div>
-          <div style={{ background: "rgba(232,116,97,0.06)", border: "1px solid rgba(232,116,97,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-            <div style={{ fontSize: 15, color: "#f0f0f5", lineHeight: 2, marginBottom: 4 }}>{sc.producePrompt}</div>
+          <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+            <div style={{ fontSize: 15, color: "#18181b", lineHeight: 2, marginBottom: 4 }}>{sc.producePrompt}</div>
           </div>
-          <textarea value={prodInput} onChange={(e) => !prodSubmitted && setProdInput(e.target.value)} placeholder="اكتب ردك بالإنجليزي..." disabled={prodSubmitted} style={{ width: "100%", minHeight: 80, padding: 14, borderRadius: 12, fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(232,116,97,0.2)", color: "#f0f0f5", outline: "none", resize: "vertical", marginBottom: 12 }} />
+          <textarea value={prodInput} onChange={(e) => !prodSubmitted && setProdInput(e.target.value)} placeholder="اكتب ردك بالإنجليزي..." disabled={prodSubmitted} style={{ width: "100%", minHeight: 80, padding: 14, borderRadius: 12, fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(220,38,38,0.2)", color: "#18181b", outline: "none", resize: "vertical", marginBottom: 12 }} />
           {!prodSubmitted ? (
             <div style={{ textAlign: "center" }}>
-              <button onClick={() => setProdSubmitted(true)} disabled={prodInput.trim().length < 5} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: prodInput.trim().length >= 5 ? "#e87461" : "#252836", color: prodInput.trim().length >= 5 ? "#1a1614" : "#5c6478", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: prodInput.trim().length >= 5 ? "pointer" : "default" }}>✓ أرسل</button>
+              <button onClick={() => setProdSubmitted(true)} disabled={prodInput.trim().length < 5} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: prodInput.trim().length >= 5 ? "#dc2626" : "#e4e4e7", color: prodInput.trim().length >= 5 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: prodInput.trim().length >= 5 ? "pointer" : "default" }}>✓ أرسل</button>
             </div>
           ) : (
             <div>
-              <div style={{ background: "rgba(94,196,182,0.06)", border: "1px solid rgba(94,196,182,0.12)", borderRadius: 12, padding: 14, marginBottom: 8 }}>
-                <div style={{ fontSize: 12, color: "#5ec4b6", fontWeight: 700, marginBottom: 6 }}>النموذج المثالي:</div>
-                <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#f0f0f5", display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: 12, padding: 14, marginBottom: 8 }}>
+                <div style={{ fontSize: 12, color: "#059669", fontWeight: 700, marginBottom: 6 }}>النموذج المثالي:</div>
+                <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#18181b", display: "flex", alignItems: "center", gap: 8 }}>
                   <span style={{ flex: 1 }}>{sc.produceModel}</span>
                   <SpeakBtn text={sc.produceModel} size={16} />
                 </div>
@@ -2099,27 +2097,27 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                       setAiFeedback(data.choices[0].message.content);
                     } catch { setAiFeedback("لم أتمكن من الاتصال. تأكّد من مفتاح API."); }
                     setAiLoading(false);
-                  }} style={{ padding: "6px 16px", borderRadius: 8, border: "1px solid rgba(196,154,56,0.2)", background: "transparent", color: "#c49a38", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🤖 تحليل ذكي لكتابتك</button>
+                  }} style={{ padding: "6px 16px", borderRadius: 8, border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "#1e40af", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🤖 تحليل ذكي لكتابتك</button>
                 </div>
               )}
-              {aiLoading && <div style={{ textAlign: "center", fontSize: 12, color: "#c49a38", marginBottom: 8 }}>جاري التحليل...</div>}
+              {aiLoading && <div style={{ textAlign: "center", fontSize: 12, color: "#1e40af", marginBottom: 8 }}>جاري التحليل...</div>}
               {aiFeedback && (
-                <div style={{ background: "rgba(196,154,56,0.06)", border: "1px solid rgba(196,154,56,0.12)", borderRadius: 12, padding: 14, marginBottom: 8 }}>
-                  <div style={{ fontSize: 12, color: "#c49a38", fontWeight: 700, marginBottom: 6 }}>🤖 تحليل ذكي:</div>
-                  <div style={{ fontSize: 13, color: "#f0d78a", lineHeight: 2, whiteSpace: "pre-wrap" }}>{aiFeedback}</div>
+                <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 14, marginBottom: 8 }}>
+                  <div style={{ fontSize: 12, color: "#1e40af", fontWeight: 700, marginBottom: 6 }}>🤖 تحليل ذكي:</div>
+                  <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2, whiteSpace: "pre-wrap" }}>{aiFeedback}</div>
                 </div>
               )}
               {/* Noticing feedback — explain WHY */}
-              <div style={{ background: "rgba(232,184,75,0.06)", border: "1px solid rgba(232,184,75,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
-                <div style={{ fontSize: 12, color: "#e8b84b", fontWeight: 700, marginBottom: 6 }}>💡 لاحظ الفرق:</div>
+              <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
+                <div style={{ fontSize: 12, color: "#1d4ed8", fontWeight: 700, marginBottom: 6 }}>💡 لاحظ الفرق:</div>
                 {sc.noticingTips ? sc.noticingTips.map((tip, ti) => (
-                  <div key={ti} style={{ fontSize: 13, color: "#f0d78a", lineHeight: 2, marginBottom: 2 }}>{"• " + tip}</div>
+                  <div key={ti} style={{ fontSize: 13, color: "#52525b", lineHeight: 2, marginBottom: 2 }}>{"• " + tip}</div>
                 )) : (
-                  <div style={{ fontSize: 13, color: "#f0d78a", lineHeight: 2 }}>قارن ردّك بالنموذج — لاحظ: هل استخدمت "please"؟ هل حددت طلبك بوضوح؟ هل سألت سؤال إضافي يُظهر ثقة؟</div>
+                  <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2 }}>قارن ردّك بالنموذج — لاحظ: هل استخدمت "please"؟ هل حددت طلبك بوضوح؟ هل سألت سؤال إضافي يُظهر ثقة؟</div>
                 )}
               </div>
               <div style={{ textAlign: "center" }}>
-                <button onClick={() => advanceStep(5)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تحدّي اليوم →</button>
+                <button onClick={() => advanceStep(5)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تحدّي اليوم →</button>
               </div>
             </div>
           )}
@@ -2130,9 +2128,9 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {step === 5 && (
         <div style={{ textAlign: "center" }}>
           <div style={{ fontSize: 48, marginBottom: 12 }}>🌍</div>
-          <div style={{ fontSize: 18, fontWeight: 800, color: "#e8b84b", marginBottom: 12 }}>تحدّي اليوم</div>
-          <div style={{ background: "rgba(232,184,75,0.06)", border: "1px solid rgba(232,184,75,0.12)", borderRadius: 14, padding: 20, marginBottom: 16 }}>
-            <div style={{ fontSize: 16, color: "#f0f0f5", lineHeight: 2 }}>{sc.challenge}</div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: "#1d4ed8", marginBottom: 12 }}>تحدّي اليوم</div>
+          <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 14, padding: 20, marginBottom: 16 }}>
+            <div style={{ fontSize: 16, color: "#18181b", lineHeight: 2 }}>{sc.challenge}</div>
           </div>
           {!challengeAccepted ? (
             <button onClick={() => {
@@ -2146,16 +2144,16 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                 await userStorage.delete("checkpoint-session"); // clear checkpoint on completion
               } catch(e) {} })();
               if (onComplete) onComplete();
-            }} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#5ec4b6,#e8b84b)", color: "#1a1614", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>أقبل التحدي ✓</button>
+            }} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#059669,#1d4ed8)", color: "#fafaf9", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>أقبل التحدي ✓</button>
           ) : !challengeDone ? (
             <div style={{ animation: "fadeUp .4s" }}>
               {/* FIX 4: Challenge follow-up */}
-              <div style={{ fontSize: 14, color: "#e8b84b", fontWeight: 700, marginBottom: 10 }}>سوّيت التحدي؟</div>
+              <div style={{ fontSize: 14, color: "#1d4ed8", fontWeight: 700, marginBottom: 10 }}>سوّيت التحدي؟</div>
               <div style={{ display: "flex", gap: 8, justifyContent: "center", marginBottom: 10 }}>
-                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#5ec4b6", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>نعم سويته ✓</button>
-                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>بسويه لاحقاً</button>
+                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#059669", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>نعم سويته ✓</button>
+                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: 10, border: "1px solid rgba(0,0,0,0.06)", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>بسويه لاحقاً</button>
               </div>
-              <input value={challengeNote} onChange={(e) => setChallengeNote(e.target.value)} placeholder="كيف كانت التجربة؟ (اختياري)" style={{ width: "100%", padding: 10, borderRadius: 10, fontFamily: "inherit", fontSize: 13, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "#f0f0f5", outline: "none", textAlign: "center" }} />
+              <input value={challengeNote} onChange={(e) => setChallengeNote(e.target.value)} placeholder="كيف كانت التجربة؟ (اختياري)" style={{ width: "100%", padding: 10, borderRadius: 10, fontFamily: "inherit", fontSize: 13, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", color: "#18181b", outline: "none", textAlign: "center" }} />
             </div>
           ) : (
             <div style={{ animation: "fadeUp .4s" }}>
@@ -2165,12 +2163,12 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                 const totalSessions = (sessionHistory || []).length;
                 const recalled = Object.values(recallScore).filter(v => v === "good").length;
                 const total = sc.keyPhrases.length;
-                if (totalSessions === 0) return <div style={{ fontSize: 16, fontWeight: 700, color: "#5ec4b6", marginBottom: 6 }}>أول جلسة لك! بداية ممتازة.</div>;
-                if (recalled === total) return <div style={{ fontSize: 16, fontWeight: 700, color: "#5ec4b6", marginBottom: 6, lineHeight: 2 }}>تذكّرت كل الجمل من ذاكرتك!<br/>هذا دليل إن عقلك يبني مسارات جديدة.</div>;
-                if (totalSessions >= 7) return <div style={{ fontSize: 16, fontWeight: 700, color: "#5ec4b6", marginBottom: 6, lineHeight: 2 }}>أسبوع كامل! {totalSessions} جلسة أنجزتها.<br/>قبل أسبوع ما كنت تعرف هالجمل. اليوم تقولها.</div>;
-                return <div style={{ fontSize: 16, fontWeight: 700, color: "#5ec4b6", marginBottom: 6, lineHeight: 2 }}>جلسة #{totalSessions + 1} مكتملة!<br/>كل جلسة تقرّبك خطوة من الطلاقة الحقيقية.</div>;
+                if (totalSessions === 0) return <div style={{ fontSize: 16, fontWeight: 700, color: "#059669", marginBottom: 6 }}>أول جلسة لك! بداية ممتازة.</div>;
+                if (recalled === total) return <div style={{ fontSize: 16, fontWeight: 700, color: "#059669", marginBottom: 6, lineHeight: 2 }}>تذكّرت كل الجمل من ذاكرتك!<br/>هذا دليل إن عقلك يبني مسارات جديدة.</div>;
+                if (totalSessions >= 7) return <div style={{ fontSize: 16, fontWeight: 700, color: "#059669", marginBottom: 6, lineHeight: 2 }}>أسبوع كامل! {totalSessions} جلسة أنجزتها.<br/>قبل أسبوع ما كنت تعرف هالجمل. اليوم تقولها.</div>;
+                return <div style={{ fontSize: 16, fontWeight: 700, color: "#059669", marginBottom: 6, lineHeight: 2 }}>جلسة #{totalSessions + 1} مكتملة!<br/>كل جلسة تقرّبك خطوة من الطلاقة الحقيقية.</div>;
               })()}
-              <div style={{ fontSize: 13, color: "#9ca3b5", lineHeight: 2 }}>تمرّنت على "{sc.title}" من ٦ زوايا. الجمل الآن أقرب لذاكرتك طويلة المدى.</div>
+              <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2 }}>تمرّنت على "{sc.title}" من ٦ زوايا. الجمل الآن أقرب لذاكرتك طويلة المدى.</div>
             </div>
           )}
         </div>
@@ -2212,13 +2210,13 @@ function PronounceBtn({ targetText, size }) {
 
   if (state === "nosupport") return null;
   if (state === "idle") return (
-    <button onClick={startListening} style={{ background: "none", border: "1px solid rgba(232,184,75,0.2)", borderRadius: 6, cursor: "pointer", fontSize: size || 12, padding: "3px 8px", color: "#e8b84b", flexShrink: 0 }} title="جرّب نطقك">🎙️</button>
+    <button onClick={startListening} style={{ background: "none", border: "1px solid rgba(29,78,216,0.2)", borderRadius: 6, cursor: "pointer", fontSize: size || 12, padding: "3px 8px", color: "#1d4ed8", flexShrink: 0 }} title="جرّب نطقك">🎙️</button>
   );
   if (state === "listening") return (
-    <span style={{ fontSize: size || 12, color: "#e87461", animation: "pulse 1s infinite" }}>🔴 تكلم...</span>
+    <span style={{ fontSize: size || 12, color: "#dc2626", animation: "none" }}>🔴 تكلم...</span>
   );
   return (
-    <span style={{ fontSize: size || 11, color: score >= 80 ? "#5ec4b6" : score >= 50 ? "#e8b84b" : "#e87461", fontWeight: 600 }}>{score >= 80 ? "✓ " + score + "%" : score + "%"}</span>
+    <span style={{ fontSize: size || 11, color: score >= 80 ? "#059669" : score >= 50 ? "#1d4ed8" : "#dc2626", fontWeight: 600 }}>{score >= 80 ? "✓ " + score + "%" : score + "%"}</span>
   );
 }
 
@@ -2274,19 +2272,19 @@ function Fluency432() {
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ textAlign: "center", marginBottom: 16 }}>
         <div style={{ fontSize: 40, marginBottom: 8 }}>🗣️</div>
-        <div style={{ fontSize: 18, fontWeight: 800, color: "#e87461", marginBottom: 6 }}>تمرين الطلاقة 4-3-2</div>
-        <div style={{ fontSize: 13, color: "#9ca3b5", lineHeight: 2 }}>تكلم عن نفس الموضوع ٣ مرات — كل مرة وقت أقل<br />مخك يتعلم يسترجع الجمل أسرع = طلاقة حقيقية</div>
+        <div style={{ fontSize: 18, fontWeight: 800, color: "#dc2626", marginBottom: 6 }}>تمرين الطلاقة 4-3-2</div>
+        <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2 }}>تكلم عن نفس الموضوع ٣ مرات — كل مرة وقت أقل<br />مخك يتعلم يسترجع الجمل أسرع = طلاقة حقيقية</div>
       </div>
-      <div style={{ background: "rgba(232,116,97,0.06)", border: "1px solid rgba(232,116,97,0.12)", borderRadius: 14, padding: 20, textAlign: "center", marginBottom: 14 }}>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 17, color: "#e87461", direction: "ltr", lineHeight: 1.6, marginBottom: 8 }}>{topic.topic}</div>
-        <div style={{ fontSize: 14, color: "#7a8295" }}>{topic.ar}</div>
+      <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: 14, padding: 20, textAlign: "center", marginBottom: 14 }}>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 17, color: "#dc2626", direction: "ltr", lineHeight: 1.6, marginBottom: 8 }}>{topic.topic}</div>
+        <div style={{ fontSize: 14, color: "#71717a" }}>{topic.ar}</div>
       </div>
-      <div style={{ background: "rgba(232,184,75,0.06)", border: "1px solid rgba(232,184,75,0.12)", borderRadius: 12, padding: 14, marginBottom: 14 }}>
-        <div style={{ fontSize: 12, color: "#e8b84b", fontWeight: 700, marginBottom: 8 }}>💡 استخدم هالجمل كبداية:</div>
-        {topic.starters.map((st, si) => <div key={si} style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#f0d78a", padding: "3px 0" }}>{st}</div>)}
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 14, marginBottom: 14 }}>
+        <div style={{ fontSize: 12, color: "#1d4ed8", fontWeight: 700, marginBottom: 8 }}>💡 استخدم هالجمل كبداية:</div>
+        {topic.starters.map((st, si) => <div key={si} style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#52525b", padding: "3px 0" }}>{st}</div>)}
       </div>
       <div style={{ textAlign: "center" }}>
-        <button onClick={() => startRound(1)} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#e87461,#e8b84b)", color: "#fff", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ الجولة الأولى (٤ دقائق) →</button>
+        <button onClick={() => startRound(1)} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "#1d4ed8", color: "#fff", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ الجولة الأولى (٤ دقائق) →</button>
       </div>
     </div>
   );
@@ -2294,9 +2292,9 @@ function Fluency432() {
   if (round === 4) return (
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 48, marginBottom: 12 }}>🔥</div>
-      <div style={{ fontSize: 20, fontWeight: 800, color: "#5ec4b6", marginBottom: 8 }}>إنجاز رائع.. أنت تقترب من التمكّن</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", lineHeight: 2, marginBottom: 16 }}>تكلمت عن نفس الموضوع ٣ مرات — كل مرة بسرعة أكبر.<br />لاحظت كيف الجمل صارت تطلع أسرع في الجولة الثالثة؟<br />هذا بالضبط كيف تُبنى الطلاقة.</div>
-      <button onClick={restart} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e87461", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 موضوع جديد</button>
+      <div style={{ fontSize: 20, fontWeight: 800, color: "#059669", marginBottom: 8 }}>إنجاز رائع.. أنت تقترب من التمكّن</div>
+      <div style={{ fontSize: 14, color: "#52525b", lineHeight: 2, marginBottom: 16 }}>تكلمت عن نفس الموضوع ٣ مرات — كل مرة بسرعة أكبر.<br />لاحظت كيف الجمل صارت تطلع أسرع في الجولة الثالثة؟<br />هذا بالضبط كيف تُبنى الطلاقة.</div>
+      <button onClick={restart} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 موضوع جديد</button>
     </div>
   );
 
@@ -2304,21 +2302,21 @@ function Fluency432() {
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
         {[1, 2, 3].map(r => (
-          <div key={r} style={{ flex: 1, height: 6, borderRadius: 3, background: r < round ? "#5ec4b6" : r === round ? "#e87461" : "#1e2130" }} />
+          <div key={r} style={{ flex: 1, height: 6, borderRadius: 3, background: r < round ? "#059669" : r === round ? "#dc2626" : "#e4e4e7" }} />
         ))}
       </div>
 
       <div style={{ textAlign: "center", marginBottom: 14 }}>
-        <div style={{ fontSize: 13, color: "#e87461", fontWeight: 700, marginBottom: 8 }}>{"الجولة " + round + "/3 — " + roundLabels[round]}</div>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 52, fontWeight: 800, color: sec <= 10 && sec > 0 ? "#e87461" : running ? "#e87461" : "#5ec4b6" }}>{String(Math.floor(sec / 60)).padStart(2, "0") + ":" + String(sec % 60).padStart(2, "0")}</div>
-        {sec === 0 && !running && <div style={{ color: "#5ec4b6", fontWeight: 700, marginTop: 6, fontSize: 14 }}>✅ انتهى الوقت!</div>}
+        <div style={{ fontSize: 13, color: "#dc2626", fontWeight: 700, marginBottom: 8 }}>{"الجولة " + round + "/3 — " + roundLabels[round]}</div>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 52, fontWeight: 800, color: sec <= 10 && sec > 0 ? "#dc2626" : running ? "#dc2626" : "#059669" }}>{String(Math.floor(sec / 60)).padStart(2, "0") + ":" + String(sec % 60).padStart(2, "0")}</div>
+        {sec === 0 && !running && <div style={{ color: "#059669", fontWeight: 700, marginTop: 6, fontSize: 14 }}>✅ انتهى الوقت!</div>}
       </div>
 
-      <div style={{ background: "rgba(232,116,97,0.04)", border: "1px solid rgba(232,116,97,0.08)", borderRadius: 12, padding: 14, marginBottom: 14, textAlign: "center" }}>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, color: "#f0f0f5", direction: "ltr", lineHeight: 1.6 }}>{topic.topic}</div>
+      <div style={{ background: "rgba(220,38,38,0.04)", border: "1px solid rgba(220,38,38,0.08)", borderRadius: 12, padding: 14, marginBottom: 14, textAlign: "center" }}>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, color: "#18181b", direction: "ltr", lineHeight: 1.6 }}>{topic.topic}</div>
       </div>
 
-      {running && <div style={{ textAlign: "center", fontSize: 14, color: "#7a8295", lineHeight: 2 }}>
+      {running && <div style={{ textAlign: "center", fontSize: 14, color: "#71717a", lineHeight: 2 }}>
         {round === 1 && "خذ وقتك — تكلم بأي سرعة. الهدف: غطِّ أكبر قدر من النقاط"}
         {round === 2 && "نفس الأفكار — لكن أسرع. لاحظ إن الجمل تطلع أسهل"}
         {round === 3 && "آخر جولة — أقصى سرعة ممكنة. لاحظ الفرق عن أول مرة!"}
@@ -2326,12 +2324,12 @@ function Fluency432() {
 
       {sec === 0 && !running && round < 3 && (
         <div style={{ textAlign: "center", marginTop: 10 }}>
-          <button onClick={() => startRound(round + 1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#e87461", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{"الجولة " + (round + 1) + " (" + (round === 1 ? "٣" : "٢") + " دقائق) →"}</button>
+          <button onClick={() => startRound(round + 1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{"الجولة " + (round + 1) + " (" + (round === 1 ? "٣" : "٢") + " دقائق) →"}</button>
         </div>
       )}
       {sec === 0 && !running && round === 3 && (
         <div style={{ textAlign: "center", marginTop: 10 }}>
-          <button onClick={() => setRound(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#5ec4b6,#e8b84b)", color: "#1a1614", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🏁 النتيجة</button>
+          <button onClick={() => setRound(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#059669,#1d4ed8)", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🏁 النتيجة</button>
         </div>
       )}
     </div>
@@ -2362,9 +2360,9 @@ function ListenExercise() {
   if (done) return (
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>👂</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#5ec4b6" : score >= 4 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#c49a38", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
 
@@ -2374,33 +2372,33 @@ function ListenExercise() {
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 13, color: "#7a8295" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontSize: 13, color: "#c49a38", fontWeight: 600 }}>{score + " صحيح"}</div>
+        <div style={{ fontSize: 13, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: 13, color: "#1e40af", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
 
-      <div style={{ background: "rgba(196,154,56,0.06)", border: "1px solid rgba(196,154,56,0.12)", borderRadius: 12, padding: 20, marginBottom: 12, textAlign: "center" }}>
-        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#c49a38,#c49a38)", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", marginBottom: 10 }}>🔊 استمع للجملة</button>
-        <div style={{ fontSize: 12, color: "#7a8295" }}>اضغط للاستماع — ثم أجب على السؤال</div>
-        {revealed && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, color: "#c49a38", marginTop: 10, direction: "ltr" }}>{raw.text}</div>}
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 20, marginBottom: 12, textAlign: "center" }}>
+        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", marginBottom: 10 }}>🔊 استمع للجملة</button>
+        <div style={{ fontSize: 12, color: "#71717a" }}>اضغط للاستماع — ثم أجب على السؤال</div>
+        {revealed && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, color: "#1e40af", marginTop: 10, direction: "ltr" }}>{raw.text}</div>}
       </div>
 
-      <div style={{ fontSize: 14, color: "#f0f0f5", marginBottom: 10, fontWeight: 600 }}>{raw.q}</div>
+      <div style={{ fontSize: 14, color: "#18181b", marginBottom: 10, fontWeight: 600 }}>{raw.q}</div>
 
       {qOpts.map((o, oi) => {
         const show = picked !== null;
         const isCorrect = oi === qAns;
         const isPicked = picked === oi;
-        let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
-        if (show && isCorrect) { bg = "rgba(94,196,182,0.1)"; brd = "rgba(94,196,182,0.3)"; }
-        else if (show && isPicked && !isCorrect) { bg = "rgba(232,160,64,0.1)"; brd = "rgba(232,160,64,0.3)"; }
+        let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
+        if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
         return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 5, cursor: show ? "default" : "pointer", fontSize: 14, lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
-          {o}{show && isCorrect && <span style={{ color: "#5ec4b6", fontSize: 12 }}> ✓</span>}
+          {o}{show && isCorrect && <span style={{ color: "#059669", fontSize: 12 }}> ✓</span>}
         </div>;
       })}
       {picked !== null && (
         <div style={{ textAlign: "center", marginTop: 10 }}>
-          {!revealed && <button onClick={() => setRevealed(true)} style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(196,154,56,0.2)", background: "transparent", color: "#c49a38", fontFamily: "inherit", fontSize: 12, cursor: "pointer", marginLeft: 8 }}>👁 أظهر النص</button>}
-          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#c49a38", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer", marginRight: 8 }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          {!revealed && <button onClick={() => setRevealed(true)} style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "#1e40af", fontFamily: "inherit", fontSize: 12, cursor: "pointer", marginLeft: 8 }}>👁 أظهر النص</button>}
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer", marginRight: 8 }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         </div>
       )}
     </div>
@@ -2433,9 +2431,9 @@ function DictationExercise() {
   if (done) return (
     <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>🎧</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#5ec4b6" : score >= 4 ? "#e8b84b" : "#e87461", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#e87461", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
     </div>
   );
 
@@ -2446,38 +2444,38 @@ function DictationExercise() {
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 13, color: "#7a8295" }}>{"جملة " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontSize: 13, color: "#e87461", fontWeight: 600 }}>{score + " صحيح"}</div>
+        <div style={{ fontSize: 13, color: "#71717a" }}>{"جملة " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: 13, color: "#dc2626", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
 
-      <div style={{ background: "rgba(232,116,97,0.06)", border: "1px solid rgba(232,116,97,0.12)", borderRadius: 12, padding: 20, marginBottom: 12, textAlign: "center" }}>
-        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#e87461,#e87461)", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", marginBottom: 6 }}>🔊 استمع</button>
+      <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: 12, padding: 20, marginBottom: 12, textAlign: "center" }}>
+        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "#dc2626", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", marginBottom: 6 }}>🔊 استمع</button>
         <div style={{ marginTop: 6 }}>
-          <button onClick={() => speak(qs.current[qi], 0.55)} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(232,116,97,0.2)", background: "transparent", color: "#e87461", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🐢 بطيء</button>
+          <button onClick={() => speak(qs.current[qi], 0.55)} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(220,38,38,0.2)", background: "transparent", color: "#dc2626", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🐢 بطيء</button>
         </div>
-        <div style={{ fontSize: 12, color: "#7a8295", marginTop: 8 }}>استمع ثم اكتب ما سمعته بالإنجليزي</div>
+        <div style={{ fontSize: 12, color: "#71717a", marginTop: 8 }}>استمع ثم اكتب ما سمعته بالإنجليزي</div>
       </div>
 
-      <textarea value={input} onChange={(e) => !checked && setInput(e.target.value)} placeholder="اكتب ما سمعته هنا..." disabled={checked} style={{ width: "100%", minHeight: 70, padding: 14, borderRadius: 12, fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(232,116,97,0.2)", color: "#f0f0f5", outline: "none", resize: "vertical", marginBottom: 12 }} />
+      <textarea value={input} onChange={(e) => !checked && setInput(e.target.value)} placeholder="اكتب ما سمعته هنا..." disabled={checked} style={{ width: "100%", minHeight: 70, padding: 14, borderRadius: 12, fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(220,38,38,0.2)", color: "#18181b", outline: "none", resize: "vertical", marginBottom: 12 }} />
 
       {!checked ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={check} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#e87461" : "#252836", color: input.trim().length >= 3 ? "#fff" : "#5c6478", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ تأكّد</button>
+          <button onClick={check} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#dc2626" : "#e4e4e7", color: input.trim().length >= 3 ? "#fff" : "#a1a1aa", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ تأكّد</button>
         </div>
       ) : (
         <div>
-          <div style={{ background: "rgba(94,196,182,0.06)", border: "1px solid rgba(94,196,182,0.12)", borderRadius: 12, padding: 14, marginBottom: 10 }}>
-            <div style={{ fontSize: 12, color: "#5ec4b6", fontWeight: 700, marginBottom: 6 }}>✓ الجملة الصحيحة:</div>
-            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#f0f0f5" }}>{correct}</div>
+          <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: 12, padding: 14, marginBottom: 10 }}>
+            <div style={{ fontSize: 12, color: "#059669", fontWeight: 700, marginBottom: 6 }}>✓ الجملة الصحيحة:</div>
+            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#18181b" }}>{correct}</div>
           </div>
           <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 2, marginBottom: 10 }}>
             {correctWords.map((w, wi) => {
               const matched = userWords.includes(w);
-              return <span key={wi} style={{ color: matched ? "#5ec4b6" : "#e87461", fontWeight: matched ? 400 : 700 }}>{w + " "}</span>;
+              return <span key={wi} style={{ color: matched ? "#059669" : "#dc2626", fontWeight: matched ? 400 : 700 }}>{w + " "}</span>;
             })}
           </div>
           <div style={{ textAlign: "center" }}>
-            <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "#e87461", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+            <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
           </div>
         </div>
       )}
@@ -2656,8 +2654,8 @@ function LevelTest({ onComplete, checkpoint }) {
   if (phase === "intro") return (
     <div style={{ animation: "fadeUp .4s", textAlign: "center" }}>
       <div style={{ fontSize: 48, marginBottom: 16 }}>🎯</div>
-      <div style={{ fontSize: 20, fontWeight: 800, background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: 12 }}>قياس مستوى التمكّن</div>
-      <div style={{ fontSize: 13, color: "#9ca3b5", lineHeight: 2, marginBottom: 20 }}>
+      <div style={{ fontSize: 20, fontWeight: 800, background: "linear-gradient(135deg,#1d4ed8,#059669)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: 12 }}>قياس مستوى التمكّن</div>
+      <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2, marginBottom: 20 }}>
         اختبار تكيّفي يقيس مستواك الحقيقي بدقة
         <br />يغطي: القواعد، المفردات، فهم القراءة، التواصل المهني
         <br />معتمد على معايير CEFR العالمية (A1 → C2)
@@ -2669,18 +2667,18 @@ function LevelTest({ onComplete, checkpoint }) {
           { icon: "📖", label: "فهم القراءة", desc: "فهم النصوص والسياق" },
           { icon: "🗣️", label: "التواصل", desc: "الرد المناسب في مواقف الحياة" },
         ].map((s, i) => (
-          <div key={i} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: 12 }}>
+          <div key={i} style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 10, padding: 12 }}>
             <div style={{ fontSize: 20, marginBottom: 4 }}>{s.icon}</div>
-            <div style={{ fontSize: 12, fontWeight: 700, color: "#f0f0f5" }}>{s.label}</div>
-            <div style={{ fontSize: 12, color: "#7a8295" }}>{s.desc}</div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: "#18181b" }}>{s.label}</div>
+            <div style={{ fontSize: 12, color: "#71717a" }}>{s.desc}</div>
           </div>
         ))}
       </div>
-      <div style={{ background: "rgba(232,184,75,0.06)", border: "1px solid rgba(232,184,75,0.12)", borderRadius: 10, padding: 12, marginBottom: 20 }}>
-        <div style={{ fontSize: 12, color: "#e8b84b", fontWeight: 600 }}>⏱️ {TOTAL_QUESTIONS} سؤال — حوالي ١٠ دقائق</div>
-        <div style={{ fontSize: 12, color: "#7a8295", marginTop: 4 }}>الأسئلة تتكيّف مع مستواك — تزداد صعوبة إذا أجبت صح</div>
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 10, padding: 12, marginBottom: 20 }}>
+        <div style={{ fontSize: 12, color: "#1d4ed8", fontWeight: 600 }}>⏱️ {TOTAL_QUESTIONS} سؤال — حوالي ١٠ دقائق</div>
+        <div style={{ fontSize: 12, color: "#71717a", marginTop: 4 }}>الأسئلة تتكيّف مع مستواك — تزداد صعوبة إذا أجبت صح</div>
       </div>
-      <button onClick={startTest} style={{ padding: "12px 36px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ القياس 🚀</button>
+      <button onClick={startTest} style={{ padding: "12px 36px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#1d4ed8,#059669)", color: "#fafaf9", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ القياس 🚀</button>
     </div>
   );
 
@@ -2692,38 +2690,38 @@ function LevelTest({ onComplete, checkpoint }) {
       <div style={{ animation: "fadeUp .4s" }}>
         <div style={{ textAlign: "center", marginBottom: 20 }}>
           <div style={{ fontSize: 48, marginBottom: 8 }}>🏆</div>
-          <div style={{ fontSize: 13, color: "#7a8295", marginBottom: 8 }}>مستواك في اللغة الإنجليزية</div>
+          <div style={{ fontSize: 13, color: "#71717a", marginBottom: 8 }}>مستواك في اللغة الإنجليزية</div>
           <div style={{ display: "inline-block", padding: "12px 32px", borderRadius: 16, background: lvl.color + "18", border: "2px solid " + lvl.color + "40" }}>
             <div style={{ fontSize: 36, fontWeight: 800, color: lvl.color, fontFamily: "'IBM Plex Mono'" }}>{lvl.code}</div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: "#f0f0f5" }}>{lvl.name}</div>
-            <div style={{ fontSize: 12, color: "#9ca3b5" }}>{lvl.nameEn}</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: "#18181b" }}>{lvl.name}</div>
+            <div style={{ fontSize: 12, color: "#52525b" }}>{lvl.nameEn}</div>
           </div>
         </div>
 
-        <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-          <div style={{ fontSize: 13, color: "#f0f0f5", lineHeight: 2 }}>{lvl.desc}</div>
+        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+          <div style={{ fontSize: 13, color: "#18181b", lineHeight: 2 }}>{lvl.desc}</div>
         </div>
 
-        <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "#e8b84b", marginBottom: 10 }}>💡 نصيحة لك</div>
-          <div style={{ fontSize: 13, color: "#9ca3b5", lineHeight: 2 }}>{lvl.tip}</div>
+        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", marginBottom: 10 }}>💡 نصيحة لك</div>
+          <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2 }}>{lvl.tip}</div>
         </div>
 
         {/* Skill breakdown */}
-        <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "#e8b84b", marginBottom: 12 }}>📊 تحليل المهارات</div>
+        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", marginBottom: 12 }}>📊 تحليل المهارات</div>
           {skillBreakdown && Object.keys(skillBreakdown).map(skill => {
             const s = skillBreakdown[skill];
             if (s.total === 0) return null;
             const pct = Math.round((s.correct / s.total) * 100);
-            const barColor = pct >= 80 ? "#5ec4b6" : pct >= 50 ? "#e8b84b" : "#e87461";
+            const barColor = pct >= 80 ? "#059669" : pct >= 50 ? "#1d4ed8" : "#dc2626";
             return (
               <div key={skill} style={{ marginBottom: 10 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                  <div style={{ fontSize: 12, color: "#f0f0f5" }}>{TYPE_ICONS[skill]} {TYPE_LABELS[skill]}</div>
+                  <div style={{ fontSize: 12, color: "#18181b" }}>{TYPE_ICONS[skill]} {TYPE_LABELS[skill]}</div>
                   <div style={{ fontSize: 12, fontWeight: 700, color: barColor, fontFamily: "'IBM Plex Mono'" }}>{pct}%</div>
                 </div>
-                <div style={{ height: 6, borderRadius: 3, background: "#181b25", overflow: "hidden" }}>
+                <div style={{ height: 6, borderRadius: 3, background: "#e4e4e7", overflow: "hidden" }}>
                   <div style={{ height: "100%", width: pct + "%", borderRadius: 3, background: barColor, transition: "width .5s" }} />
                 </div>
               </div>
@@ -2732,8 +2730,8 @@ function LevelTest({ onComplete, checkpoint }) {
         </div>
 
         {/* Level breakdown */}
-        <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "#e8b84b", marginBottom: 12 }}>📈 الأداء حسب المستوى</div>
+        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", marginBottom: 12 }}>📈 الأداء حسب المستوى</div>
           <div style={{ display: "flex", gap: 6, alignItems: "flex-end" }}>
             {CEFR_LEVELS.map((l, i) => {
               const att = levelAttempts[i];
@@ -2742,9 +2740,9 @@ function LevelTest({ onComplete, checkpoint }) {
               const isFinal = i === finalLevel;
               return (
                 <div key={i} style={{ flex: 1, textAlign: "center" }}>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: att > 0 ? (pct >= 60 ? "#5ec4b6" : "#e87461") : "#4a5166", marginBottom: 4 }}>{att > 0 ? pct + "%" : "—"}</div>
-                  <div style={{ height: Math.max(att > 0 ? pct * 0.6 : 4, 4), borderRadius: 4, background: att > 0 ? l.color : "#1e2130", border: isFinal ? "2px solid #fff" : "none", transition: "height .3s" }} />
-                  <div style={{ fontSize: 12, fontWeight: isFinal ? 800 : 600, color: isFinal ? "#fff" : "#7a8295", marginTop: 4 }}>{l.code}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: att > 0 ? (pct >= 60 ? "#059669" : "#dc2626") : "#a1a1aa", marginBottom: 4 }}>{att > 0 ? pct + "%" : "—"}</div>
+                  <div style={{ height: Math.max(att > 0 ? pct * 0.6 : 4, 4), borderRadius: 4, background: att > 0 ? l.color : "#e4e4e7", border: isFinal ? "2px solid #1d4ed8" : "none", transition: "height .3s" }} />
+                  <div style={{ fontSize: 12, fontWeight: isFinal ? 800 : 600, color: isFinal ? "#fff" : "#71717a", marginTop: 4 }}>{l.code}</div>
                 </div>
               );
             })}
@@ -2752,18 +2750,18 @@ function LevelTest({ onComplete, checkpoint }) {
         </div>
 
         <div style={{ display: "flex", gap: 6, marginBottom: 8 }}>
-          <div style={{ flex: 1, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: 12, textAlign: "center" }}>
-            <div style={{ fontSize: 20, fontWeight: 800, color: "#e8b84b", fontFamily: "'IBM Plex Mono'" }}>{totalCorrect}/{history.length}</div>
-            <div style={{ fontSize: 12, color: "#7a8295" }}>إجابات صحيحة</div>
+          <div style={{ flex: 1, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 10, padding: 12, textAlign: "center" }}>
+            <div style={{ fontSize: 20, fontWeight: 800, color: "#1d4ed8", fontFamily: "'IBM Plex Mono'" }}>{totalCorrect}/{history.length}</div>
+            <div style={{ fontSize: 12, color: "#71717a" }}>إجابات صحيحة</div>
           </div>
-          <div style={{ flex: 1, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: 12, textAlign: "center" }}>
-            <div style={{ fontSize: 20, fontWeight: 800, color: "#e8b84b", fontFamily: "'IBM Plex Mono'" }}>{Math.round((Date.now() - startTime) / 1000)}s</div>
-            <div style={{ fontSize: 12, color: "#7a8295" }}>الوقت</div>
+          <div style={{ flex: 1, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 10, padding: 12, textAlign: "center" }}>
+            <div style={{ fontSize: 20, fontWeight: 800, color: "#1d4ed8", fontFamily: "'IBM Plex Mono'" }}>{Math.round((Date.now() - startTime) / 1000)}s</div>
+            <div style={{ fontSize: 12, color: "#71717a" }}>الوقت</div>
           </div>
         </div>
 
         <div style={{ textAlign: "center", marginTop: 16 }}>
-          <button onClick={() => { setPhase("intro"); setQi(0); setPicked(null); setCurrentLevel(2); setHistory([]); setQuestions([]); setLevelScores({0:0,1:0,2:0,3:0,4:0,5:0}); setLevelAttempts({0:0,1:0,2:0,3:0,4:0,5:0}); setConsecutiveCorrect(0); setConsecutiveWrong(0); setFinalLevel(null); setSkillBreakdown(null); }} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد الاختبار</button>
+          <button onClick={() => { setPhase("intro"); setQi(0); setPicked(null); setCurrentLevel(2); setHistory([]); setQuestions([]); setLevelScores({0:0,1:0,2:0,3:0,4:0,5:0}); setLevelAttempts({0:0,1:0,2:0,3:0,4:0,5:0}); setConsecutiveCorrect(0); setConsecutiveWrong(0); setFinalLevel(null); setSkillBreakdown(null); }} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#1d4ed8,#059669)", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد الاختبار</button>
         </div>
       </div>
     );
@@ -2782,21 +2780,21 @@ function LevelTest({ onComplete, checkpoint }) {
       {/* Progress bar */}
       <div style={{ marginBottom: 14 }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-          <div style={{ fontSize: 12, color: "#7a8295" }}>{"سؤال " + (qi + 1) + "/" + TOTAL_QUESTIONS}</div>
+          <div style={{ fontSize: 12, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/" + TOTAL_QUESTIONS}</div>
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <div style={{ fontSize: 12, padding: "2px 8px", borderRadius: 6, background: levelInfo.color + "18", color: levelInfo.color, fontWeight: 700 }}>{levelInfo.code}</div>
-            <div style={{ fontSize: 12, color: "#7a8295" }}>{TYPE_ICONS[currentQ.type]} {TYPE_LABELS[currentQ.type]}</div>
+            <div style={{ fontSize: 12, color: "#71717a" }}>{TYPE_ICONS[currentQ.type]} {TYPE_LABELS[currentQ.type]}</div>
           </div>
         </div>
-        <div style={{ height: 4, borderRadius: 2, background: "#181b25", overflow: "hidden" }}>
-          <div style={{ height: "100%", width: progress + "%", borderRadius: 2, background: "linear-gradient(90deg,#e8b84b,#e8b84b)", transition: "width .3s" }} />
+        <div style={{ height: 4, borderRadius: 2, background: "#e4e4e7", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: progress + "%", borderRadius: 2, background: "#1d4ed8", transition: "width .3s" }} />
         </div>
       </div>
 
       {/* Question */}
-      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: 16, marginBottom: 14 }}>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.9, color: "#f0f0f5" }}>{displayQ.q}</div>
-        {currentQ.audio && <div style={{ textAlign: "center", marginTop: 8 }}><button onClick={() => speak(currentQ.audio, 0.85)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#c49a38", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔊 استمع مرة ثانية</button></div>}
+      <div style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: 12, padding: 16, marginBottom: 14 }}>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.9, color: "#18181b" }}>{displayQ.q}</div>
+        {currentQ.audio && <div style={{ textAlign: "center", marginTop: 8 }}><button onClick={() => speak(currentQ.audio, 0.85)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔊 استمع مرة ثانية</button></div>}
       </div>
 
       {/* Options */}
@@ -2804,14 +2802,14 @@ function LevelTest({ onComplete, checkpoint }) {
         const show = picked !== null;
         const isCorrect = oi === displayQ.ans;
         const isPicked = picked === oi;
-        let bg = "rgba(255,255,255,0.02)", brd = "rgba(255,255,255,0.04)";
-        if (show && isCorrect) { bg = "rgba(94,196,182,0.12)"; brd = "rgba(94,196,182,0.3)"; }
-        else if (show && isPicked && !isCorrect) { bg = "rgba(232,116,97,0.12)"; brd = "rgba(232,160,64,0.3)"; }
+        let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
+        if (show && isCorrect) { bg = "rgba(5,150,105,0.12)"; brd = "rgba(5,150,105,0.3)"; }
+        else if (show && isPicked && !isCorrect) { bg = "rgba(220,38,38,0.12)"; brd = "rgba(217,119,6,0.3)"; }
         return (
           <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 6, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1, transition: ".2s" }}>
             {o}
-            {show && isCorrect && <span style={{ color: "#5ec4b6", fontSize: 12 }}> ✓</span>}
-            {show && isPicked && !isCorrect && <span style={{ color: "#e87461", fontSize: 12 }}> ✗</span>}
+            {show && isCorrect && <span style={{ color: "#059669", fontSize: 12 }}> ✓</span>}
+            {show && isPicked && !isCorrect && <span style={{ color: "#dc2626", fontSize: 12 }}> ✗</span>}
           </div>
         );
       })}
@@ -2819,10 +2817,10 @@ function LevelTest({ onComplete, checkpoint }) {
       {/* Explanation after answer */}
       {picked !== null && (
         <div style={{ textAlign: "center", marginTop: 12 }}>
-          <div style={{ fontSize: 12, color: picked === displayQ.ans ? "#5ec4b6" : "#e87461", marginBottom: 8, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, color: picked === displayQ.ans ? "#059669" : "#dc2626", marginBottom: 8, fontWeight: 600 }}>
             {picked === displayQ.ans ? "✓ إنجاز رائع!" : "✗ محاولة ممتازة — لاحظ الفرق"}
           </div>
-          <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", color: "#1a1614", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+          <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#1d4ed8,#059669)", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
             {qi + 1 >= TOTAL_QUESTIONS ? "🏁 عرض النتيجة" : "التالي ←"}
           </button>
         </div>
@@ -2907,45 +2905,45 @@ function MainApp({ currentUser, onLogout }) {
 
   // ===== ONBOARDING — The Wise Mentor =====
   if (!store.start) return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#1a1614", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", background: "#fafaf9", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
       <style>{CSS}</style>
       <div style={{ maxWidth: 440, padding: 32, animation: "fadeUp .8s" }}>
 
         {/* Screen 1: The Dignified Hook */}
         {onboardStep === 0 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
           <div style={{ marginBottom: 20 }}><TaliqLogo size={52} /></div>
-          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#f5f0eb", lineHeight: 2, marginBottom: 16 }}>تملك المعرفة...<br/>لكن الكلمات تتوقف عند لسانك؟</h1>
-          <p style={{ fontSize: 15, color: "#a89e94", lineHeight: 2.4, marginBottom: 28 }}>تقرأ وتفهم الإنجليزي جيداً<br/>لكن عندما يحين وقت التحدث — تتردد<br/><b style={{ color: "#e8b84b" }}>ليست مشكلة قدرات. إنها مشكلة طريقة.</b></p>
-          <button onClick={() => setOnboardStep(1)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>هذا ما أعانيه بالضبط ←</button>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#18181b", lineHeight: 2, marginBottom: 16 }}>تملك المعرفة...<br/>لكن الكلمات تتوقف عند لسانك؟</h1>
+          <p style={{ fontSize: 15, color: "#71717a", lineHeight: 2.4, marginBottom: 28 }}>تقرأ وتفهم الإنجليزي جيداً<br/>لكن عندما يحين وقت التحدث — تتردد<br/><b style={{ color: "#1d4ed8" }}>ليست مشكلة قدرات. إنها مشكلة طريقة.</b></p>
+          <button onClick={() => setOnboardStep(1)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>هذا ما أعانيه بالضبط ←</button>
         </div>}
 
         {/* Screen 2: The Method */}
         {onboardStep === 1 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
           <div style={{ fontSize: 48, marginBottom: 16 }}>🧠</div>
-          <h1 style={{ fontSize: 21, fontWeight: 800, color: "#e8b84b", lineHeight: 2, marginBottom: 16 }}>طَلِق مبني على علم الاكتساب<br/>— ليس الحفظ</h1>
-          <div style={{ background: "rgba(232,184,75,0.05)", borderRadius: 16, padding: 20, marginBottom: 20, textAlign: "right" }}>
-            <div style={{ fontSize: 14, color: "#f5f0eb", lineHeight: 2.6 }}>
-              <div style={{ marginBottom: 8, color: "#6d635a" }}>❌ الكورسات التقليدية تعلّمك <b>قواعد تنساها</b></div>
-              <div style={{ marginBottom: 8, color: "#6d635a" }}>❌ التطبيقات الأخرى تعلّمك <b>ترجمة لا تحتاجها</b></div>
-              <div style={{ color: "#5ec4b6" }}>✅ طَلِق يُدرّب لسانك على <b>مواقف حقيقية من حياتك</b></div>
+          <h1 style={{ fontSize: 21, fontWeight: 800, color: "#1d4ed8", lineHeight: 2, marginBottom: 16 }}>طَلِق مبني على علم الاكتساب<br/>— ليس الحفظ</h1>
+          <div style={{ background: "rgba(29,78,216,0.05)", borderRadius: 16, padding: 20, marginBottom: 20, textAlign: "right" }}>
+            <div style={{ fontSize: 14, color: "#18181b", lineHeight: 2.6 }}>
+              <div style={{ marginBottom: 8, color: "#a1a1aa" }}>❌ الكورسات التقليدية تعلّمك <b>قواعد تنساها</b></div>
+              <div style={{ marginBottom: 8, color: "#a1a1aa" }}>❌ التطبيقات الأخرى تعلّمك <b>ترجمة لا تحتاجها</b></div>
+              <div style={{ color: "#059669" }}>✅ طَلِق يُدرّب لسانك على <b>مواقف حقيقية من حياتك</b></div>
             </div>
           </div>
-          <p style={{ fontSize: 13, color: "#6d635a", lineHeight: 2, marginBottom: 20 }}>مبني على أبحاث جامعية في اكتساب اللغة الثانية للكبار</p>
-          <button onClick={() => setOnboardStep(2)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>كيف يعمل؟ ←</button>
+          <p style={{ fontSize: 13, color: "#a1a1aa", lineHeight: 2, marginBottom: 20 }}>مبني على أبحاث جامعية في اكتساب اللغة الثانية للكبار</p>
+          <button onClick={() => setOnboardStep(2)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>كيف يعمل؟ ←</button>
         </div>}
 
         {/* Screen 3: The Daily Investment */}
         {onboardStep === 2 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
-          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#f5f0eb", lineHeight: 2, marginBottom: 6 }}>١٥ دقيقة يومياً</h1>
-          <p style={{ fontSize: 14, color: "#a89e94", marginBottom: 20 }}>جلسة واحدة — ست خطوات — استثمار حقيقي في نفسك</p>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: "#18181b", lineHeight: 2, marginBottom: 6 }}>١٥ دقيقة يومياً</h1>
+          <p style={{ fontSize: 14, color: "#71717a", marginBottom: 20 }}>جلسة واحدة — ست خطوات — استثمار حقيقي في نفسك</p>
           <div style={{ textAlign: "right", marginBottom: 20 }}>
             {[
-              { icon: "👂", text: "استمع — درّب أذنك بدون قراءة", color: "#a89e94" },
-              { icon: "📖", text: "اقرأ — لاحظ ما فاتك في الاستماع", color: "#a89e94" },
-              { icon: "🔊", text: "ردّد — دع لسانك يتعوّد على الجمل", color: "#e8b84b" },
-              { icon: "🧠", text: "تذكّر — استرجع من ذاكرتك بدون مساعدة", color: "#e8b84b" },
-              { icon: "✍️", text: "أنتج — عبّر بأسلوبك الخاص", color: "#5ec4b6" },
-              { icon: "🌍", text: "طبّق — تحدٍّ حقيقي تُنجزه اليوم", color: "#5ec4b6" },
+              { icon: "👂", text: "استمع — درّب أذنك بدون قراءة", color: "#71717a" },
+              { icon: "📖", text: "اقرأ — لاحظ ما فاتك في الاستماع", color: "#71717a" },
+              { icon: "🔊", text: "ردّد — دع لسانك يتعوّد على الجمل", color: "#1d4ed8" },
+              { icon: "🧠", text: "تذكّر — استرجع من ذاكرتك بدون مساعدة", color: "#1d4ed8" },
+              { icon: "✍️", text: "أنتج — عبّر بأسلوبك الخاص", color: "#059669" },
+              { icon: "🌍", text: "طبّق — تحدٍّ حقيقي تُنجزه اليوم", color: "#059669" },
             ].map((s, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: 12, animation: "slideIn .4s " + (i * 0.08) + "s both" }}>
                 <div style={{ fontSize: 22, flexShrink: 0, width: 32, textAlign: "center" }}>{s.icon}</div>
@@ -2953,14 +2951,14 @@ function MainApp({ currentUser, onLogout }) {
               </div>
             ))}
           </div>
-          <button onClick={() => setOnboardStep(3)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>هذا ما أبحث عنه ←</button>
+          <button onClick={() => setOnboardStep(3)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%" }}>هذا ما أبحث عنه ←</button>
         </div>}
 
         {/* Screen 4: Professional Identity — "What is your goal?" */}
         {onboardStep === 3 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
           <div style={{ fontSize: 44, marginBottom: 16 }}>🎯</div>
-          <h1 style={{ fontSize: 20, fontWeight: 800, color: "#f5f0eb", lineHeight: 2, marginBottom: 6 }}>ما هو هدفك من إتقان الإنجليزية؟</h1>
-          <p style={{ fontSize: 13, color: "#6d635a", marginBottom: 20 }}>سنُصمّم رحلتك بناءً على إجابتك</p>
+          <h1 style={{ fontSize: 20, fontWeight: 800, color: "#18181b", lineHeight: 2, marginBottom: 6 }}>ما هو هدفك من إتقان الإنجليزية؟</h1>
+          <p style={{ fontSize: 13, color: "#a1a1aa", marginBottom: 20 }}>سنُصمّم رحلتك بناءً على إجابتك</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               { id: "lead", icon: "👔", text: "قيادة الاجتماعات والعروض بثقة", sub: "التواصل المهني والقيادي" },
@@ -2968,9 +2966,9 @@ function MainApp({ currentUser, onLogout }) {
               { id: "travel", icon: "✈️", text: "السفر والتعامل باستقلالية تامة", sub: "فنادق، مطارات، مطاعم، أسواق" },
               { id: "grow", icon: "📈", text: "تطوير الذات والارتقاء المهني", sub: "كسر حاجز كان يعيقني سنوات" },
             ].map(c => (
-              <button key={c.id} onClick={() => { setUserChallenge(c.id); setOnboardStep(4); }} style={{ display: "flex", alignItems: "center", gap: 14, padding: 18, borderRadius: 14, border: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.03)", cursor: "pointer", textAlign: "right", transition: "all .2s" }}>
+              <button key={c.id} onClick={() => { setUserChallenge(c.id); setOnboardStep(4); }} style={{ display: "flex", alignItems: "center", gap: 14, padding: 18, borderRadius: 14, border: "1px solid rgba(0,0,0,0.05)", background: "rgba(0,0,0,0.02)", cursor: "pointer", textAlign: "right", transition: "all .2s" }}>
                 <div style={{ fontSize: 28, flexShrink: 0 }}>{c.icon}</div>
-                <div><div style={{ fontSize: 15, fontWeight: 700, color: "#f5f0eb" }}>{c.text}</div><div style={{ fontSize: 13, color: "#6d635a", marginTop: 3 }}>{c.sub}</div></div>
+                <div><div style={{ fontSize: 15, fontWeight: 700, color: "#18181b" }}>{c.text}</div><div style={{ fontSize: 13, color: "#a1a1aa", marginTop: 3 }}>{c.sub}</div></div>
               </button>
             ))}
           </div>
@@ -2978,33 +2976,33 @@ function MainApp({ currentUser, onLogout }) {
 
         {/* Screen 5: Social Proof — Success Stories */}
         {onboardStep === 4 && <div style={{ animation: "fadeUp .6s" }}>
-          <div style={{ fontSize: 15, fontWeight: 700, color: "#a89e94", textAlign: "center", marginBottom: 16 }}>أشخاص مثلك بدأوا... ولاحظوا الفرق</div>
+          <div style={{ fontSize: 15, fontWeight: 700, color: "#71717a", textAlign: "center", marginBottom: 16 }}>أشخاص مثلك بدأوا... ولاحظوا الفرق</div>
           {[
             { name: "خالد، 42 سنة — مدير مشاريع", text: "كنت أتردد في كل اجتماع. بعد أسبوعين مع طَلِق، صرت أفتح الاجتماع وأقوده بثقة.", icon: "👔" },
             { name: "نورة، 38 سنة — أم لثلاثة أطفال", text: "الآن أتواصل مع معلمات أطفالي بالإنجليزي. الحرج اختفى تماماً.", icon: "👩‍👧‍👦" },
             { name: "فهد، 45 سنة — رجل أعمال", text: "في آخر رحلة عمل، تفاوضت وأنجزت كل شيء بالإنجليزي. شعور لا يُوصف.", icon: "✈️" },
           ].map((s, i) => (
-            <div key={i} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 14, padding: 16, marginBottom: 12, animation: "slideIn .4s " + (i * 0.12) + "s both" }}>
+            <div key={i} style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: 14, padding: 16, marginBottom: 12, animation: "slideIn .4s " + (i * 0.12) + "s both" }}>
               <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 8 }}>
                 <div style={{ fontSize: 22 }}>{s.icon}</div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#e8b84b" }}>{s.name}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8" }}>{s.name}</div>
               </div>
-              <div style={{ fontSize: 14, color: "#a89e94", lineHeight: 2.2 }}>"{s.text}"</div>
+              <div style={{ fontSize: 14, color: "#71717a", lineHeight: 2.2 }}>"{s.text}"</div>
             </div>
           ))}
-          <button onClick={() => setOnboardStep(5)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%", marginTop: 8 }}>ملهم — أنا جاهز ←</button>
+          <button onClick={() => setOnboardStep(5)} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 800, cursor: "pointer", width: "100%", marginTop: 8 }}>ملهم — أنا جاهز ←</button>
         </div>}
 
         {/* Screen 6: The Commitment — Your Pledge */}
         {onboardStep === 5 && <div style={{ textAlign: "center", animation: "fadeUp .6s" }}>
           <div style={{ fontSize: 44, marginBottom: 16 }}>🤝</div>
-          <h1 style={{ fontSize: 21, fontWeight: 800, color: "#f5f0eb", lineHeight: 2, marginBottom: 16 }}>عهد مع نفسك</h1>
-          <div style={{ background: "rgba(232,184,75,0.04)", border: "1px solid rgba(232,184,75,0.1)", borderRadius: 16, padding: 24, marginBottom: 24 }}>
-            <div style={{ fontSize: 15, color: "#f5f0eb", lineHeight: 2.6, marginBottom: 12 }}>أُعاهد نفسي أن أستثمر <b style={{ color: "#e8b84b" }}>١٥ دقيقة يومياً</b><br/>لمدة أسبوع واحد فقط.<br/>لن أحكم على النتائج قبل ٧ أيام.</div>
-            <div style={{ fontSize: 13, color: "#6d635a" }}>من يلتزم علناً يُكمل ٣ أضعاف من لا يفعل — (أبحاث سلوكية)</div>
+          <h1 style={{ fontSize: 21, fontWeight: 800, color: "#18181b", lineHeight: 2, marginBottom: 16 }}>عهد مع نفسك</h1>
+          <div style={{ background: "rgba(29,78,216,0.04)", border: "1px solid rgba(29,78,216,0.1)", borderRadius: 16, padding: 24, marginBottom: 24 }}>
+            <div style={{ fontSize: 15, color: "#18181b", lineHeight: 2.6, marginBottom: 12 }}>أُعاهد نفسي أن أستثمر <b style={{ color: "#1d4ed8" }}>١٥ دقيقة يومياً</b><br/>لمدة أسبوع واحد فقط.<br/>لن أحكم على النتائج قبل ٧ أيام.</div>
+            <div style={{ fontSize: 13, color: "#a1a1aa" }}>من يلتزم علناً يُكمل ٣ أضعاف من لا يفعل — (أبحاث سلوكية)</div>
           </div>
-          <button onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge, committed: true }); }} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 18, fontWeight: 800, cursor: "pointer", width: "100%", animation: "glow 2s infinite" }}>أنا ملتزم — ابدأ استثماري الأول ✦</button>
-          <button onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge }); }} style={{ background: "none", border: "none", color: "#6d635a", fontFamily: "inherit", fontSize: 13, cursor: "pointer", marginTop: 14, display: "block", width: "100%" }}>أبدأ بدون التزام</button>
+          <button onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge, committed: true }); }} style={{ padding: "16px 40px", borderRadius: 14, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 18, fontWeight: 800, cursor: "pointer", width: "100%", animation: "none" }}>أنا ملتزم — ابدأ الآن</button>
+          <button onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge }); }} style={{ background: "none", border: "none", color: "#a1a1aa", fontFamily: "inherit", fontSize: 13, cursor: "pointer", marginTop: 14, display: "block", width: "100%" }}>أبدأ بدون التزام</button>
         </div>}
 
       </div>
@@ -3061,49 +3059,50 @@ function MainApp({ currentUser, onLogout }) {
     const available = DAILY_SCENARIOS.filter(s => !todayCompleted.includes(s.title));
     return available.length > 0 ? available[dn % available.length] : DAILY_SCENARIOS[dn % DAILY_SCENARIOS.length];
   })();
-  const Card = ({ children, s }) => <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 18, marginBottom: 12, animation: "fadeUp .4s", ...s }}>{children}</div>;
+  const Card = ({ children, s }) => <div style={{ background: "#fff", border: "1px solid #e4e4e7", borderRadius: 12, padding: 18, marginBottom: 12, animation: "fadeUp .3s", boxShadow: "0 1px 3px rgba(0,0,0,0.04)", ...s }}>{children}</div>;
 
   return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#1a1614", color: "#f0f0f5", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", background: "#fafaf9", color: "#18181b", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
       <style>{CSS}</style>
-      {conf && <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 100 }}>{Array.from({ length: 25 }).map((_, i) => <div key={i} style={{ position: "absolute", top: 0, left: Math.random() * 100 + "%", width: 7, height: 7, background: ["#e8b84b", "#e8b84b", "#e8b84b", "#5ec4b6"][i % 4], borderRadius: "50%", animation: "confDrop " + (2 + Math.random() * 2) + "s linear " + Math.random() * 0.5 + "s forwards" }} />)}</div>}
+      {/* Completion indicator — subtle banner instead of confetti */}
+      {conf && <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "10px 0", background: "#059669", color: "#fff", textAlign: "center", fontWeight: 700, fontSize: 14, animation: "fadeUp .3s" }}>جلسة اليوم مكتملة</div>}
 
       <div style={{ maxWidth: 680, margin: "0 auto", padding: "0 14px" }}>
         {/* تمكّن popup */}
-        {showXpPop && <div style={{ position: "fixed", top: 60, left: "50%", transform: "translateX(-50%)", zIndex: 200, padding: "8px 20px", borderRadius: 10, background: "linear-gradient(135deg,#e8b84b,#e87461)", color: "#fff", fontWeight: 800, fontSize: 16, fontFamily: "'IBM Plex Mono'", animation: "fadeUp .4s" }}>{showXpPop}</div>}
+        {showXpPop && <div style={{ position: "fixed", top: 60, left: "50%", transform: "translateX(-50%)", zIndex: 200, padding: "8px 20px", borderRadius: 8, background: "#fff", border: "1px solid rgba(0,0,0,0.1)", boxShadow: "0 4px 12px rgba(0,0,0,0.1)", color: "#18181b", fontWeight: 700, fontSize: 14, fontFamily: "'Noto Kufi Arabic',sans-serif", animation: "fadeUp .3s" }}>{showXpPop}</div>}
 
         <div style={{ padding: "16px 0 10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
             <TaliqLogo size={28} />
-            <div style={{ fontSize: 12, color: "#5c6478", marginTop: 2 }}>{"أسبوع " + wk + "/12" + (levelResult ? " — " + levelResult.levelCode : "")}</div>
+            <div style={{ fontSize: 12, color: "#a1a1aa", marginTop: 2 }}>{"أسبوع " + wk + "/12" + (levelResult ? " — " + levelResult.levelCode : "")}</div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            {/* Streak flame */}
-            {(() => { let s = 0; const d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s > 0 ? <div style={{ display: "flex", alignItems: "center", gap: 3 }}><span style={{ fontSize: 18, animation: s >= 7 ? "firePulse 1s infinite" : "none" }}>🔥</span><span style={{ fontSize: 14, fontWeight: 800, color: "#e8b84b", fontFamily: "'IBM Plex Mono'" }}>{s}</span></div> : null; })()}
-            {/* تمكّن */}
-            <div style={{ padding: "4px 10px", borderRadius: 8, background: "rgba(232,184,75,0.1)", display: "flex", alignItems: "center", gap: 4 }}>
-              <span style={{ fontSize: 12 }}>✦</span>
-              <span style={{ fontSize: 13, fontWeight: 800, color: "#e8b84b", fontFamily: "'IBM Plex Mono'" }}>{xp}</span>
+            {/* Streak counter */}
+            {(() => { let s = 0; const d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s > 0 ? <div style={{ display: "flex", alignItems: "center", gap: 4, padding: "4px 10px", borderRadius: 8, background: "rgba(5,150,105,0.08)" }}><span style={{ fontSize: 13, fontWeight: 700, color: "#059669", fontFamily: "'IBM Plex Mono'" }}>{s}</span><span style={{ fontSize: 11, color: "#71717a" }}>يوم</span></div> : null; })()}
+            {/* نقاط التمكّن */}
+            <div style={{ padding: "4px 10px", borderRadius: 8, background: "rgba(29,78,216,0.06)", display: "flex", alignItems: "center", gap: 4 }}>
+              <span style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", fontFamily: "'IBM Plex Mono'" }}>{xp}</span>
+              <span style={{ fontSize: 11, color: "#71717a" }}>نقطة</span>
             </div>
           </div>
         </div>
 
-        <div style={{ display: "flex", borderBottom: "1px solid rgba(255,255,255,0.04)", marginBottom: 14 }}>
-          {[["today", "✦ اليوم"], ["train", "◆ تدريب"], ["phrases", "◇ الجمل"], ["progress", "❖ التقدم"]].map(([id, l]) => (
-            <button key={id} onClick={() => { setTab(id); setOpenTask(null); setTrainMode(null); }} style={{ padding: "10px 14px", border: "none", background: "transparent", color: tab === id ? "#e8b84b" : "#5c6478", fontFamily: "inherit", fontSize: 14, fontWeight: 600, cursor: "pointer", borderBottom: "2px solid " + (tab === id ? "#e8b84b" : "transparent"), whiteSpace: "nowrap" }}>{l}</button>
+        <div style={{ display: "flex", borderBottom: "1px solid rgba(0,0,0,0.03)", marginBottom: 14 }}>
+          {[["today", "اليوم"], ["train", "تدريب"], ["phrases", "الجمل"], ["progress", "التقدم"]].map(([id, l]) => (
+            <button key={id} onClick={() => { setTab(id); setOpenTask(null); setTrainMode(null); }} style={{ padding: "10px 14px", border: "none", background: "transparent", color: tab === id ? "#1d4ed8" : "#a1a1aa", fontFamily: "inherit", fontSize: 14, fontWeight: 600, cursor: "pointer", borderBottom: "2px solid " + (tab === id ? "#1d4ed8" : "transparent"), whiteSpace: "nowrap" }}>{l}</button>
           ))}
         </div>
 
         {/* CRASH RECOVERY — Resume Banner */}
         {pendingCheckpoints && (
-          <div style={{ background: "rgba(232,184,75,0.08)", border: "1px solid rgba(232,184,75,0.2)", borderRadius: 12, padding: 14, marginBottom: 14, animation: "fadeUp .4s" }}>
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#e8b84b", marginBottom: 8 }}>⚡ عندك نشاط ما كمّلته</div>
+          <div style={{ background: "rgba(29,78,216,0.08)", border: "1px solid rgba(29,78,216,0.2)", borderRadius: 12, padding: 14, marginBottom: 14, animation: "fadeUp .4s" }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8", marginBottom: 8 }}>⚡ عندك نشاط ما كمّلته</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               {pendingCheckpoints.session && (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: "8px 12px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: 8, padding: "8px 12px" }}>
                   <div>
-                    <div style={{ fontSize: 13, color: "#f0f0f5" }}>{"🎯 جلسة: " + pendingCheckpoints.session.scenario}</div>
-                    <div style={{ fontSize: 11, color: "#7a8295" }}>{"الخطوة " + (pendingCheckpoints.session.step + 1) + "/6"}</div>
+                    <div style={{ fontSize: 13, color: "#18181b" }}>{"🎯 جلسة: " + pendingCheckpoints.session.scenario}</div>
+                    <div style={{ fontSize: 11, color: "#71717a" }}>{"الخطوة " + (pendingCheckpoints.session.step + 1) + "/6"}</div>
                   </div>
                   <div style={{ display: "flex", gap: 6 }}>
                     <button onClick={() => {
@@ -3111,47 +3110,47 @@ function MainApp({ currentUser, onLogout }) {
                       const sc = DAILY_SCENARIOS.find(s => s.title === cp.scenario);
                       if (sc) { setChosenScenario(sc); setTab("today"); }
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
                     <button onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-session"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
                   </div>
                 </div>
               )}
               {pendingCheckpoints.quiz && (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: "8px 12px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: 8, padding: "8px 12px" }}>
                   <div>
-                    <div style={{ fontSize: 13, color: "#f0f0f5" }}>{"📊 اختبار أسبوعي"}</div>
-                    <div style={{ fontSize: 11, color: "#7a8295" }}>{"سؤال " + (pendingCheckpoints.quiz.qi + 1) + "/10 — " + pendingCheckpoints.quiz.score + " صحيح"}</div>
+                    <div style={{ fontSize: 13, color: "#18181b" }}>{"📊 اختبار أسبوعي"}</div>
+                    <div style={{ fontSize: 11, color: "#71717a" }}>{"سؤال " + (pendingCheckpoints.quiz.qi + 1) + "/10 — " + pendingCheckpoints.quiz.score + " صحيح"}</div>
                   </div>
                   <div style={{ display: "flex", gap: 6 }}>
                     <button onClick={() => {
                       setTab("train"); setTrainMode("quiz");
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
                     <button onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-quiz"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
                   </div>
                 </div>
               )}
               {pendingCheckpoints.level && (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: "8px 12px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: 8, padding: "8px 12px" }}>
                   <div>
-                    <div style={{ fontSize: 13, color: "#f0f0f5" }}>{"🎓 اختبار المستوى"}</div>
-                    <div style={{ fontSize: 11, color: "#7a8295" }}>{"سؤال " + (pendingCheckpoints.level.qi + 1) + "/25"}</div>
+                    <div style={{ fontSize: 13, color: "#18181b" }}>{"🎓 اختبار المستوى"}</div>
+                    <div style={{ fontSize: 11, color: "#71717a" }}>{"سؤال " + (pendingCheckpoints.level.qi + 1) + "/25"}</div>
                   </div>
                   <div style={{ display: "flex", gap: 6 }}>
                     <button onClick={() => {
                       setTab("train"); setTrainMode("level");
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
                     <button onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-level"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
                   </div>
                 </div>
               )}
@@ -3162,19 +3161,19 @@ function MainApp({ currentUser, onLogout }) {
         {/* TODAY — Deep Processing Session */}
         {tab === "today" && (
           <div>
-            <Card><div style={{ fontSize: 14, color: "#9ca3b5", textAlign: "center", lineHeight: 2 }}>{"💎 " + MOTIV[dn % MOTIV.length]}</div></Card>
+            <Card><div style={{ fontSize: 14, color: "#52525b", textAlign: "center", lineHeight: 2 }}>{"💎 " + MOTIV[dn % MOTIV.length]}</div></Card>
             {/* FIX 1: Scenario choice — user can accept or browse */}
             <Card s={{ padding: 14 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
                 <div style={{ fontSize: 24 }}>{todayScenario.icon}</div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: "#e8b84b" }}>{"جلسة اليوم: " + todayScenario.title}</div>
-                  <div style={{ fontSize: 12, color: "#7a8295" }}>مقترح بناءً على تقدمك</div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8" }}>{"جلسة اليوم: " + todayScenario.title}</div>
+                  <div style={{ fontSize: 12, color: "#71717a" }}>مقترح بناءً على تقدمك</div>
                 </div>
               </div>
               <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 6 }}>
                 {DAILY_SCENARIOS.slice(0, 14).map((s, i) => (
-                  <button key={i} onClick={() => { setChosenScenario(s); }} style={{ padding: "4px 10px", borderRadius: 8, border: "1px solid " + ((chosenScenario || todayScenario).title === s.title ? "rgba(232,184,75,0.3)" : "rgba(255,255,255,0.05)"), background: (chosenScenario || todayScenario).title === s.title ? "rgba(232,184,75,0.1)" : "transparent", color: (chosenScenario || todayScenario).title === s.title ? "#e8b84b" : "#5c6478", fontSize: 16, cursor: "pointer", flexShrink: 0, whiteSpace: "nowrap" }} title={s.title}>{s.icon}</button>
+                  <button key={i} onClick={() => { setChosenScenario(s); }} style={{ padding: "4px 10px", borderRadius: 8, border: "1px solid " + ((chosenScenario || todayScenario).title === s.title ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.04)"), background: (chosenScenario || todayScenario).title === s.title ? "rgba(29,78,216,0.1)" : "transparent", color: (chosenScenario || todayScenario).title === s.title ? "#1d4ed8" : "#a1a1aa", fontSize: 16, cursor: "pointer", flexShrink: 0, whiteSpace: "nowrap" }} title={s.title}>{s.icon}</button>
                 ))}
               </div>
             </Card>
@@ -3217,10 +3216,10 @@ function MainApp({ currentUser, onLogout }) {
                 }}
               />
             </Card>
-            {done.includes("session") && <Card s={{ borderColor: "rgba(94,196,182,0.15)" }}>
+            {done.includes("session") && <Card s={{ borderColor: "rgba(5,150,105,0.15)" }}>
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 14, color: "#5ec4b6", fontWeight: 700, marginBottom: 4 }}>✅ إنجاز اليوم مكتمل!</div>
-                <div style={{ fontSize: 12, color: "#7a8295" }}>هل ترغب في تمارين إضافية؟ زر تبويب التدريب</div>
+                <div style={{ fontSize: 14, color: "#059669", fontWeight: 700, marginBottom: 4 }}>✅ إنجاز اليوم مكتمل!</div>
+                <div style={{ fontSize: 12, color: "#71717a" }}>هل ترغب في تمارين إضافية؟ زر تبويب التدريب</div>
               </div>
             </Card>}
             {/* FIX 6: Surprise Quiz — random phrase from past sessions */}
@@ -3228,16 +3227,16 @@ function MainApp({ currentUser, onLogout }) {
               const pastSc = DAILY_SCENARIOS.find(s => s.title === sessionHistory[Math.floor(Math.random() * sessionHistory.length)]?.scenario);
               if (!pastSc) return null;
               const phrase = pastSc.keyPhrases[dn % pastSc.keyPhrases.length];
-              return <Card s={{ borderColor: "rgba(232,116,97,0.15)", background: "rgba(232,116,97,0.03)" }}>
+              return <Card s={{ borderColor: "rgba(220,38,38,0.15)", background: "rgba(220,38,38,0.03)" }}>
                 <div style={{ textAlign: "center" }}>
                   <div style={{ fontSize: 24, marginBottom: 8 }}>✦</div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: "#e87461", marginBottom: 8 }}>اختبار مفاجئ!</div>
-                  <div style={{ fontSize: 14, color: "#9ca3b5", marginBottom: 12 }}>تذكر هالجملة من جلسة سابقة؟</div>
-                  <div style={{ fontSize: 15, color: "#e8b84b", fontWeight: 600, marginBottom: 4 }}>{phrase.ar}</div>
-                  <div style={{ fontSize: 12, color: "#7a8295", marginBottom: 12 }}>حاول تقولها بالإنجليزي قبل ما تشوف الجواب</div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: "#dc2626", marginBottom: 8 }}>اختبار مفاجئ!</div>
+                  <div style={{ fontSize: 14, color: "#52525b", marginBottom: 12 }}>تذكر هالجملة من جلسة سابقة؟</div>
+                  <div style={{ fontSize: 15, color: "#1d4ed8", fontWeight: 600, marginBottom: 4 }}>{phrase.ar}</div>
+                  <div style={{ fontSize: 12, color: "#71717a", marginBottom: 12 }}>حاول تقولها بالإنجليزي قبل ما تشوف الجواب</div>
                   <details>
-                    <summary style={{ fontSize: 13, color: "#5ec4b6", cursor: "pointer", fontFamily: "inherit" }}>👁 أظهر الجواب</summary>
-                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#f0f0f5", marginTop: 8, display: "flex", alignItems: "center", gap: 8 }}>
+                    <summary style={{ fontSize: 13, color: "#059669", cursor: "pointer", fontFamily: "inherit" }}>👁 أظهر الجواب</summary>
+                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#18181b", marginTop: 8, display: "flex", alignItems: "center", gap: 8 }}>
                       <span style={{ flex: 1 }}>{phrase.en}</span>
                       <SpeakBtn text={phrase.en} size={16} />
                     </div>
@@ -3246,11 +3245,11 @@ function MainApp({ currentUser, onLogout }) {
               </Card>;
             })()}
             {/* FIX 2: Evening Review — 3 min before sleep = 2x consolidation */}
-            {done.includes("session") && <Card s={{ borderColor: "rgba(196,154,56,0.15)", background: "rgba(196,154,56,0.03)" }}>
+            {done.includes("session") && <Card s={{ borderColor: "rgba(29,78,216,0.15)", background: "rgba(29,78,216,0.03)" }}>
               <div style={{ textAlign: "center" }}>
                 <div style={{ fontSize: 28, marginBottom: 8 }}>🌙</div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: "#e8b84b", marginBottom: 6 }}>مراجعة ما قبل النوم</div>
-                <div style={{ fontSize: 13, color: "#9ca3b5", lineHeight: 2, marginBottom: 12 }}>استمع لجمل اليوم قبل ما تنام — ٣ دقائق فقط<br/>عقلك يرسّخها أثناء النوم (مثبت علمياً)</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: "#1d4ed8", marginBottom: 6 }}>مراجعة ما قبل النوم</div>
+                <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2, marginBottom: 12 }}>استمع لجمل اليوم قبل ما تنام — ٣ دقائق فقط<br/>عقلك يرسّخها أثناء النوم (مثبت علمياً)</div>
                 <button onClick={() => {
                   const sc2 = chosenScenario || todayScenario;
                   let idx = 0;
@@ -3261,8 +3260,8 @@ function MainApp({ currentUser, onLogout }) {
                     setTimeout(playNext, 4000);
                   }
                   playNext();
-                }} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#c49a38,#e8b84b)", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔊 شغّل جمل اليوم</button>
-                <div style={{ fontSize: 12, color: "#7a8295", marginTop: 8 }}>استرخِ واستمع فقط — لا تحتاج تردد</div>
+                }} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#1e40af,#1d4ed8)", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔊 شغّل جمل اليوم</button>
+                <div style={{ fontSize: 12, color: "#71717a", marginTop: 8 }}>استرخِ واستمع فقط — لا تحتاج تردد</div>
               </div>
             </Card>}
           </div>
@@ -3273,48 +3272,48 @@ function MainApp({ currentUser, onLogout }) {
           <div>
             {!trainMode && (() => {
               const allExercises = [
-                { id: "sim", icon: "🎭", title: "محادثات تفاعلية", desc: "سيناريوهات حقيقية — اختر الرد واقرأه", color: "#e8b84b" },
-                { id: "quick", icon: "✦", title: "استجابة سريعة", desc: "مواقف يومية — اختر الرد الأنسب", color: "#e8b84b" },
-                { id: "quiz", icon: "📊", title: "تقييم أسبوعي", desc: "١٠ أسئلة تقيس تقدمك", color: "#e8b84b" },
-                { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة", color: "#d4a43a" },
-                { id: "build", icon: "🧩", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة", color: "#4db5a5" },
-                { id: "fluency", icon: "🗣️", title: "تمرين الطلاقة", desc: "تكلم ٣ مرات بوقت أقل", color: "#e87461" },
-                { id: "listen", icon: "👂", title: "فهم الاستماع", desc: "استمع وأجب", color: "#c49a38" },
-                { id: "dictation", icon: "🎧", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته", color: "#e87461" },
-                { id: "recall", icon: "✍️", title: "إنتاج حر", desc: "اكتب ردك بدون خيارات", color: "#e87461" },
-                { id: "level", icon: "🎯", title: "قياس التمكّن", desc: "اختبار CEFR تكيّفي", color: "#e8b84b" },
+                { id: "sim", icon: "🎭", title: "محادثات تفاعلية", desc: "سيناريوهات حقيقية — اختر الرد واقرأه", color: "#1d4ed8" },
+                { id: "quick", icon: "✦", title: "استجابة سريعة", desc: "مواقف يومية — اختر الرد الأنسب", color: "#1d4ed8" },
+                { id: "quiz", icon: "📊", title: "تقييم أسبوعي", desc: "١٠ أسئلة تقيس تقدمك", color: "#1d4ed8" },
+                { id: "fill", icon: "📝", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة", color: "#1e40af" },
+                { id: "build", icon: "🧩", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة", color: "#059669" },
+                { id: "fluency", icon: "🗣️", title: "تمرين الطلاقة", desc: "تكلم ٣ مرات بوقت أقل", color: "#dc2626" },
+                { id: "listen", icon: "👂", title: "فهم الاستماع", desc: "استمع وأجب", color: "#1e40af" },
+                { id: "dictation", icon: "🎧", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته", color: "#dc2626" },
+                { id: "recall", icon: "✍️", title: "إنتاج حر", desc: "اكتب ردك بدون خيارات", color: "#dc2626" },
+                { id: "level", icon: "🎯", title: "قياس التمكّن", desc: "اختبار CEFR تكيّفي", color: "#1d4ed8" },
               ];
               // Smart recommendations: top 3 based on user needs
               const recommended = allExercises.slice(0, 3);
               const rest = allExercises.slice(3);
               const ExCard = ({ m }) => (
-                <div onClick={() => setTrainMode(m.id)} style={{ display: "flex", alignItems: "center", gap: 12, padding: 14, borderRadius: 14, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", marginBottom: 8, cursor: "pointer", transition: ".3s" }}>
+                <div onClick={() => setTrainMode(m.id)} style={{ display: "flex", alignItems: "center", gap: 12, padding: 14, borderRadius: 14, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", marginBottom: 8, cursor: "pointer", transition: ".3s" }}>
                   <div style={{ fontSize: 28, flexShrink: 0 }}>{m.icon}</div>
-                  <div style={{ flex: 1 }}><div style={{ fontSize: 14, fontWeight: 700, color: m.color }}>{m.title}</div><div style={{ fontSize: 12, color: "#7a8295", marginTop: 2 }}>{m.desc}</div></div>
-                  <div style={{ fontSize: 14, color: "#4a5166" }}>←</div>
+                  <div style={{ flex: 1 }}><div style={{ fontSize: 14, fontWeight: 700, color: m.color }}>{m.title}</div><div style={{ fontSize: 12, color: "#71717a", marginTop: 2 }}>{m.desc}</div></div>
+                  <div style={{ fontSize: 14, color: "#a1a1aa" }}>←</div>
                 </div>
               );
               return (
                 <div>
-                  <Card><div style={{ fontSize: 14, fontWeight: 700, color: "#e8b84b", marginBottom: 8 }}>⭐ مقترح لك</div>
+                  <Card><div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8", marginBottom: 8 }}>⭐ مقترح لك</div>
                     {recommended.map(m => <ExCard key={m.id} m={m} />)}
                   </Card>
-                  <Card><div style={{ fontSize: 13, fontWeight: 600, color: "#7a8295", marginBottom: 8 }}>المزيد من التمارين</div>
+                  <Card><div style={{ fontSize: 13, fontWeight: 600, color: "#71717a", marginBottom: 8 }}>المزيد من التمارين</div>
                     {rest.map(m => <ExCard key={m.id} m={m} />)}
                   </Card>
                 </div>
               );
             })()}
-            {trainMode === "sim" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><MeetingSim /></Card>}
-            {trainMode === "quick" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><QuickResp /></Card>}
-            {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} checkpoint={pendingCheckpoints && pendingCheckpoints.quiz ? pendingCheckpoints.quiz : undefined} /></Card>}
-            {trainMode === "fill" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FillBlank /></Card>}
-            {trainMode === "build" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><SentenceBuild /></Card>}
-            {trainMode === "fluency" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><Fluency432 /></Card>}
-            {trainMode === "listen" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><ListenExercise /></Card>}
-            {trainMode === "dictation" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><DictationExercise /></Card>}
-            {trainMode === "recall" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FreeRecall /></Card>}
-            {trainMode === "level" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><LevelTest onComplete={(result) => setLevelResult(result)} checkpoint={pendingCheckpoints && pendingCheckpoints.level ? pendingCheckpoints.level : undefined} /></Card>}
+            {trainMode === "sim" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><MeetingSim /></Card>}
+            {trainMode === "quick" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><QuickResp /></Card>}
+            {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} checkpoint={pendingCheckpoints && pendingCheckpoints.quiz ? pendingCheckpoints.quiz : undefined} /></Card>}
+            {trainMode === "fill" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FillBlank /></Card>}
+            {trainMode === "build" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><SentenceBuild /></Card>}
+            {trainMode === "fluency" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><Fluency432 /></Card>}
+            {trainMode === "listen" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><ListenExercise /></Card>}
+            {trainMode === "dictation" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><DictationExercise /></Card>}
+            {trainMode === "recall" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FreeRecall /></Card>}
+            {trainMode === "level" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><LevelTest onComplete={(result) => setLevelResult(result)} checkpoint={pendingCheckpoints && pendingCheckpoints.level ? pendingCheckpoints.level : undefined} /></Card>}
           </div>
         )}
 
@@ -3323,11 +3322,11 @@ function MainApp({ currentUser, onLogout }) {
           <div>
             <div style={{ display: "flex", gap: 5, overflowX: "auto", paddingBottom: 8 }}>
               {PHRASES.map((c, i) => (
-                <button key={i} onClick={() => setPCat(i)} style={{ padding: "7px 12px", borderRadius: 18, border: "1px solid " + (pCat === i ? "#e8b84b" : "rgba(255,255,255,0.05)"), background: pCat === i ? "rgba(232,184,75,0.08)" : "transparent", color: pCat === i ? "#e8b84b" : "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer", whiteSpace: "nowrap" }}>{c.icon + " " + c.cat}</button>
+                <button key={i} onClick={() => setPCat(i)} style={{ padding: "7px 12px", borderRadius: 18, border: "1px solid " + (pCat === i ? "#1d4ed8" : "rgba(0,0,0,0.04)"), background: pCat === i ? "rgba(29,78,216,0.08)" : "transparent", color: pCat === i ? "#1d4ed8" : "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer", whiteSpace: "nowrap" }}>{c.icon + " " + c.cat}</button>
               ))}
             </div>
             <Card>
-              <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 10, color: "#e8b84b" }}>{PHRASES[pCat].icon + " " + PHRASES[pCat].cat}</div>
+              <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 10, color: "#1d4ed8" }}>{PHRASES[pCat].icon + " " + PHRASES[pCat].cat}</div>
               {PHRASES[pCat].items.map((p, i) => {
                 const k = "p" + pCat + "-" + i;
                 const r = reps[k] || 0;
@@ -3345,17 +3344,17 @@ function MainApp({ currentUser, onLogout }) {
                       setSrsData(newSrs);
                       (async () => { try { await userStorage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                     }
-                  }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(94,196,182,0.06)" : isDue ? "rgba(232,184,75,0.04)" : "rgba(255,255,255,0.015)", border: "1px solid " + (r >= 5 ? "rgba(94,196,182,0.15)" : isDue ? "rgba(232,184,75,0.15)" : "rgba(255,255,255,0.04)"), marginBottom: 6, cursor: "pointer" }}>
-                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#5ec4b6" : r > 0 ? "#e8b84b" : "#252836", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#1a1614" : "#5c6478", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div>
+                  }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(5,150,105,0.06)" : isDue ? "rgba(29,78,216,0.04)" : "rgba(0,0,0,0.015)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : isDue ? "rgba(29,78,216,0.15)" : "rgba(0,0,0,0.03)"), marginBottom: 6, cursor: "pointer" }}>
+                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
-                      <div style={{ fontSize: 12, color: "#7a8295", marginTop: 2 }}>{p.ar}</div>
+                      <div style={{ fontSize: 12, color: "#71717a", marginTop: 2 }}>{p.ar}</div>
                     </div>
-                    {isDue && <div style={{ fontSize: 12, padding: "2px 6px", borderRadius: 4, background: "rgba(232,184,75,0.15)", color: "#e8b84b", fontWeight: 600 }}>مراجعة</div>}
+                    {isDue && <div style={{ fontSize: 12, padding: "2px 6px", borderRadius: 4, background: "rgba(29,78,216,0.15)", color: "#1d4ed8", fontWeight: 600 }}>مراجعة</div>}
                   </div>
                 );
               })}
-              <div style={{ fontSize: 12, color: "#7a8295", textAlign: "center", marginTop: 10 }}>اضغط على الدائرة كل مرة ترددّ — الهدف ٥ لكل جملة</div>
+              <div style={{ fontSize: 12, color: "#71717a", textAlign: "center", marginTop: 10 }}>اضغط على الدائرة كل مرة ترددّ — الهدف ٥ لكل جملة</div>
             </Card>
             {/* SRS Review Section */}
             {(() => {
@@ -3375,9 +3374,9 @@ function MainApp({ currentUser, onLogout }) {
               });
               if (dueItems.length === 0) return null;
               return (
-                <Card s={{ borderColor: "rgba(232,184,75,0.15)" }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: "#e8b84b", marginBottom: 10 }}>{"🔄 مراجعة مطلوبة (" + dueItems.length + " جملة)"}</div>
-                  <div style={{ fontSize: 12, color: "#7a8295", marginBottom: 10 }}>هذه الجمل حان وقت مراجعتها حسب نظام التكرار المتباعد</div>
+                <Card s={{ borderColor: "rgba(29,78,216,0.15)" }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8", marginBottom: 10 }}>{"🔄 مراجعة مطلوبة (" + dueItems.length + " جملة)"}</div>
+                  <div style={{ fontSize: 12, color: "#71717a", marginBottom: 10 }}>هذه الجمل حان وقت مراجعتها حسب نظام التكرار المتباعد</div>
                   {dueItems.slice(0, 5).map((item, i) => {
                     const k = "srs-" + item.srsKey;
                     const r = reps[k] || 0;
@@ -3392,13 +3391,13 @@ function MainApp({ currentUser, onLogout }) {
                           setSrsData(newSrs);
                           (async () => { try { await userStorage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                         }
-                      }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(94,196,182,0.06)" : "rgba(232,184,75,0.04)", border: "1px solid " + (r >= 5 ? "rgba(94,196,182,0.15)" : "rgba(232,184,75,0.1)"), marginBottom: 6, cursor: "pointer" }}>
-                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#5ec4b6" : r > 0 ? "#e8b84b" : "#252836", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#1a1614" : "#5c6478", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
+                      }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(5,150,105,0.06)" : "rgba(29,78,216,0.04)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : "rgba(29,78,216,0.1)"), marginBottom: 6, cursor: "pointer" }}>
+                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{item.phrase.en}</div>
-                          <div style={{ fontSize: 12, color: "#7a8295" }}>{item.phrase.ar} — {item.icon} {item.cat}</div>
+                          <div style={{ fontSize: 12, color: "#71717a" }}>{item.phrase.ar} — {item.icon} {item.cat}</div>
                         </div>
-                        <div style={{ fontSize: 12, color: "#e8b84b" }}>{item.daysSince + "d"}</div>
+                        <div style={{ fontSize: 12, color: "#1d4ed8" }}>{item.daysSince + "d"}</div>
                       </div>
                     );
                   })}
@@ -3413,14 +3412,14 @@ function MainApp({ currentUser, onLogout }) {
           <div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
               {[
-                { l: "أيام", v: Object.values(store.days).filter(d => d.length >= 1).length, c: "#e8b84b" },
-                { l: "أسبوع", v: wk + "/12", c: "#e8b84b" },
-                { l: "سلسلة 🔥", v: (() => { let s = 0, d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s; })(), c: "#e8b84b" },
+                { l: "أيام", v: Object.values(store.days).filter(d => d.length >= 1).length, c: "#1d4ed8" },
+                { l: "أسبوع", v: wk + "/12", c: "#1d4ed8" },
+                { l: "سلسلة 🔥", v: (() => { let s = 0, d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s; })(), c: "#1d4ed8" },
               ].map((s, i) => (
                 <Card key={i} s={{ padding: 12 }}>
                   <div style={{ textAlign: "center" }}>
                     <div style={{ fontSize: 20, fontWeight: 800, color: s.c, fontFamily: "'IBM Plex Mono'" }}>{s.v}</div>
-                    <div style={{ fontSize: 12, color: "#5c6478", marginTop: 4 }}>{s.l}</div>
+                    <div style={{ fontSize: 12, color: "#a1a1aa", marginTop: 4 }}>{s.l}</div>
                   </div>
                 </Card>
               ))}
@@ -3428,13 +3427,13 @@ function MainApp({ currentUser, onLogout }) {
             <Card>
               <div style={{ display: "flex", alignItems: "center", gap: 3, justifyContent: "center", flexWrap: "wrap" }}>
                 {Array.from({ length: 12 }, (_, i) => i + 1).map((w) => (
-                  <div key={w} style={{ width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, border: "2px solid " + (w <= wk ? "#e8b84b" : "#1e2130"), background: w < wk ? "#e8b84b" : "transparent", color: w < wk ? "#1a1614" : w === wk ? "#e8b84b" : "#5c6478", animation: w === wk ? "glow 2s infinite" : "none", opacity: w > wk ? 0.2 : 1 }}>{w < wk ? "✓" : w}</div>
+                  <div key={w} style={{ width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, border: "2px solid " + (w <= wk ? "#1d4ed8" : "#e4e4e7"), background: w < wk ? "#1d4ed8" : "transparent", color: w < wk ? "#fafaf9" : w === wk ? "#1d4ed8" : "#a1a1aa", animation: "none", opacity: w > wk ? 0.2 : 1 }}>{w < wk ? "✓" : w}</div>
                 ))}
               </div>
             </Card>
             {/* FIX 3: Smart Weekly Summary */}
-            {sessionHistory.length >= 3 && <Card s={{ borderColor: "rgba(232,184,75,0.1)" }}>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#e8b84b", marginBottom: 10 }}>📋 ملخص الأسبوع</div>
+            {sessionHistory.length >= 3 && <Card s={{ borderColor: "rgba(29,78,216,0.1)" }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8", marginBottom: 10 }}>📋 ملخص الأسبوع</div>
               {(() => {
                 const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
                 const weekStr = weekAgo.toISOString().slice(0, 10);
@@ -3445,19 +3444,19 @@ function MainApp({ currentUser, onLogout }) {
                 const weakScenarios = thisWeek.filter(s => { const rs = s.recallScore || {}; return Object.values(rs).filter(v => v === "forgot").length > 0; }).map(s => s.scenario);
                 const uniqueWeak = [...new Set(weakScenarios)];
                 return (
-                  <div style={{ fontSize: 13, color: "#9ca3b5", lineHeight: 2.2 }}>
+                  <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2.2 }}>
                     <div>{"✅ " + thisWeek.length + " جلسة هالأسبوع — " + scenarios.length + " موقف مختلف"}</div>
                     <div>{"💬 " + totalPh + " جملة تمرّنت عليها — تذكّرت " + recalled + " منها"}</div>
-                    {uniqueWeak.length > 0 && <div style={{ color: "#e8b84b" }}>{"🔄 تحتاج مراجعة: " + uniqueWeak.slice(0, 3).join("، ")}</div>}
-                    {uniqueWeak.length === 0 && thisWeek.length >= 5 && <div style={{ color: "#5ec4b6" }}>{"🔥 أسبوع إنجاز مميز! ما نسيت أي جملة"}</div>}
-                    {thisWeek.length < 3 && <div style={{ color: "#7a8295" }}>{"💡 حاول تسوي ٥ جلسات الأسبوع الجاي للحصول على أفضل نتيجة"}</div>}
+                    {uniqueWeak.length > 0 && <div style={{ color: "#1d4ed8" }}>{"🔄 تحتاج مراجعة: " + uniqueWeak.slice(0, 3).join("، ")}</div>}
+                    {uniqueWeak.length === 0 && thisWeek.length >= 5 && <div style={{ color: "#059669" }}>{"🔥 أسبوع إنجاز مميز! ما نسيت أي جملة"}</div>}
+                    {thisWeek.length < 3 && <div style={{ color: "#71717a" }}>{"💡 حاول تسوي ٥ جلسات الأسبوع الجاي للحصول على أفضل نتيجة"}</div>}
                   </div>
                 );
               })()}
             </Card>}
             {/* Smart Progress — Session History */}
             {sessionHistory.length > 0 && <Card>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#e87461", marginBottom: 10 }}>🧠 أداء الذاكرة</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#dc2626", marginBottom: 10 }}>🧠 أداء الذاكرة</div>
               {(() => {
                 const recent = sessionHistory.slice(-10);
                 const totalPhrases = recent.reduce((sum, s) => sum + (s.phrasesCount || 0), 0);
@@ -3468,33 +3467,33 @@ function MainApp({ currentUser, onLogout }) {
                 return (
                   <div>
                     <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
-                      <div style={{ flex: 1, textAlign: "center", background: "rgba(94,196,182,0.06)", borderRadius: 10, padding: 10 }}>
-                        <div style={{ fontSize: 22, fontWeight: 800, color: "#5ec4b6", fontFamily: "'IBM Plex Mono'" }}>{recalled}</div>
-                        <div style={{ fontSize: 12, color: "#7a8295" }}>تذكّرتها</div>
+                      <div style={{ flex: 1, textAlign: "center", background: "rgba(5,150,105,0.06)", borderRadius: 10, padding: 10 }}>
+                        <div style={{ fontSize: 22, fontWeight: 800, color: "#059669", fontFamily: "'IBM Plex Mono'" }}>{recalled}</div>
+                        <div style={{ fontSize: 12, color: "#71717a" }}>تذكّرتها</div>
                       </div>
-                      <div style={{ flex: 1, textAlign: "center", background: "rgba(232,184,75,0.06)", borderRadius: 10, padding: 10 }}>
-                        <div style={{ fontSize: 22, fontWeight: 800, color: "#e8b84b", fontFamily: "'IBM Plex Mono'" }}>{partial}</div>
-                        <div style={{ fontSize: 12, color: "#7a8295" }}>تقريباً</div>
+                      <div style={{ flex: 1, textAlign: "center", background: "rgba(29,78,216,0.06)", borderRadius: 10, padding: 10 }}>
+                        <div style={{ fontSize: 22, fontWeight: 800, color: "#1d4ed8", fontFamily: "'IBM Plex Mono'" }}>{partial}</div>
+                        <div style={{ fontSize: 12, color: "#71717a" }}>تقريباً</div>
                       </div>
-                      <div style={{ flex: 1, textAlign: "center", background: "rgba(232,116,97,0.06)", borderRadius: 10, padding: 10 }}>
-                        <div style={{ fontSize: 22, fontWeight: 800, color: "#e87461", fontFamily: "'IBM Plex Mono'" }}>{forgot}</div>
-                        <div style={{ fontSize: 12, color: "#7a8295" }}>نسيتها</div>
+                      <div style={{ flex: 1, textAlign: "center", background: "rgba(220,38,38,0.06)", borderRadius: 10, padding: 10 }}>
+                        <div style={{ fontSize: 22, fontWeight: 800, color: "#dc2626", fontFamily: "'IBM Plex Mono'" }}>{forgot}</div>
+                        <div style={{ fontSize: 12, color: "#71717a" }}>نسيتها</div>
                       </div>
                     </div>
-                    <div style={{ height: 6, borderRadius: 3, background: "#181b25", overflow: "hidden", marginBottom: 8 }}>
-                      <div style={{ height: "100%", width: recallPct + "%", borderRadius: 3, background: recallPct >= 70 ? "#5ec4b6" : recallPct >= 40 ? "#e8b84b" : "#e87461", transition: "width .5s" }} />
+                    <div style={{ height: 6, borderRadius: 3, background: "#e4e4e7", overflow: "hidden", marginBottom: 8 }}>
+                      <div style={{ height: "100%", width: recallPct + "%", borderRadius: 3, background: recallPct >= 70 ? "#059669" : recallPct >= 40 ? "#1d4ed8" : "#dc2626", transition: "width .5s" }} />
                     </div>
-                    <div style={{ fontSize: 12, color: "#9ca3b5", textAlign: "center" }}>{recallPct >= 70 ? "ذاكرتك قوية! الجمل ترسخ" : recallPct >= 40 ? "تتحسن — استمر بالمراجعة اليومية" : "ركّز على خطوة التذكّر — ردّد الجمل المنسية أكثر"}</div>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: "#7a8295", marginTop: 10, marginBottom: 6 }}>آخر الجلسات:</div>
+                    <div style={{ fontSize: 12, color: "#52525b", textAlign: "center" }}>{recallPct >= 70 ? "ذاكرتك قوية! الجمل ترسخ" : recallPct >= 40 ? "تتحسن — استمر بالمراجعة اليومية" : "ركّز على خطوة التذكّر — ردّد الجمل المنسية أكثر"}</div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: "#71717a", marginTop: 10, marginBottom: 6 }}>آخر الجلسات:</div>
                     {recent.slice(-5).reverse().map((s, i) => {
                       const rs = s.recallScore || {};
                       const g = Object.values(rs).filter(v => v === "good").length;
                       const t = s.phrasesCount || 3;
                       return (
-                        <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: 8, borderRadius: 8, background: "rgba(255,255,255,0.02)", marginBottom: 4 }}>
-                          <div style={{ fontSize: 12, color: "#7a8295", minWidth: 55 }}>{s.date ? s.date.slice(5) : ""}</div>
-                          <div style={{ fontSize: 13, color: "#f0f0f5", flex: 1 }}>{s.scenario}</div>
-                          <div style={{ fontSize: 12, fontWeight: 700, color: g === t ? "#5ec4b6" : g > 0 ? "#e8b84b" : "#e87461", fontFamily: "'IBM Plex Mono'" }}>{g + "/" + t}</div>
+                        <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: 8, borderRadius: 8, background: "rgba(0,0,0,0.02)", marginBottom: 4 }}>
+                          <div style={{ fontSize: 12, color: "#71717a", minWidth: 55 }}>{s.date ? s.date.slice(5) : ""}</div>
+                          <div style={{ fontSize: 13, color: "#18181b", flex: 1 }}>{s.scenario}</div>
+                          <div style={{ fontSize: 12, fontWeight: 700, color: g === t ? "#059669" : g > 0 ? "#1d4ed8" : "#dc2626", fontFamily: "'IBM Plex Mono'" }}>{g + "/" + t}</div>
                         </div>
                       );
                     })}
@@ -3503,36 +3502,36 @@ function MainApp({ currentUser, onLogout }) {
               })()}
             </Card>}
             {levelResult && <Card>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#e8b84b", marginBottom: 12 }}>🎯 مستوى اللغة (CEFR)</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", marginBottom: 12 }}>🎯 مستوى اللغة (CEFR)</div>
               <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
                 <div style={{ width: 60, height: 60, borderRadius: 12, background: CEFR_LEVELS[levelResult.level].color + "18", border: "2px solid " + CEFR_LEVELS[levelResult.level].color + "40", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ fontSize: 22, fontWeight: 800, color: CEFR_LEVELS[levelResult.level].color, fontFamily: "'IBM Plex Mono'" }}>{levelResult.levelCode}</div>
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: "#f0f0f5" }}>{CEFR_LEVELS[levelResult.level].name}</div>
-                  <div style={{ fontSize: 12, color: "#7a8295" }}>{CEFR_LEVELS[levelResult.level].nameEn} — {levelResult.date}</div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: "#18181b" }}>{CEFR_LEVELS[levelResult.level].name}</div>
+                  <div style={{ fontSize: 12, color: "#71717a" }}>{CEFR_LEVELS[levelResult.level].nameEn} — {levelResult.date}</div>
                   {levelResult.skills && <div style={{ display: "flex", gap: 6, marginTop: 6, flexWrap: "wrap" }}>
                     {Object.keys(levelResult.skills).map(sk => {
                       const s = levelResult.skills[sk];
                       if (!s || s.total === 0) return null;
                       const pct = Math.round((s.correct / s.total) * 100);
-                      return <div key={sk} style={{ fontSize: 12, padding: "2px 6px", borderRadius: 4, background: (pct >= 60 ? "rgba(94,196,182,0.1)" : "rgba(232,160,64,0.1)"), color: pct >= 60 ? "#5ec4b6" : "#e87461" }}>{TYPE_ICONS[sk]} {pct}%</div>;
+                      return <div key={sk} style={{ fontSize: 12, padding: "2px 6px", borderRadius: 4, background: (pct >= 60 ? "rgba(5,150,105,0.1)" : "rgba(217,119,6,0.1)"), color: pct >= 60 ? "#059669" : "#dc2626" }}>{TYPE_ICONS[sk]} {pct}%</div>;
                     })}
                   </div>}
                 </div>
               </div>
               <div style={{ textAlign: "center", marginTop: 10 }}>
-                <button onClick={() => { setTab("train"); setTrainMode("level"); }} style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(232,121,249,0.2)", background: "transparent", color: "#e8b84b", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🔄 أعد الاختبار</button>
+                <button onClick={() => { setTab("train"); setTrainMode("level"); }} style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(29,78,216,0.15)", background: "transparent", color: "#1d4ed8", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🔄 أعد الاختبار</button>
               </div>
             </Card>}
             {quizResults && quizResults.length > 0 && <Card>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#e8b84b", marginBottom: 12 }}>📊 نتائج الاختبارات</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", marginBottom: 12 }}>📊 نتائج الاختبارات</div>
               <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height: 100, padding: "0 4px" }}>
                 {quizResults.slice(-10).map((r, i) => (
                   <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: r.pct >= 80 ? "#5ec4b6" : r.pct >= 50 ? "#e8b84b" : "#e87461" }}>{r.pct + "%"}</div>
-                    <div style={{ width: "100%", height: Math.max(r.pct * 0.8, 4), borderRadius: 4, background: r.pct >= 80 ? "#5ec4b6" : r.pct >= 50 ? "#e8b84b" : "#e87461", transition: "height .3s" }} />
-                    <div style={{ fontSize: 12, color: "#5c6478" }}>{r.date ? r.date.slice(5) : ""}</div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: r.pct >= 80 ? "#059669" : r.pct >= 50 ? "#1d4ed8" : "#dc2626" }}>{r.pct + "%"}</div>
+                    <div style={{ width: "100%", height: Math.max(r.pct * 0.8, 4), borderRadius: 4, background: r.pct >= 80 ? "#059669" : r.pct >= 50 ? "#1d4ed8" : "#dc2626", transition: "height .3s" }} />
+                    <div style={{ fontSize: 12, color: "#a1a1aa" }}>{r.date ? r.date.slice(5) : ""}</div>
                   </div>
                 ))}
               </div>
@@ -3540,41 +3539,41 @@ function MainApp({ currentUser, onLogout }) {
                 const last = quizResults[quizResults.length - 1].pct;
                 const prev = quizResults[quizResults.length - 2].pct;
                 const diff = last - prev;
-                return <div style={{ textAlign: "center", marginTop: 8, fontSize: 13, fontWeight: 700, color: diff >= 0 ? "#5ec4b6" : "#e87461" }}>{diff >= 0 ? "📈 +" + diff + "%" : "📉 " + diff + "%"} مقارنة بالاختبار السابق</div>;
+                return <div style={{ textAlign: "center", marginTop: 8, fontSize: 13, fontWeight: 700, color: diff >= 0 ? "#059669" : "#dc2626" }}>{diff >= 0 ? "📈 +" + diff + "%" : "📉 " + diff + "%"} مقارنة بالاختبار السابق</div>;
               })()}
             </Card>}
             {/* Voice Settings */}
             <Card>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#e8b84b", marginBottom: 10 }}>🔊 تفضيلاتك الصوتية</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8", marginBottom: 10 }}>🔊 تفضيلاتك الصوتية</div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                <div style={{ fontSize: 13, color: "#9ca3b5" }}>الحالة:</div>
+                <div style={{ fontSize: 13, color: "#52525b" }}>الحالة:</div>
                 <VoiceBadge />
               </div>
 
               {/* Test current voice */}
               <div style={{ marginBottom: 14 }}>
-                <button onClick={() => speak("Hello! Nice to meet you. How are you today?", 0.9)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "rgba(232,184,75,0.1)", color: "#e8b84b", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>🔊 جرّب الصوت الحالي</button>
+                <button onClick={() => speak("Hello! Nice to meet you. How are you today?", 0.9)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "rgba(29,78,216,0.1)", color: "#1d4ed8", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>🔊 جرّب الصوت الحالي</button>
               </div>
               {/* FIX 8: Accent selection */}
-              <div style={{ fontSize: 12, color: "#7a8295", marginBottom: 6 }}>اللهجة:</div>
+              <div style={{ fontSize: 12, color: "#71717a", marginBottom: 6 }}>اللهجة:</div>
               <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
                 {[{ code: "en-US", label: "🇺🇸 أمريكي" }, { code: "en-GB", label: "🇬🇧 بريطاني" }, { code: "en-AU", label: "🇦🇺 أسترالي" }].map(a => (
-                  <button key={a.code} onClick={() => { setAccent(a.code); speak("Hello! How are you today?", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (getAccent() === a.code ? "rgba(232,184,75,0.3)" : "rgba(255,255,255,0.06)"), background: getAccent() === a.code ? "rgba(232,184,75,0.1)" : "transparent", color: getAccent() === a.code ? "#e8b84b" : "#7a8295", fontSize: 12, cursor: "pointer" }}>{a.label}</button>
+                  <button key={a.code} onClick={() => { setAccent(a.code); speak("Hello! How are you today?", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (getAccent() === a.code ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)"), background: getAccent() === a.code ? "rgba(29,78,216,0.1)" : "transparent", color: getAccent() === a.code ? "#1d4ed8" : "#71717a", fontSize: 12, cursor: "pointer" }}>{a.label}</button>
                 ))}
               </div>
 
               {/* Tier explanation */}
-              <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 10, padding: 12, marginBottom: 14 }}>
-                <div style={{ fontSize: 12, color: "#f0f0f5", lineHeight: 2.2 }}>
-                  <div style={{ marginBottom: 4 }}><span style={{ color: "#e8b84b" }}>المستوى المجاني:</span> التطبيق يختار تلقائياً أفضل صوت متاح في متصفحك</div>
-                  <div style={{ fontSize: 12, color: "#7a8295" }}>Edge = أصوات Neural ممتازة | Chrome = Google voices جيدة | Safari = أصوات Apple</div>
-                  <div style={{ marginTop: 8, marginBottom: 4 }}><span style={{ color: "#5ec4b6" }}>المستوى المدفوع (اختياري):</span> صوت بشري حقيقي عبر OpenAI</div>
-                  <div style={{ fontSize: 12, color: "#7a8295" }}>أفضل جودة — connected speech + نبرة طبيعية (~$0.10/شهر)</div>
+              <div style={{ background: "rgba(0,0,0,0.02)", borderRadius: 10, padding: 12, marginBottom: 14 }}>
+                <div style={{ fontSize: 12, color: "#18181b", lineHeight: 2.2 }}>
+                  <div style={{ marginBottom: 4 }}><span style={{ color: "#1d4ed8" }}>المستوى المجاني:</span> التطبيق يختار تلقائياً أفضل صوت متاح في متصفحك</div>
+                  <div style={{ fontSize: 12, color: "#71717a" }}>Edge = أصوات Neural ممتازة | Chrome = Google voices جيدة | Safari = أصوات Apple</div>
+                  <div style={{ marginTop: 8, marginBottom: 4 }}><span style={{ color: "#059669" }}>المستوى المدفوع (اختياري):</span> صوت بشري حقيقي عبر OpenAI</div>
+                  <div style={{ fontSize: 12, color: "#71717a" }}>أفضل جودة — connected speech + نبرة طبيعية (~$0.10/شهر)</div>
                 </div>
               </div>
 
               {/* OpenAI API key (optional) */}
-              <div style={{ fontSize: 12, color: "#7a8295", marginBottom: 6 }}>مفتاح OpenAI (اختياري):</div>
+              <div style={{ fontSize: 12, color: "#71717a", marginBottom: 6 }}>مفتاح OpenAI (اختياري):</div>
               <div style={{ marginBottom: 10 }}>
                 <input
                   type="password"
@@ -3585,33 +3584,33 @@ function MainApp({ currentUser, onLogout }) {
                     setOpenAIKey(key || null);
                     try { await userStorage.set("openai-tts-key", key); } catch(ex) {}
                   }}
-                  style={{ width: "100%", padding: 12, borderRadius: 10, fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(232,184,75,0.15)", color: "#f0f0f5", outline: "none" }}
+                  style={{ width: "100%", padding: 12, borderRadius: 10, fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", background: "rgba(0,0,0,0.02)", border: "1px solid rgba(29,78,216,0.15)", color: "#18181b", outline: "none" }}
                 />
               </div>
               {getOpenAIKey() && <div>
-                <div style={{ fontSize: 12, color: "#7a8295", marginBottom: 6 }}>الصوت:</div>
+                <div style={{ fontSize: 12, color: "#71717a", marginBottom: 6 }}>الصوت:</div>
                 <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
                   {["nova", "alloy", "echo", "fable", "onyx", "shimmer"].map(v => (
-                    <button key={v} onClick={async () => { setTTSVoice(v); try { await userStorage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (getTTSVoice() === v ? "rgba(232,184,75,0.3)" : "rgba(255,255,255,0.06)"), background: getTTSVoice() === v ? "rgba(232,184,75,0.1)" : "transparent", color: getTTSVoice() === v ? "#e8b84b" : "#7a8295", fontFamily: "'IBM Plex Mono'", fontSize: 12, cursor: "pointer" }}>{v}</button>
+                    <button key={v} onClick={async () => { setTTSVoice(v); try { await userStorage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (getTTSVoice() === v ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)"), background: getTTSVoice() === v ? "rgba(29,78,216,0.1)" : "transparent", color: getTTSVoice() === v ? "#1d4ed8" : "#71717a", fontFamily: "'IBM Plex Mono'", fontSize: 12, cursor: "pointer" }}>{v}</button>
                   ))}
                 </div>
-                <div style={{ fontSize: 12, color: "#4a5166" }}>nova = أنثى طبيعية | onyx = ذكر واثق | shimmer = أنثى دافئة | echo = ذكر هادئ</div>
+                <div style={{ fontSize: 12, color: "#a1a1aa" }}>nova = أنثى طبيعية | onyx = ذكر واثق | shimmer = أنثى دافئة | echo = ذكر هادئ</div>
               </div>}
-              {!getOpenAIKey() && <div style={{ fontSize: 12, color: "#5ec4b6", background: "rgba(94,196,182,0.06)", borderRadius: 8, padding: 10 }}>💡 نصيحة: افتح التطبيق في متصفح Edge للحصول على أفضل صوت مجاني (Microsoft Neural voices)</div>}
+              {!getOpenAIKey() && <div style={{ fontSize: 12, color: "#059669", background: "rgba(5,150,105,0.06)", borderRadius: 8, padding: 10 }}>💡 نصيحة: افتح التطبيق في متصفح Edge للحصول على أفضل صوت مجاني (Microsoft Neural voices)</div>}
             </Card>
             {/* Profile & Logout */}
             {currentUser && <Card>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
-                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#e8b84b,#5ec4b6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, fontWeight: 800, color: "#1a1614", flexShrink: 0 }}>{currentUser.displayName.charAt(0).toUpperCase()}</div>
+                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#1d4ed8,#059669)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, fontWeight: 800, color: "#fafaf9", flexShrink: 0 }}>{currentUser.displayName.charAt(0).toUpperCase()}</div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: "#f0f0f5" }}>{currentUser.displayName}</div>
-                  <div style={{ fontSize: 12, color: "#7a8295" }}>@{currentUser.username}</div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: "#18181b" }}>{currentUser.displayName}</div>
+                  <div style={{ fontSize: 12, color: "#71717a" }}>@{currentUser.username}</div>
                 </div>
               </div>
-              <button onClick={() => { if (confirm("تسجيل خروج؟")) onLogout(); }} style={{ width: "100%", padding: 10, borderRadius: 10, border: "1px solid rgba(232,184,75,0.15)", background: "transparent", color: "#e8b84b", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>تسجيل خروج ←</button>
+              <button onClick={() => { if (confirm("تسجيل خروج؟")) onLogout(); }} style={{ width: "100%", padding: 10, borderRadius: 10, border: "1px solid rgba(29,78,216,0.15)", background: "transparent", color: "#1d4ed8", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>تسجيل خروج ←</button>
             </Card>}
             <div style={{ textAlign: "center", marginTop: 14 }}>
-              <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(232,160,64,0.1)", background: "transparent", color: "#e87461", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة ضبط</button>
+              <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(217,119,6,0.1)", background: "transparent", color: "#dc2626", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة ضبط</button>
             </div>
           </div>
         )}

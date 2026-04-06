@@ -3,23 +3,23 @@
  * طَلِق — Premium English Learning for Arabic Adults 35+
  */
 
-// ===== BRAND COLORS =====
+// ===== BRAND COLORS (Professional Light Theme) =====
 export const BRAND = {
-  dark: '#1a1614',
-  darkAlt: '#231f1c',
-  darkCard: '#2a2421',
-  gold: '#e8b84b',
-  goldDim: '#c49a38',
-  goldGlow: 'rgba(232,184,75,0.15)',
-  teal: '#5ec4b6',
-  tealDim: '#4db5a5',
-  coral: '#e87461',
-  coralDim: '#d4634f',
-  text: '#f5f0eb',
-  textSecondary: '#a89e94',
-  textTertiary: '#6d635a',
-  border: 'rgba(255,255,255,0.08)',
-  borderGold: 'rgba(232,184,75,0.2)',
+  dark: '#fafaf9',
+  darkAlt: '#f4f4f5',
+  darkCard: '#ffffff',
+  gold: '#1d4ed8',
+  goldDim: '#1e40af',
+  goldGlow: 'rgba(29,78,216,0.08)',
+  teal: '#059669',
+  tealDim: '#047857',
+  coral: '#dc2626',
+  coralDim: '#b91c1c',
+  text: '#18181b',
+  textSecondary: '#52525b',
+  textTertiary: '#a1a1aa',
+  border: 'rgba(0,0,0,0.06)',
+  borderGold: 'rgba(29,78,216,0.12)',
 };
 
 // ===== TALIQ LOGO (SVG) =====
@@ -29,10 +29,10 @@ export function TaliqLogo({ size = 48, showText = true, color = BRAND.gold }) {
     <div style={{ display: 'inline-flex', alignItems: 'center', gap: showText ? 12 : 0 }}>
       <svg width={size} height={size} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Barrier line — vertical, slightly rounded */}
-        <rect x="28" y="8" width="3" height="48" rx="1.5" fill={BRAND.textTertiary} opacity="0.4" />
+        <rect x="28" y="8" width="3" height="48" rx="1.5" fill="#d4d4d8" opacity="0.5" />
         {/* Breaking effect — gap in barrier */}
-        <rect x="28" y="8" width="3" height="18" rx="1.5" fill={BRAND.textTertiary} opacity="0.4" />
-        <rect x="28" y="38" width="3" height="18" rx="1.5" fill={BRAND.textTertiary} opacity="0.4" />
+        <rect x="28" y="8" width="3" height="18" rx="1.5" fill="#d4d4d8" opacity="0.5" />
+        <rect x="28" y="38" width="3" height="18" rx="1.5" fill="#d4d4d8" opacity="0.5" />
         {/* Arrow breaking through — dynamic, forward-moving */}
         <path
           d="M16 32 L38 32 L32 24 L44 32 L32 40 L38 32"
@@ -48,8 +48,6 @@ export function TaliqLogo({ size = 48, showText = true, color = BRAND.gold }) {
         <circle cx="46" cy="38" r="1.5" fill={color} opacity="0.6" />
         <circle cx="52" cy="28" r="1" fill={BRAND.teal} opacity="0.5" />
         <circle cx="52" cy="36" r="1" fill={BRAND.teal} opacity="0.5" />
-        {/* Glow behind arrow */}
-        <circle cx="40" cy="32" r="10" fill={color} opacity="0.06" />
       </svg>
       {showText && (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -80,7 +78,7 @@ export function TaliqAppIcon({ size = 512 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
       {/* Background */}
-      <rect width="512" height="512" rx="96" fill={BRAND.dark} />
+      <rect width="512" height="512" rx="96" fill="#1e293b" />
       {/* Subtle radial glow */}
       <circle cx="256" cy="256" r="180" fill="url(#iconGlow)" />
       <defs>
@@ -90,23 +88,23 @@ export function TaliqAppIcon({ size = 512 }) {
         </radialGradient>
       </defs>
       {/* Barrier */}
-      <rect x="220" y="80" width="16" height="140" rx="8" fill="#4a3f38" />
-      <rect x="220" y="292" width="16" height="140" rx="8" fill="#4a3f38" />
+      <rect x="220" y="80" width="16" height="140" rx="8" fill="#475569" />
+      <rect x="220" y="292" width="16" height="140" rx="8" fill="#475569" />
       {/* Arrow */}
       <path
         d="M120 256 L300 256 L260 208 L340 256 L260 304 L300 256"
-        stroke={BRAND.gold}
+        stroke="#60a5fa"
         strokeWidth="18"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
       />
       {/* Particles */}
-      <circle cx="360" cy="216" r="10" fill={BRAND.gold} opacity="0.6" />
-      <circle cx="390" cy="256" r="10" fill={BRAND.gold} opacity="0.8" />
-      <circle cx="360" cy="296" r="10" fill={BRAND.gold} opacity="0.6" />
-      <circle cx="400" cy="230" r="6" fill={BRAND.teal} opacity="0.5" />
-      <circle cx="400" cy="282" r="6" fill={BRAND.teal} opacity="0.5" />
+      <circle cx="360" cy="216" r="10" fill="#60a5fa" opacity="0.6" />
+      <circle cx="390" cy="256" r="10" fill="#60a5fa" opacity="0.8" />
+      <circle cx="360" cy="296" r="10" fill="#60a5fa" opacity="0.6" />
+      <circle cx="400" cy="230" r="6" fill="#34d399" opacity="0.5" />
+      <circle cx="400" cy="282" r="6" fill="#34d399" opacity="0.5" />
       {/* Arabic text */}
       <text
         x="256" y="430"
@@ -114,7 +112,7 @@ export function TaliqAppIcon({ size = 512 }) {
         fontFamily="'Noto Kufi Arabic', sans-serif"
         fontSize="72"
         fontWeight="800"
-        fill={BRAND.gold}
+        fill="#60a5fa"
       >طَلِق</text>
     </svg>
   );
@@ -149,19 +147,11 @@ export function SplashScreen({ onReady }) {
   return (
     <div style={{
       position: 'fixed', inset: 0, zIndex: 9999,
-      background: `radial-gradient(ellipse at center, ${BRAND.darkCard} 0%, ${BRAND.dark} 70%)`,
+      background: BRAND.dark,
       display: 'flex', flexDirection: 'column',
       alignItems: 'center', justifyContent: 'center',
       fontFamily: "'Noto Kufi Arabic', sans-serif",
     }}>
-      {/* Gold glow behind logo */}
-      <div style={{
-        position: 'absolute',
-        width: 200, height: 200, borderRadius: '50%',
-        background: `radial-gradient(circle, ${BRAND.goldGlow} 0%, transparent 70%)`,
-        top: '50%', left: '50%', transform: 'translate(-50%, -60%)',
-      }} />
-
       <div style={{ animation: 'fadeUp 0.8s ease-out', position: 'relative' }}>
         <TaliqLogo size={64} />
       </div>
