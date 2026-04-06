@@ -208,54 +208,54 @@ function AuthScreen({ onLogin }) {
     onLogin(acc);
   }
 
-  const inputStyle = { width: "100%", padding: 14, borderRadius: 12, fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 14, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", color: "#18181b", outline: "none", marginBottom: 10, textAlign: "right" };
-  const btnStyle = { width: "100%", padding: 16, borderRadius: 14, border: "none", fontFamily: "'Noto Kufi Arabic',sans-serif", fontSize: 16, fontWeight: 700, cursor: "pointer" };
+  const inputStyle = { width: "100%", padding: "var(--sp-4)", borderRadius: "var(--r-lg)", fontFamily: "inherit", fontSize: "var(--fs-sm)", background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", color: "var(--c-text)", outline: "none", marginBottom: "var(--sp-3)", textAlign: "right" };
+  const btnStyle = { width: "100%", padding: "var(--sp-4)", borderRadius: "var(--r-lg)", border: "none", fontFamily: "inherit", fontSize: "var(--fs-md)", fontWeight: 700, cursor: "pointer" };
 
   // Quick profile selection if accounts exist
   if (showProfiles && accounts.length > 0 && mode === "login") return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#fafaf9", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", background: "var(--c-bg)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
       `}</style>
-      <div style={{ maxWidth: 400, width: "100%", padding: 28, animation: "fadeUp .5s" }}>
+      <div style={{ maxWidth: 400, width: "100%", padding: "var(--sp-7)", animation: "fadeUp .5s" }}>
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <TaliqLogo size={44} />
-          <div style={{ fontSize: 18, fontWeight: 700, color: "#18181b", marginTop: 14 }}>من يتدرب اليوم؟</div>
+          <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-text)", marginTop: "var(--sp-4)" }}>من يتدرب اليوم؟</div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--sp-2)", marginBottom: "var(--sp-5)" }}>
           {accounts.map(acc => (
-            <button key={acc.uid} onClick={() => quickLogin(acc)} style={{ display: "flex", alignItems: "center", gap: 12, padding: 16, borderRadius: 14, border: "1px solid rgba(29,78,216,0.12)", background: "rgba(29,78,216,0.04)", cursor: "pointer", textAlign: "right", fontFamily: "inherit" }}>
-              <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#1d4ed8,#059669)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, fontWeight: 800, color: "#fafaf9", flexShrink: 0 }}>{acc.displayName.charAt(0).toUpperCase()}</div>
+            <button key={acc.uid} onClick={() => quickLogin(acc)} style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", padding: "var(--sp-4)", borderRadius: "var(--r-lg)", border: "1px solid rgba(29,78,216,0.12)", background: "rgba(29,78,216,0.04)", cursor: "pointer", textAlign: "right", fontFamily: "inherit" }}>
+              <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,var(--c-accent),var(--c-success))", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-lg)", fontWeight: 800, color: "#fff", flexShrink: 0 }}>{acc.displayName.charAt(0).toUpperCase()}</div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 16, fontWeight: 700, color: "#18181b" }}>{acc.displayName}</div>
-                <div style={{ fontSize: 12, color: "#71717a" }}>@{acc.username}</div>
+                <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-text)" }}>{acc.displayName}</div>
+                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>@{acc.username}</div>
               </div>
-              <div style={{ fontSize: 20, color: "#1d4ed8" }}>←</div>
+              <div style={{ fontSize: "var(--fs-lg)", color: "var(--c-accent)" }}>←</div>
             </button>
           ))}
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
-          <button onClick={() => setShowProfiles(false)} style={{ flex: 1, padding: 12, borderRadius: 10, border: "1px solid rgba(0,0,0,0.06)", background: "transparent", color: "#52525b", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>تسجيل دخول بحساب آخر</button>
-          <button onClick={() => { setMode("register"); setShowProfiles(false); }} style={{ flex: 1, padding: 12, borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>حساب جديد</button>
+        <div style={{ display: "flex", gap: "var(--sp-2)" }}>
+          <button onClick={() => setShowProfiles(false)} style={{ flex: 1, padding: "var(--sp-3)", borderRadius: "var(--r-md)", border: "1px solid rgba(0,0,0,0.06)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-sm)", cursor: "pointer" }}>تسجيل دخول بحساب آخر</button>
+          <button onClick={() => { setMode("register"); setShowProfiles(false); }} style={{ flex: 1, padding: "var(--sp-3)", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>حساب جديد</button>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#fafaf9", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", background: "var(--c-bg)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
       `}</style>
-      <div style={{ maxWidth: 400, width: "100%", padding: 28, animation: "fadeUp .5s" }}>
+      <div style={{ maxWidth: 400, width: "100%", padding: "var(--sp-7)", animation: "fadeUp .5s" }}>
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <TaliqLogo size={44} />
-          <div style={{ fontSize: 20, fontWeight: 800, color: "#18181b", marginTop: 14 }}>{mode === "register" ? "حساب جديد" : "تسجيل الدخول"}</div>
-          <div style={{ fontSize: 13, color: "#71717a", marginTop: 6 }}>{mode === "register" ? "سجّل وابدأ رحلتك في اكتساب الإنجليزية" : "أدخل بياناتك لمتابعة التدريب"}</div>
+          <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-text)", marginTop: "var(--sp-4)" }}>{mode === "register" ? "حساب جديد" : "تسجيل الدخول"}</div>
+          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginTop: "var(--sp-2)" }}>{mode === "register" ? "سجّل وابدأ رحلتك في اكتساب الإنجليزية" : "أدخل بياناتك لمتابعة التدريب"}</div>
         </div>
 
         {mode === "register" && (
@@ -266,27 +266,27 @@ function AuthScreen({ onLogin }) {
           onKeyDown={e => { if (e.key === "Enter") { mode === "register" ? handleRegister() : handleLogin(); } }}
         />
 
-        {error && <div style={{ fontSize: 13, color: "#dc2626", textAlign: "center", marginBottom: 10, padding: 8, background: "rgba(220,38,38,0.08)", borderRadius: 8 }}>{error}</div>}
+        {error && <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-error)", textAlign: "center", marginBottom: "var(--sp-3)", padding: "var(--sp-2)", background: "rgba(220,38,38,0.08)", borderRadius: "var(--r-sm)" }}>{error}</div>}
 
-        <button onClick={mode === "register" ? handleRegister : handleLogin} disabled={loading} style={{ ...btnStyle, background: loading ? "#a1a1aa" : "linear-gradient(135deg,#1d4ed8,#1e40af)", color: "#fafaf9", marginBottom: 12 }}>
+        <button onClick={mode === "register" ? handleRegister : handleLogin} disabled={loading} style={{ ...btnStyle, background: loading ? "#a1a1aa" : "linear-gradient(135deg,var(--c-accent),var(--c-accent-hover))", color: "#fff", marginBottom: "var(--sp-3)" }}>
           {loading ? "..." : mode === "register" ? "إنشاء حساب" : "دخول"}
         </button>
 
         <div style={{ textAlign: "center" }}>
           {mode === "login" ? (
-            <button onClick={() => { setMode("register"); setError(""); }} style={{ background: "none", border: "none", color: "#1d4ed8", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>ما عندك حساب؟ <b>سجّل الآن</b></button>
+            <button onClick={() => { setMode("register"); setError(""); }} style={{ background: "none", border: "none", color: "var(--c-accent)", fontFamily: "inherit", fontSize: "var(--fs-sm)", cursor: "pointer" }}>ما عندك حساب؟ <b>سجّل الآن</b></button>
           ) : (
-            <button onClick={() => { setMode("login"); setError(""); setShowProfiles(accounts.length > 0); }} style={{ background: "none", border: "none", color: "#1d4ed8", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>عندك حساب؟ <b>سجّل دخول</b></button>
+            <button onClick={() => { setMode("login"); setError(""); setShowProfiles(accounts.length > 0); }} style={{ background: "none", border: "none", color: "var(--c-accent)", fontFamily: "inherit", fontSize: "var(--fs-sm)", cursor: "pointer" }}>عندك حساب؟ <b>سجّل دخول</b></button>
           )}
         </div>
 
         {/* OAuth providers */}
         <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,0.04)" }}>
-          <div style={{ fontSize: 12, color: "#a1a1aa", textAlign: "center", marginBottom: 12 }}>أو سجّل عن طريق</div>
-          <div style={{ display: "flex", gap: 8 }}>
+          <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)", textAlign: "center", marginBottom: "var(--sp-3)" }}>أو سجّل عن طريق</div>
+          <div style={{ display: "flex", gap: "var(--sp-2)" }}>
             {[
               { name: "Google", key: "google", icon: "G", color: "#4285f4", bg: "rgba(66,133,244,0.1)", configured: !!OAUTH_CONFIG.google },
-              { name: "Apple", key: "apple", icon: "", color: "#18181b", bg: "rgba(0,0,0,0.04)", configured: !!OAUTH_CONFIG.apple },
+              { name: "Apple", key: "apple", icon: "", color: "var(--c-text)", bg: "rgba(0,0,0,0.04)", configured: !!OAUTH_CONFIG.apple },
               { name: "Facebook", key: "facebook", icon: "f", color: "#1877f2", bg: "rgba(24,119,242,0.1)", configured: !!OAUTH_CONFIG.facebook },
             ].map(p => (
               <button key={p.name} disabled={loading} onClick={async () => {
@@ -309,9 +309,9 @@ function AuthScreen({ onLogin }) {
                   setLoading(false);
                   setError(err.message || "فشل تسجيل الدخول");
                 }
-              }} style={{ flex: 1, padding: 12, borderRadius: 10, border: "1px solid " + (p.configured ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.02)"), background: p.configured ? p.bg : "rgba(0,0,0,0.02)", color: p.configured ? p.color : "#a1a1aa", fontFamily: "'IBM Plex Mono'", fontSize: 16, fontWeight: 700, cursor: p.configured ? "pointer" : "default", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, opacity: p.configured ? 1 : 0.5 }}>
+              }} style={{ flex: 1, padding: "var(--sp-3)", borderRadius: "var(--r-md)", border: "1px solid " + (p.configured ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.02)"), background: p.configured ? p.bg : "rgba(0,0,0,0.02)", color: p.configured ? p.color : "#a1a1aa", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-md)", fontWeight: 700, cursor: p.configured ? "pointer" : "default", display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--sp-2)", opacity: p.configured ? 1 : 0.5 }}>
                 <span>{p.icon}</span>
-                <span style={{ fontSize: 11, fontFamily: "'Noto Kufi Arabic',sans-serif", fontWeight: 600 }}>{p.name}</span>
+                <span style={{ fontSize: "var(--fs-xs)", fontFamily: "inherit", fontWeight: 600 }}>{p.name}</span>
               </button>
             ))}
           </div>
@@ -328,25 +328,25 @@ const CSS = `
   /* ===== DESIGN TOKENS ===== */
   :root {
     /* Colors */
-    --c-bg: #f7f7f5;
+    --c-bg: #fafaf9;
     --c-surface: #ffffff;
-    --c-surface-hover: #f0f0ee;
-    --c-border: #e3e3e0;
+    --c-surface-hover: #f4f4f5;
+    --c-border: #e4e4e7;
     --c-border-light: #eeeeec;
-    --c-text: #1a1a1a;
-    --c-text-secondary: #5c5c5c;
-    --c-text-tertiary: #8c8c8c;
+    --c-text: #18181b;
+    --c-text-secondary: #71717a;
+    --c-text-tertiary: #a1a1aa;
     --c-text-muted: #b0b0b0;
-    --c-accent: #2b5ea7;
-    --c-accent-hover: #234d8a;
-    --c-accent-light: rgba(43,94,167,0.08);
-    --c-accent-border: rgba(43,94,167,0.18);
-    --c-success: #2e7d5b;
-    --c-success-light: rgba(46,125,91,0.08);
-    --c-error: #c53030;
-    --c-error-light: rgba(197,48,48,0.06);
-    --c-warn: #a16207;
-    --c-warn-light: rgba(161,98,7,0.08);
+    --c-accent: #1d4ed8;
+    --c-accent-hover: #1e40af;
+    --c-accent-light: rgba(29,78,216,0.08);
+    --c-accent-border: rgba(29,78,216,0.18);
+    --c-success: #059669;
+    --c-success-light: rgba(5,150,105,0.08);
+    --c-error: #dc2626;
+    --c-error-light: rgba(220,38,38,0.06);
+    --c-warn: #d97706;
+    --c-warn-light: rgba(217,119,6,0.08);
 
     /* Typography Scale (modular — 1.2 ratio) */
     --fs-xs: 0.75rem;    /* 12px */
@@ -748,35 +748,35 @@ const PROMPTS = [
   { en: "Talk about what makes a good friend", ar: "صفات الصديق الجيد", starters: ["In my opinion, a good friend is someone who...", "One important quality is...", "For example, my best friend...", "I also believe that...", "The best friendships I've seen..."] },
 ];
 const PHRASES = [
-  { cat: "التعارف والمجاملات", icon: "👋", items: [
+  { cat: "التعارف والمجاملات", icon: "٦", items: [
     { en: "Nice to meet you. Where are you from?", ar: "تشرفنا. من وين أنت؟" },
     { en: "I've heard great things about you.", ar: "سمعت عنك أشياء حلوة." },
     { en: "How long have you been living here?", ar: "من متى وأنت ساكن هنا؟" },
     { en: "What do you do for a living?", ar: "وش شغلك؟ (سؤال مهذب)" },
     { en: "It was really nice talking to you.", ar: "كان ممتع إني أتكلم معك." },
   ]},
-  { cat: "السفر والمطار", icon: "✈️", items: [
+  { cat: "السفر والمطار", icon: "٧", items: [
     { en: "Excuse me, where is gate number seven?", ar: "لو سمحت، وين بوابة رقم ٧؟" },
     { en: "I'd like to check in for my flight, please.", ar: "أبي أسوي تشيك إن لرحلتي." },
     { en: "Is there a direct flight or do I have a layover?", ar: "في رحلة مباشرة أو عندي توقف؟" },
     { en: "Could you help me find my connecting flight?", ar: "تقدر تساعدني ألاقي رحلتي المتصلة؟" },
     { en: "My luggage didn't arrive. Where can I report this?", ar: "شنطتي ما وصلت. وين أبلّغ؟" },
   ]},
-  { cat: "المطاعم والطلبات", icon: "🍽️", items: [
+  { cat: "المطاعم والطلبات", icon: "١", items: [
     { en: "A table for two, please.", ar: "طاولة لشخصين، لو سمحت." },
     { en: "What do you recommend from the menu?", ar: "وش تنصح من القائمة؟" },
     { en: "I'm allergic to nuts. Does this contain any?", ar: "عندي حساسية مكسرات. هل فيها؟" },
     { en: "Could we have the bill, please?", ar: "ممكن الحساب لو سمحت؟" },
     { en: "The food was excellent. Thank you.", ar: "الأكل كان ممتاز. شكراً لك." },
   ]},
-  { cat: "المواعيد والاتصالات", icon: "📞", items: [
+  { cat: "المواعيد والاتصالات", icon: "١٠", items: [
     { en: "I'd like to make an appointment, please.", ar: "أبي أحجز موعد لو سمحت." },
     { en: "Is it possible to reschedule to next week?", ar: "ممكن أأجّل الموعد للأسبوع الجاي؟" },
     { en: "I'm calling to follow up on my request.", ar: "أتصل أتابع طلبي." },
     { en: "Could you transfer me to the right department?", ar: "ممكن تحوّلني للقسم المختص؟" },
     { en: "Thank you for your help. Have a nice day.", ar: "شكراً على مساعدتك. يوم سعيد." },
   ]},
-  { cat: "إبداء الرأي والنقاش", icon: "💡", items: [
+  { cat: "إبداء الرأي والنقاش", icon: "٢٥", items: [
     { en: "I see it differently. From my perspective...", ar: "أشوفها بشكل مختلف. من وجهة نظري..." },
     { en: "That's a good point. I also think...", ar: "نقطة ممتازة. وأنا أيضاً أشوف..." },
     { en: "I agree overall, but I have one concern.", ar: "بشكل عام متفق، بس عندي تحفّظ." },
@@ -810,21 +810,21 @@ const MOTIV = [
 ];
 
 const CONVERSATIONS = [
-  { title: "في الفندق", icon: "🏨", steps: [
+  { title: "في الفندق", icon: "٣", steps: [
     { speaker: "موظف الاستقبال", text: "Good evening. Welcome to our hotel. Do you have a reservation?", prompt: "أكّد حجزك", opts: ["Yes, I have a reservation under the name Al-Rashid.", "I think I booked something online recently.", "I'm here to stay at the hotel."], ans: 0 },
     { speaker: "موظف الاستقبال", text: "I found it. A double room for three nights. Could I see your ID?", prompt: "أعطِ معلوماتك", opts: ["Of course. Here's my passport. Is breakfast included?", "Sure, let me look for it in my bag.", "Yes, here you go."], ans: 0 },
     { speaker: "موظف الاستقبال", text: "Breakfast is from 7 to 10. Your room is on the fifth floor.", prompt: "اسأل عن الخدمات", opts: ["Great. Is there a gym and pool available for guests?", "That sounds fine. Thank you.", "OK, I'll find it."], ans: 0 },
     { speaker: "موظف الاستقبال", text: "Yes, both are on the second floor. Open until 10 PM.", prompt: "اطلب شيء إضافي", opts: ["Perfect. Could I also get some extra towels sent to the room?", "That's nice to know. Thank you.", "I'll check them out later."], ans: 0 },
     { speaker: "موظف الاستقبال", text: "Absolutely. Is there anything else I can help you with?", prompt: "اشكره واختم", opts: ["That's everything. Thank you so much for your help.", "No, I think that's all for now.", "I'm fine, thanks."], ans: 0 },
   ]},
-  { title: "عند الطبيب", icon: "🏥", steps: [
+  { title: "عند الطبيب", icon: "٢", steps: [
     { speaker: "الطبيب", text: "Good morning. What brings you in today?", prompt: "اشرح أعراضك", opts: ["I've been having a persistent headache for the past three days, along with some fatigue.", "My head hurts and I feel tired.", "I haven't been feeling well lately."], ans: 0 },
     { speaker: "الطبيب", text: "I see. Have you experienced any other symptoms like fever or nausea?", prompt: "أجب بتفصيل", opts: ["No fever, but I've noticed some mild dizziness, especially in the morning.", "I don't think so. Maybe a little.", "Not really, just the headache."], ans: 0 },
     { speaker: "الطبيب", text: "Have you been under a lot of stress recently? Any changes in sleep?", prompt: "اشرح وضعك", opts: ["Yes, actually. I've been sleeping less than usual and my schedule has been very hectic.", "Kind of. I've been busy with a lot of things.", "Maybe a little stressed, nothing major."], ans: 0 },
     { speaker: "الطبيب", text: "I'd recommend some blood tests just to be safe. I'll also prescribe something for the headache.", prompt: "اسأل عن العلاج", opts: ["That sounds good. How often should I take the medication, and are there any side effects?", "OK, I'll do the blood tests. Thank you.", "Sure, whatever you recommend."], ans: 0 },
     { speaker: "الطبيب", text: "Take it twice daily with food. Come back in a week if it doesn't improve.", prompt: "اشكره وأكّد", opts: ["Thank you, doctor. I'll follow your advice and schedule a follow-up if needed.", "OK, I'll come back if it doesn't get better.", "Thanks for seeing me today."], ans: 0 },
   ]},
-  { title: "اجتماع أولياء أمور", icon: "🎓", steps: [
+  { title: "اجتماع أولياء أمور", icon: "٤", steps: [
     { speaker: "المعلم/ة", text: "Thank you for coming. Your son Omar is a bright student.", prompt: "اشكره واسأل", opts: ["Thank you. I'm glad to hear that. How is he doing in his main subjects?", "That's great to hear. Thank you.", "Good, I was hoping he was doing well."], ans: 0 },
     { speaker: "المعلم/ة", text: "He's excellent in math and science, but he needs to improve his reading.", prompt: "اسأل عن التفاصيل", opts: ["I see. Could you give me specific examples of where he's struggling?", "I noticed that at home too.", "What can we do about that?"], ans: 0 },
     { speaker: "المعلم/ة", text: "He reads slowly and sometimes skips words. I think more practice at home would help.", prompt: "اقترح خطة", opts: ["That makes sense. What if we start with fifteen minutes of reading together every evening?", "I'll try to read with him more.", "We'll work on it at home."], ans: 0 },
@@ -838,7 +838,7 @@ const CONVERSATIONS = [
     { speaker: "صاحب الشقة", text: "I could do fourteen fifty with three months upfront. That's the best I can offer.", prompt: "وافق واسأل", opts: ["That works for me. When would the apartment be available to move in?", "OK, I'll take it at that price.", "Sure, let's go with that."], ans: 0 },
     { speaker: "صاحب الشقة", text: "You can move in on the first of next month. I'll prepare the contract.", prompt: "أكّد وأنهِ", opts: ["Perfect. I'll review the contract and have it signed by the end of the week.", "Great, I'll be ready by then.", "Sounds good. Thank you."], ans: 0 },
   ]},
-  { title: "مكالمة خدمة العملاء", icon: "📱", steps: [
+  { title: "مكالمة خدمة العملاء", icon: "٥", steps: [
     { speaker: "موظف الخدمة", text: "Thank you for calling. How can I help you today?", prompt: "اشرح مشكلتك", opts: ["Hi, I placed an order last week and it still hasn't arrived. My order number is five-seven-three.", "I have a problem with my order.", "My order is late."], ans: 0 },
     { speaker: "موظف الخدمة", text: "I'm sorry about that. Let me check the status for you. One moment please.", prompt: "انتظر بأدب", opts: ["Of course, take your time. I appreciate you looking into this.", "Sure, no problem.", "OK, I'll wait."], ans: 0 },
     { speaker: "موظف الخدمة", text: "It looks like the package was delayed due to a shipping issue. It should arrive by Thursday.", prompt: "اسأل عن التعويض", opts: ["I understand. Since it's significantly late, is there any compensation you can offer?", "OK, as long as it arrives by Thursday.", "That's fine then."], ans: 0 },
@@ -879,12 +879,12 @@ const QUIZ_BANK = [
 // Levels: A1 (Beginner) → C2 (Mastery)
 
 const CEFR_LEVELS = [
-  { code: "A1", name: "مبتدئ", nameEn: "Beginner", color: "#dc2626", desc: "تعرف كلمات وجمل بسيطة جداً. تقدر تعرّف نفسك وتسأل أسئلة أساسية.", tip: "ركّز على حفظ الجمل الأساسية والمفردات اليومية. ابدأ بتمارين الظل مع الجمل القصيرة." },
-  { code: "A2", name: "ما قبل المتوسط", nameEn: "Elementary", color: "#d97706", desc: "تفهم جمل متكررة في مواضيع يومية. تقدر تتواصل في مواقف بسيطة ومباشرة.", tip: "وسّع مفرداتك وركّز على تركيب جمل بسيطة. استخدم تمرين 'تفكير بصوت عالٍ' يومياً." },
-  { code: "B1", name: "متوسط", nameEn: "Intermediate", color: "#1d4ed8", desc: "تفهم النقاط الرئيسية في محادثات واضحة. تقدر تتعامل مع أغلب المواقف اليومية.", tip: "ابدأ بالمحادثات التفاعلية وركّز على ربط الأفكار. تمرّن على الجمل الجاهزة لمواقف الحياة." },
-  { code: "B2", name: "فوق المتوسط", nameEn: "Upper-Intermediate", color: "#1d4ed8", desc: "تفهم أفكار معقدة وتقدر تتفاعل بطلاقة مع متحدثين أصليين بدون جهد كبير.", tip: "ركّز على الدقة في التعبير والمصطلحات المتخصصة. تمرّن على العروض التقديمية والتفاوض." },
-  { code: "C1", name: "متقدم", nameEn: "Advanced", color: "#1d4ed8", desc: "تفهم نصوص طويلة ومعقدة وتقدر تعبّر عن نفسك بطلاقة وعفوية في أي موقف مهني.", tip: "ركّز على الفروق الدقيقة في اللغة والتعابير الاصطلاحية. تمرّن على المحادثات المتقدمة." },
-  { code: "C2", name: "إتقان", nameEn: "Mastery", color: "#059669", desc: "تفهم كل شيء تقريباً وتقدر تعبّر بدقة عالية حتى في المواقف الأكثر تعقيداً.", tip: "حافظ على مستواك بالممارسة المستمرة. ركّز على الأسلوب والبلاغة في التواصل المهني." },
+  { code: "A1", name: "مبتدئ", nameEn: "Beginner", color: "var(--c-error)", desc: "تعرف كلمات وجمل بسيطة جداً. تقدر تعرّف نفسك وتسأل أسئلة أساسية.", tip: "ركّز على حفظ الجمل الأساسية والمفردات اليومية. ابدأ بتمارين الظل مع الجمل القصيرة." },
+  { code: "A2", name: "ما قبل المتوسط", nameEn: "Elementary", color: "var(--c-warn)", desc: "تفهم جمل متكررة في مواضيع يومية. تقدر تتواصل في مواقف بسيطة ومباشرة.", tip: "وسّع مفرداتك وركّز على تركيب جمل بسيطة. استخدم تمرين 'تفكير بصوت عالٍ' يومياً." },
+  { code: "B1", name: "متوسط", nameEn: "Intermediate", color: "var(--c-accent)", desc: "تفهم النقاط الرئيسية في محادثات واضحة. تقدر تتعامل مع أغلب المواقف اليومية.", tip: "ابدأ بالمحادثات التفاعلية وركّز على ربط الأفكار. تمرّن على الجمل الجاهزة لمواقف الحياة." },
+  { code: "B2", name: "فوق المتوسط", nameEn: "Upper-Intermediate", color: "var(--c-accent)", desc: "تفهم أفكار معقدة وتقدر تتفاعل بطلاقة مع متحدثين أصليين بدون جهد كبير.", tip: "ركّز على الدقة في التعبير والمصطلحات المتخصصة. تمرّن على العروض التقديمية والتفاوض." },
+  { code: "C1", name: "متقدم", nameEn: "Advanced", color: "var(--c-accent)", desc: "تفهم نصوص طويلة ومعقدة وتقدر تعبّر عن نفسك بطلاقة وعفوية في أي موقف مهني.", tip: "ركّز على الفروق الدقيقة في اللغة والتعابير الاصطلاحية. تمرّن على المحادثات المتقدمة." },
+  { code: "C2", name: "إتقان", nameEn: "Mastery", color: "var(--c-success)", desc: "تفهم كل شيء تقريباً وتقدر تعبّر بدقة عالية حتى في المواقف الأكثر تعقيداً.", tip: "حافظ على مستواك بالممارسة المستمرة. ركّز على الأسلوب والبلاغة في التواصل المهني." },
 ];
 
 const LEVEL_TEST = [
@@ -949,17 +949,17 @@ const LEVEL_TEST = [
   { level: 5, type: "pragmatics", q: "You discover a critical flaw in a strategy that your CEO personally championed in front of the board. How do you address it?", opts: ["I've been reviewing the implementation details and identified an area where we might want to stress-test our assumptions before proceeding further.", "Your strategy is flawed.", "I think there's a problem but it's probably fine.", "I'll just fix it quietly and not say anything."], ans: 0 },
 
   // ===== LISTENING QUESTIONS (FIX 2) — audio-based, one per level =====
-  { level: 0, type: "listening", q: "🔊 Listen: 'I would like a cup of coffee, please.' — What does the speaker want?", audio: "I would like a cup of coffee, please.", opts: ["A cup of coffee", "A cup of tea", "A glass of water", "A sandwich"], ans: 0 },
-  { level: 1, type: "listening", q: "🔊 Listen: 'The store closes at nine o'clock on weekdays.' — When does the store close?", audio: "The store closes at nine o'clock on weekdays.", opts: ["9 PM on weekdays", "9 AM on weekdays", "10 PM every day", "8 PM on weekends"], ans: 0 },
-  { level: 2, type: "listening", q: "🔊 Listen: 'I've been waiting for over thirty minutes and my order still hasn't arrived.' — What is the problem?", audio: "I've been waiting for over thirty minutes and my order still hasn't arrived.", opts: ["The order is very late", "The food is cold", "The wrong order arrived", "The restaurant is closed"], ans: 0 },
-  { level: 3, type: "listening", q: "🔊 Listen: 'While the proposal has merit, I believe we should consider the long-term implications before committing resources.' — What is the speaker's position?", audio: "While the proposal has merit, I believe we should consider the long-term implications before committing resources.", opts: ["Cautiously supportive but wants more analysis", "Fully against the proposal", "Enthusiastically in favor", "Indifferent to the outcome"], ans: 0 },
-  { level: 4, type: "listening", q: "🔊 Listen: 'Notwithstanding the initial setbacks, the project has demonstrated remarkable resilience and is now on track to exceed its original projections.' — What happened to the project?", audio: "Notwithstanding the initial setbacks, the project has demonstrated remarkable resilience and is now on track to exceed its original projections.", opts: ["It struggled early but recovered and is now exceeding expectations", "It failed completely", "It was cancelled and restarted", "It met exactly the original targets"], ans: 0 },
-  { level: 5, type: "listening", q: "🔊 Listen: 'The ostensible rationale for the restructuring belied a more nuanced set of motivations that only became apparent in retrospect.' — What does this mean?", audio: "The ostensible rationale for the restructuring belied a more nuanced set of motivations that only became apparent in retrospect.", opts: ["The stated reasons were not the real reasons, which only became clear later", "The restructuring was fully transparent from the start", "Everyone understood the reasons immediately", "The restructuring had no clear purpose"], ans: 0 },
+  { level: 0, type: "listening", q: "♪ Listen: 'I would like a cup of coffee, please.' — What does the speaker want?", audio: "I would like a cup of coffee, please.", opts: ["A cup of coffee", "A cup of tea", "A glass of water", "A sandwich"], ans: 0 },
+  { level: 1, type: "listening", q: "♪ Listen: 'The store closes at nine o'clock on weekdays.' — When does the store close?", audio: "The store closes at nine o'clock on weekdays.", opts: ["9 PM on weekdays", "9 AM on weekdays", "10 PM every day", "8 PM on weekends"], ans: 0 },
+  { level: 2, type: "listening", q: "♪ Listen: 'I've been waiting for over thirty minutes and my order still hasn't arrived.' — What is the problem?", audio: "I've been waiting for over thirty minutes and my order still hasn't arrived.", opts: ["The order is very late", "The food is cold", "The wrong order arrived", "The restaurant is closed"], ans: 0 },
+  { level: 3, type: "listening", q: "♪ Listen: 'While the proposal has merit, I believe we should consider the long-term implications before committing resources.' — What is the speaker's position?", audio: "While the proposal has merit, I believe we should consider the long-term implications before committing resources.", opts: ["Cautiously supportive but wants more analysis", "Fully against the proposal", "Enthusiastically in favor", "Indifferent to the outcome"], ans: 0 },
+  { level: 4, type: "listening", q: "♪ Listen: 'Notwithstanding the initial setbacks, the project has demonstrated remarkable resilience and is now on track to exceed its original projections.' — What happened to the project?", audio: "Notwithstanding the initial setbacks, the project has demonstrated remarkable resilience and is now on track to exceed its original projections.", opts: ["It struggled early but recovered and is now exceeding expectations", "It failed completely", "It was cancelled and restarted", "It met exactly the original targets"], ans: 0 },
+  { level: 5, type: "listening", q: "♪ Listen: 'The ostensible rationale for the restructuring belied a more nuanced set of motivations that only became apparent in retrospect.' — What does this mean?", audio: "The ostensible rationale for the restructuring belied a more nuanced set of motivations that only became apparent in retrospect.", opts: ["The stated reasons were not the real reasons, which only became clear later", "The restructuring was fully transparent from the start", "Everyone understood the reasons immediately", "The restructuring had no clear purpose"], ans: 0 },
 ];
 
 const LEVEL_IDX = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4, C2: 5 };
 const TYPE_LABELS = { grammar: "قواعد", vocab: "مفردات", reading: "فهم القراءة", pragmatics: "تواصل", listening: "استماع" };
-const TYPE_ICONS = { grammar: "📐", vocab: "📚", reading: "📖", pragmatics: "🗣️", listening: "👂" };
+const TYPE_ICONS = { grammar: "⌘", vocab: "V", reading: "R", pragmatics: "P", listening: "L" };
 
 // ===== SPEECH UI COMPONENTS (engine is in platform.js) =====
 function SpeakBtn({ text, rate, size, color }) {
@@ -973,7 +973,7 @@ function SpeakBtn({ text, rate, size, color }) {
     } else setPlaying(false);
   }
   return (
-    <button onClick={(e) => { e.stopPropagation(); play(); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: size || 16, padding: 2, opacity: playing ? 1 : 0.5, color: color || "#1d4ed8", transition: ".2s", flexShrink: 0 }} title="استمع">{playing ? "🔊" : "🔈"}</button>
+    <button onClick={(e) => { e.stopPropagation(); play(); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: size || 16, padding: 2, opacity: playing ? 1 : 0.5, color: color || "#1d4ed8", transition: ".2s", flexShrink: 0 }} title="استمع">{playing ? "♪" : "♪"}</button>
   );
 }
 
@@ -981,7 +981,7 @@ function VoiceBadge() {
   const info = getVoiceInfo();
   const colors = { openai: "#059669", native: "#059669", neural: "#1d4ed8", basic: "#1d4ed8" };
   const bgs = { openai: "rgba(5,150,105,0.15)", native: "rgba(5,150,105,0.15)", neural: "rgba(29,78,216,0.15)", basic: "rgba(29,78,216,0.15)" };
-  return <span style={{ fontSize: 12, padding: "2px 6px", borderRadius: 4, background: bgs[info.tier], color: colors[info.tier], fontWeight: 600 }}>{info.label}</span>;
+  return <span style={{ fontSize: "var(--fs-xs)", padding: "2px 6px", borderRadius: "var(--r-sm)", background: bgs[info.tier], color: colors[info.tier], fontWeight: 600 }}>{info.label}</span>;
 }
 
 // ===== LISTENING COMPREHENSION =====
@@ -1017,7 +1017,7 @@ const DICTATION_ITEMS = [
 // ===== DAILY DEEP PROCESSING SCENARIOS =====
 // Each scenario is ONE topic processed through 6 cognitive layers
 const DAILY_SCENARIOS = [
-  { title: "في المطعم", icon: "🍽️", dialogue: [
+  { title: "في المطعم", icon: "١", dialogue: [
     { speaker: "أنت", text: "Good evening. A table for two, please." },
     { speaker: "النادل", text: "Of course. Would you prefer indoor or outdoor seating?" },
     { speaker: "أنت", text: "Indoor, please. Could we have the menu?" },
@@ -1037,7 +1037,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "وين تصير هالمحادثة؟", opts: ["مطعم", "مطار", "بنك"], ans: 0 },
   challenge: "اليوم: اطلب قهوتك من أي كافيه بالإنجليزي. حتى لو جملة وحدة." },
 
-  { title: "عند الدكتور", icon: "🏥", dialogue: [
+  { title: "عند الدكتور", icon: "٢", dialogue: [
     { speaker: "الطبيب", text: "Good morning. What brings you in today?" },
     { speaker: "أنت", text: "I've been having a headache for three days." },
     { speaker: "الطبيب", text: "I see. Any other symptoms? Fever or nausea?" },
@@ -1057,7 +1057,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "وش مشكلة المتحدث؟", opts: ["صداع ودوخة", "ألم في الظهر", "مشكلة في النظر"], ans: 0 },
   challenge: "اليوم: لو أحد سألك How are you — رد بجملة كاملة بدل fine." },
 
-  { title: "في الفندق", icon: "🏨", dialogue: [
+  { title: "في الفندق", icon: "٣", dialogue: [
     { speaker: "الموظف", text: "Good evening. Welcome. Do you have a reservation?" },
     { speaker: "أنت", text: "Yes, under the name Al-Rashid. For three nights." },
     { speaker: "الموظف", text: "Found it. Could I see your passport?" },
@@ -1077,7 +1077,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "كم ليلة الحجز؟", opts: ["٣ ليالي", "ليلة وحدة", "أسبوع"], ans: 0 },
   challenge: "اليوم: افتح موقع فندق وحاول تقرأ صفحة الخدمات بالإنجليزي بدون ترجمة." },
 
-  { title: "اجتماع أولياء أمور", icon: "🎓", dialogue: [
+  { title: "اجتماع أولياء أمور", icon: "٤", dialogue: [
     { speaker: "المعلمة", text: "Thank you for coming. Sara is a wonderful student." },
     { speaker: "أنت", text: "Thank you. How is she doing in her main subjects?" },
     { speaker: "المعلمة", text: "She's great in math, but needs help with reading." },
@@ -1097,7 +1097,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "وش تحتاج البنت تحسّن؟", opts: ["القراءة", "الرياضيات", "الرسم"], ans: 0 },
   challenge: "اليوم: اقرأ لعيالك قصة قصيرة بالإنجليزي — حتى لو مو perfect." },
 
-  { title: "مكالمة خدمة العملاء", icon: "📱", dialogue: [
+  { title: "مكالمة خدمة العملاء", icon: "٥", dialogue: [
     { speaker: "الموظف", text: "Thank you for calling. How can I help you?" },
     { speaker: "أنت", text: "I placed an order last week and it hasn't arrived." },
     { speaker: "الموظف", text: "I'm sorry. Let me check. One moment please." },
@@ -1117,7 +1117,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "وش المشكلة؟", opts: ["الطلب ما وصل", "المنتج مكسور", "السعر غلط"], ans: 0 },
   challenge: "اليوم: لو اشتريت شيء أونلاين — اقرأ صفحة الـ FAQ بالإنجليزي." },
 
-  { title: "التعارف مع شخص جديد", icon: "👋", dialogue: [
+  { title: "التعارف مع شخص جديد", icon: "٦", dialogue: [
     { speaker: "الشخص", text: "Hi! I don't think we've met. I'm David." },
     { speaker: "أنت", text: "Nice to meet you, David. I'm Omar." },
     { speaker: "الشخص", text: "So, what do you do for a living?" },
@@ -1137,7 +1137,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "وش شغل المتحدث؟", opts: ["إدارة مشاريع", "هندسة برمجيات", "تسويق"], ans: 0 },
   challenge: "اليوم: لو قابلت أي شخص أجنبي — قل Nice to meet you وسأله سؤال واحد." },
 
-  { title: "في المطار", icon: "✈️", dialogue: [
+  { title: "في المطار", icon: "٧", dialogue: [
     { speaker: "الموظفة", text: "Good morning. May I see your passport and ticket?" },
     { speaker: "أنت", text: "Of course. Here they are. I'd like a window seat." },
     { speaker: "الموظفة", text: "Let me check. Yes, 14A is available." },
@@ -1157,7 +1157,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "هل الرحلة مباشرة؟", opts: ["نعم مباشرة", "فيها توقف", "ما ذكر"], ans: 0 },
   challenge: "اليوم: لو رحت أي مكان فيه موظف — سأل سؤال واحد بالإنجليزي." },
 
-  { title: "في الصيدلية", icon: "💊", dialogue: [
+  { title: "في الصيدلية", icon: "٨", dialogue: [
     { speaker: "الصيدلي", text: "Good afternoon. How can I help you?" },
     { speaker: "أنت", text: "I need something for a sore throat." },
     { speaker: "الصيدلي", text: "How long have you had it?" },
@@ -1177,7 +1177,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "وش يشتكي منه؟", opts: ["التهاب حلق", "صداع", "ألم بطن"], ans: 0 },
   challenge: "اليوم: اقرأ نشرة أي دواء عندك بالبيت — الجانب الإنجليزي." },
 
-  { title: "في السوبرماركت", icon: "🛒", dialogue: [
+  { title: "في السوبرماركت", icon: "٩", dialogue: [
     { speaker: "أنت", text: "Excuse me, where can I find the dairy section?" },
     { speaker: "الموظف", text: "It's in aisle three, on your right." },
     { speaker: "أنت", text: "Thank you. Do you have any organic milk?" },
@@ -1197,7 +1197,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "وش يدوّر عليه؟", opts: ["قسم الألبان", "قسم اللحوم", "قسم الخضار"], ans: 0 },
   challenge: "اليوم: لو دخلت أي محل — اقرأ أسماء المنتجات بالإنجليزي في بالك." },
 
-  { title: "حجز موعد بالتلفون", icon: "📞", dialogue: [
+  { title: "حجز موعد بالتلفون", icon: "١٠", dialogue: [
     { speaker: "الموظفة", text: "Good morning, City Dental Clinic. How can I help you?" },
     { speaker: "أنت", text: "I'd like to make an appointment, please." },
     { speaker: "الموظفة", text: "Sure. Is this your first visit with us?" },
@@ -1217,7 +1217,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "متى الموعد؟", opts: ["الخميس ١٠ الصبح", "الثلاثاء ٢ الظهر", "السبت ٩ الصبح"], ans: 0 },
   challenge: "اليوم: احجز أي موعد بالتلفون — حتى لو بالعربي، فكّر كيف تقولها بالإنجليزي." },
 
-  { title: "طلب توصيل أونلاين", icon: "📦", dialogue: [
+  { title: "طلب توصيل أونلاين", icon: "١١", dialogue: [
     { speaker: "أنت", text: "Hi, I'd like to place an order for delivery." },
     { speaker: "الموظف", text: "Sure! What would you like to order?" },
     { speaker: "أنت", text: "Two chicken burgers and a large fries, please." },
@@ -1237,7 +1237,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "وش طلب؟", opts: ["برقرين وبطاطس", "بيتزا وسلطة", "سمك وأرز"], ans: 0 },
   challenge: "اليوم: اطلب من أي مطعم أونلاين وحاول تقرأ القائمة الإنجليزية." },
 
-  { title: "في البنك", icon: "🏦", dialogue: [
+  { title: "في البنك", icon: "١٢", dialogue: [
     { speaker: "الموظف", text: "Welcome. How can I assist you today?" },
     { speaker: "أنت", text: "I'd like to open a savings account, please." },
     { speaker: "الموظف", text: "Of course. Do you have any ID with you?" },
@@ -1257,7 +1257,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "وش يبي يسوي؟", opts: ["يفتح حساب توفير", "يأخذ قرض", "يغيّر كلمة السر"], ans: 0 },
   challenge: "اليوم: افتح تطبيق بنكك وحوّل اللغة للإنجليزي ٥ دقائق." },
 
-  { title: "استئجار سيارة", icon: "🚗", dialogue: [
+  { title: "استئجار سيارة", icon: "١٣", dialogue: [
     { speaker: "الموظف", text: "Good morning. Would you like to rent a car?" },
     { speaker: "أنت", text: "Yes, I need a car for five days." },
     { speaker: "الموظف", text: "We have compact, sedan, and SUV options." },
@@ -1277,7 +1277,7 @@ const DAILY_SCENARIOS = [
   listenQ: { q: "كم سعر اليوم؟", opts: ["80 دولار", "50 دولار", "120 دولار"], ans: 0 },
   challenge: "اليوم: ادخل أي موقع تأجير سيارات واقرأ الشروط بالإنجليزي." },
 
-  { title: "شكوى في الفندق", icon: "🔧", dialogue: [
+  { title: "شكوى في الفندق", icon: "١٤", dialogue: [
     { speaker: "أنت", text: "Excuse me, I have an issue with my room." },
     { speaker: "الموظف", text: "I'm sorry to hear that. What's the problem?" },
     { speaker: "أنت", text: "The air conditioning isn't working properly." },
@@ -1340,7 +1340,7 @@ const DAILY_SCENARIOS = [
     { en: "Could you drop me off at the main entrance?", ar: "ممكن تنزلني عند المدخل الرئيسي؟" },
   ], producePrompt: "ركبت تاكسي وتبي توصل مكان محدد:", produceModel: "Could you take me to the Hilton Hotel on King Street, please? How long will it take, and is there much traffic?", noticingTips: ["\"Could you take me to\" = الطريقة المهذبة لطلب وجهة", "\"drop me off at\" = مصطلح أساسي يعني 'نزّلني عند'", "السؤال عن الوقت والزحمة = محادثة طبيعية مع السائق"], challenge: "اليوم: لو ركبت أي وسيلة نقل — فكّر كيف توصف وجهتك بالإنجليزي." },
 
-  { title: "اشتراك نادي رياضي", icon: "💪", dialogue: [
+  { title: "اشتراك نادي رياضي", icon: "", dialogue: [
     { speaker: "الموظف", text: "Welcome! Are you interested in joining our gym?" },
     { speaker: "أنت", text: "Yes, I'd like to know about your membership options." },
     { speaker: "الموظف", text: "We have monthly and annual plans. Would you like a tour?" },
@@ -1354,7 +1354,7 @@ const DAILY_SCENARIOS = [
     { en: "How much is the monthly plan?", ar: "كم الاشتراك الشهري؟" },
   ], producePrompt: "تبي تشترك في نادي. اسأل عن الخدمات والأسعار:", produceModel: "I'm interested in joining. What membership options do you have? I'd like to know about the facilities and the monthly rate.", noticingTips: ["\"I'm interested in joining\" = بداية مهذبة أقوى من \"I want to join\"", "\"What facilities do you have?\" = سؤال شامل ذكي", "\"No contract required\" = عبارة مهمة تسمعها كثير — يعني بدون التزام"], challenge: "اليوم: ادخل موقع أي نادي رياضي واقرأ صفحة الاشتراكات بالإنجليزي." },
 
-  { title: "مقابلة عمل", icon: "👔", dialogue: [
+  { title: "مقابلة عمل", icon: "١٦", dialogue: [
     { speaker: "المقابِل", text: "Thank you for coming. Tell me a little about yourself." },
     { speaker: "أنت", text: "I have ten years of experience in project management." },
     { speaker: "المقابِل", text: "What would you say is your biggest strength?" },
@@ -1396,7 +1396,7 @@ const DAILY_SCENARIOS = [
     { en: "Is there a kids' menu available?", ar: "في قائمة أطفال؟" },
   ], producePrompt: "اتصل بمطعم واحجز طاولة لعائلتك:", produceModel: "I'd like to make a reservation for Saturday evening at seven thirty. We'll be four guests, including two children. Do you have a kids' menu?", noticingTips: ["\"I'd like to make a reservation\" = نفس بنية حجز الفندق والعيادة", "تحديد العدد + الوقت في جملة واحدة = واضح ومباشر", "السؤال عن kids' menu = يُظهر تخطيط عملي"], challenge: "اليوم: لو بتطلع مع عائلتك — فكّر كيف تحجز بالإنجليزي." },
 
-  { title: "عند الكهربائي/السباك", icon: "🔧", dialogue: [
+  { title: "عند الكهربائي/السباك", icon: "١٤", dialogue: [
     { speaker: "أنت", text: "Hi, I'm having a problem with my kitchen sink. It's leaking." },
     { speaker: "الفني", text: "I see. How long has it been leaking?" },
     { speaker: "أنت", text: "It started about two days ago. It gets worse when I use hot water." },
@@ -1411,7 +1411,7 @@ const DAILY_SCENARIOS = [
   ], producePrompt: "عندك مشكلة بالبيت واستدعيت فني. اشرح المشكلة:", produceModel: "I'm having a problem with my air conditioning. It's making a strange noise and not cooling properly. It started yesterday.", noticingTips: ["\"I'm having a problem with...\" = بداية مثالية لأي شكوى", "وصف الأعراض بالتفصيل (leaking, strange noise) = يساعد الفني", "\"That sounds reasonable\" = موافقة مهذبة على السعر"], challenge: "اليوم: فكّر بأي جهاز في بيتك — كيف توصف مشكلته بالإنجليزي؟" },
 
   // ===== WEEKS 4-6: 13 more scenarios (total 35 = 5 weeks) =====
-  { title: "في محل الجوالات", icon: "📱", dialogue: [{ speaker: "البائع", text: "Welcome! Looking for anything specific today?" }, { speaker: "أنت", text: "Yes, I'm looking for a new phone with a good camera." }, { speaker: "البائع", text: "I'd recommend this model. It has a great camera and battery." }, { speaker: "أنت", text: "How much storage does it have?" }, { speaker: "البائع", text: "128 or 256 gigabytes." }, { speaker: "أنت", text: "I'll take the 256. Does it come with a warranty?" }, { speaker: "البائع", text: "Yes, two years included." }], keyPhrases: [{ en: "I'm looking for a new phone with a good camera.", ar: "أدوّر جوال جديد كاميرته حلوة." }, { en: "How much storage does it have?", ar: "كم مساحة التخزين؟" }, { en: "Does it come with a warranty?", ar: "يجي معاه ضمان؟" }], producePrompt: "تبي تشتري جوال جديد. اسأل:", produceModel: "I'm looking for a new smartphone with a good camera and at least 256GB. What do you recommend?", noticingTips: ["\"I'm looking for\" = أفضل بداية للتسوق", "\"Does it come with\" = سؤال ذكي عن المُضاف", "تحديد المواصفات مباشرة = يوفر وقت"], challenge: "اليوم: اقرأ مواصفات جوالك بالإنجليزي." },
+  { title: "في محل الجوالات", icon: "٥", dialogue: [{ speaker: "البائع", text: "Welcome! Looking for anything specific today?" }, { speaker: "أنت", text: "Yes, I'm looking for a new phone with a good camera." }, { speaker: "البائع", text: "I'd recommend this model. It has a great camera and battery." }, { speaker: "أنت", text: "How much storage does it have?" }, { speaker: "البائع", text: "128 or 256 gigabytes." }, { speaker: "أنت", text: "I'll take the 256. Does it come with a warranty?" }, { speaker: "البائع", text: "Yes, two years included." }], keyPhrases: [{ en: "I'm looking for a new phone with a good camera.", ar: "أدوّر جوال جديد كاميرته حلوة." }, { en: "How much storage does it have?", ar: "كم مساحة التخزين؟" }, { en: "Does it come with a warranty?", ar: "يجي معاه ضمان؟" }], producePrompt: "تبي تشتري جوال جديد. اسأل:", produceModel: "I'm looking for a new smartphone with a good camera and at least 256GB. What do you recommend?", noticingTips: ["\"I'm looking for\" = أفضل بداية للتسوق", "\"Does it come with\" = سؤال ذكي عن المُضاف", "تحديد المواصفات مباشرة = يوفر وقت"], challenge: "اليوم: اقرأ مواصفات جوالك بالإنجليزي." },
 
   { title: "في البريد", icon: "📮", dialogue: [{ speaker: "الموظف", text: "How can I help you?" }, { speaker: "أنت", text: "I'd like to send this package to London, please." }, { speaker: "الموظف", text: "Standard or express?" }, { speaker: "أنت", text: "How long does express take?" }, { speaker: "الموظف", text: "Three to five business days." }, { speaker: "أنت", text: "Express, please. I need it there by next week." }, { speaker: "الموظف", text: "Forty-five dollars. Would you like tracking?" }], keyPhrases: [{ en: "I'd like to send this package to London.", ar: "أبي أرسل هالطرد للندن." }, { en: "How long does express take?", ar: "كم يأخذ الإكسبرس؟" }, { en: "Would you like tracking?", ar: "تبي رقم تتبع؟" }], producePrompt: "تبي ترسل طرد لخارج البلد:", produceModel: "I'd like to send this package to London via express. How long will it take and how much does it cost? I'd also like tracking.", noticingTips: ["\"via express\" = طريقة أنيقة لتحديد الشحن", "\"business days\" = أيام عمل (بدون ويكند)", "طلب tracking = تفكير عملي"], challenge: "اليوم: تتبع أي شحنة واقرأ حالتها بالإنجليزي." },
 
@@ -1419,11 +1419,11 @@ const DAILY_SCENARIOS = [
 
   { title: "طلب إجازة من العمل", icon: "🏖️", dialogue: [{ speaker: "المدير", text: "You wanted to see me?" }, { speaker: "أنت", text: "Yes, I'd like to request some time off next month." }, { speaker: "المدير", text: "How many days?" }, { speaker: "أنت", text: "A week, from the fifteenth to the twenty-second." }, { speaker: "المدير", text: "That should be fine. Reachable for emergencies?" }, { speaker: "أنت", text: "I'll have my phone. Email for non-urgent matters." }, { speaker: "المدير", text: "Submit the request and I'll approve it." }], keyPhrases: [{ en: "I'd like to request some time off.", ar: "أبي أطلب إجازة." }, { en: "From the fifteenth to the twenty-second.", ar: "من ١٥ إلى ٢٢." }, { en: "I'd prefer email for non-urgent matters.", ar: "أفضّل الإيميل للأمور غير العاجلة." }], producePrompt: "تبي تطلب إجازة من مديرك:", produceModel: "I'd like to request a week off next month. I'll make sure all my tasks are completed before I leave.", noticingTips: ["\"request time off\" = طلب إجازة رسمياً", "تحديد التواريخ بدقة = احترافية", "ذكر خطة التغطية = مسؤولية"], challenge: "اليوم: اكتب إيميل قصير بالإنجليزي." },
 
-  { title: "التعريف بنفسك في مناسبة", icon: "🤝", dialogue: [{ speaker: "شخص", text: "Hi! I don't think we've met." }, { speaker: "أنت", text: "Nice to meet you! I'm Khalid." }, { speaker: "شخص", text: "What do you do?" }, { speaker: "أنت", text: "I work in finance. I manage investments." }, { speaker: "شخص", text: "How long have you been doing that?" }, { speaker: "أنت", text: "About eight years. I enjoy the analytical side." }, { speaker: "شخص", text: "We should exchange contacts!" }], keyPhrases: [{ en: "I work in finance. I manage investments.", ar: "أشتغل في المالية. أدير استثمارات." }, { en: "I enjoy the analytical side of it.", ar: "أستمتع بالجانب التحليلي." }, { en: "We should exchange contacts!", ar: "لازم نتبادل أرقام!" }], producePrompt: "شخص جديد يسألك عن نفسك:", produceModel: "I'm Khalid. I work in engineering — about ten years. I'm passionate about renewable energy. What about you?", noticingTips: ["اسم → مجال → خبرة → شغف = بناء طبيعي", "\"I'm passionate about\" = تعبير قوي عن الاهتمام", "\"What about you?\" = تحوّل المحادثة لحوار"], challenge: "اليوم: حضّر تعريف عن نفسك من 4 جمل وقله بصوت عالٍ." },
+  { title: "التعريف بنفسك في مناسبة", icon: "١٥", dialogue: [{ speaker: "شخص", text: "Hi! I don't think we've met." }, { speaker: "أنت", text: "Nice to meet you! I'm Khalid." }, { speaker: "شخص", text: "What do you do?" }, { speaker: "أنت", text: "I work in finance. I manage investments." }, { speaker: "شخص", text: "How long have you been doing that?" }, { speaker: "أنت", text: "About eight years. I enjoy the analytical side." }, { speaker: "شخص", text: "We should exchange contacts!" }], keyPhrases: [{ en: "I work in finance. I manage investments.", ar: "أشتغل في المالية. أدير استثمارات." }, { en: "I enjoy the analytical side of it.", ar: "أستمتع بالجانب التحليلي." }, { en: "We should exchange contacts!", ar: "لازم نتبادل أرقام!" }], producePrompt: "شخص جديد يسألك عن نفسك:", produceModel: "I'm Khalid. I work in engineering — about ten years. I'm passionate about renewable energy. What about you?", noticingTips: ["اسم → مجال → خبرة → شغف = بناء طبيعي", "\"I'm passionate about\" = تعبير قوي عن الاهتمام", "\"What about you?\" = تحوّل المحادثة لحوار"], challenge: "اليوم: حضّر تعريف عن نفسك من 4 جمل وقله بصوت عالٍ." },
 
   { title: "في محطة القطار", icon: "🚂", dialogue: [{ speaker: "الموظف", text: "Where would you like to go?" }, { speaker: "أنت", text: "One ticket to Manchester, please." }, { speaker: "الموظف", text: "Single or return?" }, { speaker: "أنت", text: "Return. What time is the next train?" }, { speaker: "الموظف", text: "Ten fifteen from platform four." }, { speaker: "أنت", text: "Do I need to reserve a seat?" }, { speaker: "الموظف", text: "Recommended during peak hours." }], keyPhrases: [{ en: "One ticket to Manchester, please.", ar: "تذكرة واحدة لمانشستر." }, { en: "Single or return?", ar: "ذهاب أو ذهاب وإياب؟" }, { en: "Do I need to reserve a seat?", ar: "لازم أحجز مقعد؟" }], producePrompt: "تبي تشتري تذكرة قطار:", produceModel: "I'd like a return ticket to Edinburgh. What time is the next train, and which platform?", noticingTips: ["\"single\" = ذهاب / \"return\" = ذهاب وإياب", "\"platform\" = رصيف القطار", "\"peak hours\" = ساعات الذروة"], challenge: "اليوم: تعلّم ٣ مصطلحات مواصلات بالإنجليزي." },
 
-  { title: "شكوى على خدمة إنترنت", icon: "🌐", dialogue: [{ speaker: "الموظف", text: "How can I assist you?" }, { speaker: "أنت", text: "My internet has been very slow for the past week." }, { speaker: "الموظف", text: "Let me check your account." }, { speaker: "أنت", text: "I'm paying for 100 megabits but only getting 20." }, { speaker: "الموظف", text: "There might be an issue in your area. We'll send a technician." }, { speaker: "أنت", text: "When? And will I get a credit for the downtime?" }, { speaker: "الموظف", text: "Tomorrow. I'll apply a credit to your bill." }], keyPhrases: [{ en: "My internet has been very slow for the past week.", ar: "النت بطيء من أسبوع." }, { en: "I'm paying for 100 megabits but only getting 20.", ar: "أدفع ١٠٠ ميقا وما أحصل إلا ٢٠." }, { en: "Will I get a credit for the downtime?", ar: "بتعوّضوني؟" }], producePrompt: "النت بطيء من أسبوع. اتصل بالشركة:", produceModel: "My internet has been extremely slow for a week. I'm paying for 100 megabits but only getting 20. Can you send a technician and credit my account?", noticingTips: ["المقارنة (paying for X but getting Y) = شكوى قوية", "\"credit\" = تعويض/خصم على الفاتورة", "\"downtime\" = فترة الانقطاع"], challenge: "اليوم: اقرأ فاتورة بالإنجليزي وافهم البنود." },
+  { title: "شكوى على خدمة إنترنت", icon: "٢٦", dialogue: [{ speaker: "الموظف", text: "How can I assist you?" }, { speaker: "أنت", text: "My internet has been very slow for the past week." }, { speaker: "الموظف", text: "Let me check your account." }, { speaker: "أنت", text: "I'm paying for 100 megabits but only getting 20." }, { speaker: "الموظف", text: "There might be an issue in your area. We'll send a technician." }, { speaker: "أنت", text: "When? And will I get a credit for the downtime?" }, { speaker: "الموظف", text: "Tomorrow. I'll apply a credit to your bill." }], keyPhrases: [{ en: "My internet has been very slow for the past week.", ar: "النت بطيء من أسبوع." }, { en: "I'm paying for 100 megabits but only getting 20.", ar: "أدفع ١٠٠ ميقا وما أحصل إلا ٢٠." }, { en: "Will I get a credit for the downtime?", ar: "بتعوّضوني؟" }], producePrompt: "النت بطيء من أسبوع. اتصل بالشركة:", produceModel: "My internet has been extremely slow for a week. I'm paying for 100 megabits but only getting 20. Can you send a technician and credit my account?", noticingTips: ["المقارنة (paying for X but getting Y) = شكوى قوية", "\"credit\" = تعويض/خصم على الفاتورة", "\"downtime\" = فترة الانقطاع"], challenge: "اليوم: اقرأ فاتورة بالإنجليزي وافهم البنود." },
 
   { title: "في العيادة البصرية", icon: "👓", dialogue: [{ speaker: "الطبيب", text: "When was your last eye exam?" }, { speaker: "أنت", text: "Two years ago. I'm having trouble seeing far away." }, { speaker: "الطبيب", text: "Can you read the third line?" }, { speaker: "أنت", text: "The first two letters, but the rest is blurry." }, { speaker: "الطبيب", text: "You need a new prescription. Glasses or contacts?" }, { speaker: "أنت", text: "Glasses, please. Any frame recommendations?" }, { speaker: "الطبيب", text: "Let me show you some options." }], keyPhrases: [{ en: "I'm having trouble seeing things far away.", ar: "أشوف البعيد بصعوبة." }, { en: "The rest is blurry.", ar: "الباقي ضبابي." }, { en: "Would you like glasses or contacts?", ar: "تبي نظارات أو عدسات؟" }], producePrompt: "رحت عيادة العيون. اشرح مشكلتك:", produceModel: "I've been having trouble seeing far away, especially when driving at night. I think I need a new prescription.", noticingTips: ["\"blurry\" = ضبابي — كلمة طبية يومية", "\"prescription\" = وصفة — للنظارات والأدوية", "\"I've been having trouble\" + ing = مشكلة مستمرة"], challenge: "اليوم: تعلم ٣ كلمات طبية جديدة بالإنجليزي." },
 
@@ -1433,46 +1433,46 @@ const DAILY_SCENARIOS = [
 
   { title: "تحويل أموال", icon: "💸", dialogue: [{ speaker: "الموظف", text: "How can I help?" }, { speaker: "أنت", text: "I'd like to make an international transfer." }, { speaker: "الموظف", text: "Which country?" }, { speaker: "أنت", text: "The UK. Three thousand pounds." }, { speaker: "الموظف", text: "The rate is 4.7 riyals per pound." }, { speaker: "أنت", text: "How long will it take?" }, { speaker: "الموظف", text: "One to two business days." }], keyPhrases: [{ en: "I'd like to make an international transfer.", ar: "أبي حوالة دولية." }, { en: "The exchange rate is 4.7 per pound.", ar: "سعر الصرف ٤.٧ للباوند." }, { en: "How long will it take to arrive?", ar: "كم يأخذ توصل؟" }], producePrompt: "تبي تحوّل فلوس لخارج:", produceModel: "I'd like to make an international transfer to the UK. Three thousand pounds. What's the exchange rate, and how long will it take?", noticingTips: ["\"international transfer\" = تحويل دولي", "\"exchange rate\" = سعر الصرف", "\"business days\" = أيام عمل"], challenge: "اليوم: اعرف سعر صرف عملة واحدة بالإنجليزي." },
 
-  { title: "استلام توصيل", icon: "📦", dialogue: [{ speaker: "المندوب", text: "Delivery for apartment 5B?" }, { speaker: "أنت", text: "Yes, that's me. Where do I sign?" }, { speaker: "المندوب", text: "Right here. Can I see some ID?" }, { speaker: "أنت", text: "Sure. Can I check the package first?" }, { speaker: "المندوب", text: "Of course. Take your time." }, { speaker: "أنت", text: "Everything looks good. Thank you." }, { speaker: "المندوب", text: "Have a great day!" }], keyPhrases: [{ en: "Where do I sign?", ar: "وين أوقّع؟" }, { en: "Can I check the package first?", ar: "ممكن أتأكّد أول؟" }, { en: "Everything looks good.", ar: "كل شيء تمام." }], producePrompt: "المندوب وصل وعنده طرد:", produceModel: "Yes, that's me. Before I sign, can I check the package? Everything looks good. Thank you!", noticingTips: ["\"Where do I sign?\" = سؤال بسيط مهم", "التأكّد قبل التوقيع = حقك", "\"Everything looks good\" = تأكيد طبيعي مختصر"], challenge: "اليوم: لو وصلك توصيل — قل Thank you." },
+  { title: "استلام توصيل", icon: "١١", dialogue: [{ speaker: "المندوب", text: "Delivery for apartment 5B?" }, { speaker: "أنت", text: "Yes, that's me. Where do I sign?" }, { speaker: "المندوب", text: "Right here. Can I see some ID?" }, { speaker: "أنت", text: "Sure. Can I check the package first?" }, { speaker: "المندوب", text: "Of course. Take your time." }, { speaker: "أنت", text: "Everything looks good. Thank you." }, { speaker: "المندوب", text: "Have a great day!" }], keyPhrases: [{ en: "Where do I sign?", ar: "وين أوقّع؟" }, { en: "Can I check the package first?", ar: "ممكن أتأكّد أول؟" }, { en: "Everything looks good.", ar: "كل شيء تمام." }], producePrompt: "المندوب وصل وعنده طرد:", produceModel: "Yes, that's me. Before I sign, can I check the package? Everything looks good. Thank you!", noticingTips: ["\"Where do I sign?\" = سؤال بسيط مهم", "التأكّد قبل التوقيع = حقك", "\"Everything looks good\" = تأكيد طبيعي مختصر"], challenge: "اليوم: لو وصلك توصيل — قل Thank you." },
 
   { title: "طلب تاكسي", icon: "🚕", dialogue: [{ speaker: "أنت", text: "Could you take me to the airport, please?" }, { speaker: "السائق", text: "Sure. Which terminal?" }, { speaker: "أنت", text: "Terminal two, international departures." }, { speaker: "السائق", text: "About thirty minutes." }, { speaker: "أنت", text: "Is there much traffic now?" }, { speaker: "السائق", text: "A little, but we should make it." }, { speaker: "أنت", text: "Could you drop me off at the main entrance?" }], keyPhrases: [{ en: "Could you take me to the airport?", ar: "ممكن توصلني المطار؟" }, { en: "Is there much traffic?", ar: "في زحمة؟" }, { en: "Could you drop me off at the main entrance?", ar: "ممكن تنزلني عند المدخل الرئيسي؟" }], producePrompt: "ركبت تاكسي:", produceModel: "Could you take me to the Hilton Hotel on King Street? How long will it take?", noticingTips: ["\"Could you take me to\" = طلب مهذب للوجهة", "\"drop me off at\" = نزّلني عند", "السؤال عن الوقت = محادثة طبيعية"], challenge: "اليوم: فكّر كيف توصف وجهتك بالإنجليزي." },
   // ========== BLOCK 3: SOCIAL & RELATIONSHIPS (Weeks 5-6) ==========
   { title: "دعوة صديق للعشاء", icon: "🍷", dialogue: [{ speaker: "أنت", text: "Hey! Are you free this Friday evening?" }, { speaker: "الصديق", text: "I think so. What do you have in mind?" }, { speaker: "أنت", text: "I'd love to have you over for dinner. We're grilling." }, { speaker: "الصديق", text: "That sounds great! What time should I come?" }, { speaker: "أنت", text: "Around seven. Feel free to bring your family." }, { speaker: "الصديق", text: "Can I bring anything?" }, { speaker: "أنت", text: "That would be lovely. See you Friday!" }], keyPhrases: [{ en: "Are you free this Friday evening?", ar: "فاضي يوم الجمعة؟" }, { en: "I'd love to have you over for dinner.", ar: "يسعدني تتعشى عندنا." }, { en: "Feel free to bring your family.", ar: "جيب عائلتك براحتك." }], producePrompt: "ادعو صديقك للعشاء:", produceModel: "Are you free this Saturday? I'd love to have you and your family over for dinner around seven.", noticingTips: ["\"I'd love to have you over\" = دعوة دافئة", "\"Feel free to\" = تعبير كرم"], challenge: "اليوم: ادعُ شخص لشيء بسيط." },
   { title: "تهنئة بمولود", icon: "👶", dialogue: [{ speaker: "أنت", text: "Congratulations! I heard the wonderful news!" }, { speaker: "الصديق", text: "Thank you! We're thrilled." }, { speaker: "أنت", text: "How is the baby doing?" }, { speaker: "الصديق", text: "A boy. Perfectly healthy." }, { speaker: "أنت", text: "That's amazing. What did you name him?" }, { speaker: "الصديق", text: "Adam." }, { speaker: "أنت", text: "Beautiful name. I'd love to visit when you're ready." }], keyPhrases: [{ en: "Congratulations! I heard the wonderful news!", ar: "مبروك! سمعت الخبر!" }, { en: "How is the baby doing?", ar: "كيف حال البيبي؟" }, { en: "I'd love to visit when you're ready.", ar: "أزوركم لما تكونون جاهزين." }], producePrompt: "صديقك جاه مولود. هنّئه:", produceModel: "Congratulations! I'm so happy for you. How is the baby doing? I'd love to visit and bring something for the little one.", noticingTips: ["\"I'm so happy for you\" = أقوى من مجرد Congratulations", "\"the little one\" = تعبير حنون"], challenge: "اليوم: اكتب تهنئة بالإنجليزي." },
   { title: "اعتذار عن تأخير", icon: "⏰", dialogue: [{ speaker: "أنت", text: "I'm really sorry I'm late. Traffic was terrible." }, { speaker: "الصديق", text: "No worries. These things happen." }, { speaker: "أنت", text: "I should have left earlier." }, { speaker: "الصديق", text: "Don't worry about it." }, { speaker: "أنت", text: "Thank you for being so understanding." }, { speaker: "الصديق", text: "Of course. Let's get started." }, { speaker: "أنت", text: "I really appreciate your patience." }], keyPhrases: [{ en: "I'm really sorry I'm late.", ar: "آسف جداً على التأخير." }, { en: "I should have left earlier.", ar: "كان لازم أطلع بدري." }, { en: "I appreciate your patience.", ar: "أقدّر صبرك." }], producePrompt: "تأخرت على موعد:", produceModel: "I'm so sorry for being late. Traffic was much worse than expected. I should have planned better. Thank you for waiting.", noticingTips: ["\"I should have\" = كان لازم — تعبير ندم", "\"I appreciate your patience\" = أقوى من sorry المتكررة"], challenge: "اليوم: لو تأخرت — قل I'm sorry بالإنجليزي." },
-  { title: "رد على دعوة", icon: "🎉", dialogue: [{ speaker: "المضيف", text: "We're having a gathering Saturday. Can you make it?" }, { speaker: "أنت", text: "I'd love to come! What's the occasion?" }, { speaker: "المضيف", text: "Just a casual get-together." }, { speaker: "أنت", text: "Sounds perfect. What time?" }, { speaker: "المضيف", text: "Around six." }, { speaker: "أنت", text: "Should I bring anything?" }, { speaker: "المضيف", text: "Just yourself!" }], keyPhrases: [{ en: "I'd love to come!", ar: "يسعدني أجي!" }, { en: "What's the occasion?", ar: "وش المناسبة؟" }, { en: "Should I bring anything?", ar: "أجيب شيء معي؟" }], producePrompt: "أحد دعاك. رد:", produceModel: "I'd love to come! What time should I be there, and should I bring anything?", noticingTips: ["\"I'd love to come\" = قبول حماسي", "\"Should I bring anything\" = يُظهر ذوق"], challenge: "اليوم: لو دعاك أحد — جاوب بجملة كاملة." },
+  { title: "رد على دعوة", icon: "٢٧", dialogue: [{ speaker: "المضيف", text: "We're having a gathering Saturday. Can you make it?" }, { speaker: "أنت", text: "I'd love to come! What's the occasion?" }, { speaker: "المضيف", text: "Just a casual get-together." }, { speaker: "أنت", text: "Sounds perfect. What time?" }, { speaker: "المضيف", text: "Around six." }, { speaker: "أنت", text: "Should I bring anything?" }, { speaker: "المضيف", text: "Just yourself!" }], keyPhrases: [{ en: "I'd love to come!", ar: "يسعدني أجي!" }, { en: "What's the occasion?", ar: "وش المناسبة؟" }, { en: "Should I bring anything?", ar: "أجيب شيء معي؟" }], producePrompt: "أحد دعاك. رد:", produceModel: "I'd love to come! What time should I be there, and should I bring anything?", noticingTips: ["\"I'd love to come\" = قبول حماسي", "\"Should I bring anything\" = يُظهر ذوق"], challenge: "اليوم: لو دعاك أحد — جاوب بجملة كاملة." },
   { title: "طلب نصيحة", icon: "💭", dialogue: [{ speaker: "أنت", text: "Can I ask you for some advice?" }, { speaker: "الصديق", text: "Of course! What's on your mind?" }, { speaker: "أنت", text: "I'm thinking about changing careers." }, { speaker: "الصديق", text: "That's big. What's making you consider it?" }, { speaker: "أنت", text: "I feel like I've stopped growing." }, { speaker: "الصديق", text: "Have you thought about what you'd do instead?" }, { speaker: "أنت", text: "Technology, but I'd need new skills." }], keyPhrases: [{ en: "Can I ask you for some advice?", ar: "ممكن أسألك نصيحة؟" }, { en: "I feel like I've stopped growing.", ar: "أحس إني وقفت عن التطور." }, { en: "I'd need to learn new skills.", ar: "أحتاج أتعلم مهارات جديدة." }], producePrompt: "اسأل صديقك نصيحة:", produceModel: "Can I ask your advice? I'm thinking about changing careers. I feel stuck and want to try something in technology.", noticingTips: ["\"Can I ask you for some advice\" = بداية مثالية", "\"I feel like\" = وصف مشاعر بدون مبالغة"], challenge: "اليوم: فكّر بقرار مهم — كيف تشرحه بالإنجليزي؟" },
   { title: "مجاملة والرد عليها", icon: "😊", dialogue: [{ speaker: "شخص", text: "I love your jacket! Where did you get it?" }, { speaker: "أنت", text: "Thank you! I got it from a store downtown." }, { speaker: "شخص", text: "It really suits you." }, { speaker: "أنت", text: "That's very kind of you to say." }, { speaker: "شخص", text: "I've been looking for something similar." }, { speaker: "أنت", text: "I can send you the name of the store." }, { speaker: "شخص", text: "That would be great!" }], keyPhrases: [{ en: "That's very kind of you to say.", ar: "كلامك لطيف جداً." }, { en: "It really suits you.", ar: "فعلاً يناسبك." }, { en: "I can send you the details.", ar: "أقدر أرسلك التفاصيل." }], producePrompt: "شخص مدحك. رد:", produceModel: "Thank you, that's really kind! I actually got it on sale. I can send you the link if you're interested.", noticingTips: ["\"That's kind of you\" = رد متواضع على المجاملة", "\"It suits you\" = مجاملة شائعة"], challenge: "اليوم: امدح شخص بالإنجليزي." },
   { title: "تعزية ومواساة", icon: "🤲", dialogue: [{ speaker: "أنت", text: "I was so sorry to hear about your loss." }, { speaker: "الصديق", text: "Thank you. It's been difficult." }, { speaker: "أنت", text: "Please know that I'm here for you." }, { speaker: "الصديق", text: "That means a lot." }, { speaker: "أنت", text: "Is there anything I can do?" }, { speaker: "الصديق", text: "Just having someone to talk to helps." }, { speaker: "أنت", text: "I'm always a phone call away." }], keyPhrases: [{ en: "I was sorry to hear about your loss.", ar: "تأسفت لما سمعت." }, { en: "I'm here for you.", ar: "أنا موجود لك." }, { en: "I'm always a phone call away.", ar: "اتصل عليّ بأي وقت." }], producePrompt: "صديقك فقد شخص عزيز:", produceModel: "I'm deeply sorry for your loss. Please know that I'm here for you, whatever you need.", noticingTips: ["\"I was sorry to hear\" = التعزية القياسية", "\"I'm here for you\" = دعم قوي ومختصر"], challenge: "اليوم: تعلّم 3 عبارات تعزية بالإنجليزي." },
   { title: "تقديم شخص لشخص", icon: "🫱🏼‍🫲🏽", dialogue: [{ speaker: "أنت", text: "Sarah, I'd like you to meet my friend Khalid." }, { speaker: "أنت", text: "Khalid, this is Sarah from marketing." }, { speaker: "سارة", text: "Nice to meet you!" }, { speaker: "خالد", text: "Likewise! Omar has told me great things." }, { speaker: "أنت", text: "You two have a lot in common." }, { speaker: "سارة", text: "Really? Like what?" }, { speaker: "أنت", text: "You're both into photography." }], keyPhrases: [{ en: "I'd like you to meet my friend.", ar: "أبي أعرّفك على صديقي." }, { en: "Likewise!", ar: "وأنا كذلك!" }, { en: "You have a lot in common.", ar: "بينكم أشياء مشتركة." }], producePrompt: "عرّف صديقين على بعض:", produceModel: "Hey Sarah, I'd like you to meet my colleague Ahmed. I think you two would really get along!", noticingTips: ["\"I'd like you to meet\" = تعريف رسمي", "\"Likewise\" = بديل أنيق لـ nice to meet you too"], challenge: "اليوم: فكّر كيف تعرّف شخصين بالإنجليزي." },
   { title: "شكر على هدية", icon: "🎁", dialogue: [{ speaker: "أنت", text: "This is beautiful! You really didn't have to!" }, { speaker: "الصديق", text: "I saw it and thought of you." }, { speaker: "أنت", text: "That's so thoughtful. I love it!" }, { speaker: "الصديق", text: "I'm glad you like it." }, { speaker: "أنت", text: "The craftsmanship is amazing." }, { speaker: "الصديق", text: "A small shop in the old town." }, { speaker: "أنت", text: "Thank you. This really made my day." }], keyPhrases: [{ en: "You really didn't have to!", ar: "ما كان لازم تتعب نفسك!" }, { en: "That's so thoughtful.", ar: "ذوق عالي منك." }, { en: "This made my day.", ar: "سعّدت يومي." }], producePrompt: "أحد أهداك. اشكره:", produceModel: "This is absolutely beautiful! You really didn't have to. That's so thoughtful of you!", noticingTips: ["\"You didn't have to\" = تواضع + تقدير", "\"This made my day\" = فرح حقيقي"], challenge: "اليوم: اشكر شخص بأكثر من Thank you." },
   { title: "محادثة جار عن مشكلة", icon: "🏠", dialogue: [{ speaker: "أنت", text: "Hi, sorry to bother you. Do you have a minute?" }, { speaker: "الجار", text: "Sure, what's up?" }, { speaker: "أنت", text: "I wanted to talk about the noise late at night." }, { speaker: "الجار", text: "Oh, was it too loud?" }, { speaker: "أنت", text: "After midnight it gets a bit much. The kids wake up." }, { speaker: "الجار", text: "I had no idea. I'll keep it down." }, { speaker: "أنت", text: "I appreciate that. Thanks for understanding." }], keyPhrases: [{ en: "Sorry to bother you.", ar: "آسف أزعجك." }, { en: "I wanted to talk about the noise.", ar: "بغيت أتكلم عن الإزعاج." }, { en: "Thanks for understanding.", ar: "شكراً على تفهّمك." }], producePrompt: "جارك يسوي إزعاج. تكلم بأدب:", produceModel: "Sorry to bother you. The noise after midnight has been waking the kids. Would it be possible to keep it down?", noticingTips: ["\"Sorry to bother you\" = بداية مثالية لموضوع حساس", "\"Thanks for understanding\" = إنهاء يحفظ العلاقة"], challenge: "اليوم: فكّر بموقف محرج — كيف تتعامل بالإنجليزي؟" },
-  { title: "دردشة في الانتظار", icon: "💬", dialogue: [{ speaker: "شخص", text: "Long wait today, isn't it?" }, { speaker: "أنت", text: "Yeah, about twenty minutes already." }, { speaker: "شخص", text: "I hope it won't be much longer." }, { speaker: "أنت", text: "Me too. Are you here for a checkup?" }, { speaker: "شخص", text: "Yes, routine. You?" }, { speaker: "أنت", text: "Same. Every six months." }, { speaker: "شخص", text: "Good discipline." }], keyPhrases: [{ en: "Long wait today, isn't it?", ar: "الانتظار طويل اليوم، صح؟" }, { en: "I hope it won't be much longer.", ar: "إن شاء الله ما يطول." }, { en: "Are you here for a checkup?", ar: "جاي فحص؟" }], producePrompt: "شخص يسولفك في الانتظار:", produceModel: "Yeah, quite a wait. Are you here for a checkup too? I try to come every six months.", noticingTips: ["tag questions (isn't it?) = تفتح محادثة", "small talk = مهارة اجتماعية أساسية"], challenge: "اليوم: سولف مع أي شخص غريب — حتى بالعربي." },
-  { title: "مكالمة صديق قديم", icon: "📞", dialogue: [{ speaker: "أنت", text: "Hey! It's been ages! How have you been?" }, { speaker: "الصديق", text: "Great to hear from you! I'm doing well." }, { speaker: "أنت", text: "What are you up to these days?" }, { speaker: "الصديق", text: "Started a new job last month." }, { speaker: "أنت", text: "That's awesome! We should catch up over coffee." }, { speaker: "الصديق", text: "Absolutely! When?" }, { speaker: "أنت", text: "This weekend? My treat." }], keyPhrases: [{ en: "It's been ages!", ar: "من زمان!" }, { en: "What are you up to these days?", ar: "وش أخبارك؟" }, { en: "We should catch up. My treat.", ar: "لازم نتسولف. أنا أدفع." }], producePrompt: "تكلم صديق قديم:", produceModel: "Hey! It's been so long! How have you been? Let's catch up this weekend — my treat!", noticingTips: ["\"It's been ages\" = من زمان", "\"catch up\" = نلحّق أخبار بعض", "\"My treat\" = أنا أدفع"], challenge: "اليوم: أرسل رسالة لصديق قديم." },
+  { title: "دردشة في الانتظار", icon: "٢٣", dialogue: [{ speaker: "شخص", text: "Long wait today, isn't it?" }, { speaker: "أنت", text: "Yeah, about twenty minutes already." }, { speaker: "شخص", text: "I hope it won't be much longer." }, { speaker: "أنت", text: "Me too. Are you here for a checkup?" }, { speaker: "شخص", text: "Yes, routine. You?" }, { speaker: "أنت", text: "Same. Every six months." }, { speaker: "شخص", text: "Good discipline." }], keyPhrases: [{ en: "Long wait today, isn't it?", ar: "الانتظار طويل اليوم، صح؟" }, { en: "I hope it won't be much longer.", ar: "إن شاء الله ما يطول." }, { en: "Are you here for a checkup?", ar: "جاي فحص؟" }], producePrompt: "شخص يسولفك في الانتظار:", produceModel: "Yeah, quite a wait. Are you here for a checkup too? I try to come every six months.", noticingTips: ["tag questions (isn't it?) = تفتح محادثة", "small talk = مهارة اجتماعية أساسية"], challenge: "اليوم: سولف مع أي شخص غريب — حتى بالعربي." },
+  { title: "مكالمة صديق قديم", icon: "١٠", dialogue: [{ speaker: "أنت", text: "Hey! It's been ages! How have you been?" }, { speaker: "الصديق", text: "Great to hear from you! I'm doing well." }, { speaker: "أنت", text: "What are you up to these days?" }, { speaker: "الصديق", text: "Started a new job last month." }, { speaker: "أنت", text: "That's awesome! We should catch up over coffee." }, { speaker: "الصديق", text: "Absolutely! When?" }, { speaker: "أنت", text: "This weekend? My treat." }], keyPhrases: [{ en: "It's been ages!", ar: "من زمان!" }, { en: "What are you up to these days?", ar: "وش أخبارك؟" }, { en: "We should catch up. My treat.", ar: "لازم نتسولف. أنا أدفع." }], producePrompt: "تكلم صديق قديم:", produceModel: "Hey! It's been so long! How have you been? Let's catch up this weekend — my treat!", noticingTips: ["\"It's been ages\" = من زمان", "\"catch up\" = نلحّق أخبار بعض", "\"My treat\" = أنا أدفع"], challenge: "اليوم: أرسل رسالة لصديق قديم." },
   { title: "إلغاء خطة بأدب", icon: "🙏", dialogue: [{ speaker: "أنت", text: "I'm sorry, but I need to cancel tonight." }, { speaker: "الصديق", text: "Is everything okay?" }, { speaker: "أنت", text: "Yes, something came up with work." }, { speaker: "الصديق", text: "I understand." }, { speaker: "أنت", text: "Can we reschedule for next week?" }, { speaker: "الصديق", text: "Sure, that works." }, { speaker: "أنت", text: "Thanks for being flexible. I'll make it up to you." }], keyPhrases: [{ en: "Something came up.", ar: "طرأ شيء." }, { en: "Can we reschedule?", ar: "نقدر نأجّل؟" }, { en: "I'll make it up to you.", ar: "بعوّضك." }], producePrompt: "تحتاج تلغي خطة:", produceModel: "I'm really sorry, but I can't make it tonight. Something came up. Could we reschedule for next week? I'll make it up to you!", noticingTips: ["\"Something came up\" = العذر الأكثر شيوعاً", "\"I'll make it up to you\" = يحفظ العلاقة"], challenge: "اليوم: تدرّب: Something came up بصوت عالٍ." },
-  { title: "شكوى لطيفة في مطعم", icon: "🍽️", dialogue: [{ speaker: "أنت", text: "Excuse me, I think there's an issue with my order." }, { speaker: "النادل", text: "I'm sorry. What's the problem?" }, { speaker: "أنت", text: "I ordered well-done, but this seems medium." }, { speaker: "النادل", text: "Let me take it back." }, { speaker: "أنت", text: "Thank you. I appreciate it." }, { speaker: "النادل", text: "Here's the corrected order." }, { speaker: "أنت", text: "Perfect now. No worries at all." }], keyPhrases: [{ en: "I think there's an issue with my order.", ar: "أعتقد في مشكلة بطلبي." }, { en: "I ordered well-done but this seems medium.", ar: "طلبت well-done بس هذا medium." }, { en: "No worries at all.", ar: "أبداً عادي." }], producePrompt: "طلبك جا غلط. اشتكِ بأدب:", produceModel: "Excuse me, I think there's an issue. I ordered the steak well-done but this looks medium. Would you mind checking?", noticingTips: ["\"I think there might be\" = شكوى ناعمة", "\"No worries at all\" = ختام إيجابي"], challenge: "اليوم: تعلّم: rare, medium, well-done." },
+  { title: "شكوى لطيفة في مطعم", icon: "١", dialogue: [{ speaker: "أنت", text: "Excuse me, I think there's an issue with my order." }, { speaker: "النادل", text: "I'm sorry. What's the problem?" }, { speaker: "أنت", text: "I ordered well-done, but this seems medium." }, { speaker: "النادل", text: "Let me take it back." }, { speaker: "أنت", text: "Thank you. I appreciate it." }, { speaker: "النادل", text: "Here's the corrected order." }, { speaker: "أنت", text: "Perfect now. No worries at all." }], keyPhrases: [{ en: "I think there's an issue with my order.", ar: "أعتقد في مشكلة بطلبي." }, { en: "I ordered well-done but this seems medium.", ar: "طلبت well-done بس هذا medium." }, { en: "No worries at all.", ar: "أبداً عادي." }], producePrompt: "طلبك جا غلط. اشتكِ بأدب:", produceModel: "Excuse me, I think there's an issue. I ordered the steak well-done but this looks medium. Would you mind checking?", noticingTips: ["\"I think there might be\" = شكوى ناعمة", "\"No worries at all\" = ختام إيجابي"], challenge: "اليوم: تعلّم: rare, medium, well-done." },
 
   // ========== BLOCK 4: WORK & PROFESSIONAL (Weeks 7-8) ==========
-  { title: "عرض تقديمي", icon: "📊", dialogue: [{ speaker: "أنت", text: "Good morning everyone. Thank you for joining." }, { speaker: "أنت", text: "Today I'll be presenting our quarterly results." }, { speaker: "الحضور", text: "Could you zoom in on that chart?" }, { speaker: "أنت", text: "Of course. As you can see, revenue increased by fifteen percent." }, { speaker: "الحضور", text: "What contributed to that growth?" }, { speaker: "أنت", text: "Mainly our expansion into new markets." }, { speaker: "أنت", text: "Any other questions before I move to the next slide?" }], keyPhrases: [{ en: "Thank you for joining.", ar: "شكراً لحضوركم." }, { en: "As you can see, revenue increased by fifteen percent.", ar: "كما تشوفون، الإيرادات زادت ١٥٪." }, { en: "Any questions before I move on?", ar: "أسئلة قبل ما أكمل؟" }], producePrompt: "افتح عرض تقديمي:", produceModel: "Good morning everyone. Thank you for being here. Today I'll walk you through our quarterly results. As you can see from this chart, we've seen a fifteen percent increase in revenue.", noticingTips: ["\"Thank you for joining\" = فتح احترافي", "\"As you can see\" = ربط الكلام بالعرض", "\"Before I move on\" = تحكم بالمحادثة"], challenge: "اليوم: قدّم أي فكرة بـ 3 جمل إنجليزية بصوت عالٍ." },
+  { title: "عرض تقديمي", icon: "٢٤", dialogue: [{ speaker: "أنت", text: "Good morning everyone. Thank you for joining." }, { speaker: "أنت", text: "Today I'll be presenting our quarterly results." }, { speaker: "الحضور", text: "Could you zoom in on that chart?" }, { speaker: "أنت", text: "Of course. As you can see, revenue increased by fifteen percent." }, { speaker: "الحضور", text: "What contributed to that growth?" }, { speaker: "أنت", text: "Mainly our expansion into new markets." }, { speaker: "أنت", text: "Any other questions before I move to the next slide?" }], keyPhrases: [{ en: "Thank you for joining.", ar: "شكراً لحضوركم." }, { en: "As you can see, revenue increased by fifteen percent.", ar: "كما تشوفون، الإيرادات زادت ١٥٪." }, { en: "Any questions before I move on?", ar: "أسئلة قبل ما أكمل؟" }], producePrompt: "افتح عرض تقديمي:", produceModel: "Good morning everyone. Thank you for being here. Today I'll walk you through our quarterly results. As you can see from this chart, we've seen a fifteen percent increase in revenue.", noticingTips: ["\"Thank you for joining\" = فتح احترافي", "\"As you can see\" = ربط الكلام بالعرض", "\"Before I move on\" = تحكم بالمحادثة"], challenge: "اليوم: قدّم أي فكرة بـ 3 جمل إنجليزية بصوت عالٍ." },
   { title: "طلب زيادة راتب", icon: "💰", dialogue: [{ speaker: "أنت", text: "I'd like to discuss my compensation, if you have a moment." }, { speaker: "المدير", text: "Sure. What's on your mind?" }, { speaker: "أنت", text: "I've taken on additional responsibilities this year." }, { speaker: "المدير", text: "I've noticed that. You've been doing great work." }, { speaker: "أنت", text: "I'd like to discuss a salary adjustment that reflects my contributions." }, { speaker: "المدير", text: "What figure did you have in mind?" }, { speaker: "أنت", text: "Based on my research, a fifteen percent increase would be fair." }], keyPhrases: [{ en: "I'd like to discuss my compensation.", ar: "أبي نتكلم عن راتبي." }, { en: "I've taken on additional responsibilities.", ar: "أخذت مسؤوليات إضافية." }, { en: "A fifteen percent increase would be fair.", ar: "زيادة ١٥٪ تكون عادلة." }], producePrompt: "تبي تطلب زيادة من مديرك:", produceModel: "I'd like to discuss my compensation. Over the past year, I've taken on additional responsibilities and delivered strong results. I believe a fifteen percent adjustment would be fair.", noticingTips: ["\"compensation\" أفضل من \"salary\" = أكثر احترافية", "\"salary adjustment\" أفضل من \"raise\" = دبلوماسي", "ذكر الإنجازات قبل الطلب = يقوّي موقفك"], challenge: "اليوم: اكتب ٣ إنجازات لك بالإنجليزي." },
-  { title: "اجتماع مع عميل", icon: "🤝", dialogue: [{ speaker: "العميل", text: "Thanks for meeting with us today." }, { speaker: "أنت", text: "Thank you for your time. I'm excited to discuss the proposal." }, { speaker: "العميل", text: "We've reviewed it. We have some concerns about the timeline." }, { speaker: "أنت", text: "I understand. Could you be more specific about your concerns?" }, { speaker: "العميل", text: "We need delivery by March, not April." }, { speaker: "أنت", text: "That's tight but achievable if we start immediately." }, { speaker: "العميل", text: "That works. Let's move forward." }], keyPhrases: [{ en: "I'm excited to discuss the proposal.", ar: "متحمس نناقش العرض." }, { en: "Could you be more specific about your concerns?", ar: "ممكن توضّح تحفظاتك أكثر؟" }, { en: "That's tight but achievable.", ar: "ضيق لكن ممكن ننجزه." }], producePrompt: "العميل عنده تحفظات على مشروعك:", produceModel: "I understand your concerns about the timeline. If we start immediately and allocate additional resources, we can deliver by March.", noticingTips: ["\"Could you be more specific\" = طلب توضيح احترافي", "\"tight but achievable\" = واقعي وإيجابي", "تقديم حل مع الموافقة = قوة تفاوضية"], challenge: "اليوم: فكّر بمشكلة في شغلك — كيف تشرحها بالإنجليزي؟" },
+  { title: "اجتماع مع عميل", icon: "١٥", dialogue: [{ speaker: "العميل", text: "Thanks for meeting with us today." }, { speaker: "أنت", text: "Thank you for your time. I'm excited to discuss the proposal." }, { speaker: "العميل", text: "We've reviewed it. We have some concerns about the timeline." }, { speaker: "أنت", text: "I understand. Could you be more specific about your concerns?" }, { speaker: "العميل", text: "We need delivery by March, not April." }, { speaker: "أنت", text: "That's tight but achievable if we start immediately." }, { speaker: "العميل", text: "That works. Let's move forward." }], keyPhrases: [{ en: "I'm excited to discuss the proposal.", ar: "متحمس نناقش العرض." }, { en: "Could you be more specific about your concerns?", ar: "ممكن توضّح تحفظاتك أكثر؟" }, { en: "That's tight but achievable.", ar: "ضيق لكن ممكن ننجزه." }], producePrompt: "العميل عنده تحفظات على مشروعك:", produceModel: "I understand your concerns about the timeline. If we start immediately and allocate additional resources, we can deliver by March.", noticingTips: ["\"Could you be more specific\" = طلب توضيح احترافي", "\"tight but achievable\" = واقعي وإيجابي", "تقديم حل مع الموافقة = قوة تفاوضية"], challenge: "اليوم: فكّر بمشكلة في شغلك — كيف تشرحها بالإنجليزي؟" },
   { title: "إيميل متابعة", icon: "📧", dialogue: [{ speaker: "أنت", text: "I wanted to follow up on our meeting from last week." }, { speaker: "الزميل", text: "Yes, I've been meaning to get back to you." }, { speaker: "أنت", text: "Have you had a chance to review the documents?" }, { speaker: "الزميل", text: "I have. I think we need to revise section three." }, { speaker: "أنت", text: "I agree. I'll make the changes and send an updated version by Friday." }, { speaker: "الزميل", text: "That would be great." }, { speaker: "أنت", text: "I'll copy you on the email. Let me know if you need anything else." }], keyPhrases: [{ en: "I wanted to follow up on our meeting.", ar: "بغيت أتابع بخصوص اجتماعنا." }, { en: "Have you had a chance to review?", ar: "لحقت تراجع؟" }, { en: "I'll send an updated version by Friday.", ar: "بأرسل نسخة محدّثة يوم الجمعة." }], producePrompt: "تبي تتابع بعد اجتماع:", produceModel: "I wanted to follow up on our meeting last Tuesday. Have you had a chance to review the proposal? I can make any changes and send an updated version by end of week.", noticingTips: ["\"follow up on\" = المتابعة — فعل أساسي في العمل", "\"Have you had a chance to\" = أدب في السؤال عن تقدم العمل", "\"I'll copy you\" = أنسخك في الإيميل"], challenge: "اليوم: اكتب إيميل متابعة قصير بالإنجليزي." },
   { title: "التعامل مع خلاف في العمل", icon: "⚖️", dialogue: [{ speaker: "الزميل", text: "I don't think your approach will work." }, { speaker: "أنت", text: "I appreciate your honesty. Can you help me understand your concerns?" }, { speaker: "الزميل", text: "The timeline is unrealistic and the budget is too low." }, { speaker: "أنت", text: "Those are valid points. What if we adjusted both?" }, { speaker: "الزميل", text: "I'd need to see the numbers first." }, { speaker: "أنت", text: "Fair enough. I'll prepare a revised plan by tomorrow." }, { speaker: "الزميل", text: "That sounds good. I appreciate you listening." }], keyPhrases: [{ en: "I appreciate your honesty.", ar: "أقدّر صراحتك." }, { en: "Can you help me understand your concerns?", ar: "ممكن تساعدني أفهم تحفظاتك؟" }, { en: "Those are valid points.", ar: "نقاط صحيحة." }], producePrompt: "زميلك يعارض فكرتك:", produceModel: "I appreciate your perspective. You raise valid points about the timeline. What if we explored a compromise? I'll prepare a revised plan.", noticingTips: ["\"I appreciate your honesty\" = يحوّل الخلاف لحوار", "\"valid points\" = اعتراف بالآخر = يهدّئ", "\"Fair enough\" = تقبّل مختصر ومحترف"], challenge: "اليوم: فكّر بخلاف سابق — كيف تعيد صياغته باحترافية؟" },
-  { title: "مقابلة توظيف (أنت تقابل)", icon: "🪑", dialogue: [{ speaker: "أنت", text: "Thank you for coming in. Tell me about your experience." }, { speaker: "المرشح", text: "I have five years in software development." }, { speaker: "أنت", text: "What interests you about this position?" }, { speaker: "المرشح", text: "The opportunity to work on innovative projects." }, { speaker: "أنت", text: "Can you describe a challenging project you've led?" }, { speaker: "المرشح", text: "I led a team of eight on a product launch last year." }, { speaker: "أنت", text: "Impressive. We'll be in touch within a week." }], keyPhrases: [{ en: "Tell me about your experience.", ar: "كلمني عن خبرتك." }, { en: "What interests you about this position?", ar: "وش يجذبك في هالوظيفة؟" }, { en: "We'll be in touch within a week.", ar: "بنتواصل معك خلال أسبوع." }], producePrompt: "أنت تقابل مرشح وظيفة:", produceModel: "Thank you for coming. I'd like to start by hearing about your experience and what interests you about this role.", noticingTips: ["\"Tell me about\" = أشهر سؤال في المقابلات", "\"What interests you\" = أفضل من \"Why do you want\"", "\"We'll be in touch\" = إنهاء مهذب بدون وعد"], challenge: "اليوم: حضّر 3 أسئلة مقابلة بالإنجليزي." },
-  { title: "تقديم فكرة لمديرك", icon: "💡", dialogue: [{ speaker: "أنت", text: "Do you have five minutes? I have an idea I'd like to run by you." }, { speaker: "المدير", text: "Sure, go ahead." }, { speaker: "أنت", text: "I think we could save twenty percent on costs by automating the reports." }, { speaker: "المدير", text: "Interesting. How would that work?" }, { speaker: "أنت", text: "There's a tool that generates reports automatically from our data." }, { speaker: "المدير", text: "What's the cost of implementing it?" }, { speaker: "أنت", text: "About two thousand upfront, but it pays for itself in three months." }], keyPhrases: [{ en: "I have an idea I'd like to run by you.", ar: "عندي فكرة أبي آخذ رأيك فيها." }, { en: "We could save twenty percent by automating.", ar: "نقدر نوفر ٢٠٪ بالأتمتة." }, { en: "It pays for itself in three months.", ar: "يرجع تكلفته في ٣ شهور." }], producePrompt: "عندك فكرة حلوة وتبي تقنع مديرك:", produceModel: "I have an idea I'd like to run by you. I believe we could save significant costs by automating our reporting process. The tool costs two thousand but pays for itself within three months.", noticingTips: ["\"run by you\" = آخذ رأيك — تعبير عملي شائع", "\"pays for itself\" = يغطي تكلفته — مصطلح مالي مقنع", "أرقام محددة (20%, 3 months) = تقنع أكثر من كلام عام"], challenge: "اليوم: فكّر بفكرة تحسين في شغلك — صِغها بـ 3 جمل إنجليزية." },
+  { title: "مقابلة توظيف (أنت تقابل)", icon: "١٨", dialogue: [{ speaker: "أنت", text: "Thank you for coming in. Tell me about your experience." }, { speaker: "المرشح", text: "I have five years in software development." }, { speaker: "أنت", text: "What interests you about this position?" }, { speaker: "المرشح", text: "The opportunity to work on innovative projects." }, { speaker: "أنت", text: "Can you describe a challenging project you've led?" }, { speaker: "المرشح", text: "I led a team of eight on a product launch last year." }, { speaker: "أنت", text: "Impressive. We'll be in touch within a week." }], keyPhrases: [{ en: "Tell me about your experience.", ar: "كلمني عن خبرتك." }, { en: "What interests you about this position?", ar: "وش يجذبك في هالوظيفة؟" }, { en: "We'll be in touch within a week.", ar: "بنتواصل معك خلال أسبوع." }], producePrompt: "أنت تقابل مرشح وظيفة:", produceModel: "Thank you for coming. I'd like to start by hearing about your experience and what interests you about this role.", noticingTips: ["\"Tell me about\" = أشهر سؤال في المقابلات", "\"What interests you\" = أفضل من \"Why do you want\"", "\"We'll be in touch\" = إنهاء مهذب بدون وعد"], challenge: "اليوم: حضّر 3 أسئلة مقابلة بالإنجليزي." },
+  { title: "تقديم فكرة لمديرك", icon: "٢٥", dialogue: [{ speaker: "أنت", text: "Do you have five minutes? I have an idea I'd like to run by you." }, { speaker: "المدير", text: "Sure, go ahead." }, { speaker: "أنت", text: "I think we could save twenty percent on costs by automating the reports." }, { speaker: "المدير", text: "Interesting. How would that work?" }, { speaker: "أنت", text: "There's a tool that generates reports automatically from our data." }, { speaker: "المدير", text: "What's the cost of implementing it?" }, { speaker: "أنت", text: "About two thousand upfront, but it pays for itself in three months." }], keyPhrases: [{ en: "I have an idea I'd like to run by you.", ar: "عندي فكرة أبي آخذ رأيك فيها." }, { en: "We could save twenty percent by automating.", ar: "نقدر نوفر ٢٠٪ بالأتمتة." }, { en: "It pays for itself in three months.", ar: "يرجع تكلفته في ٣ شهور." }], producePrompt: "عندك فكرة حلوة وتبي تقنع مديرك:", produceModel: "I have an idea I'd like to run by you. I believe we could save significant costs by automating our reporting process. The tool costs two thousand but pays for itself within three months.", noticingTips: ["\"run by you\" = آخذ رأيك — تعبير عملي شائع", "\"pays for itself\" = يغطي تكلفته — مصطلح مالي مقنع", "أرقام محددة (20%, 3 months) = تقنع أكثر من كلام عام"], challenge: "اليوم: فكّر بفكرة تحسين في شغلك — صِغها بـ 3 جمل إنجليزية." },
   { title: "اجتماع فريق أسبوعي", icon: "👥", dialogue: [{ speaker: "أنت", text: "Let's start with a quick round of updates." }, { speaker: "الزميل", text: "I finished the design phase. Ready for review." }, { speaker: "أنت", text: "Great. Any blockers we should discuss?" }, { speaker: "الزميل", text: "I'm waiting on approval from the legal team." }, { speaker: "أنت", text: "I'll follow up with them today." }, { speaker: "الزميل", text: "That would help a lot." }, { speaker: "أنت", text: "Let's wrap up. I'll send the action items by email." }], keyPhrases: [{ en: "Let's start with updates.", ar: "نبدأ بالمستجدات." }, { en: "Any blockers?", ar: "في أي عوائق؟" }, { en: "I'll send the action items by email.", ar: "بأرسل المهام بالإيميل." }], producePrompt: "تدير اجتماع فريقك:", produceModel: "Let's go around for quick updates. Any blockers we need to address? I'll follow up on the pending items and send a summary by end of day.", noticingTips: ["\"blockers\" = عوائق — مصطلح شائع في الاجتماعات", "\"action items\" = المهام المطلوبة — أساسي", "\"wrap up\" = نختم — أنيق ومختصر"], challenge: "اليوم: لخّص يومك بـ 3 جمل إنجليزية." },
   { title: "طلب تمديد موعد", icon: "📅", dialogue: [{ speaker: "أنت", text: "I need to discuss the project deadline with you." }, { speaker: "المدير", text: "What's the situation?" }, { speaker: "أنت", text: "We've encountered some unexpected technical issues." }, { speaker: "المدير", text: "How much additional time do you need?" }, { speaker: "أنت", text: "I'd say about one extra week would be sufficient." }, { speaker: "المدير", text: "Can you guarantee delivery by then?" }, { speaker: "أنت", text: "Yes, I'm confident we can deliver with high quality." }], keyPhrases: [{ en: "We've encountered unexpected issues.", ar: "واجهنا مشاكل غير متوقعة." }, { en: "One extra week would be sufficient.", ar: "أسبوع إضافي يكفي." }, { en: "I'm confident we can deliver.", ar: "واثق إننا نقدر نسلّم." }], producePrompt: "تحتاج وقت إضافي للمشروع:", produceModel: "I need to discuss the timeline. We've encountered some unexpected issues. I'd like to request one additional week. I'm confident we'll deliver high quality.", noticingTips: ["\"encountered\" أفضل من \"had\" = أكثر احترافية", "\"sufficient\" أفضل من \"enough\" = رسمي أكثر", "ختام بثقة (I'm confident) = يطمئن المدير"], challenge: "اليوم: فكّر بموقف طلبت فيه وقت إضافي — كيف بالإنجليزي؟" },
-  { title: "تفاوض على عقد", icon: "📝", dialogue: [{ speaker: "الطرف الآخر", text: "We'd like to propose a two-year contract." }, { speaker: "أنت", text: "I'm open to that. What are the key terms?" }, { speaker: "الطرف الآخر", text: "Fixed pricing with annual reviews." }, { speaker: "أنت", text: "Could we include a performance bonus clause?" }, { speaker: "الطرف الآخر", text: "We'd need to discuss the metrics." }, { speaker: "أنت", text: "I suggest we tie it to customer satisfaction scores." }, { speaker: "الطرف الآخر", text: "That's reasonable. Let's draft it up." }], keyPhrases: [{ en: "What are the key terms?", ar: "وش الشروط الرئيسية؟" }, { en: "Could we include a performance bonus?", ar: "ممكن نضيف مكافأة أداء؟" }, { en: "Let's draft it up.", ar: "نكتب المسودة." }], producePrompt: "تتفاوض على عقد:", produceModel: "I'm open to a two-year contract. Could we include a performance-based bonus clause? I suggest tying it to measurable outcomes.", noticingTips: ["\"I'm open to\" = مرونة مهنية", "\"Could we include\" = اقتراح مهذب في التفاوض", "\"Let's draft it up\" = ننتقل للتنفيذ"], challenge: "اليوم: اقرأ أي عقد أو اتفاقية بالإنجليزي." },
-  { title: "تدريب موظف جديد", icon: "🎓", dialogue: [{ speaker: "أنت", text: "Welcome to the team! I'll be showing you around today." }, { speaker: "الموظف", text: "Thank you! I'm excited to start." }, { speaker: "أنت", text: "First, let me walk you through our main systems." }, { speaker: "الموظف", text: "Should I take notes?" }, { speaker: "أنت", text: "Absolutely. I'll also send you a guide by email." }, { speaker: "الموظف", text: "That's very helpful." }, { speaker: "أنت", text: "Don't hesitate to ask questions. There's no such thing as a silly question." }], keyPhrases: [{ en: "I'll be showing you around.", ar: "بأعرّفك على المكان." }, { en: "Let me walk you through our systems.", ar: "خلني أشرحلك أنظمتنا." }, { en: "Don't hesitate to ask questions.", ar: "لا تتردد تسأل." }], producePrompt: "ترحّب بموظف جديد:", produceModel: "Welcome to the team! I'll walk you through everything today. Feel free to ask any questions — there are no silly questions here.", noticingTips: ["\"walk you through\" = أشرحلك خطوة بخطوة", "\"showing you around\" = أعرّفك على المكان", "\"Don't hesitate\" = لا تتردد — يُظهر دعم"], challenge: "اليوم: اشرح شيء بسيط لأي شخص بالإنجليزي." },
-  { title: "تقديم تقرير شهري", icon: "📈", dialogue: [{ speaker: "أنت", text: "Here's the monthly report. Let me highlight the key points." }, { speaker: "المدير", text: "Go ahead." }, { speaker: "أنت", text: "Sales are up eight percent compared to last month." }, { speaker: "المدير", text: "What about expenses?" }, { speaker: "أنت", text: "We came in under budget by about five percent." }, { speaker: "المدير", text: "Excellent. Any concerns for next month?" }, { speaker: "أنت", text: "Hiring is our biggest challenge. We need two more engineers." }], keyPhrases: [{ en: "Let me highlight the key points.", ar: "خلني أبرز النقاط المهمة." }, { en: "Sales are up eight percent.", ar: "المبيعات زادت ٨٪." }, { en: "We came in under budget.", ar: "جينا أقل من الميزانية." }], producePrompt: "تقدّم تقريرك الشهري:", produceModel: "Let me walk you through the key highlights. Sales increased eight percent. We came in under budget. Our main challenge going forward is hiring.", noticingTips: ["\"highlight\" = أبرز — كلمة عروض أساسية", "\"came in under budget\" = أنفقنا أقل من المخطط", "ذكر التحديات بصراحة = مصداقية"], challenge: "اليوم: لخّص إنجازات أسبوعك بـ 3 جمل إنجليزية." },
+  { title: "تفاوض على عقد", icon: "٢٨", dialogue: [{ speaker: "الطرف الآخر", text: "We'd like to propose a two-year contract." }, { speaker: "أنت", text: "I'm open to that. What are the key terms?" }, { speaker: "الطرف الآخر", text: "Fixed pricing with annual reviews." }, { speaker: "أنت", text: "Could we include a performance bonus clause?" }, { speaker: "الطرف الآخر", text: "We'd need to discuss the metrics." }, { speaker: "أنت", text: "I suggest we tie it to customer satisfaction scores." }, { speaker: "الطرف الآخر", text: "That's reasonable. Let's draft it up." }], keyPhrases: [{ en: "What are the key terms?", ar: "وش الشروط الرئيسية؟" }, { en: "Could we include a performance bonus?", ar: "ممكن نضيف مكافأة أداء؟" }, { en: "Let's draft it up.", ar: "نكتب المسودة." }], producePrompt: "تتفاوض على عقد:", produceModel: "I'm open to a two-year contract. Could we include a performance-based bonus clause? I suggest tying it to measurable outcomes.", noticingTips: ["\"I'm open to\" = مرونة مهنية", "\"Could we include\" = اقتراح مهذب في التفاوض", "\"Let's draft it up\" = ننتقل للتنفيذ"], challenge: "اليوم: اقرأ أي عقد أو اتفاقية بالإنجليزي." },
+  { title: "تدريب موظف جديد", icon: "٤", dialogue: [{ speaker: "أنت", text: "Welcome to the team! I'll be showing you around today." }, { speaker: "الموظف", text: "Thank you! I'm excited to start." }, { speaker: "أنت", text: "First, let me walk you through our main systems." }, { speaker: "الموظف", text: "Should I take notes?" }, { speaker: "أنت", text: "Absolutely. I'll also send you a guide by email." }, { speaker: "الموظف", text: "That's very helpful." }, { speaker: "أنت", text: "Don't hesitate to ask questions. There's no such thing as a silly question." }], keyPhrases: [{ en: "I'll be showing you around.", ar: "بأعرّفك على المكان." }, { en: "Let me walk you through our systems.", ar: "خلني أشرحلك أنظمتنا." }, { en: "Don't hesitate to ask questions.", ar: "لا تتردد تسأل." }], producePrompt: "ترحّب بموظف جديد:", produceModel: "Welcome to the team! I'll walk you through everything today. Feel free to ask any questions — there are no silly questions here.", noticingTips: ["\"walk you through\" = أشرحلك خطوة بخطوة", "\"showing you around\" = أعرّفك على المكان", "\"Don't hesitate\" = لا تتردد — يُظهر دعم"], challenge: "اليوم: اشرح شيء بسيط لأي شخص بالإنجليزي." },
+  { title: "تقديم تقرير شهري", icon: "٢٩", dialogue: [{ speaker: "أنت", text: "Here's the monthly report. Let me highlight the key points." }, { speaker: "المدير", text: "Go ahead." }, { speaker: "أنت", text: "Sales are up eight percent compared to last month." }, { speaker: "المدير", text: "What about expenses?" }, { speaker: "أنت", text: "We came in under budget by about five percent." }, { speaker: "المدير", text: "Excellent. Any concerns for next month?" }, { speaker: "أنت", text: "Hiring is our biggest challenge. We need two more engineers." }], keyPhrases: [{ en: "Let me highlight the key points.", ar: "خلني أبرز النقاط المهمة." }, { en: "Sales are up eight percent.", ar: "المبيعات زادت ٨٪." }, { en: "We came in under budget.", ar: "جينا أقل من الميزانية." }], producePrompt: "تقدّم تقريرك الشهري:", produceModel: "Let me walk you through the key highlights. Sales increased eight percent. We came in under budget. Our main challenge going forward is hiring.", noticingTips: ["\"highlight\" = أبرز — كلمة عروض أساسية", "\"came in under budget\" = أنفقنا أقل من المخطط", "ذكر التحديات بصراحة = مصداقية"], challenge: "اليوم: لخّص إنجازات أسبوعك بـ 3 جمل إنجليزية." },
   { title: "رد على إيميل صعب", icon: "📬", dialogue: [{ speaker: "الزميل", text: "I'm disappointed with the quality of the last deliverable." }, { speaker: "أنت", text: "Thank you for your feedback. I take this seriously." }, { speaker: "الزميل", text: "Several errors were found in the final document." }, { speaker: "أنت", text: "I apologize. Can you share the specific issues?" }, { speaker: "الزميل", text: "I'll send you a detailed list." }, { speaker: "أنت", text: "I'll address each point and send a corrected version within 48 hours." }, { speaker: "الزميل", text: "I appreciate your prompt response." }], keyPhrases: [{ en: "Thank you for your feedback.", ar: "شكراً على ملاحظاتك." }, { en: "I take this seriously.", ar: "آخذ الموضوع بجدية." }, { en: "I'll address each point.", ar: "بأعالج كل نقطة." }], producePrompt: "أحد ينتقد شغلك. رد باحترافية:", produceModel: "Thank you for bringing this to my attention. I take your feedback seriously. I'll review each point and send a corrected version within 48 hours.", noticingTips: ["\"Thank you for your feedback\" = يحوّل النقد لحوار بنّاء", "\"I take this seriously\" = يُظهر مسؤولية", "تحديد الموعد (48 hours) = التزام واضح"], challenge: "اليوم: اكتب رد على نقد بـ 3 جمل إنجليزية محترفة." },
-  { title: "طلب ترقية", icon: "🪜", dialogue: [{ speaker: "أنت", text: "I'd like to discuss my career growth with you." }, { speaker: "المدير", text: "Of course. Where do you see yourself heading?" }, { speaker: "أنت", text: "I'm interested in moving into a senior role." }, { speaker: "المدير", text: "What makes you feel ready for that?" }, { speaker: "أنت", text: "I've consistently exceeded my targets and mentored three junior team members." }, { speaker: "المدير", text: "Those are strong qualifications." }, { speaker: "أنت", text: "I'd appreciate your guidance on what else I need to demonstrate." }], keyPhrases: [{ en: "I'd like to discuss my career growth.", ar: "أبي نتكلم عن تطوري المهني." }, { en: "I've consistently exceeded my targets.", ar: "تجاوزت أهدافي باستمرار." }, { en: "I'd appreciate your guidance.", ar: "أقدّر توجيهك." }], producePrompt: "تبي تطلب ترقية:", produceModel: "I'd like to discuss my career path. I've been exceeding my targets consistently and mentoring junior members. I believe I'm ready for a senior role and would appreciate your guidance.", noticingTips: ["\"career growth\" = تطور مهني — أفضل من \"promotion\"", "\"consistently exceeded\" = فعل + ظرف = يُظهر نمط مستمر", "\"I'd appreciate your guidance\" = طلب مهذب يُظهر تواضع"], challenge: "اليوم: اكتب 3 أسباب تستحق فيها ترقية بالإنجليزي." },
+  { title: "طلب ترقية", icon: "١٩", dialogue: [{ speaker: "أنت", text: "I'd like to discuss my career growth with you." }, { speaker: "المدير", text: "Of course. Where do you see yourself heading?" }, { speaker: "أنت", text: "I'm interested in moving into a senior role." }, { speaker: "المدير", text: "What makes you feel ready for that?" }, { speaker: "أنت", text: "I've consistently exceeded my targets and mentored three junior team members." }, { speaker: "المدير", text: "Those are strong qualifications." }, { speaker: "أنت", text: "I'd appreciate your guidance on what else I need to demonstrate." }], keyPhrases: [{ en: "I'd like to discuss my career growth.", ar: "أبي نتكلم عن تطوري المهني." }, { en: "I've consistently exceeded my targets.", ar: "تجاوزت أهدافي باستمرار." }, { en: "I'd appreciate your guidance.", ar: "أقدّر توجيهك." }], producePrompt: "تبي تطلب ترقية:", produceModel: "I'd like to discuss my career path. I've been exceeding my targets consistently and mentoring junior members. I believe I'm ready for a senior role and would appreciate your guidance.", noticingTips: ["\"career growth\" = تطور مهني — أفضل من \"promotion\"", "\"consistently exceeded\" = فعل + ظرف = يُظهر نمط مستمر", "\"I'd appreciate your guidance\" = طلب مهذب يُظهر تواضع"], challenge: "اليوم: اكتب 3 أسباب تستحق فيها ترقية بالإنجليزي." },
 
   // ========== BLOCK 5: TRAVEL & EتمكّنLORATION (Weeks 9-10) ==========
   { title: "حجز فندق أونلاين", icon: "🖥️", dialogue: [{ speaker: "الموظف", text: "How can I help with your booking?" }, { speaker: "أنت", text: "I'd like to book a room for three nights starting March fifth." }, { speaker: "الموظف", text: "We have standard and deluxe available." }, { speaker: "أنت", text: "What's the difference in price?" }, { speaker: "الموظف", text: "Standard is one-twenty, deluxe is one-eighty per night." }, { speaker: "أنت", text: "Deluxe, please. Is there a cancellation policy?" }, { speaker: "الموظف", text: "Free cancellation up to 48 hours before check-in." }], keyPhrases: [{ en: "I'd like to book for three nights starting March fifth.", ar: "أبي أحجز ٣ ليالي من ٥ مارس." }, { en: "What's the difference in price?", ar: "وش فرق السعر؟" }, { en: "Is there a cancellation policy?", ar: "في سياسة إلغاء؟" }], producePrompt: "تبي تحجز فندق:", produceModel: "I'd like to book a deluxe room for three nights from March 5th to 8th. Is there a cancellation policy?", noticingTips: ["\"starting [date]\" = ابتداءً من", "\"cancellation policy\" = سياسة الإلغاء — مصطلح سفر أساسي"], challenge: "اليوم: ادخل أي موقع حجز واقرأ شروط الإلغاء." },
   { title: "في مكتب الجوازات", icon: "🛂", dialogue: [{ speaker: "الموظف", text: "Passport and boarding pass, please." }, { speaker: "أنت", text: "Here you go." }, { speaker: "الموظف", text: "What's the purpose of your visit?" }, { speaker: "أنت", text: "I'm here for a business conference." }, { speaker: "الموظف", text: "How long will you be staying?" }, { speaker: "أنت", text: "Five days. I'm returning next Wednesday." }, { speaker: "الموظف", text: "Welcome. Enjoy your stay." }], keyPhrases: [{ en: "What's the purpose of your visit?", ar: "وش سبب زيارتك؟" }, { en: "I'm here for a business conference.", ar: "جاي لمؤتمر عمل." }, { en: "I'm returning next Wednesday.", ar: "راجع يوم الأربعاء." }], producePrompt: "في الجوازات يسألونك:", produceModel: "I'm here for a five-day business trip. I'll be attending a conference and returning next Wednesday.", noticingTips: ["\"purpose of your visit\" = أشهر سؤال في المطار", "\"business/tourism/visiting family\" = الأجوبة الثلاث الشائعة"], challenge: "اليوم: حضّر ٣ جمل تحتاجها في المطار." },
   { title: "ضياع الشنطة في المطار", icon: "🧳", dialogue: [{ speaker: "أنت", text: "Excuse me, my luggage hasn't arrived on the carousel." }, { speaker: "الموظف", text: "I'm sorry. Can I see your baggage claim ticket?" }, { speaker: "أنت", text: "Here it is. I was on flight SA102 from Riyadh." }, { speaker: "الموظف", text: "Let me check the system. Can you describe your bag?" }, { speaker: "أنت", text: "It's a large black suitcase with a red tag." }, { speaker: "الموظف", text: "We'll locate it and deliver it to your hotel." }, { speaker: "أنت", text: "How long will that take? I need my medication." }], keyPhrases: [{ en: "My luggage hasn't arrived.", ar: "شنطتي ما وصلت." }, { en: "It's a large black suitcase with a red tag.", ar: "شنطة سوداء كبيرة عليها تاق أحمر." }, { en: "I need my medication.", ar: "أحتاج أدويتي." }], producePrompt: "شنطتك ضاعت في المطار:", produceModel: "My luggage didn't arrive on the carousel. Here's my claim ticket. It's a large black suitcase. I need it urgently because it has my medication.", noticingTips: ["\"baggage claim\" = استلام الأمتعة", "وصف الشنطة بالتفصيل = يسرّع إيجادها", "ذكر السبب (medication) = يُعطي أولوية"], challenge: "اليوم: تعلّم كيف توصف شنطتك بالإنجليزي." },
-  { title: "سؤال عن الاتجاهات", icon: "🗺️", dialogue: [{ speaker: "أنت", text: "Excuse me, could you tell me how to get to the museum?" }, { speaker: "شخص", text: "Sure! Go straight for two blocks, then turn left." }, { speaker: "أنت", text: "Is it far from here? Can I walk?" }, { speaker: "شخص", text: "About ten minutes on foot." }, { speaker: "أنت", text: "Is there a landmark I should look for?" }, { speaker: "شخص", text: "You'll see a big fountain. The museum is right behind it." }, { speaker: "أنت", text: "Thank you so much! That's very helpful." }], keyPhrases: [{ en: "Could you tell me how to get to the museum?", ar: "ممكن تدلني كيف أوصل المتحف؟" }, { en: "Is it far? Can I walk?", ar: "بعيد؟ أقدر أمشي؟" }, { en: "Is there a landmark I should look for?", ar: "في علامة مميزة أدوّر عليها؟" }], producePrompt: "تبي توصل مكان وسألت شخص:", produceModel: "Excuse me, could you tell me how to get to the nearest metro station? Is it walking distance?", noticingTips: ["\"How to get to\" = كيف أوصل — أفضل من \"Where is\"", "\"landmark\" = علامة مميزة — كلمة مفيدة جداً في السفر"], challenge: "اليوم: وصف طريق بيتك لمكان بالإنجليزي." },
+  { title: "سؤال عن الاتجاهات", icon: "٢٠", dialogue: [{ speaker: "أنت", text: "Excuse me, could you tell me how to get to the museum?" }, { speaker: "شخص", text: "Sure! Go straight for two blocks, then turn left." }, { speaker: "أنت", text: "Is it far from here? Can I walk?" }, { speaker: "شخص", text: "About ten minutes on foot." }, { speaker: "أنت", text: "Is there a landmark I should look for?" }, { speaker: "شخص", text: "You'll see a big fountain. The museum is right behind it." }, { speaker: "أنت", text: "Thank you so much! That's very helpful." }], keyPhrases: [{ en: "Could you tell me how to get to the museum?", ar: "ممكن تدلني كيف أوصل المتحف؟" }, { en: "Is it far? Can I walk?", ar: "بعيد؟ أقدر أمشي؟" }, { en: "Is there a landmark I should look for?", ar: "في علامة مميزة أدوّر عليها؟" }], producePrompt: "تبي توصل مكان وسألت شخص:", produceModel: "Excuse me, could you tell me how to get to the nearest metro station? Is it walking distance?", noticingTips: ["\"How to get to\" = كيف أوصل — أفضل من \"Where is\"", "\"landmark\" = علامة مميزة — كلمة مفيدة جداً في السفر"], challenge: "اليوم: وصف طريق بيتك لمكان بالإنجليزي." },
   { title: "تأجير شقة أثناء السفر", icon: "🏡", dialogue: [{ speaker: "المضيف", text: "Welcome! I hope you had a good trip." }, { speaker: "أنت", text: "Thank you! The place looks even better than the photos." }, { speaker: "المضيف", text: "Here are the keys. Let me show you around." }, { speaker: "أنت", text: "Is there Wi-Fi? What's the password?" }, { speaker: "المضيف", text: "Yes, the password is on the fridge." }, { speaker: "أنت", text: "Where's the nearest grocery store?" }, { speaker: "المضيف", text: "Just five minutes walk. Turn right at the corner." }], keyPhrases: [{ en: "The place looks better than the photos.", ar: "المكان أحلى من الصور." }, { en: "What's the Wi-Fi password?", ar: "وش باسورد الواي فاي؟" }, { en: "Where's the nearest grocery store?", ar: "وين أقرب بقالة؟" }], producePrompt: "وصلت شقتك المؤجرة:", produceModel: "Thank you! This looks great. Could you show me how the heating works? And what's the Wi-Fi password?", noticingTips: ["\"looks better than the photos\" = مجاملة للمضيف", "\"How does X work?\" = سؤال عملي عن الأجهزة"], challenge: "اليوم: اقرأ وصف أي شقة على Airbnb بالإنجليزي." },
   { title: "في متحف أو معلم سياحي", icon: "🏛️", dialogue: [{ speaker: "أنت", text: "Two adult tickets, please." }, { speaker: "الموظف", text: "That's thirty dollars. Would you like an audio guide?" }, { speaker: "أنت", text: "Yes, please. Is it available in Arabic?" }, { speaker: "الموظف", text: "We have English, French, and Spanish." }, { speaker: "أنت", text: "English is fine. How long is the full tour?" }, { speaker: "الموظف", text: "About ninety minutes." }, { speaker: "أنت", text: "Is photography allowed inside?" }], keyPhrases: [{ en: "Two adult tickets, please.", ar: "تذكرتين للكبار." }, { en: "Is it available in Arabic?", ar: "متوفر بالعربي؟" }, { en: "Is photography allowed?", ar: "التصوير مسموح؟" }], producePrompt: "تبي تدخل متحف:", produceModel: "Two tickets, please. Do you have an audio guide? How long is the tour, and is photography allowed?", noticingTips: ["\"audio guide\" = دليل صوتي — مصطلح سياحي", "\"Is photography allowed\" = سؤال مهم في المتاحف"], challenge: "اليوم: اقرأ عن أي معلم سياحي بالإنجليزي." },
   { title: "حالة طوارئ طبية في السفر", icon: "🚑", dialogue: [{ speaker: "أنت", text: "I need help! My friend is feeling very dizzy." }, { speaker: "شخص", text: "Should I call an ambulance?" }, { speaker: "أنت", text: "Yes, please. He has a heart condition." }, { speaker: "المسعف", text: "What medication is he on?" }, { speaker: "أنت", text: "He takes blood pressure medication daily." }, { speaker: "المسعف", text: "We'll take him to the nearest hospital." }, { speaker: "أنت", text: "Can I ride with him? I have his insurance card." }], keyPhrases: [{ en: "He has a heart condition.", ar: "عنده مشكلة في القلب." }, { en: "He takes blood pressure medication.", ar: "يأخذ دواء ضغط." }, { en: "I have his insurance card.", ar: "معي بطاقة تأمينه." }], producePrompt: "صديقك تعب في السفر:", produceModel: "I need help urgently. My friend is very dizzy and has a heart condition. He takes blood pressure medication. Please call an ambulance.", noticingTips: ["\"heart condition\" = حالة قلبية — مصطلح طبي ضروري", "\"insurance card\" = بطاقة التأمين — لازم تعرفها", "ذكر الأدوية = ينقذ حياة"], challenge: "اليوم: اكتب معلوماتك الطبية بالإنجليزي واحفظها في جوالك." },
@@ -1480,11 +1480,11 @@ const DAILY_SCENARIOS = [
   // ========== BLOCK 6: COMPLEX & ADVANCED (Weeks 11-12) ==========
   { title: "التفاوض على سعر سيارة", icon: "🚘", dialogue: [{ speaker: "البائع", text: "This model starts at forty-five thousand." }, { speaker: "أنت", text: "That's above my budget. Is there any room for negotiation?" }, { speaker: "البائع", text: "What were you hoping to spend?" }, { speaker: "أنت", text: "I'd like to stay around forty thousand." }, { speaker: "البائع", text: "I could do forty-two with the extended warranty included." }, { speaker: "أنت", text: "If you include free maintenance for the first year, we have a deal." }, { speaker: "البائع", text: "Done. Let me prepare the paperwork." }], keyPhrases: [{ en: "Is there room for negotiation?", ar: "في مجال للتفاوض؟" }, { en: "I'd like to stay around forty thousand.", ar: "أبي أبقى حدود ٤٠ ألف." }, { en: "If you include X, we have a deal.", ar: "لو تضيف X، اتفقنا." }], producePrompt: "تتفاوض على سعر سيارة:", produceModel: "That's a bit above my budget. I was hoping to stay around forty thousand. If you include the warranty and first-year maintenance, we have a deal.", noticingTips: ["\"room for negotiation\" = مجال للتفاوض — تعبير أساسي", "\"If you include X, we have a deal\" = أقوى جملة تفاوض", "\"I'd like to stay around\" = تحديد ميزانية بأدب"], challenge: "اليوم: تفاوض على أي شيء بسيط — فكّر بالإنجليزي." },
   { title: "شرح مشكلة تقنية لغير تقني", icon: "🖥️", dialogue: [{ speaker: "الشخص", text: "Why isn't the app working on my phone?" }, { speaker: "أنت", text: "It looks like it needs an update. Let me check." }, { speaker: "الشخص", text: "I don't understand all these technical things." }, { speaker: "أنت", text: "No worries. Think of it like this: the app is an old map, and the update gives you a new one." }, { speaker: "الشخص", text: "Oh, that makes sense! How do I update it?" }, { speaker: "أنت", text: "Go to the App Store, search for it, and tap Update." }, { speaker: "الشخص", text: "Thank you for explaining it so clearly." }], keyPhrases: [{ en: "Think of it like this.", ar: "فكّر فيها كذا." }, { en: "The app needs an update.", ar: "التطبيق يحتاج تحديث." }, { en: "Thank you for explaining so clearly.", ar: "شكراً على الشرح الواضح." }], producePrompt: "اشرح مشكلة تقنية لشخص عادي:", produceModel: "The app needs an update. Think of it like this: your current version is like an old map — the update gives you a better one with new features.", noticingTips: ["\"Think of it like this\" = بداية ممتازة لتبسيط أي شيء", "التشبيه (like an old map) = أقوى أداة شرح", "\"No worries\" = يهدّئ الشخص المتوتر"], challenge: "اليوم: اشرح شيء تقني لأي شخص ببساطة." },
-  { title: "قيادة نقاش جماعي", icon: "🗣️", dialogue: [{ speaker: "أنت", text: "I'd like to hear everyone's thoughts on this." }, { speaker: "شخص ١", text: "I think we should go with option A." }, { speaker: "شخص ٢", text: "I prefer option B. It's less risky." }, { speaker: "أنت", text: "Both have valid points. Let me summarize the pros and cons." }, { speaker: "أنت", text: "Option A is faster but riskier. Option B is safer but slower." }, { speaker: "شخص ١", text: "When you put it that way, maybe we need a middle ground." }, { speaker: "أنت", text: "Exactly. What if we start with B and transition to A in phase two?" }], keyPhrases: [{ en: "I'd like to hear everyone's thoughts.", ar: "أبي أسمع رأي الكل." }, { en: "Let me summarize the pros and cons.", ar: "خلني ألخّص المزايا والعيوب." }, { en: "What if we start with B and transition to A?", ar: "وش رأيكم نبدأ بـ B وننتقل لـ A؟" }], producePrompt: "أنت تقود نقاش بين فريقين:", produceModel: "I'd like to hear from both sides. Let me summarize: option A is faster but riskier, option B is safer but slower. What if we combine the best of both?", noticingTips: ["\"I'd like to hear everyone's thoughts\" = يُشرك الكل باحترام", "\"pros and cons\" = مزايا وعيوب — مصطلح أساسي", "\"What if we\" = اقتراح حل وسط — دبلوماسي"], challenge: "اليوم: لو في نقاش عائلي — فكّر كيف تديره بالإنجليزي." },
+  { title: "قيادة نقاش جماعي", icon: "P", dialogue: [{ speaker: "أنت", text: "I'd like to hear everyone's thoughts on this." }, { speaker: "شخص ١", text: "I think we should go with option A." }, { speaker: "شخص ٢", text: "I prefer option B. It's less risky." }, { speaker: "أنت", text: "Both have valid points. Let me summarize the pros and cons." }, { speaker: "أنت", text: "Option A is faster but riskier. Option B is safer but slower." }, { speaker: "شخص ١", text: "When you put it that way, maybe we need a middle ground." }, { speaker: "أنت", text: "Exactly. What if we start with B and transition to A in phase two?" }], keyPhrases: [{ en: "I'd like to hear everyone's thoughts.", ar: "أبي أسمع رأي الكل." }, { en: "Let me summarize the pros and cons.", ar: "خلني ألخّص المزايا والعيوب." }, { en: "What if we start with B and transition to A?", ar: "وش رأيكم نبدأ بـ B وننتقل لـ A؟" }], producePrompt: "أنت تقود نقاش بين فريقين:", produceModel: "I'd like to hear from both sides. Let me summarize: option A is faster but riskier, option B is safer but slower. What if we combine the best of both?", noticingTips: ["\"I'd like to hear everyone's thoughts\" = يُشرك الكل باحترام", "\"pros and cons\" = مزايا وعيوب — مصطلح أساسي", "\"What if we\" = اقتراح حل وسط — دبلوماسي"], challenge: "اليوم: لو في نقاش عائلي — فكّر كيف تديره بالإنجليزي." },
   { title: "شرح ثقافتك لأجنبي", icon: "🕌", dialogue: [{ speaker: "الأجنبي", text: "I noticed people stop everything for prayer. Can you explain?" }, { speaker: "أنت", text: "Of course! Muslims pray five times a day. It's a core part of our faith." }, { speaker: "الأجنبي", text: "That's interesting. Does everything close?" }, { speaker: "أنت", text: "Most shops close briefly, but they reopen after about twenty minutes." }, { speaker: "الأجنبي", text: "I'd love to learn more about your culture." }, { speaker: "أنت", text: "I'd be happy to share. Would you like to try Arabic coffee?" }, { speaker: "الأجنبي", text: "I'd love that! Thank you for being so welcoming." }], keyPhrases: [{ en: "Muslims pray five times a day.", ar: "المسلمين يصلون ٥ مرات باليوم." }, { en: "It's a core part of our faith.", ar: "جزء أساسي من ديننا." }, { en: "I'd be happy to share more.", ar: "يسعدني أشاركك أكثر." }], producePrompt: "أجنبي يسأل عن ثقافتك:", produceModel: "Muslims pray five times a day — it's a core part of our faith and daily routine. Most shops close briefly for prayer but reopen quickly. Would you like to try Arabic coffee? It's part of our hospitality tradition.", noticingTips: ["\"a core part of\" = جزء أساسي من — شرح محترم", "\"I'd be happy to share\" = انفتاح وكرم", "ربط الشرح بتجربة (Arabic coffee) = يجعله حي"], challenge: "اليوم: اشرح عادة سعودية بالإنجليزي لنفسك." },
-  { title: "إقناع شخص بفكرتك", icon: "🎯", dialogue: [{ speaker: "أنت", text: "I have a proposal that I think could benefit both of us." }, { speaker: "الشخص", text: "I'm listening. Go ahead." }, { speaker: "أنت", text: "What if we combined our resources to launch a joint project?" }, { speaker: "الشخص", text: "Interesting, but what's in it for me?" }, { speaker: "أنت", text: "You'd get access to our market, and we'd benefit from your technology." }, { speaker: "الشخص", text: "That does sound like a win-win." }, { speaker: "أنت", text: "Exactly. Shall I put together a formal proposal?" }], keyPhrases: [{ en: "I have a proposal that could benefit both of us.", ar: "عندي اقتراح يفيدنا الاثنين." }, { en: "What's in it for me?", ar: "وش الفايدة لي؟" }, { en: "It's a win-win.", ar: "الطرفين يستفيدون." }], producePrompt: "تبي تقنع شخص بشراكة:", produceModel: "I have a proposal that could benefit both of us. You'd get access to our market, and we'd leverage your technology. It's a true win-win.", noticingTips: ["\"benefit both of us\" = يفيد الطرفين — أساسي في الإقناع", "\"What's in it for me?\" = سؤال تفاوضي لازم تتوقعه", "\"win-win\" = كسب مشترك — أقوى كلمة في الشراكات"], challenge: "اليوم: فكّر بفكرة تبي تقنع فيها أحد — جهّزها بالإنجليزي." },
-  { title: "حل سوء تفاهم ثقافي", icon: "🌍", dialogue: [{ speaker: "الزميل", text: "I felt a bit uncomfortable when you didn't shake my hand yesterday." }, { speaker: "أنت", text: "I'm sorry if that came across as rude. It wasn't intentional." }, { speaker: "الزميل", text: "I was just confused." }, { speaker: "أنت", text: "In my culture, some people prefer not to shake hands with the opposite gender. It's a sign of respect, not disrespect." }, { speaker: "الزميل", text: "I had no idea! Thank you for explaining." }, { speaker: "أنت", text: "I appreciate your openness. Please feel free to ask about anything." }, { speaker: "الزميل", text: "I really respect that. Thanks for being so open." }], keyPhrases: [{ en: "It wasn't intentional.", ar: "ما كان مقصود." }, { en: "It's a sign of respect, not disrespect.", ar: "هذا احترام مو العكس." }, { en: "I appreciate your openness.", ar: "أقدّر انفتاحك." }], producePrompt: "سوء تفاهم ثقافي. وضّح:", produceModel: "I'm sorry if that was confusing. In my culture, it's actually a sign of respect. I appreciate you asking — please feel free to ask about anything.", noticingTips: ["\"It wasn't intentional\" = ما كان مقصود — يوضّح النية", "\"a sign of respect\" = يحوّل السلبي لإيجابي", "\"I appreciate your openness\" = يبني جسر ثقافي"], challenge: "اليوم: فكّر بموقف ثقافي — كيف تشرحه بالإنجليزي؟" },
-  { title: "خطاب في مناسبة عائلية", icon: "🎤", dialogue: [{ speaker: "أنت", text: "Good evening everyone. Thank you all for being here tonight." }, { speaker: "أنت", text: "We're gathered to celebrate a very special occasion." }, { speaker: "أنت", text: "I want to say a few words about the person we're honoring." }, { speaker: "أنت", text: "He's not just my father. He's my role model and my best friend." }, { speaker: "أنت", text: "Everything I've achieved, I owe to his guidance and support." }, { speaker: "أنت", text: "Please join me in raising a glass to the best father in the world." }, { speaker: "الجمهور", text: "Cheers!" }], keyPhrases: [{ en: "Thank you all for being here tonight.", ar: "شكراً لحضوركم الليلة." }, { en: "He's my role model and best friend.", ar: "هو قدوتي وصديقي." }, { en: "Everything I've achieved, I owe to him.", ar: "كل شيء حققته بفضله." }], producePrompt: "تلقي كلمة في مناسبة:", produceModel: "Good evening everyone. Thank you for being here. I want to say a few words about someone very special. He taught me everything I know, and I owe him more than words can express.", noticingTips: ["\"We're gathered to celebrate\" = فتح خطاب رسمي", "\"I owe to his guidance\" = أدين لتوجيهه — تعبير تقدير عميق", "\"raise a glass\" = نرفع الكأس — ختام تقليدي"], challenge: "اليوم: حضّر كلمة شكر من 5 جمل وقلها بصوت عالٍ." },
+  { title: "إقناع شخص بفكرتك", icon: "", dialogue: [{ speaker: "أنت", text: "I have a proposal that I think could benefit both of us." }, { speaker: "الشخص", text: "I'm listening. Go ahead." }, { speaker: "أنت", text: "What if we combined our resources to launch a joint project?" }, { speaker: "الشخص", text: "Interesting, but what's in it for me?" }, { speaker: "أنت", text: "You'd get access to our market, and we'd benefit from your technology." }, { speaker: "الشخص", text: "That does sound like a win-win." }, { speaker: "أنت", text: "Exactly. Shall I put together a formal proposal?" }], keyPhrases: [{ en: "I have a proposal that could benefit both of us.", ar: "عندي اقتراح يفيدنا الاثنين." }, { en: "What's in it for me?", ar: "وش الفايدة لي؟" }, { en: "It's a win-win.", ar: "الطرفين يستفيدون." }], producePrompt: "تبي تقنع شخص بشراكة:", produceModel: "I have a proposal that could benefit both of us. You'd get access to our market, and we'd leverage your technology. It's a true win-win.", noticingTips: ["\"benefit both of us\" = يفيد الطرفين — أساسي في الإقناع", "\"What's in it for me?\" = سؤال تفاوضي لازم تتوقعه", "\"win-win\" = كسب مشترك — أقوى كلمة في الشراكات"], challenge: "اليوم: فكّر بفكرة تبي تقنع فيها أحد — جهّزها بالإنجليزي." },
+  { title: "حل سوء تفاهم ثقافي", icon: "٣١", dialogue: [{ speaker: "الزميل", text: "I felt a bit uncomfortable when you didn't shake my hand yesterday." }, { speaker: "أنت", text: "I'm sorry if that came across as rude. It wasn't intentional." }, { speaker: "الزميل", text: "I was just confused." }, { speaker: "أنت", text: "In my culture, some people prefer not to shake hands with the opposite gender. It's a sign of respect, not disrespect." }, { speaker: "الزميل", text: "I had no idea! Thank you for explaining." }, { speaker: "أنت", text: "I appreciate your openness. Please feel free to ask about anything." }, { speaker: "الزميل", text: "I really respect that. Thanks for being so open." }], keyPhrases: [{ en: "It wasn't intentional.", ar: "ما كان مقصود." }, { en: "It's a sign of respect, not disrespect.", ar: "هذا احترام مو العكس." }, { en: "I appreciate your openness.", ar: "أقدّر انفتاحك." }], producePrompt: "سوء تفاهم ثقافي. وضّح:", produceModel: "I'm sorry if that was confusing. In my culture, it's actually a sign of respect. I appreciate you asking — please feel free to ask about anything.", noticingTips: ["\"It wasn't intentional\" = ما كان مقصود — يوضّح النية", "\"a sign of respect\" = يحوّل السلبي لإيجابي", "\"I appreciate your openness\" = يبني جسر ثقافي"], challenge: "اليوم: فكّر بموقف ثقافي — كيف تشرحه بالإنجليزي؟" },
+  { title: "خطاب في مناسبة عائلية", icon: "١٧", dialogue: [{ speaker: "أنت", text: "Good evening everyone. Thank you all for being here tonight." }, { speaker: "أنت", text: "We're gathered to celebrate a very special occasion." }, { speaker: "أنت", text: "I want to say a few words about the person we're honoring." }, { speaker: "أنت", text: "He's not just my father. He's my role model and my best friend." }, { speaker: "أنت", text: "Everything I've achieved, I owe to his guidance and support." }, { speaker: "أنت", text: "Please join me in raising a glass to the best father in the world." }, { speaker: "الجمهور", text: "Cheers!" }], keyPhrases: [{ en: "Thank you all for being here tonight.", ar: "شكراً لحضوركم الليلة." }, { en: "He's my role model and best friend.", ar: "هو قدوتي وصديقي." }, { en: "Everything I've achieved, I owe to him.", ar: "كل شيء حققته بفضله." }], producePrompt: "تلقي كلمة في مناسبة:", produceModel: "Good evening everyone. Thank you for being here. I want to say a few words about someone very special. He taught me everything I know, and I owe him more than words can express.", noticingTips: ["\"We're gathered to celebrate\" = فتح خطاب رسمي", "\"I owe to his guidance\" = أدين لتوجيهه — تعبير تقدير عميق", "\"raise a glass\" = نرفع الكأس — ختام تقليدي"], challenge: "اليوم: حضّر كلمة شكر من 5 جمل وقلها بصوت عالٍ." },
 
 ];
 
@@ -1512,7 +1512,7 @@ const gtd = () => { const d = new Date(); return d.getFullYear() + "-" + String(
 const gdn = () => { const d = new Date(); return d.getDate() + d.getMonth() * 31 + d.getFullYear(); };
 const gdow = () => new Date().getDay();
 const getWk = (s) => { const x = Math.floor((new Date(gtd()) - new Date(s)) / 864e5); return x < 0 ? 0 : Math.min(Math.floor(x / 7) + 1, 12); };
-const getPh = (w) => w <= 4 ? { n: 1, nm: "بناء الأساس", c: "#1d4ed8", gap: 6 } : w <= 8 ? { n: 2, nm: "التسريع", c: "#1d4ed8", gap: 4 } : { n: 3, nm: "الإطلاق", c: "#1d4ed8", gap: 3 };
+const getPh = (w) => w <= 4 ? { n: 1, nm: "بناء الأساس", c: "#1d4ed8", gap: "var(--sp-2)" } : w <= 8 ? { n: 2, nm: "التسريع", c: "#1d4ed8", gap: "var(--sp-1)" } : { n: 3, nm: "الإطلاق", c: "#1d4ed8", gap: "var(--sp-1)" };
 function shuffle(arr, seed) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = (seed * (i + 1) * 9301 + 49297) % 233280; const k = Math.floor((j / 233280) * (i + 1)); [a[i], a[k]] = [a[k], a[i]]; } return a; }
 function shuffleOpts(opts, correctIndex, seed) {
   const correct = opts[correctIndex];
@@ -1567,25 +1567,25 @@ function Prompter({ lines, gap, color, label, withAudio }) {
 
   return (
     <div>
-      <div style={{ display: "flex", gap: 8, marginBottom: 12, alignItems: "center" }}>
+      <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-3)", alignItems: "center" }}>
         {!on ? (
-          <button onClick={start} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "linear-gradient(135deg," + color + ",#1e40af)", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{"▶ ابدأ " + label}</button>
+          <button onClick={start} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg," + color + ",#1e40af)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{"▶ ابدأ " + label}</button>
         ) : (
-          <button onClick={stop} style={{ padding: "8px 20px", borderRadius: 10, border: "1px solid #e4e4e7", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>⏹ إيقاف</button>
+          <button onClick={stop} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "1px solid #e4e4e7", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 600, cursor: "pointer" }}>>إيقاف</button>
         )}
-        {on && phase === "listen" && <div style={{ fontSize: 13, color: "#1d4ed8", fontWeight: 600 }}>🔊 استمع...</div>}
-        {on && phase === "repeat" && sec > 0 && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 22, fontWeight: 700, color: color }}>{sec}</div>}
-        {on && phase === "repeat" && sec > 0 && <div style={{ fontSize: 12, color: "#71717a" }}>ردّد بصوت عالٍ!</div>}
+        {on && phase === "listen" && <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 600 }}>>استمع...</div>}
+        {on && phase === "repeat" && sec > 0 && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-xl)", fontWeight: 700, color: color }}>{sec}</div>}
+        {on && phase === "repeat" && sec > 0 && <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>ردّد بصوت عالٍ!</div>}
       </div>
       {lines.map((line, i) => {
         const cur = on && i === idx;
         const past = on && i < idx;
         return (
-          <div key={i} style={{ padding: "10px 14px", borderRadius: 10, marginBottom: 4, fontFamily: "'IBM Plex Mono',monospace", fontSize: cur ? 16 : 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, transition: "all .4s", background: cur ? color + "18" : "rgba(0,0,0,0.015)", border: "1px solid " + (cur ? color + "40" : "rgba(0,0,0,0.03)"), color: cur ? "#1e40af" : past ? "#a1a1aa" : "#52525b", fontWeight: cur ? 600 : 400, transform: cur ? "scale(1.01)" : "none", display: "flex", alignItems: "center", gap: 8 }}>
+          <div key={i} style={{ padding: "10px 14px", borderRadius: "var(--r-md)", marginBottom: "var(--sp-1)", fontFamily: "'IBM Plex Mono',monospace", fontSize: cur ? 16 : 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, transition: "all .4s", background: cur ? color + "18" : "rgba(0,0,0,0.015)", border: "1px solid " + (cur ? color + "40" : "rgba(0,0,0,0.03)"), color: cur ? "#1e40af" : past ? "#a1a1aa" : "#52525b", fontWeight: cur ? 600 : 400, transform: cur ? "scale(1.01)" : "none", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
             <div style={{ flex: 1 }}>{line}</div>
             <SpeakBtn text={line} size={cur ? 18 : 14} color={cur ? color : "#71717a"} />
-            {cur && phase === "repeat" && <span style={{ fontSize: 12, color: color, flexShrink: 0 }}>← ردّد!</span>}
-            {cur && phase === "listen" && <span style={{ fontSize: 12, color: "#1d4ed8", flexShrink: 0 }}>← استمع</span>}
+            {cur && phase === "repeat" && <span style={{ fontSize: "var(--fs-xs)", color: color, flexShrink: 0 }}>← ردّد!</span>}
+            {cur && phase === "listen" && <span style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", flexShrink: 0 }}>← استمع</span>}
           </div>
         );
       })}
@@ -1607,24 +1607,24 @@ function MeetingSim() {
   function next() { if (step + 1 >= m.steps.length) { setDone(true); return; } setStep(step + 1); setPicked(null); }
   function restart() { setMi((mi + 1) % CONVERSATIONS.length); setStep(0); setPicked(null); setScore(0); setDone(false); }
   if (done) return (
-    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: 40, marginBottom: 12 }}>🎉</div>
-      <div style={{ fontSize: 20, fontWeight: 800, color: "#1d4ed8", marginBottom: 8 }}>{score}/{m.steps.length}</div>
-      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score === m.steps.length ? "إنجاز مميز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محادثة جديدة</button>
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-success)" }}>إنجاز</div>
+      <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{m.steps.length}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score === m.steps.length ? "إنجاز مميز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محادثة جديدة</button>
     </div>
   );
   return (
     <div style={{ animation: "fadeUp .4s" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8" }}>{(m.icon || "🎭") + " " + m.title}</div>
-        <div style={{ fontSize: 12, color: "#71717a" }}>{"خطوة " + (step + 1) + "/" + m.steps.length}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)" }}>{m.title}</div>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"خطوة " + (step + 1) + "/" + m.steps.length}</div>
       </div>
-      <div style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
-        <div style={{ fontSize: 12, color: "#1d4ed8", marginBottom: 4 }}>{"💬 " + s.speaker + ":"}</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "#18181b", flex: 1 }}>{s.text}</div><SpeakBtn text={s.text} size={18} /></div>
+      <div style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", marginBottom: "var(--sp-1)" }}>{": " + s.speaker + ":"}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)" }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "var(--c-text)", flex: 1 }}>{s.text}</div><SpeakBtn text={s.text} size={18} /></div>
       </div>
-      <div style={{ fontSize: 12, color: "#1d4ed8", fontWeight: 600, marginBottom: 8 }}>{"🎯 " + s.prompt + " — اختر الرد الأنسب واقرأه بصوت عالٍ:"}</div>
+      <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>{" " + s.prompt + " — اختر الرد الأنسب واقرأه بصوت عالٍ:"}</div>
       {s.opts.map((o, oi) => {
         const show = picked !== null;
         const isCorrect = oi === s.ans;
@@ -1633,14 +1633,14 @@ function MeetingSim() {
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
         return (
-          <div key={oi} onClick={() => picked === null && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 6, cursor: picked === null ? "pointer" : "default", fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, transition: ".3s", opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+          <div key={oi} onClick={() => picked === null && pick(oi)} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: "var(--sp-2)", cursor: picked === null ? "pointer" : "default", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, transition: ".3s", opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
             {o}
-            {show && isCorrect && <span style={{ marginRight: 8, fontSize: 12, color: "#059669" }}> ✓ صحيح — اقرأها بصوت عالٍ!</span>}
-            {show && isPicked && !isCorrect && <span style={{ marginRight: 8, fontSize: 12, color: "#dc2626" }}> ✗</span>}
+            {show && isCorrect && <span style={{ marginRight: 8, fontSize: "var(--fs-xs)", color: "var(--c-success)" }}> ✓ صحيح — اقرأها بصوت عالٍ!</span>}
+            {show && isPicked && !isCorrect && <span style={{ marginRight: 8, fontSize: "var(--fs-xs)", color: "var(--c-error)" }}> ✗</span>}
           </div>
         );
       })}
-      {picked !== null && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{step + 1 >= m.steps.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
+      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{step + 1 >= m.steps.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
     </div>
   );
 }
@@ -1660,11 +1660,11 @@ function QuickResp() {
   function restart() { qs.current = shuffle(QUICK_RESP, Date.now()); setQi(0); setPicked(null); setScore(0); setTotal(0); setDone(false); startTimer(); }
   useEffect(() => { startTimer(); return () => clearInterval(tRef.current); }, []);
   if (done) return (
-    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: 40, marginBottom: 12 }}>✦</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: "#1d4ed8", marginBottom: 8 }}>{score}/{total}</div>
-      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 7 ? "سريع وحاسم! 🔥" : score >= 5 ? "جيد! السرعة تتحسن" : "تحتاج تحفظ الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
+      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{total}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 7 ? "سريع وحاسم! " : score >= 5 ? "جيد! السرعة تتحسن" : "تحتاج تحفظ الجمل أكثر"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
     </div>
   );
   const rawQ = qs.current[qi];
@@ -1672,12 +1672,12 @@ function QuickResp() {
   const q = { ...rawQ, opts: qOpts, ans: qAns };
   return (
     <div style={{ animation: "fadeUp .4s" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 12, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 18, fontWeight: 700, color: timer <= 3 ? "#dc2626" : "#1d4ed8" }}>{timer > 0 && picked === null ? timer + "s" : ""}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-md)", fontWeight: 700, color: timer <= 3 ? "#dc2626" : "#1d4ed8" }}>{timer > 0 && picked === null ? timer + "s" : ""}</div>
       </div>
-      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
-        <div style={{ fontSize: 14, color: "#18181b", lineHeight: 1.8 }}>{"🎯 " + q.sit}</div>
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)", lineHeight: 1.8 }}>{" " + q.sit}</div>
       </div>
       {q.opts.map((o, oi) => {
         const show = picked !== null;
@@ -1686,13 +1686,13 @@ function QuickResp() {
         let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
-        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: 10, marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
-          {o}{show && isCorrect && <span style={{ color: "#059669", fontSize: 12 }}> ✓ اقرأها!</span>}
+        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: "var(--r-md)", marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+          {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> ✓ اقرأها!</span>}
         </div>;
       })}
-      {(picked !== null || timer === 0) && <div style={{ textAlign: "center", marginTop: 10 }}>
-        {timer === 0 && picked === null && <div style={{ color: "#dc2626", fontSize: 13, marginBottom: 8 }}>⏰ انتهى الوقت!</div>}
-        <button onClick={() => { if (timer === 0 && picked === null) { setTotal(total + 1); } next(); }} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>التالي ←</button>
+      {(picked !== null || timer === 0) && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
+        {timer === 0 && picked === null && <div style={{ color: "var(--c-error)", fontSize: "var(--fs-sm)", marginBottom: "var(--sp-2)" }}>⏰ انتهى الوقت!</div>}
+        <button onClick={() => { if (timer === 0 && picked === null) { setTotal(total + 1); } next(); }} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي ←</button>
       </div>}
     </div>
   );
@@ -1737,13 +1737,13 @@ function WeeklyQuiz({ onSave, checkpoint }) {
     const pct = Math.round((score / qs.current.length) * 100);
     const diff = prevPct !== null ? pct - prevPct : null;
     return (
-      <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
-        <div style={{ fontSize: 40, marginBottom: 12 }}>📊</div>
-        <div style={{ fontSize: 28, fontWeight: 800, color: pct >= 80 ? "#059669" : pct >= 50 ? "#1d4ed8" : "#dc2626", marginBottom: 4 }}>{pct + "%"}</div>
-        <div style={{ fontSize: 16, color: "#52525b", marginBottom: 4 }}>{score + "/" + qs.current.length}</div>
-        {diff !== null && <div style={{ fontSize: 14, fontWeight: 700, color: diff >= 0 ? "#059669" : "#dc2626", marginBottom: 4 }}>{diff >= 0 ? "📈 +" + diff + "% عن الاختبار السابق" : "📉 " + diff + "% عن الاختبار السابق"}</div>}
-        <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{pct >= 80 ? "إنجاز مميز! الجمل صارت جزء منك 🔥" : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
-        <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 اختبار جديد</button>
+      <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+        <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>التقييم</div>
+        <div style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: pct >= 80 ? "#059669" : pct >= 50 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-1)" }}>{pct + "%"}</div>
+        <div style={{ fontSize: "var(--fs-md)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-1)" }}>{score + "/" + qs.current.length}</div>
+        {diff !== null && <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: diff >= 0 ? "#059669" : "#dc2626", marginBottom: "var(--sp-1)" }}>{diff >= 0 ? "+" + diff + "% عن الاختبار السابق" : "" + diff + "% عن الاختبار السابق"}</div>}
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{pct >= 80 ? "إنجاز مميز! الجمل صارت جزء منك " : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
+        <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>اختبار جديد</button>
       </div>
     );
   }
@@ -1752,12 +1752,12 @@ function WeeklyQuiz({ onSave, checkpoint }) {
   const q = { ...rawQz, opts: qzOpts, ans: qzAns };
   return (
     <div style={{ animation: "fadeUp .4s" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 12, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/10"}</div>
-        <div style={{ fontSize: 12, color: "#1d4ed8", fontWeight: 600 }}>{score + " صحيح"}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (qi + 1) + "/10"}</div>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
-      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
-        <div style={{ fontSize: 14, color: "#18181b", lineHeight: 1.8 }}>{q.q}</div>
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)", lineHeight: 1.8 }}>{q.q}</div>
       </div>
       {q.opts.map((o, oi) => {
         const show = picked !== null;
@@ -1766,11 +1766,11 @@ function WeeklyQuiz({ onSave, checkpoint }) {
         let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
-        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: 10, marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
-          {o}{show && isCorrect && <span style={{ color: "#059669", fontSize: 12 }}> ✓</span>}
+        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: "var(--r-md)", marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+          {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> </span>}
         </div>;
       })}
-      {picked !== null && <div style={{ textAlign: "center", marginTop: 10 }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
+      {picked !== null && <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}><button onClick={next} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button></div>}
     </div>
   );
 }
@@ -1835,11 +1835,11 @@ function FillBlank() {
   function restart() { qs.current = shuffle(FILL_BLANKS, Date.now()); setQi(0); setAnswers({}); setChecked(false); setScore(0); setDone(false); }
 
   if (done) return (
-    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: 40, marginBottom: 12 }}>📝</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! ذاكرتك قوية 🔥" : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>أكمل الفراغ</div>
+      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! ذاكرتك قوية " : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
     </div>
   );
 
@@ -1848,14 +1848,14 @@ function FillBlank() {
 
   return (
     <div style={{ animation: "fadeUp .4s" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 12, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontSize: 12, color: "#1e40af", fontWeight: 600 }}>{score + " صحيح"}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
-      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 2.2, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 4 }}>
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 2.2, display: "flex", flexWrap: "wrap", alignItems: "center", gap: "var(--sp-1)" }}>
           {parts.map((p, pi) => p.type === "text" ? (
-            <span key={pi} style={{ color: "#18181b" }}>{p.value}</span>
+            <span key={pi} style={{ color: "var(--c-text)" }}>{p.value}</span>
           ) : (
             <span key={pi} style={{ display: "inline-block" }}>
               <input
@@ -1864,7 +1864,7 @@ function FillBlank() {
                 onChange={(e) => !checked && setAnswers({ ...answers, [p.index]: e.target.value })}
                 style={{
                   width: Math.max(p.word.length * 11, 60),
-                  padding: "4px 8px", borderRadius: 6, fontSize: 14,
+                  padding: "4px 8px", borderRadius: "var(--r-sm)", fontSize: "var(--fs-sm)",
                   fontFamily: "'IBM Plex Mono'", textAlign: "center",
                   background: checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(5,150,105,0.15)" : "rgba(220,38,38,0.15)") : "rgba(0,0,0,0.05)",
                   border: "1px solid " + (checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(5,150,105,0.4)" : "rgba(220,38,38,0.4)") : "rgba(29,78,216,0.3)"),
@@ -1874,7 +1874,7 @@ function FillBlank() {
                 disabled={checked}
               />
               {checked && (answers[p.index] || "").trim().toLowerCase() !== p.word.toLowerCase() && (
-                <div style={{ fontSize: 12, color: "#059669", textAlign: "center" }}>{p.word}</div>
+                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", textAlign: "center" }}>{p.word}</div>
               )}
             </span>
           ))}
@@ -1882,11 +1882,11 @@ function FillBlank() {
       </div>
       {!checked ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={check} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>✓ تأكّد</button>
+          <button onClick={check} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>تأكّد</button>
         </div>
       ) : (
         <div style={{ textAlign: "center" }}>
-          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         </div>
       )}
     </div>
@@ -1957,11 +1957,11 @@ function SentenceBuild() {
   }
 
   if (done) return (
-    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: 40, marginBottom: 12 }}>🧩</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! تركيب الجمل صار سهل 🔥" : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#059669", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>بناء جمل</div>
+      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! تركيب الجمل صار سهل " : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-success)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
     </div>
   );
 
@@ -1971,24 +1971,24 @@ function SentenceBuild() {
 
   return (
     <div style={{ animation: "fadeUp .4s" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 12, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontSize: 12, color: "#059669", fontWeight: 600 }}>{score + " صحيح"}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
-      <div style={{ background: "rgba(77,181,165,0.06)", border: "1px solid rgba(77,181,165,0.12)", borderRadius: 12, padding: 14, marginBottom: 12, minHeight: 50 }}>
-        <div style={{ fontSize: 12, color: "#059669", fontWeight: 600, marginBottom: 8 }}>🔗 الجملة المُركّبة:</div>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: checked ? (isCorrect ? "#059669" : "#dc2626") : "#18181b", minHeight: 24 }}>
-          {selected.length > 0 ? selected.map(i => shuffledWords.current[i]).join(" ") : <span style={{ color: "#a1a1aa" }}>اضغط على الكلمات بالترتيب الصحيح...</span>}
+      <div style={{ background: "rgba(77,181,165,0.06)", border: "1px solid rgba(77,181,165,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)", minHeight: 50 }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>الجملة المُركّبة:</div>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: checked ? (isCorrect ? "#059669" : "#dc2626") : "#18181b", minHeight: 24 }}>
+          {selected.length > 0 ? selected.map(i => shuffledWords.current[i]).join(" ") : <span style={{ color: "var(--c-text-tertiary)" }}>اضغط على الكلمات بالترتيب الصحيح...</span>}
         </div>
-        {checked && !isCorrect && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#059669", marginTop: 8 }}>{"✓ " + qs.current[qi]}</div>}
+        {checked && !isCorrect && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-success)", marginTop: "var(--sp-2)" }}>{"✓ " + qs.current[qi]}</div>}
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--sp-2)", marginBottom: "var(--sp-4)" }}>
         {shuffledWords.current.map((w, wi) => {
           const isSelected = selected.includes(wi);
           return (
             <button key={wi} onClick={() => toggleWord(wi)} style={{
-              padding: "8px 14px", borderRadius: 8,
-              fontFamily: "'IBM Plex Mono'", fontSize: 14,
+              padding: "8px 14px", borderRadius: "var(--r-sm)",
+              fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)",
               border: "1px solid " + (isSelected ? "rgba(77,181,165,0.4)" : "rgba(0,0,0,0.06)"),
               background: isSelected ? "rgba(77,181,165,0.15)" : "rgba(0,0,0,0.02)",
               color: isSelected ? "#059669" : "#18181b",
@@ -1999,12 +1999,12 @@ function SentenceBuild() {
           );
         })}
       </div>
-      <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
-        {!checked && selected.length > 0 && <button onClick={() => setSelected([])} style={{ padding: "8px 16px", borderRadius: 10, border: "1px solid #e4e4e7", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>↻ مسح</button>}
+      <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center" }}>
+        {!checked && selected.length > 0 && <button onClick={() => setSelected([])} style={{ padding: "8px 16px", borderRadius: "var(--r-md)", border: "1px solid #e4e4e7", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>>مسح</button>}
         {!checked ? (
-          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: selected.length > 0 ? "#059669" : "#e4e4e7", color: selected.length > 0 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>✓ تأكّد</button>
+          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: selected.length > 0 ? "#059669" : "#e4e4e7", color: selected.length > 0 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>>تأكّد</button>
         ) : (
-          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#059669", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-success)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         )}
       </div>
     </div>
@@ -2054,11 +2054,11 @@ function FreeRecall() {
   }
 
   if (done) return (
-    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: 40, marginBottom: 12 }}>✍️</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 4 ? "#059669" : score >= 2 ? "#1d4ed8" : "#dc2626", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 4 ? "إنجاز مميز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إنتاج حر</div>
+      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 4 ? "#059669" : score >= 2 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 4 ? "إنجاز مميز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
     </div>
   );
 
@@ -2066,27 +2066,27 @@ function FreeRecall() {
 
   return (
     <div style={{ animation: "fadeUp .4s" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 13, color: "#71717a" }}>{"موقف " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontSize: 13, color: "#dc2626", fontWeight: 600 }}>{score + " صحيح"}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)" }}>{"موقف " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-error)", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
 
-      <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-        <div style={{ fontSize: 15, color: "#18181b", lineHeight: 2, marginBottom: 8 }}>{scenario.sit}</div>
-        <div style={{ fontSize: 13, color: "#dc2626", fontWeight: 600 }}>{"💡 " + scenario.hint}</div>
+      <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-base)", color: "var(--c-text)", lineHeight: 2, marginBottom: "var(--sp-2)" }}>{scenario.sit}</div>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-error)", fontWeight: 600 }}>{scenario.hint}</div>
       </div>
 
-      <div style={{ marginBottom: 12 }}>
+      <div style={{ marginBottom: "var(--sp-3)" }}>
         <textarea
           value={input}
           onChange={(e) => !submitted && setInput(e.target.value)}
           placeholder="اكتب ردك بالإنجليزي هنا..."
           disabled={submitted}
           style={{
-            width: "100%", minHeight: 80, padding: 14, borderRadius: 12,
-            fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left",
+            width: "100%", minHeight: 80, padding: "var(--sp-4)", borderRadius: "var(--r-lg)",
+            fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left",
             lineHeight: 1.8, background: "rgba(0,0,0,0.02)",
-            border: "1px solid rgba(220,38,38,0.2)", color: "#18181b",
+            border: "1px solid rgba(220,38,38,0.2)", color: "var(--c-text)",
             outline: "none", resize: "vertical"
           }}
         />
@@ -2094,22 +2094,22 @@ function FreeRecall() {
 
       {!submitted ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={submit} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#dc2626" : "#e4e4e7", color: input.trim().length >= 3 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ أرسل</button>
+          <button onClick={submit} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: input.trim().length >= 3 ? "#dc2626" : "#e4e4e7", color: input.trim().length >= 3 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>>أرسل</button>
         </div>
       ) : (
         <div>
-          <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
-            <div style={{ fontSize: 12, color: "#059669", fontWeight: 700, marginBottom: 6 }}>✓ الجواب المثالي:</div>
-            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#18181b" }}>{scenario.model}</div>
+          <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>>الجواب المثالي:</div>
+            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)" }}>{scenario.model}</div>
           </div>
           {matchedWords.length > 0 && (
-            <div style={{ fontSize: 13, color: "#059669", marginBottom: 8 }}>{"كلمات مفتاحية استخدمتها: " + matchedWords.join(", ")}</div>
+            <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-success)", marginBottom: "var(--sp-2)" }}>{"كلمات مفتاحية استخدمتها: " + matchedWords.join(", ")}</div>
           )}
           {matchedWords.length === 0 && (
-            <div style={{ fontSize: 13, color: "#1d4ed8", marginBottom: 8 }}>حاول تستخدم كلمات من بنك الجمل في المرة الجاية</div>
+            <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>حاول تستخدم كلمات من بنك الجمل في المرة الجاية</div>
           )}
           <div style={{ textAlign: "center" }}>
-            <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+            <button onClick={next} style={{ padding: "8px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
           </div>
         </div>
       )}
@@ -2140,12 +2140,12 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
 
   const sc = scenario;
   const steps = [
-    { icon: "👂", title: "استمع", desc: "استمع جملة جملة — بدون نص" },
-    { icon: "👂📖", title: "استمع واقرأ", desc: "استمع مع النص — لاحظ اللي فاتك" },
-    { icon: "🔊", title: "ردّد", desc: "ردّد الجمل المفتاحية ٣ مرات" },
-    { icon: "🧠", title: "تذكّر", desc: "شوف الترجمة — قل الجملة من ذاكرتك" },
-    { icon: "✍️", title: "أنتج", desc: "اكتب ردك بنفسك" },
-    { icon: "🌍", title: "طبّق", desc: "تحدّي حقيقي اليوم" },
+    { icon: "L", title: "استمع", desc: "استمع جملة جملة — بدون نص" },
+    { label: "٢", title: "استمع واقرأ", desc: "استمع مع النص — لاحظ اللي فاتك" },
+    { icon: "♪", title: "ردّد", desc: "ردّد الجمل المفتاحية ٣ مرات" },
+    { label: "٤", title: "تذكّر", desc: "شوف الترجمة — قل الجملة من ذاكرتك" },
+    { label: "٥", title: "أنتج", desc: "اكتب ردك بنفسك" },
+    { label: "٦", title: "طبّق", desc: "تحدّي حقيقي اليوم" },
   ];
 
   // Checkpoint: save session state on every meaningful change
@@ -2182,7 +2182,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
 
   // Micro-celebration on step change
   function advanceStep(nextStep) {
-    const msgs = ["إنجاز مميز! 🔥", "إنجاز رائع.. أنت تقترب من التمكّن ✦", "يلّا كمّل! 💪", "رائع! ✨", "نص الطريق! 🎯", ""];
+    const msgs = ["إنجاز مميز! ", "إنجاز رائع.. أنت تقترب من التمكّن ", "يلّا كمّل! ", "رائع! ", "نص الطريق! ", ""];
     setStepCelebration(msgs[step] || "👏");
     setTimeout(() => { setStepCelebration(null); setStep(nextStep); }, 800);
   }
@@ -2190,26 +2190,26 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-        <div style={{ fontSize: 28 }}>{sc.icon}</div>
+      <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", marginBottom: "var(--sp-4)" }}>
+        <div style={{ fontSize: "var(--fs-2xl)" }}>{sc.icon}</div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 16, fontWeight: 700, color: "#1d4ed8" }}>{"جلسة اليوم: " + sc.title}</div>
-          <div style={{ fontSize: 12, color: "#71717a" }}>{"الخطوة " + (step + 1) + "/6 — " + steps[step].title}</div>
+          <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-accent)" }}>{"جلسة اليوم: " + sc.title}</div>
+          <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"الخطوة " + (step + 1) + "/6 — " + steps[step].title}</div>
         </div>
-        <div style={{ fontSize: 14, fontWeight: 800, color: "#1d4ed8", fontFamily: "'IBM Plex Mono'" }}>{stepPct + "%"}</div>
+        <div style={{ fontSize: "var(--fs-sm)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "'IBM Plex Mono'" }}>{stepPct + "%"}</div>
       </div>
 
       {/* Micro-celebration popup */}
-      {stepCelebration && <div style={{ textAlign: "center", padding: 16, animation: "stepDone .6s" }}>
-        <div style={{ fontSize: 28, fontWeight: 800, color: "#059669" }}>{stepCelebration}</div>
+      {stepCelebration && <div style={{ textAlign: "center", padding: "var(--sp-4)", animation: "stepDone .6s" }}>
+        <div style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: "var(--c-success)" }}>{stepCelebration}</div>
       </div>}
 
       {/* Progress */}
-      {!stepCelebration && <div style={{ display: "flex", gap: 4, marginBottom: 16 }}>
+      {!stepCelebration && <div style={{ display: "flex", gap: "var(--sp-1)", marginBottom: "var(--sp-4)" }}>
         {steps.map((s, i) => (
           <div key={i} style={{ flex: 1, textAlign: "center" }}>
-            <div style={{ height: 5, borderRadius: 3, background: i < step ? "linear-gradient(90deg,#059669,#1d4ed8)" : i === step ? "#1d4ed8" : "#e4e4e7", transition: ".3s", marginBottom: 4 }} />
-            <div style={{ fontSize: 12, color: i === step ? "#1d4ed8" : i < step ? "#059669" : "#a1a1aa" }}>{i < step ? "✓" : s.icon}</div>
+            <div style={{ height: 5, borderRadius: "var(--r-sm)", background: i < step ? "var(--c-success)" : i === step ? "#1d4ed8" : "#e4e4e7", transition: ".3s", marginBottom: "var(--sp-1)" }} />
+            <div style={{ fontSize: "var(--fs-xs)", color: i === step ? "#1d4ed8" : i < step ? "#059669" : "#a1a1aa" }}>{i < step ? "✓" : s.icon}</div>
           </div>
         ))}
       </div>}
@@ -2218,40 +2218,40 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {step === 0 && (
         <div>
           {/* FIX 2: Breathing focus — 5 seconds before session */}
-          {listenIdx === -1 && !listenDone && listenChunk === 0 && <div style={{ background: "linear-gradient(135deg, rgba(5,150,105,0.08), rgba(29,78,216,0.08))", border: "1px solid rgba(5,150,105,0.12)", borderRadius: 16, padding: 24, marginBottom: 14, textAlign: "center" }}>
-            <div style={{ fontSize: 32, marginBottom: 12 }}>🧘</div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: "#059669", marginBottom: 8 }}>خذ نفس عميق...</div>
-            <div style={{ fontSize: 14, color: "#52525b", lineHeight: 2.2, marginBottom: 12 }}>شهيق... ٣... ٢... ١... زفير...<br/>الآن عقلك جاهز يستقبل اللغة</div>
-            <div style={{ fontSize: 12, color: "#71717a" }}>التنفس العميق يرفع الانتباه 40% ويفتح مراكز التعلّم</div>
+          {listenIdx === -1 && !listenDone && listenChunk === 0 && <div style={{ background: "linear-gradient(135deg, rgba(5,150,105,0.08), rgba(29,78,216,0.08))", border: "1px solid rgba(5,150,105,0.12)", borderRadius: "var(--r-xl)", padding: "var(--sp-6)", marginBottom: "var(--sp-4)", textAlign: "center" }}>
+            <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}>·</div>
+            <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-success)", marginBottom: "var(--sp-2)" }}>خذ نفس عميق...</div>
+            <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2.2, marginBottom: "var(--sp-3)" }}>شهيق... ٣... ٢... ١... زفير...<br/>الآن عقلك جاهز يستقبل اللغة</div>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>التنفس العميق يرفع الانتباه 40% ويفتح مراكز التعلّم</div>
           </div>}
           {/* Mental imagery prompt */}
-          {listenIdx === -1 && !listenDone && <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.1)", borderRadius: 14, padding: 20, marginBottom: 14, textAlign: "center" }}>
-            <div style={{ fontSize: 24, marginBottom: 8 }}>{sc.icon}</div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: "#1d4ed8", marginBottom: 8 }}>أغمض عينك لحظة...</div>
-            <div style={{ fontSize: 14, color: "#52525b", lineHeight: 2.2 }}>تخيّل نفسك فعلاً {sc.title === "في المطعم" ? "جالس في مطعم... النادل يجي ويسألك عن طلبك" : sc.title === "عند الدكتور" ? "في عيادة الدكتور... يسألك عن صحتك" : sc.title === "في الفندق" ? "واقف أمام موظف الاستقبال... تسوي check-in" : "في هالموقف... وتحتاج تتكلم إنجليزي"}</div>
-            <div style={{ fontSize: 12, color: "#71717a", marginTop: 8 }}>التخيّل يُنشئ ارتباط في ذاكرتك = تتذكر الجمل أسرع 5x</div>
+          {listenIdx === -1 && !listenDone && <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.1)", borderRadius: "var(--r-lg)", padding: "var(--sp-5)", marginBottom: "var(--sp-4)", textAlign: "center" }}>
+            <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-2)" }}>{sc.icon}</div>
+            <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>أغمض عينك لحظة...</div>
+            <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2.2 }}>تخيّل نفسك فعلاً {sc.title === "في المطعم" ? "جالس في مطعم... النادل يجي ويسألك عن طلبك" : sc.title === "عند الدكتور" ? "في عيادة الدكتور... يسألك عن صحتك" : sc.title === "في الفندق" ? "واقف أمام موظف الاستقبال... تسوي check-in" : "في هالموقف... وتحتاج تتكلم إنجليزي"}</div>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginTop: "var(--sp-2)" }}>التخيّل يُنشئ ارتباط في ذاكرتك = تتذكر الجمل أسرع 5x</div>
           </div>}
-          <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 14, padding: 24, textAlign: "center", marginBottom: 14 }}>
-            <div style={{ fontSize: 15, color: "#52525b", marginBottom: 16, lineHeight: 2 }}>استمع للمحادثة جملة جملة — حاول تفهم بدون ما تشوف النص</div>
+          <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-6)", textAlign: "center", marginBottom: "var(--sp-4)" }}>
+            <div style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)", lineHeight: 2 }}>استمع للمحادثة جملة جملة — حاول تفهم بدون ما تشوف النص</div>
             {listenIdx === -1 && !listenDone && (
               <div>
-                <div style={{ fontSize: 12, color: "#71717a", marginBottom: 8 }}>{"مقطع " + (listenChunk + 1) + "/" + Math.ceil(sc.dialogue.length / 3) + " — ٣ جمل في كل مقطع (لتركيز أفضل)"}</div>
-                <button onClick={playDialogueSequence} style={{ padding: "14px 32px", borderRadius: 12, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer" }}>{"🔊 " + (listenChunk === 0 ? "ابدأ الاستماع" : "استمع المقطع التالي")}</button>
+                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>{"مقطع " + (listenChunk + 1) + "/" + Math.ceil(sc.dialogue.length / 3) + " — ٣ جمل في كل مقطع (لتركيز أفضل)"}</div>
+                <button onClick={playDialogueSequence} style={{ padding: "14px 32px", borderRadius: "var(--r-lg)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-md)", fontWeight: 700, cursor: "pointer" }}>{"♪ " + (listenChunk === 0 ? "ابدأ الاستماع" : "استمع المقطع التالي")}</button>
               </div>
             )}
             {/* After chunk finishes but more remain */}
             {listenIdx === -1 && !listenDone && listenChunk > 0 && (
-              <div style={{ fontSize: 12, color: "#059669", marginTop: 8 }}>{"✓ سمعت " + (listenChunk * 3) + " جمل — كمّل؟"}</div>
+              <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", marginTop: "var(--sp-2)" }}>{"✓ سمعت " + (listenChunk * 3) + " جمل — كمّل؟"}</div>
             )}
             {listenIdx >= 0 && (
               <div>
-                <div style={{ fontSize: 40, marginBottom: 8 }}>🔊</div>
-                <div style={{ display: "flex", gap: 4, justifyContent: "center", marginBottom: 8 }}>
+                <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-2)" }}>استمع</div>
+                <div style={{ display: "flex", gap: "var(--sp-1)", justifyContent: "center", marginBottom: "var(--sp-2)" }}>
                   {sc.dialogue.map((_, di) => (
                     <div key={di} style={{ width: 12, height: 12, borderRadius: "50%", background: di < listenIdx ? "#059669" : di === listenIdx ? "#1e40af" : "#e4e4e7", transition: ".3s", border: di === listenIdx ? "2px solid #1d4ed8" : "none" }} />
                   ))}
                 </div>
-                <div style={{ fontSize: 14, color: "#1d4ed8" }}>{"جملة " + (listenIdx + 1) + "/" + sc.dialogue.length + " — " + sc.dialogue[listenIdx].speaker}</div>
+                <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)" }}>{"جملة " + (listenIdx + 1) + "/" + sc.dialogue.length + " — " + sc.dialogue[listenIdx].speaker}</div>
               </div>
             )}
           </div>
@@ -2259,26 +2259,26 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
             <div style={{ animation: "fadeUp .3s" }}>
               {/* Comprehension check */}
               {sc.listenQ && listenAnswer === null && (
-                <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-                  <div style={{ fontSize: 14, color: "#1d4ed8", fontWeight: 700, marginBottom: 10 }}>🤔 سؤال سريع — {sc.listenQ.q}</div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+                  <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 700, marginBottom: "var(--sp-3)" }}>🤔 سؤال سريع — {sc.listenQ.q}</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "var(--sp-2)" }}>
                     {sc.listenQ.opts.map((o, oi) => (
-                      <div key={oi} onClick={() => setListenAnswer(oi)} style={{ padding: 12, borderRadius: 10, cursor: "pointer", fontSize: 14, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", transition: ".2s" }}>{o}</div>
+                      <div key={oi} onClick={() => setListenAnswer(oi)} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", cursor: "pointer", fontSize: "var(--fs-sm)", background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", transition: ".2s" }}>{o}</div>
                     ))}
                   </div>
                 </div>
               )}
               {listenAnswer !== null && (
-                <div style={{ textAlign: "center", marginBottom: 12 }}>
-                  <div style={{ fontSize: 14, color: listenAnswer === (sc.listenQ ? sc.listenQ.ans : 0) ? "#059669" : "#1d4ed8", fontWeight: 700, marginBottom: 4 }}>
+                <div style={{ textAlign: "center", marginBottom: "var(--sp-3)" }}>
+                  <div style={{ fontSize: "var(--fs-sm)", color: listenAnswer === (sc.listenQ ? sc.listenQ.ans : 0) ? "#059669" : "#1d4ed8", fontWeight: 700, marginBottom: "var(--sp-1)" }}>
                     {listenAnswer === (sc.listenQ ? sc.listenQ.ans : 0) ? "✓ صح! فهمت المحادثة" : "تقريباً — في الخطوة الجاية بتشوف النص وتلاحظ اللي فاتك"}
                   </div>
                 </div>
               )}
               {(listenAnswer !== null || !sc.listenQ) && (
-                <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
-                  <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} style={{ padding: "8px 16px", borderRadius: 8, border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "#1e40af", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🔄 استمع مرة ثانية</button>
-                  <button onClick={() => advanceStep(1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي →</button>
+                <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center" }}>
+                  <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} style={{ padding: "8px 16px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "var(--c-accent-hover)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>>استمع مرة ثانية</button>
+                  <button onClick={() => advanceStep(1)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي →</button>
                 </div>
               )}
             </div>
@@ -2289,16 +2289,16 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {/* Step 2: Listen + Read */}
       {step === 1 && (
         <div>
-          <div style={{ fontSize: 13, color: "#52525b", marginBottom: 12, lineHeight: 2 }}>اضغط 🔈 على كل جملة واقرأها. لاحظ الكلمات اللي ما فهمتها أول مرة.</div>
+          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)", lineHeight: 2 }}>اضغط ♪ على كل جملة واقرأها. لاحظ الكلمات اللي ما فهمتها أول مرة.</div>
           {sc.dialogue.map((d, i) => (
-            <div key={i} style={{ display: "flex", gap: 10, padding: 10, marginBottom: 4, borderRadius: 10, background: d.speaker === "أنت" ? "rgba(29,78,216,0.06)" : "rgba(0,0,0,0.02)", border: "1px solid " + (d.speaker === "أنت" ? "rgba(29,78,216,0.1)" : "rgba(0,0,0,0.03)") }}>
-              <div style={{ fontSize: 12, color: d.speaker === "أنت" ? "#1d4ed8" : "#1d4ed8", fontWeight: 700, minWidth: 50, flexShrink: 0 }}>{d.speaker}</div>
-              <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, flex: 1, color: "#18181b" }}>{d.text}</div>
+            <div key={i} style={{ display: "flex", gap: "var(--sp-3)", padding: "var(--sp-3)", marginBottom: "var(--sp-1)", borderRadius: "var(--r-md)", background: d.speaker === "أنت" ? "rgba(29,78,216,0.06)" : "rgba(0,0,0,0.02)", border: "1px solid " + (d.speaker === "أنت" ? "rgba(29,78,216,0.1)" : "rgba(0,0,0,0.03)") }}>
+              <div style={{ fontSize: "var(--fs-xs)", color: d.speaker === "أنت" ? "#1d4ed8" : "#1d4ed8", fontWeight: 700, minWidth: 50, flexShrink: 0 }}>{d.speaker}</div>
+              <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.7, flex: 1, color: "var(--c-text)" }}>{d.text}</div>
               <SpeakBtn text={d.text} size={16} />
             </div>
           ))}
-          <div style={{ textAlign: "center", marginTop: 14 }}>
-            <button onClick={() => advanceStep(2)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: ردّد الجمل →</button>
+          <div style={{ textAlign: "center", marginTop: "var(--sp-4)" }}>
+            <button onClick={() => advanceStep(2)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي: ردّد الجمل →</button>
           </div>
         </div>
       )}
@@ -2306,23 +2306,23 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {/* Step 3: Shadow key phrases 3x */}
       {step === 2 && (
         <div>
-          <div style={{ fontSize: 13, color: "#52525b", marginBottom: 12, lineHeight: 2 }}>اسمع الجملة ← ردّدها بصوت عالٍ ← اضغط 🎙️ للتأكّد من نطقك. الهدف: ٣ مرات.</div>
+          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)", lineHeight: 2 }}>اسمع الجملة ← ردّدها بصوت عالٍ ← اضغط  للتأكّد من نطقك. الهدف: ٣ مرات.</div>
           {sc.keyPhrases.map((p, i) => {
             const r = shadowReps[i] || 0;
             const spokenResult = shadowSpoken[i];
             const setSpokenResult = (v) => setShadowSpoken(prev => ({ ...prev, [i]: v }));
             return (
-              <div key={i} style={{ padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(5,150,105,0.06)" : "rgba(0,0,0,0.02)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : "rgba(0,0,0,0.03)"), marginBottom: 8 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 5 ? "✓" : r + "/5"}</div>
+              <div key={i} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", background: r >= 5 ? "rgba(5,150,105,0.06)" : "rgba(0,0,0,0.02)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : "rgba(0,0,0,0.03)"), marginBottom: "var(--sp-2)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", marginBottom: "var(--sp-2)" }}>
+                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-xs)", fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 5 ? "✓" : r + "/5"}</div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
-                    <div style={{ fontSize: 12, color: "#71717a", marginTop: 2 }}>{p.ar}</div>
+                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
+                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginTop: "var(--sp-1)" }}>{p.ar}</div>
                   </div>
                   <SpeakBtn text={p.en} size={18} />
                 </div>
                 {r < 3 && (
-                  <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                  <div style={{ display: "flex", gap: "var(--sp-2)", alignItems: "center" }}>
                     <button onClick={() => {
                       speak(p.en, 0.8);
                       // Start speech recognition after audio finishes
@@ -2345,11 +2345,11 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                           setShadowReps(prev => ({ ...prev, [i]: (prev[i] || 0) + 1 }));
                         }
                       }, 2500);
-                    }} style={{ flex: 1, padding: "10px 16px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔊 استمع ثم 🎙️ ردّد</button>
+                    }} style={{ flex: 1, padding: "10px 16px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>استمع ثم  ردّد</button>
                   </div>
                 )}
                 {spokenResult !== undefined && spokenResult !== null && (
-                  <div style={{ fontSize: 12, color: spokenResult >= 80 ? "#059669" : spokenResult >= 50 ? "#1d4ed8" : "#dc2626", fontWeight: 600, marginTop: 4 }}>
+                  <div style={{ fontSize: "var(--fs-xs)", color: spokenResult >= 80 ? "#059669" : spokenResult >= 50 ? "#1d4ed8" : "#dc2626", fontWeight: 600, marginTop: "var(--sp-1)" }}>
                     {spokenResult >= 80 ? "نطق إنجاز مميز! " + spokenResult + "%" : spokenResult >= 50 ? "جيد! " + spokenResult + "% — جرّب مرة ثانية" : "حاول مرة ثانية — ركّز على الكلمات المفتاحية"}
                   </div>
                 )}
@@ -2357,8 +2357,8 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
             );
           })}
           {Object.values(shadowReps).filter(r => r >= 5).length >= sc.keyPhrases.length && (
-            <div style={{ textAlign: "center", marginTop: 14 }}>
-              <button onClick={() => advanceStep(3)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تذكّر →</button>
+            <div style={{ textAlign: "center", marginTop: "var(--sp-4)" }}>
+              <button onClick={() => advanceStep(3)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي: تذكّر →</button>
             </div>
           )}
         </div>
@@ -2367,46 +2367,46 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {/* Step 4: Recall — show Arabic, hide English, reveal to check */}
       {step === 3 && (
         <div>
-          <div style={{ fontSize: 13, color: "#52525b", marginBottom: 12, lineHeight: 2 }}>شوف الترجمة العربية فقط — حاول تقول الجملة الإنجليزية من ذاكرتك — ثم اضغط "أظهر" وقارن.</div>
+          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)", lineHeight: 2 }}>شوف الترجمة العربية فقط — حاول تقول الجملة الإنجليزية من ذاكرتك — ثم اضغط "أظهر" وقارن.</div>
           {sc.keyPhrases.map((p, i) => {
             const state = recallState[i] || "hidden";
             const selfScore = recallScore[i]; // undefined, "good", "partial", "forgot"
             return (
-              <div key={i} style={{ background: "rgba(29,78,216,0.06)", border: "1px solid " + (selfScore === "good" ? "rgba(5,150,105,0.2)" : selfScore === "forgot" ? "rgba(220,38,38,0.15)" : "rgba(29,78,216,0.1)"), borderRadius: 10, padding: 14, marginBottom: 8 }}>
+              <div key={i} style={{ background: "rgba(29,78,216,0.06)", border: "1px solid " + (selfScore === "good" ? "rgba(5,150,105,0.2)" : selfScore === "forgot" ? "rgba(220,38,38,0.15)" : "rgba(29,78,216,0.1)"), borderRadius: "var(--r-md)", padding: "var(--sp-4)", marginBottom: "var(--sp-2)" }}>
                 {/* Always show Arabic */}
-                <div style={{ fontSize: 14, color: "#1d4ed8", fontWeight: 600, marginBottom: 8 }}>{p.ar}</div>
+                <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>{p.ar}</div>
 
                 {state === "hidden" && (
-                  <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "thinking" }))} style={{ padding: "8px 20px", borderRadius: 8, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>قلها بصوت عالٍ ثم اضغط هنا</button>
+                  <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "thinking" }))} style={{ padding: "8px 20px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>قلها بصوت عالٍ ثم اضغط هنا</button>
                 )}
 
                 {state === "thinking" && (
                   <div>
-                    <div style={{ fontSize: 12, color: "#52525b", marginBottom: 8 }}>قلت الجملة؟ اضغط "أظهر" وقارن:</div>
-                    <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "revealed" }))} style={{ padding: "8px 20px", borderRadius: 8, border: "none", background: "#1d4ed8", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>👁 أظهر الجملة</button>
+                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>قلت الجملة؟ اضغط "أظهر" وقارن:</div>
+                    <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "revealed" }))} style={{ padding: "8px 20px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>أظهر الجملة</button>
                   </div>
                 )}
 
                 {state === "revealed" && (
                   <div>
-                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "#18181b", marginBottom: 8, display: "flex", alignItems: "center", gap: 8 }}>
+                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "var(--c-text)", marginBottom: "var(--sp-2)", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
                       <span style={{ flex: 1 }}>{p.en}</span>
                       <SpeakBtn text={p.en} size={16} />
                     </div>
                     {/* FIX 8: Cross-context patterns */}
                     {(() => { const patterns = findCrossPatterns(p.en); return patterns.length > 0 ? (
-                      <div style={{ fontSize: 12, color: "#1d4ed8", marginBottom: 6, lineHeight: 1.8 }}>
-                        {"🔗 " + patterns[0].pattern + " — " + patterns[0].usage}
+                      <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", marginBottom: "var(--sp-2)", lineHeight: 1.8 }}>
+                        {"" + patterns[0].pattern + " — " + patterns[0].usage}
                       </div>
                     ) : null; })()}
                     {!selfScore && (
-                      <div style={{ display: "flex", gap: 6 }}>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "good" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(5,150,105,0.15)", color: "#059669", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>تذكّرتها ✓</button>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "partial" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(29,78,216,0.15)", color: "#1d4ed8", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>تقريباً</button>
-                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} style={{ padding: "6px 14px", borderRadius: 6, border: "none", background: "rgba(217,119,6,0.1)", color: "#d97706", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>لسه</button>
+                      <div style={{ display: "flex", gap: "var(--sp-2)" }}>
+                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "good" }))} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "none", background: "rgba(5,150,105,0.15)", color: "var(--c-success)", fontSize: "var(--fs-xs)", fontWeight: 600, cursor: "pointer" }}>تذكّرتها </button>
+                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "partial" }))} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "none", background: "rgba(29,78,216,0.15)", color: "var(--c-accent)", fontSize: "var(--fs-xs)", fontWeight: 600, cursor: "pointer" }}>تقريباً</button>
+                        <button onClick={() => setRecallScore(prev => ({ ...prev, [i]: "forgot" }))} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "none", background: "rgba(217,119,6,0.1)", color: "var(--c-warn)", fontSize: "var(--fs-xs)", fontWeight: 600, cursor: "pointer" }}>لسه</button>
                       </div>
                     )}
-                    {selfScore && <div style={{ fontSize: 12, color: selfScore === "good" ? "#059669" : selfScore === "partial" ? "#1d4ed8" : "#dc2626", fontWeight: 600, marginTop: 4 }}>{selfScore === "good" ? "✓ إنجاز مميز!" : selfScore === "partial" ? "✦ قريب — ردّدها مرة" : "🔄 عادي تماماً! المخ يحتاج ٥-٧ تكرارات — بنراجعها سوا"}</div>}
+                    {selfScore && <div style={{ fontSize: "var(--fs-xs)", color: selfScore === "good" ? "#059669" : selfScore === "partial" ? "#1d4ed8" : "#dc2626", fontWeight: 600, marginTop: "var(--sp-1)" }}>{selfScore === "good" ? "✓ إنجاز مميز!" : selfScore === "partial" ? " قريب — ردّدها مرة" : "🔄 عادي تماماً! المخ يحتاج ٥-٧ تكرارات — بنراجعها سوا"}</div>}
                   </div>
                 )}
               </div>
@@ -2416,23 +2416,23 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
             const forgotten = sc.keyPhrases.map((_, i) => i).filter(i => recallScore[i] === "forgot" || recallScore[i] === "partial");
             const allGood = forgotten.length === 0;
             return (
-              <div style={{ marginTop: 14 }}>
+              <div style={{ marginTop: "var(--sp-4)" }}>
                 {!allGood && (
-                  <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(217,119,6,0.1)", borderRadius: 10, padding: 14, marginBottom: 10, textAlign: "center" }}>
-                    <div style={{ fontSize: 13, color: "#dc2626", fontWeight: 600, marginBottom: 8 }}>{"🔄 " + forgotten.length + " جملة تحتاج مراجعة — ردّدها ثم أعد التقييم"}</div>
+                  <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(217,119,6,0.1)", borderRadius: "var(--r-md)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)", textAlign: "center" }}>
+                    <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-error)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>{"🔄 " + forgotten.length + " جملة تحتاج مراجعة — ردّدها ثم أعد التقييم"}</div>
                     {forgotten.map(fi => (
-                      <div key={fi} style={{ display: "flex", alignItems: "center", gap: 8, padding: 10, borderRadius: 8, background: "rgba(0,0,0,0.02)", marginBottom: 4 }}>
+                      <div key={fi} style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)", padding: "var(--sp-3)", borderRadius: "var(--r-sm)", background: "rgba(0,0,0,0.02)", marginBottom: "var(--sp-1)" }}>
                         <SpeakBtn text={sc.keyPhrases[fi].en} size={18} color="#1d4ed8" />
-                        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", flex: 1, color: "#18181b" }}>{sc.keyPhrases[fi].en}</div>
+                        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", flex: 1, color: "var(--c-text)" }}>{sc.keyPhrases[fi].en}</div>
                       </div>
                     ))}
-                    <button onClick={() => { const newState = { ...recallState }; const newScore = { ...recallScore }; forgotten.forEach(fi => { newState[fi] = "hidden"; delete newScore[fi]; }); setRecallState(newState); setRecallScore(newScore); }} style={{ marginTop: 8, padding: "8px 20px", borderRadius: 8, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد اختبار الجمل المنسيّة</button>
+                    <button onClick={() => { const newState = { ...recallState }; const newScore = { ...recallScore }; forgotten.forEach(fi => { newState[fi] = "hidden"; delete newScore[fi]; }); setRecallState(newState); setRecallScore(newScore); }} style={{ marginTop: "var(--sp-2)", padding: "8px 20px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>أعد اختبار الجمل المنسيّة</button>
                   </div>
                 )}
                 {allGood && (
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: 13, color: "#059669", fontWeight: 600, marginBottom: 8 }}>✓ إنجاز مميز! تذكّرت كل الجمل</div>
-                    <button onClick={() => advanceStep(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
+                    <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-success)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>>إنجاز مميز! تذكّرت كل الجمل</div>
+                    <button onClick={() => advanceStep(4)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
                   </div>
                 )}
               </div>
@@ -2444,26 +2444,26 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {/* Step 5: Produce + feedback */}
       {step === 4 && (
         <div>
-          <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-            <div style={{ fontSize: 15, color: "#18181b", lineHeight: 2, marginBottom: 4 }}>{sc.producePrompt}</div>
+          <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+            <div style={{ fontSize: "var(--fs-base)", color: "var(--c-text)", lineHeight: 2, marginBottom: "var(--sp-1)" }}>{sc.producePrompt}</div>
           </div>
-          <textarea value={prodInput} onChange={(e) => !prodSubmitted && setProdInput(e.target.value)} placeholder="اكتب ردك بالإنجليزي..." disabled={prodSubmitted} style={{ width: "100%", minHeight: 80, padding: 14, borderRadius: 12, fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(220,38,38,0.2)", color: "#18181b", outline: "none", resize: "vertical", marginBottom: 12 }} />
+          <textarea value={prodInput} onChange={(e) => !prodSubmitted && setProdInput(e.target.value)} placeholder="اكتب ردك بالإنجليزي..." disabled={prodSubmitted} style={{ width: "100%", minHeight: 80, padding: "var(--sp-4)", borderRadius: "var(--r-lg)", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(220,38,38,0.2)", color: "var(--c-text)", outline: "none", resize: "vertical", marginBottom: "var(--sp-3)" }} />
           {!prodSubmitted ? (
             <div style={{ textAlign: "center" }}>
-              <button onClick={() => setProdSubmitted(true)} disabled={prodInput.trim().length < 5} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: prodInput.trim().length >= 5 ? "#dc2626" : "#e4e4e7", color: prodInput.trim().length >= 5 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: prodInput.trim().length >= 5 ? "pointer" : "default" }}>✓ أرسل</button>
+              <button onClick={() => setProdSubmitted(true)} disabled={prodInput.trim().length < 5} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: prodInput.trim().length >= 5 ? "#dc2626" : "#e4e4e7", color: prodInput.trim().length >= 5 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: prodInput.trim().length >= 5 ? "pointer" : "default" }}>>أرسل</button>
             </div>
           ) : (
             <div>
-              <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: 12, padding: 14, marginBottom: 8 }}>
-                <div style={{ fontSize: 12, color: "#059669", fontWeight: 700, marginBottom: 6 }}>النموذج المثالي:</div>
-                <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#18181b", display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-2)" }}>
+                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>النموذج المثالي:</div>
+                <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
                   <span style={{ flex: 1 }}>{sc.produceModel}</span>
                   <SpeakBtn text={sc.produceModel} size={16} />
                 </div>
               </div>
               {/* FIX 7: AI feedback on writing */}
               {getOpenAIKey() && !aiFeedback && !aiLoading && (
-                <div style={{ textAlign: "center", marginBottom: 8 }}>
+                <div style={{ textAlign: "center", marginBottom: "var(--sp-2)" }}>
                   <button onClick={async () => {
                     setAiLoading(true);
                     try {
@@ -2478,27 +2478,27 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                       setAiFeedback(data.choices[0].message.content);
                     } catch { setAiFeedback("لم أتمكن من الاتصال. تأكّد من مفتاح API."); }
                     setAiLoading(false);
-                  }} style={{ padding: "6px 16px", borderRadius: 8, border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "#1e40af", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🤖 تحليل ذكي لكتابتك</button>
+                  }} style={{ padding: "6px 16px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "var(--c-accent-hover)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>>تحليل ذكي لكتابتك</button>
                 </div>
               )}
-              {aiLoading && <div style={{ textAlign: "center", fontSize: 12, color: "#1e40af", marginBottom: 8 }}>جاري التحليل...</div>}
+              {aiLoading && <div style={{ textAlign: "center", fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", marginBottom: "var(--sp-2)" }}>جاري التحليل...</div>}
               {aiFeedback && (
-                <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 14, marginBottom: 8 }}>
-                  <div style={{ fontSize: 12, color: "#1e40af", fontWeight: 700, marginBottom: 6 }}>🤖 تحليل ذكي:</div>
-                  <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2, whiteSpace: "pre-wrap" }}>{aiFeedback}</div>
+                <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-2)" }}>
+                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>>تحليل ذكي:</div>
+                  <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, whiteSpace: "pre-wrap" }}>{aiFeedback}</div>
                 </div>
               )}
               {/* Noticing feedback — explain WHY */}
-              <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 14, marginBottom: 12 }}>
-                <div style={{ fontSize: 12, color: "#1d4ed8", fontWeight: 700, marginBottom: 6 }}>💡 لاحظ الفرق:</div>
+              <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>— لاحظ الفرق:</div>
                 {sc.noticingTips ? sc.noticingTips.map((tip, ti) => (
-                  <div key={ti} style={{ fontSize: 13, color: "#52525b", lineHeight: 2, marginBottom: 2 }}>{"• " + tip}</div>
+                  <div key={ti} style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, marginBottom: 2 }}>{"• " + tip}</div>
                 )) : (
-                  <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2 }}>قارن ردّك بالنموذج — لاحظ: هل استخدمت "please"؟ هل حددت طلبك بوضوح؟ هل سألت سؤال إضافي يُظهر ثقة؟</div>
+                  <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>قارن ردّك بالنموذج — لاحظ: هل استخدمت "please"؟ هل حددت طلبك بوضوح؟ هل سألت سؤال إضافي يُظهر ثقة؟</div>
                 )}
               </div>
               <div style={{ textAlign: "center" }}>
-                <button onClick={() => advanceStep(5)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>التالي: تحدّي اليوم →</button>
+                <button onClick={() => advanceStep(5)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي: تحدّي اليوم →</button>
               </div>
             </div>
           )}
@@ -2508,10 +2508,10 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {/* Step 6: Real-world challenge */}
       {step === 5 && (
         <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: 48, marginBottom: 12 }}>🌍</div>
-          <div style={{ fontSize: 18, fontWeight: 800, color: "#1d4ed8", marginBottom: 12 }}>تحدّي اليوم</div>
-          <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 14, padding: 20, marginBottom: 16 }}>
-            <div style={{ fontSize: 16, color: "#18181b", lineHeight: 2 }}>{sc.challenge}</div>
+          <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>تحدّي اليوم</div>
+          <div style={{ fontSize: "var(--fs-md)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>تحدّي اليوم</div>
+          <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-5)", marginBottom: "var(--sp-4)" }}>
+            <div style={{ fontSize: "var(--fs-md)", color: "var(--c-text)", lineHeight: 2 }}>{sc.challenge}</div>
           </div>
           {!challengeAccepted ? (
             <button onClick={() => {
@@ -2525,31 +2525,31 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                 await userStorage.delete("checkpoint-session"); // clear checkpoint on completion
               } catch(e) {} })();
               if (onComplete) onComplete();
-            }} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#059669,#1d4ed8)", color: "#fafaf9", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>أقبل التحدي ✓</button>
+            }} style={{ padding: "12px 28px", borderRadius: "var(--r-lg)", border: "none", background: "linear-gradient(135deg,#059669,#1d4ed8)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-base)", fontWeight: 700, cursor: "pointer" }}>أقبل التحدي </button>
           ) : !challengeDone ? (
             <div style={{ animation: "fadeUp .4s" }}>
               {/* FIX 4: Challenge follow-up */}
-              <div style={{ fontSize: 14, color: "#1d4ed8", fontWeight: 700, marginBottom: 10 }}>سوّيت التحدي؟</div>
-              <div style={{ display: "flex", gap: 8, justifyContent: "center", marginBottom: 10 }}>
-                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#059669", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>نعم سويته ✓</button>
-                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: 10, border: "1px solid rgba(0,0,0,0.06)", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 13, cursor: "pointer" }}>بسويه لاحقاً</button>
+              <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 700, marginBottom: "var(--sp-3)" }}>سوّيت التحدي؟</div>
+              <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center", marginBottom: "var(--sp-3)" }}>
+                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-success)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>نعم سويته </button>
+                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "1px solid rgba(0,0,0,0.06)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-sm)", cursor: "pointer" }}>بسويه لاحقاً</button>
               </div>
-              <input value={challengeNote} onChange={(e) => setChallengeNote(e.target.value)} placeholder="كيف كانت التجربة؟ (اختياري)" style={{ width: "100%", padding: 10, borderRadius: 10, fontFamily: "inherit", fontSize: 13, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", color: "#18181b", outline: "none", textAlign: "center" }} />
+              <input value={challengeNote} onChange={(e) => setChallengeNote(e.target.value)} placeholder="كيف كانت التجربة؟ (اختياري)" style={{ width: "100%", padding: "var(--sp-3)", borderRadius: "var(--r-md)", fontFamily: "inherit", fontSize: "var(--fs-sm)", background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", color: "var(--c-text)", outline: "none", textAlign: "center" }} />
             </div>
           ) : (
             <div style={{ animation: "fadeUp .4s" }}>
-              <div style={{ fontSize: 40, marginBottom: 8 }}>🎉</div>
+              <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-2)", color: "var(--c-success)" }}>مبروك</div>
               {/* FIX 5: Self-efficacy message based on history */}
               {(() => {
                 const totalSessions = (sessionHistory || []).length;
                 const recalled = Object.values(recallScore).filter(v => v === "good").length;
                 const total = sc.keyPhrases.length;
-                if (totalSessions === 0) return <div style={{ fontSize: 16, fontWeight: 700, color: "#059669", marginBottom: 6 }}>أول جلسة لك! بداية ممتازة.</div>;
-                if (recalled === total) return <div style={{ fontSize: 16, fontWeight: 700, color: "#059669", marginBottom: 6, lineHeight: 2 }}>تذكّرت كل الجمل من ذاكرتك!<br/>هذا دليل إن عقلك يبني مسارات جديدة.</div>;
-                if (totalSessions >= 7) return <div style={{ fontSize: 16, fontWeight: 700, color: "#059669", marginBottom: 6, lineHeight: 2 }}>أسبوع كامل! {totalSessions} جلسة أنجزتها.<br/>قبل أسبوع ما كنت تعرف هالجمل. اليوم تقولها.</div>;
-                return <div style={{ fontSize: 16, fontWeight: 700, color: "#059669", marginBottom: 6, lineHeight: 2 }}>جلسة #{totalSessions + 1} مكتملة!<br/>كل جلسة تقرّبك خطوة من الطلاقة الحقيقية.</div>;
+                if (totalSessions === 0) return <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-success)", marginBottom: "var(--sp-2)" }}>أول جلسة لك! بداية ممتازة.</div>;
+                if (recalled === total) return <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-success)", marginBottom: "var(--sp-2)", lineHeight: 2 }}>تذكّرت كل الجمل من ذاكرتك!<br/>هذا دليل إن عقلك يبني مسارات جديدة.</div>;
+                if (totalSessions >= 7) return <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-success)", marginBottom: "var(--sp-2)", lineHeight: 2 }}>أسبوع كامل! {totalSessions} جلسة أنجزتها.<br/>قبل أسبوع ما كنت تعرف هالجمل. اليوم تقولها.</div>;
+                return <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-success)", marginBottom: "var(--sp-2)", lineHeight: 2 }}>جلسة #{totalSessions + 1} مكتملة!<br/>كل جلسة تقرّبك خطوة من الطلاقة الحقيقية.</div>;
               })()}
-              <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2 }}>تمرّنت على "{sc.title}" من ٦ زوايا. الجمل الآن أقرب لذاكرتك طويلة المدى.</div>
+              <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>تمرّنت على "{sc.title}" من ٦ زوايا. الجمل الآن أقرب لذاكرتك طويلة المدى.</div>
             </div>
           )}
         </div>
@@ -2591,10 +2591,10 @@ function PronounceBtn({ targetText, size }) {
 
   if (state === "nosupport") return null;
   if (state === "idle") return (
-    <button onClick={startListening} style={{ background: "none", border: "1px solid rgba(29,78,216,0.2)", borderRadius: 6, cursor: "pointer", fontSize: size || 12, padding: "3px 8px", color: "#1d4ed8", flexShrink: 0 }} title="جرّب نطقك">🎙️</button>
+    <button onClick={startListening} style={{ background: "none", border: "1px solid rgba(29,78,216,0.2)", borderRadius: "var(--r-sm)", cursor: "pointer", fontSize: size || 12, padding: "3px 8px", color: "var(--c-accent)", flexShrink: 0 }} title="جرّب نطقك"></button>
   );
   if (state === "listening") return (
-    <span style={{ fontSize: size || 12, color: "#dc2626", animation: "none" }}>🔴 تكلم...</span>
+    <span style={{ fontSize: size || 12, color: "var(--c-error)", animation: "none" }}>جاري التسجيل...</span>
   );
   return (
     <span style={{ fontSize: size || 11, color: score >= 80 ? "#059669" : score >= 50 ? "#1d4ed8" : "#dc2626", fontWeight: 600 }}>{score >= 80 ? "✓ " + score + "%" : score + "%"}</span>
@@ -2651,66 +2651,66 @@ function Fluency432() {
 
   if (round === 0) return (
     <div style={{ animation: "fadeUp .4s" }}>
-      <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <div style={{ fontSize: 40, marginBottom: 8 }}>🗣️</div>
-        <div style={{ fontSize: 18, fontWeight: 800, color: "#dc2626", marginBottom: 6 }}>تمرين الطلاقة 4-3-2</div>
-        <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2 }}>تكلم عن نفس الموضوع ٣ مرات — كل مرة وقت أقل<br />مخك يتعلم يسترجع الجمل أسرع = طلاقة حقيقية</div>
+      <div style={{ textAlign: "center", marginBottom: "var(--sp-4)" }}>
+        <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-2)", color: "var(--c-accent)" }}>الطلاقة</div>
+        <div style={{ fontSize: "var(--fs-md)", fontWeight: 800, color: "var(--c-error)", marginBottom: "var(--sp-2)" }}>تمرين الطلاقة 4-3-2</div>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>تكلم عن نفس الموضوع ٣ مرات — كل مرة وقت أقل<br />مخك يتعلم يسترجع الجمل أسرع = طلاقة حقيقية</div>
       </div>
-      <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: 14, padding: 20, textAlign: "center", marginBottom: 14 }}>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 17, color: "#dc2626", direction: "ltr", lineHeight: 1.6, marginBottom: 8 }}>{topic.topic}</div>
-        <div style={{ fontSize: 14, color: "#71717a" }}>{topic.ar}</div>
+      <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-5)", textAlign: "center", marginBottom: "var(--sp-4)" }}>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-md)", color: "var(--c-error)", direction: "ltr", lineHeight: 1.6, marginBottom: "var(--sp-2)" }}>{topic.topic}</div>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)" }}>{topic.ar}</div>
       </div>
-      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 14, marginBottom: 14 }}>
-        <div style={{ fontSize: 12, color: "#1d4ed8", fontWeight: 700, marginBottom: 8 }}>💡 استخدم هالجمل كبداية:</div>
-        {topic.starters.map((st, si) => <div key={si} style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#52525b", padding: "3px 0" }}>{st}</div>)}
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-4)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>— استخدم هالجمل كبداية:</div>
+        {topic.starters.map((st, si) => <div key={si} style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text-secondary)", padding: "3px 0" }}>{st}</div>)}
       </div>
       <div style={{ textAlign: "center" }}>
-        <button onClick={() => startRound(1)} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "#1d4ed8", color: "#fff", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ الجولة الأولى (٤ دقائق) →</button>
+        <button onClick={() => startRound(1)} style={{ padding: "12px 28px", borderRadius: "var(--r-lg)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-base)", fontWeight: 700, cursor: "pointer" }}>ابدأ الجولة الأولى (٤ دقائق) →</button>
       </div>
     </div>
   );
 
   if (round === 4) return (
-    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: 48, marginBottom: 12 }}>🔥</div>
-      <div style={{ fontSize: 20, fontWeight: 800, color: "#059669", marginBottom: 8 }}>إنجاز رائع.. أنت تقترب من التمكّن</div>
-      <div style={{ fontSize: 14, color: "#52525b", lineHeight: 2, marginBottom: 16 }}>تكلمت عن نفس الموضوع ٣ مرات — كل مرة بسرعة أكبر.<br />لاحظت كيف الجمل صارت تطلع أسرع في الجولة الثالثة؟<br />هذا بالضبط كيف تُبنى الطلاقة.</div>
-      <button onClick={restart} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 موضوع جديد</button>
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
+      <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-success)", marginBottom: "var(--sp-2)" }}>إنجاز رائع.. أنت تقترب من التمكّن</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, marginBottom: "var(--sp-4)" }}>تكلمت عن نفس الموضوع ٣ مرات — كل مرة بسرعة أكبر.<br />لاحظت كيف الجمل صارت تطلع أسرع في الجولة الثالثة؟<br />هذا بالضبط كيف تُبنى الطلاقة.</div>
+      <button onClick={restart} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>موضوع جديد</button>
     </div>
   );
 
   return (
     <div style={{ animation: "fadeUp .4s" }}>
-      <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
+      <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-4)" }}>
         {[1, 2, 3].map(r => (
-          <div key={r} style={{ flex: 1, height: 6, borderRadius: 3, background: r < round ? "#059669" : r === round ? "#dc2626" : "#e4e4e7" }} />
+          <div key={r} style={{ flex: 1, height: 6, borderRadius: "var(--r-sm)", background: r < round ? "#059669" : r === round ? "#dc2626" : "#e4e4e7" }} />
         ))}
       </div>
 
-      <div style={{ textAlign: "center", marginBottom: 14 }}>
-        <div style={{ fontSize: 13, color: "#dc2626", fontWeight: 700, marginBottom: 8 }}>{"الجولة " + round + "/3 — " + roundLabels[round]}</div>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 52, fontWeight: 800, color: sec <= 10 && sec > 0 ? "#dc2626" : running ? "#dc2626" : "#059669" }}>{String(Math.floor(sec / 60)).padStart(2, "0") + ":" + String(sec % 60).padStart(2, "0")}</div>
-        {sec === 0 && !running && <div style={{ color: "#059669", fontWeight: 700, marginTop: 6, fontSize: 14 }}>✅ انتهى الوقت!</div>}
+      <div style={{ textAlign: "center", marginBottom: "var(--sp-4)" }}>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-error)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>{"الجولة " + round + "/3 — " + roundLabels[round]}</div>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-2xl)", fontWeight: 800, color: sec <= 10 && sec > 0 ? "#dc2626" : running ? "#dc2626" : "#059669" }}>{String(Math.floor(sec / 60)).padStart(2, "0") + ":" + String(sec % 60).padStart(2, "0")}</div>
+        {sec === 0 && !running && <div style={{ color: "var(--c-success)", fontWeight: 700, marginTop: "var(--sp-2)", fontSize: "var(--fs-sm)" }}>✅ انتهى الوقت!</div>}
       </div>
 
-      <div style={{ background: "rgba(220,38,38,0.04)", border: "1px solid rgba(220,38,38,0.08)", borderRadius: 12, padding: 14, marginBottom: 14, textAlign: "center" }}>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, color: "#18181b", direction: "ltr", lineHeight: 1.6 }}>{topic.topic}</div>
+      <div style={{ background: "rgba(220,38,38,0.04)", border: "1px solid rgba(220,38,38,0.08)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-4)", textAlign: "center" }}>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", color: "var(--c-text)", direction: "ltr", lineHeight: 1.6 }}>{topic.topic}</div>
       </div>
 
-      {running && <div style={{ textAlign: "center", fontSize: 14, color: "#71717a", lineHeight: 2 }}>
+      {running && <div style={{ textAlign: "center", fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>
         {round === 1 && "خذ وقتك — تكلم بأي سرعة. الهدف: غطِّ أكبر قدر من النقاط"}
         {round === 2 && "نفس الأفكار — لكن أسرع. لاحظ إن الجمل تطلع أسهل"}
         {round === 3 && "آخر جولة — أقصى سرعة ممكنة. لاحظ الفرق عن أول مرة!"}
       </div>}
 
       {sec === 0 && !running && round < 3 && (
-        <div style={{ textAlign: "center", marginTop: 10 }}>
-          <button onClick={() => startRound(round + 1)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{"الجولة " + (round + 1) + " (" + (round === 1 ? "٣" : "٢") + " دقائق) →"}</button>
+        <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
+          <button onClick={() => startRound(round + 1)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{"الجولة " + (round + 1) + " (" + (round === 1 ? "٣" : "٢") + " دقائق) →"}</button>
         </div>
       )}
       {sec === 0 && !running && round === 3 && (
-        <div style={{ textAlign: "center", marginTop: 10 }}>
-          <button onClick={() => setRound(4)} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#059669,#1d4ed8)", color: "#fafaf9", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🏁 النتيجة</button>
+        <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
+          <button onClick={() => setRound(4)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg,#059669,#1d4ed8)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>النتيجة</button>
         </div>
       )}
     </div>
@@ -2739,11 +2739,11 @@ function ListenExercise() {
   useEffect(() => { if (!done) { const t = setTimeout(() => playQ(), 400); return () => clearTimeout(t); } }, [qi, done]);
 
   if (done) return (
-    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: 40, marginBottom: 12 }}>👂</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>الاستماع</div>
+      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
     </div>
   );
 
@@ -2752,18 +2752,18 @@ function ListenExercise() {
 
   return (
     <div style={{ animation: "fadeUp .4s" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 13, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontSize: 13, color: "#1e40af", fontWeight: 600 }}>{score + " صحيح"}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent-hover)", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
 
-      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 12, padding: 20, marginBottom: 12, textAlign: "center" }}>
-        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", marginBottom: 10 }}>🔊 استمع للجملة</button>
-        <div style={{ fontSize: 12, color: "#71717a" }}>اضغط للاستماع — ثم أجب على السؤال</div>
-        {revealed && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, color: "#1e40af", marginTop: 10, direction: "ltr" }}>{raw.text}</div>}
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-5)", marginBottom: "var(--sp-3)", textAlign: "center" }}>
+        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: "var(--r-lg)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-md)", fontWeight: 700, cursor: "pointer", marginBottom: "var(--sp-3)" }}>>استمع للجملة</button>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>اضغط للاستماع — ثم أجب على السؤال</div>
+        {revealed && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", color: "var(--c-accent-hover)", marginTop: "var(--sp-3)", direction: "ltr" }}>{raw.text}</div>}
       </div>
 
-      <div style={{ fontSize: 14, color: "#18181b", marginBottom: 10, fontWeight: 600 }}>{raw.q}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)", marginBottom: "var(--sp-3)", fontWeight: 600 }}>{raw.q}</div>
 
       {qOpts.map((o, oi) => {
         const show = picked !== null;
@@ -2772,14 +2772,14 @@ function ListenExercise() {
         let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
-        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 5, cursor: show ? "default" : "pointer", fontSize: 14, lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
-          {o}{show && isCorrect && <span style={{ color: "#059669", fontSize: 12 }}> ✓</span>}
+        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: 5, cursor: show ? "default" : "pointer", fontSize: "var(--fs-sm)", lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+          {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> </span>}
         </div>;
       })}
       {picked !== null && (
-        <div style={{ textAlign: "center", marginTop: 10 }}>
-          {!revealed && <button onClick={() => setRevealed(true)} style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "#1e40af", fontFamily: "inherit", fontSize: 12, cursor: "pointer", marginLeft: 8 }}>👁 أظهر النص</button>}
-          <button onClick={next} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer", marginRight: 8 }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+        <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
+          {!revealed && <button onClick={() => setRevealed(true)} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "var(--c-accent-hover)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer", marginLeft: 8 }}>>أظهر النص</button>}
+          <button onClick={next} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer", marginRight: 8 }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         </div>
       )}
     </div>
@@ -2810,11 +2810,11 @@ function DictationExercise() {
   useEffect(() => { if (!done) { const t = setTimeout(() => playQ(), 400); return () => clearTimeout(t); } }, [qi, done]);
 
   if (done) return (
-    <div style={{ textAlign: "center", padding: 20, animation: "fadeUp .4s" }}>
-      <div style={{ fontSize: 40, marginBottom: 12 }}>🎧</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: 8 }}>{score + "/" + qs.current.length}</div>
-      <div style={{ fontSize: 14, color: "#52525b", marginBottom: 16 }}>{score >= 6 ? "إنجاز مميز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>🔄 محاولة جديدة</button>
+    <div style={{ textAlign: "center", padding: "var(--sp-5)", animation: "fadeUp .4s" }}>
+      <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إملاء صوتي</div>
+      <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
     </div>
   );
 
@@ -2824,39 +2824,39 @@ function DictationExercise() {
 
   return (
     <div style={{ animation: "fadeUp .4s" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <div style={{ fontSize: 13, color: "#71717a" }}>{"جملة " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontSize: 13, color: "#dc2626", fontWeight: 600 }}>{score + " صحيح"}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)" }}>{"جملة " + (qi + 1) + "/" + qs.current.length}</div>
+        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-error)", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
 
-      <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: 12, padding: 20, marginBottom: 12, textAlign: "center" }}>
-        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "#dc2626", color: "#fff", fontFamily: "inherit", fontSize: 16, fontWeight: 700, cursor: "pointer", marginBottom: 6 }}>🔊 استمع</button>
-        <div style={{ marginTop: 6 }}>
-          <button onClick={() => speak(qs.current[qi], 0.55)} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(220,38,38,0.2)", background: "transparent", color: "#dc2626", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🐢 بطيء</button>
+      <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-5)", marginBottom: "var(--sp-3)", textAlign: "center" }}>
+        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: "var(--r-lg)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-md)", fontWeight: 700, cursor: "pointer", marginBottom: "var(--sp-2)" }}>>استمع</button>
+        <div style={{ marginTop: "var(--sp-2)" }}>
+          <button onClick={() => speak(qs.current[qi], 0.55)} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "1px solid rgba(220,38,38,0.2)", background: "transparent", color: "var(--c-error)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>بطيء</button>
         </div>
-        <div style={{ fontSize: 12, color: "#71717a", marginTop: 8 }}>استمع ثم اكتب ما سمعته بالإنجليزي</div>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginTop: "var(--sp-2)" }}>استمع ثم اكتب ما سمعته بالإنجليزي</div>
       </div>
 
-      <textarea value={input} onChange={(e) => !checked && setInput(e.target.value)} placeholder="اكتب ما سمعته هنا..." disabled={checked} style={{ width: "100%", minHeight: 70, padding: 14, borderRadius: 12, fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(220,38,38,0.2)", color: "#18181b", outline: "none", resize: "vertical", marginBottom: 12 }} />
+      <textarea value={input} onChange={(e) => !checked && setInput(e.target.value)} placeholder="اكتب ما سمعته هنا..." disabled={checked} style={{ width: "100%", minHeight: 70, padding: "var(--sp-4)", borderRadius: "var(--r-lg)", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(220,38,38,0.2)", color: "var(--c-text)", outline: "none", resize: "vertical", marginBottom: "var(--sp-3)" }} />
 
       {!checked ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={check} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: input.trim().length >= 3 ? "#dc2626" : "#e4e4e7", color: input.trim().length >= 3 ? "#fff" : "#a1a1aa", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>✓ تأكّد</button>
+          <button onClick={check} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: input.trim().length >= 3 ? "#dc2626" : "#e4e4e7", color: input.trim().length >= 3 ? "#fff" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>>تأكّد</button>
         </div>
       ) : (
         <div>
-          <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: 12, padding: 14, marginBottom: 10 }}>
-            <div style={{ fontSize: 12, color: "#059669", fontWeight: 700, marginBottom: 6 }}>✓ الجملة الصحيحة:</div>
-            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "#18181b" }}>{correct}</div>
+          <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>>الجملة الصحيحة:</div>
+            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)" }}>{correct}</div>
           </div>
-          <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 2, marginBottom: 10 }}>
+          <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 2, marginBottom: "var(--sp-3)" }}>
             {correctWords.map((w, wi) => {
               const matched = userWords.includes(w);
               return <span key={wi} style={{ color: matched ? "#059669" : "#dc2626", fontWeight: matched ? 400 : 700 }}>{w + " "}</span>;
             })}
           </div>
           <div style={{ textAlign: "center" }}>
-            <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "#dc2626", color: "#fff", fontFamily: "inherit", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
+            <button onClick={next} style={{ padding: "8px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
           </div>
         </div>
       )}
@@ -3034,32 +3034,32 @@ function LevelTest({ onComplete, checkpoint }) {
   // INTRO SCREEN
   if (phase === "intro") return (
     <div style={{ animation: "fadeUp .4s", textAlign: "center" }}>
-      <div style={{ fontSize: 48, marginBottom: 16 }}>🎯</div>
-      <div style={{ fontSize: 20, fontWeight: 800, background: "linear-gradient(135deg,#1d4ed8,#059669)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: 12 }}>قياس مستوى التمكّن</div>
-      <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2, marginBottom: 20 }}>
+      <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-4)" }}></div>
+      <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, background: "linear-gradient(135deg,var(--c-accent),var(--c-success))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: "var(--sp-3)" }}>قياس مستوى التمكّن</div>
+      <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, marginBottom: "var(--sp-5)" }}>
         اختبار تكيّفي يقيس مستواك الحقيقي بدقة
         <br />يغطي: القواعد، المفردات، فهم القراءة، التواصل المهني
         <br />معتمد على معايير CEFR العالمية (A1 → C2)
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 20, textAlign: "right" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--sp-2)", marginBottom: "var(--sp-5)", textAlign: "right" }}>
         {[
-          { icon: "📐", label: "قواعد اللغة", desc: "تركيب الجمل والأزمنة" },
-          { icon: "📚", label: "المفردات", desc: "معاني الكلمات واستخدامها" },
-          { icon: "📖", label: "فهم القراءة", desc: "فهم النصوص والسياق" },
-          { icon: "🗣️", label: "التواصل", desc: "الرد المناسب في مواقف الحياة" },
+          { icon: "⌘", label: "قواعد اللغة", desc: "تركيب الجمل والأزمنة" },
+          { icon: "V", label: "المفردات", desc: "معاني الكلمات واستخدامها" },
+          { icon: "R", label: "فهم القراءة", desc: "فهم النصوص والسياق" },
+          { icon: "P", label: "التواصل", desc: "الرد المناسب في مواقف الحياة" },
         ].map((s, i) => (
-          <div key={i} style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 10, padding: 12 }}>
-            <div style={{ fontSize: 20, marginBottom: 4 }}>{s.icon}</div>
-            <div style={{ fontSize: 12, fontWeight: 700, color: "#18181b" }}>{s.label}</div>
-            <div style={{ fontSize: 12, color: "#71717a" }}>{s.desc}</div>
+          <div key={i} style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)" }}>
+            <div style={{ fontSize: "var(--fs-lg)", marginBottom: "var(--sp-1)" }}>{s.icon}</div>
+            <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: "var(--c-text)" }}>{s.label}</div>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{s.desc}</div>
           </div>
         ))}
       </div>
-      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: 10, padding: 12, marginBottom: 20 }}>
-        <div style={{ fontSize: 12, color: "#1d4ed8", fontWeight: 600 }}>⏱️ {TOTAL_QUESTIONS} سؤال — حوالي ١٠ دقائق</div>
-        <div style={{ fontSize: 12, color: "#71717a", marginTop: 4 }}>الأسئلة تتكيّف مع مستواك — تزداد صعوبة إذا أجبت صح</div>
+      <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-md)", padding: "var(--sp-3)", marginBottom: "var(--sp-5)" }}>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", fontWeight: 600 }}>— {TOTAL_QUESTIONS} سؤال — حوالي ١٠ دقائق</div>
+        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginTop: "var(--sp-1)" }}>الأسئلة تتكيّف مع مستواك — تزداد صعوبة إذا أجبت صح</div>
       </div>
-      <button onClick={startTest} style={{ padding: "12px 36px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#1d4ed8,#059669)", color: "#fafaf9", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>ابدأ القياس 🚀</button>
+      <button onClick={startTest} style={{ padding: "12px 36px", borderRadius: "var(--r-lg)", border: "none", background: "linear-gradient(135deg,var(--c-accent),var(--c-success))", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-base)", fontWeight: 700, cursor: "pointer" }}>ابدأ القياس </button>
     </div>
   );
 
@@ -3069,41 +3069,41 @@ function LevelTest({ onComplete, checkpoint }) {
     const totalCorrect = history.filter(h => h.correct).length;
     return (
       <div style={{ animation: "fadeUp .4s" }}>
-        <div style={{ textAlign: "center", marginBottom: 20 }}>
-          <div style={{ fontSize: 48, marginBottom: 8 }}>🏆</div>
-          <div style={{ fontSize: 13, color: "#71717a", marginBottom: 8 }}>مستواك في اللغة الإنجليزية</div>
-          <div style={{ display: "inline-block", padding: "12px 32px", borderRadius: 16, background: lvl.color + "18", border: "2px solid " + lvl.color + "40" }}>
-            <div style={{ fontSize: 36, fontWeight: 800, color: lvl.color, fontFamily: "'IBM Plex Mono'" }}>{lvl.code}</div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: "#18181b" }}>{lvl.name}</div>
-            <div style={{ fontSize: 12, color: "#52525b" }}>{lvl.nameEn}</div>
+        <div style={{ textAlign: "center", marginBottom: "var(--sp-5)" }}>
+          <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-2)" }}></div>
+          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>مستواك في اللغة الإنجليزية</div>
+          <div style={{ display: "inline-block", padding: "12px 32px", borderRadius: "var(--r-xl)", background: lvl.color + "18", border: "2px solid " + lvl.color + "40" }}>
+            <div style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: lvl.color, fontFamily: "'IBM Plex Mono'" }}>{lvl.code}</div>
+            <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-text)" }}>{lvl.name}</div>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{lvl.nameEn}</div>
           </div>
         </div>
 
-        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-          <div style={{ fontSize: 13, color: "#18181b", lineHeight: 2 }}>{lvl.desc}</div>
+        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)", lineHeight: 2 }}>{lvl.desc}</div>
         </div>
 
-        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", marginBottom: 10 }}>💡 نصيحة لك</div>
-          <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2 }}>{lvl.tip}</div>
+        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+          <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>نصيحة لك</div>
+          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>{lvl.tip}</div>
         </div>
 
         {/* Skill breakdown */}
-        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", marginBottom: 12 }}>📊 تحليل المهارات</div>
+        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+          <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>تحليل المهارات</div>
           {skillBreakdown && Object.keys(skillBreakdown).map(skill => {
             const s = skillBreakdown[skill];
             if (s.total === 0) return null;
             const pct = Math.round((s.correct / s.total) * 100);
             const barColor = pct >= 80 ? "#059669" : pct >= 50 ? "#1d4ed8" : "#dc2626";
             return (
-              <div key={skill} style={{ marginBottom: 10 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                  <div style={{ fontSize: 12, color: "#18181b" }}>{TYPE_ICONS[skill]} {TYPE_LABELS[skill]}</div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: barColor, fontFamily: "'IBM Plex Mono'" }}>{pct}%</div>
+              <div key={skill} style={{ marginBottom: "var(--sp-3)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-1)" }}>
+                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text)" }}>{TYPE_ICONS[skill]} {TYPE_LABELS[skill]}</div>
+                  <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: barColor, fontFamily: "'IBM Plex Mono'" }}>{pct}%</div>
                 </div>
-                <div style={{ height: 6, borderRadius: 3, background: "#e4e4e7", overflow: "hidden" }}>
-                  <div style={{ height: "100%", width: pct + "%", borderRadius: 3, background: barColor, transition: "width .5s" }} />
+                <div style={{ height: 6, borderRadius: "var(--r-sm)", background: "var(--c-border)", overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: pct + "%", borderRadius: "var(--r-sm)", background: barColor, transition: "width .5s" }} />
                 </div>
               </div>
             );
@@ -3111,9 +3111,9 @@ function LevelTest({ onComplete, checkpoint }) {
         </div>
 
         {/* Level breakdown */}
-        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", marginBottom: 12 }}>📈 الأداء حسب المستوى</div>
-          <div style={{ display: "flex", gap: 6, alignItems: "flex-end" }}>
+        <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+          <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>الأداء حسب المستوى</div>
+          <div style={{ display: "flex", gap: "var(--sp-2)", alignItems: "flex-end" }}>
             {CEFR_LEVELS.map((l, i) => {
               const att = levelAttempts[i];
               const sc = levelScores[i];
@@ -3121,28 +3121,28 @@ function LevelTest({ onComplete, checkpoint }) {
               const isFinal = i === finalLevel;
               return (
                 <div key={i} style={{ flex: 1, textAlign: "center" }}>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: att > 0 ? (pct >= 60 ? "#059669" : "#dc2626") : "#a1a1aa", marginBottom: 4 }}>{att > 0 ? pct + "%" : "—"}</div>
-                  <div style={{ height: Math.max(att > 0 ? pct * 0.6 : 4, 4), borderRadius: 4, background: att > 0 ? l.color : "#e4e4e7", border: isFinal ? "2px solid #1d4ed8" : "none", transition: "height .3s" }} />
-                  <div style={{ fontSize: 12, fontWeight: isFinal ? 800 : 600, color: isFinal ? "#fff" : "#71717a", marginTop: 4 }}>{l.code}</div>
+                  <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: att > 0 ? (pct >= 60 ? "#059669" : "#dc2626") : "#a1a1aa", marginBottom: "var(--sp-1)" }}>{att > 0 ? pct + "%" : "—"}</div>
+                  <div style={{ height: Math.max(att > 0 ? pct * 0.6 : 4, 4), borderRadius: "var(--r-sm)", background: att > 0 ? l.color : "#e4e4e7", border: isFinal ? "2px solid #1d4ed8" : "none", transition: "height .3s" }} />
+                  <div style={{ fontSize: "var(--fs-xs)", fontWeight: isFinal ? 800 : 600, color: isFinal ? "#fff" : "#71717a", marginTop: "var(--sp-1)" }}>{l.code}</div>
                 </div>
               );
             })}
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: 6, marginBottom: 8 }}>
-          <div style={{ flex: 1, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 10, padding: 12, textAlign: "center" }}>
-            <div style={{ fontSize: 20, fontWeight: 800, color: "#1d4ed8", fontFamily: "'IBM Plex Mono'" }}>{totalCorrect}/{history.length}</div>
-            <div style={{ fontSize: 12, color: "#71717a" }}>إجابات صحيحة</div>
+        <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-2)" }}>
+          <div style={{ flex: 1, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)", textAlign: "center" }}>
+            <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "'IBM Plex Mono'" }}>{totalCorrect}/{history.length}</div>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>إجابات صحيحة</div>
           </div>
-          <div style={{ flex: 1, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 10, padding: 12, textAlign: "center" }}>
-            <div style={{ fontSize: 20, fontWeight: 800, color: "#1d4ed8", fontFamily: "'IBM Plex Mono'" }}>{Math.round((Date.now() - startTime) / 1000)}s</div>
-            <div style={{ fontSize: 12, color: "#71717a" }}>الوقت</div>
+          <div style={{ flex: 1, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)", textAlign: "center" }}>
+            <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "'IBM Plex Mono'" }}>{Math.round((Date.now() - startTime) / 1000)}s</div>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>الوقت</div>
           </div>
         </div>
 
-        <div style={{ textAlign: "center", marginTop: 16 }}>
-          <button onClick={() => { setPhase("intro"); setQi(0); setPicked(null); setCurrentLevel(2); setHistory([]); setQuestions([]); setLevelScores({0:0,1:0,2:0,3:0,4:0,5:0}); setLevelAttempts({0:0,1:0,2:0,3:0,4:0,5:0}); setConsecutiveCorrect(0); setConsecutiveWrong(0); setFinalLevel(null); setSkillBreakdown(null); }} style={{ padding: "10px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#1d4ed8,#059669)", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔄 أعد الاختبار</button>
+        <div style={{ textAlign: "center", marginTop: "var(--sp-4)" }}>
+          <button onClick={() => { setPhase("intro"); setQi(0); setPicked(null); setCurrentLevel(2); setHistory([]); setQuestions([]); setLevelScores({0:0,1:0,2:0,3:0,4:0,5:0}); setLevelAttempts({0:0,1:0,2:0,3:0,4:0,5:0}); setConsecutiveCorrect(0); setConsecutiveWrong(0); setFinalLevel(null); setSkillBreakdown(null); }} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg,var(--c-accent),var(--c-success))", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>أعد الاختبار</button>
         </div>
       </div>
     );
@@ -3159,23 +3159,23 @@ function LevelTest({ onComplete, checkpoint }) {
   return (
     <div style={{ animation: "fadeUp .4s" }}>
       {/* Progress bar */}
-      <div style={{ marginBottom: 14 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-          <div style={{ fontSize: 12, color: "#71717a" }}>{"سؤال " + (qi + 1) + "/" + TOTAL_QUESTIONS}</div>
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <div style={{ fontSize: 12, padding: "2px 8px", borderRadius: 6, background: levelInfo.color + "18", color: levelInfo.color, fontWeight: 700 }}>{levelInfo.code}</div>
-            <div style={{ fontSize: 12, color: "#71717a" }}>{TYPE_ICONS[currentQ.type]} {TYPE_LABELS[currentQ.type]}</div>
+      <div style={{ marginBottom: "var(--sp-4)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-2)" }}>
+          <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (qi + 1) + "/" + TOTAL_QUESTIONS}</div>
+          <div style={{ display: "flex", gap: "var(--sp-2)", alignItems: "center" }}>
+            <div style={{ fontSize: "var(--fs-xs)", padding: "2px 8px", borderRadius: "var(--r-sm)", background: levelInfo.color + "18", color: levelInfo.color, fontWeight: 700 }}>{levelInfo.code}</div>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{TYPE_ICONS[currentQ.type]} {TYPE_LABELS[currentQ.type]}</div>
           </div>
         </div>
-        <div style={{ height: 4, borderRadius: 2, background: "#e4e4e7", overflow: "hidden" }}>
-          <div style={{ height: "100%", width: progress + "%", borderRadius: 2, background: "#1d4ed8", transition: "width .3s" }} />
+        <div style={{ height: 4, borderRadius: "var(--r-sm)", background: "var(--c-border)", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: progress + "%", borderRadius: "var(--r-sm)", background: "var(--c-accent)", transition: "width .3s" }} />
         </div>
       </div>
 
       {/* Question */}
-      <div style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: 12, padding: 16, marginBottom: 14 }}>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.9, color: "#18181b" }}>{displayQ.q}</div>
-        {currentQ.audio && <div style={{ textAlign: "center", marginTop: 8 }}><button onClick={() => speak(currentQ.audio, 0.85)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "#1e40af", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔊 استمع مرة ثانية</button></div>}
+      <div style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-4)" }}>
+        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.9, color: "var(--c-text)" }}>{displayQ.q}</div>
+        {currentQ.audio && <div style={{ textAlign: "center", marginTop: "var(--sp-2)" }}><button onClick={() => speak(currentQ.audio, 0.85)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>استمع مرة ثانية</button></div>}
       </div>
 
       {/* Options */}
@@ -3187,21 +3187,21 @@ function LevelTest({ onComplete, checkpoint }) {
         if (show && isCorrect) { bg = "rgba(5,150,105,0.12)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(220,38,38,0.12)"; brd = "rgba(217,119,6,0.3)"; }
         return (
-          <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 12, borderRadius: 10, marginBottom: 6, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1, transition: ".2s" }}>
+          <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: "var(--sp-2)", cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1, transition: ".2s" }}>
             {o}
-            {show && isCorrect && <span style={{ color: "#059669", fontSize: 12 }}> ✓</span>}
-            {show && isPicked && !isCorrect && <span style={{ color: "#dc2626", fontSize: 12 }}> ✗</span>}
+            {show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> </span>}
+            {show && isPicked && !isCorrect && <span style={{ color: "var(--c-error)", fontSize: "var(--fs-xs)" }}> ✗</span>}
           </div>
         );
       })}
 
       {/* Explanation after answer */}
       {picked !== null && (
-        <div style={{ textAlign: "center", marginTop: 12 }}>
-          <div style={{ fontSize: 12, color: picked === displayQ.ans ? "#059669" : "#dc2626", marginBottom: 8, fontWeight: 600 }}>
+        <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
+          <div style={{ fontSize: "var(--fs-xs)", color: picked === displayQ.ans ? "#059669" : "#dc2626", marginBottom: "var(--sp-2)", fontWeight: 600 }}>
             {picked === displayQ.ans ? "✓ إنجاز رائع!" : "✗ محاولة ممتازة — لاحظ الفرق"}
           </div>
-          <button onClick={next} style={{ padding: "8px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#1d4ed8,#059669)", color: "#fafaf9", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+          <button onClick={next} style={{ padding: "8px 24px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg,var(--c-accent),var(--c-success))", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>
             {qi + 1 >= TOTAL_QUESTIONS ? "🏁 عرض النتيجة" : "التالي ←"}
           </button>
         </div>
@@ -3286,7 +3286,7 @@ function MainApp({ currentUser, onLogout }) {
 
   // ===== ONBOARDING =====
   if (!store.start) return (
-    <div dir="rtl" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" }}>
       <style>{CSS}</style>
       <div style={{ maxWidth: 480, width: "100%", padding: "var(--sp-7)", animation: "fadeUp .5s" }}>
 
@@ -3393,9 +3393,9 @@ function MainApp({ currentUser, onLogout }) {
   const adaptedPhase = (() => {
     if (!levelResult || levelResult.level === undefined) return ph;
     const lvl = levelResult.level; // 0=A1 ... 5=C2
-    if (lvl <= 1) return { ...ph, n: 1, gap: 6 }; // A1-A2: slow
-    if (lvl <= 3) return { ...ph, n: 2, gap: 4 }; // B1-B2: medium
-    return { ...ph, n: 3, gap: 3 }; // C1-C2: fast
+    if (lvl <= 1) return { ...ph, n: 1, gap: "var(--sp-2)" }; // A1-A2: slow
+    if (lvl <= 3) return { ...ph, n: 2, gap: "var(--sp-1)" }; // B1-B2: medium
+    return { ...ph, n: 3, gap: "var(--sp-1)" }; // C1-C2: fast
   })();
   const pct = done.includes("session") ? 100 : 0;
 
@@ -3441,7 +3441,7 @@ function MainApp({ currentUser, onLogout }) {
   const Card = ({ children, s, cls }) => <div className={"card" + (cls ? " " + cls : "")} style={s}>{children}</div>;
 
   return (
-    <div dir="rtl" style={{ minHeight: "100vh", fontFamily: "'Noto Kufi Arabic',sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", fontFamily: "inherit" }}>
       <style>{CSS}</style>
       {/* Completion toast */}
       {conf && <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "var(--sp-3) 0", background: "var(--c-success)", color: "#fff", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-base)", animation: "fadeUp .3s" }}>جلسة اليوم مكتملة</div>}
@@ -3454,7 +3454,7 @@ function MainApp({ currentUser, onLogout }) {
         <header className="header">
           <div>
             <TaliqLogo size={32} />
-            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)", marginTop: 4 }}>{"الأسبوع " + wk + " من 12" + (levelResult ? " · " + levelResult.levelCode : "")}</div>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)", marginTop: "var(--sp-1)" }}>{"الأسبوع " + wk + " من 12" + (levelResult ? " · " + levelResult.levelCode : "")}</div>
           </div>
           <div className="header__badges">
             {(() => { let s = 0; const d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s > 0 ? <span className="badge badge--success">{s} يوم متواصل</span> : null; })()}
@@ -3471,62 +3471,62 @@ function MainApp({ currentUser, onLogout }) {
 
         {/* CRASH RECOVERY — Resume Banner */}
         {pendingCheckpoints && (
-          <div style={{ background: "rgba(29,78,216,0.08)", border: "1px solid rgba(29,78,216,0.2)", borderRadius: 12, padding: 14, marginBottom: 14, animation: "fadeUp .4s" }}>
+          <div style={{ background: "rgba(29,78,216,0.08)", border: "1px solid rgba(29,78,216,0.2)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-4)", animation: "fadeUp .4s" }}>
             <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>عندك نشاط لم يكتمل</div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--sp-2)" }}>
               {pendingCheckpoints.session && (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: 8, padding: "8px 12px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: "var(--r-sm)", padding: "8px 12px" }}>
                   <div>
-                    <div style={{ fontSize: 13, color: "#18181b" }}>{"جلسة: " + pendingCheckpoints.session.scenario}</div>
-                    <div style={{ fontSize: 11, color: "#71717a" }}>{"الخطوة " + (pendingCheckpoints.session.step + 1) + "/6"}</div>
+                    <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)" }}>{"جلسة: " + pendingCheckpoints.session.scenario}</div>
+                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"الخطوة " + (pendingCheckpoints.session.step + 1) + "/6"}</div>
                   </div>
-                  <div style={{ display: "flex", gap: 6 }}>
+                  <div style={{ display: "flex", gap: "var(--sp-2)" }}>
                     <button onClick={() => {
                       const cp = pendingCheckpoints.session;
                       const sc = DAILY_SCENARIOS.find(s => s.title === cp.scenario);
                       if (sc) { setChosenScenario(sc); setTab("today"); }
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-xs)", fontWeight: 700, cursor: "pointer" }}>كمّل</button>
                     <button onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-session"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
+                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>ابدأ من جديد</button>
                   </div>
                 </div>
               )}
               {pendingCheckpoints.quiz && (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: 8, padding: "8px 12px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: "var(--r-sm)", padding: "8px 12px" }}>
                   <div>
-                    <div style={{ fontSize: 13, color: "#18181b" }}>{"اختبار أسبوعي"}</div>
-                    <div style={{ fontSize: 11, color: "#71717a" }}>{"سؤال " + (pendingCheckpoints.quiz.qi + 1) + "/10 — " + pendingCheckpoints.quiz.score + " صحيح"}</div>
+                    <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)" }}>{"اختبار أسبوعي"}</div>
+                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (pendingCheckpoints.quiz.qi + 1) + "/10 — " + pendingCheckpoints.quiz.score + " صحيح"}</div>
                   </div>
-                  <div style={{ display: "flex", gap: 6 }}>
+                  <div style={{ display: "flex", gap: "var(--sp-2)" }}>
                     <button onClick={() => {
                       setTab("train"); setTrainMode("quiz");
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-xs)", fontWeight: 700, cursor: "pointer" }}>كمّل</button>
                     <button onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-quiz"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
+                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>ابدأ من جديد</button>
                   </div>
                 </div>
               )}
               {pendingCheckpoints.level && (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: 8, padding: "8px 12px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.02)", borderRadius: "var(--r-sm)", padding: "8px 12px" }}>
                   <div>
-                    <div style={{ fontSize: 13, color: "#18181b" }}>{"اختبار المستوى"}</div>
-                    <div style={{ fontSize: 11, color: "#71717a" }}>{"سؤال " + (pendingCheckpoints.level.qi + 1) + "/25"}</div>
+                    <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)" }}>{"اختبار المستوى"}</div>
+                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (pendingCheckpoints.level.qi + 1) + "/25"}</div>
                   </div>
-                  <div style={{ display: "flex", gap: 6 }}>
+                  <div style={{ display: "flex", gap: "var(--sp-2)" }}>
                     <button onClick={() => {
                       setTab("train"); setTrainMode("level");
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#1d4ed8", color: "#fafaf9", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-xs)", fontWeight: 700, cursor: "pointer" }}>كمّل</button>
                     <button onClick={() => {
                       (async () => { try { await userStorage.delete("checkpoint-level"); } catch(e) {} })();
                       setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
-                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "#71717a", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
+                    }} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "1px solid rgba(0,0,0,0.08)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>ابدأ من جديد</button>
                   </div>
                 </div>
               )}
@@ -3539,17 +3539,17 @@ function MainApp({ currentUser, onLogout }) {
           <div>
             <Card><div style={{ fontSize: "var(--fs-base)", color: "var(--c-text-secondary)", textAlign: "center", lineHeight: 1.8, fontStyle: "italic" }}>{MOTIV[dn % MOTIV.length]}</div></Card>
             {/* FIX 1: Scenario choice — user can accept or browse */}
-            <Card s={{ padding: 14 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                <div style={{ fontSize: 24 }}>{todayScenario.icon}</div>
+            <Card s={{ padding: "var(--sp-4)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", marginBottom: "var(--sp-3)" }}>
+                <div style={{ fontSize: "var(--fs-xl)" }}>{todayScenario.icon}</div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8" }}>{"جلسة اليوم: " + todayScenario.title}</div>
-                  <div style={{ fontSize: 12, color: "#71717a" }}>مقترح بناءً على تقدمك</div>
+                  <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)" }}>{"جلسة اليوم: " + todayScenario.title}</div>
+                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>مقترح بناءً على تقدمك</div>
                 </div>
               </div>
-              <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 6 }}>
+              <div style={{ display: "flex", gap: "var(--sp-2)", overflowX: "auto", paddingBottom: 6 }}>
                 {DAILY_SCENARIOS.slice(0, 14).map((s, i) => (
-                  <button key={i} onClick={() => { setChosenScenario(s); }} style={{ padding: "4px 10px", borderRadius: 8, border: "1px solid " + ((chosenScenario || todayScenario).title === s.title ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.04)"), background: (chosenScenario || todayScenario).title === s.title ? "rgba(29,78,216,0.1)" : "transparent", color: (chosenScenario || todayScenario).title === s.title ? "#1d4ed8" : "#a1a1aa", fontSize: 16, cursor: "pointer", flexShrink: 0, whiteSpace: "nowrap" }} title={s.title}>{s.icon}</button>
+                  <button key={i} onClick={() => { setChosenScenario(s); }} style={{ padding: "4px 10px", borderRadius: "var(--r-sm)", border: "1px solid " + ((chosenScenario || todayScenario).title === s.title ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.04)"), background: (chosenScenario || todayScenario).title === s.title ? "rgba(29,78,216,0.1)" : "transparent", color: (chosenScenario || todayScenario).title === s.title ? "#1d4ed8" : "#a1a1aa", fontSize: "var(--fs-md)", cursor: "pointer", flexShrink: 0, whiteSpace: "nowrap" }} title={s.title}>{s.icon}</button>
                 ))}
               </div>
             </Card>
@@ -3573,18 +3573,18 @@ function MainApp({ currentUser, onLogout }) {
                     // Variable reward messages (surprise = dopamine spike)
                     const surprises = [
                       null, null, // normal
-                      "🏆 إنجاز: أول ٣ جلسات متتالية!",
+                      " إنجاز: أول ٣ جلسات متتالية!",
                       null,
-                      "💎 حفظت ١٥ جملة — أكثر من معظم متعلمي اللغة!",
+                      "حفظت ١٥ جملة — أكثر من معظم متعلمي اللغة",
                       null, null,
-                      "🔥 أسبوع كامل! عقلك بدأ يبني مسارات عصبية جديدة",
+                      "أسبوع كامل — عقلك بدأ يبني مسارات عصبية جديدة",
                       null, null,
-                      "⭐ ١٠ جلسات! صرت تعرف ٣٠ جملة تقدر تستخدمها في أي مكان",
+                      "١٠ جلسات! صرت تعرف ٣٠ جملة تقدر تستخدمها في أي مكان",
                       null, null, null,
-                      "🎖️ أسبوعين! بروكا (منطقة الكلام في دماغك) صارت أنشط",
+                      "أسبوعين — منطقة الكلام في دماغك صارت أنشط",
                     ];
                     const surprise = surprises[Math.min(sessCount - 1, surprises.length - 1)];
-                    setShowXpPop(surprise || ("+" + earned + " تمكّن ✦" + (bonus > 0 ? " 🎁 مكافأة!" : "")));
+                    setShowXpPop(surprise || ("+" + earned + " تمكّن " + (bonus > 0 ? " — مكافأة" : "")));
                     setTimeout(() => setShowXpPop(null), surprise ? 4000 : 2000);
                     (async () => { try { await userStorage.set("user-xp", String(newXp)); } catch(e) {} })();
                   }
@@ -3720,17 +3720,17 @@ function MainApp({ currentUser, onLogout }) {
                       setSrsData(newSrs);
                       (async () => { try { await userStorage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                     }
-                  }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(5,150,105,0.06)" : isDue ? "rgba(29,78,216,0.04)" : "rgba(0,0,0,0.015)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : isDue ? "rgba(29,78,216,0.15)" : "rgba(0,0,0,0.03)"), marginBottom: 6, cursor: "pointer" }}>
-                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div>
+                  }} style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", padding: "var(--sp-3)", borderRadius: "var(--r-md)", background: r >= 5 ? "rgba(5,150,105,0.06)" : isDue ? "rgba(29,78,216,0.04)" : "rgba(0,0,0,0.015)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : isDue ? "rgba(29,78,216,0.15)" : "rgba(0,0,0,0.03)"), marginBottom: "var(--sp-2)", cursor: "pointer" }}>
+                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-xs)", fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 15, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
-                      <div style={{ fontSize: 12, color: "#71717a", marginTop: 2 }}>{p.ar}</div>
+                      <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
+                      <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginTop: "var(--sp-1)" }}>{p.ar}</div>
                     </div>
-                    {isDue && <div style={{ fontSize: 12, padding: "2px 6px", borderRadius: 4, background: "rgba(29,78,216,0.15)", color: "#1d4ed8", fontWeight: 600 }}>مراجعة</div>}
+                    {isDue && <div style={{ fontSize: "var(--fs-xs)", padding: "2px 6px", borderRadius: "var(--r-sm)", background: "rgba(29,78,216,0.15)", color: "var(--c-accent)", fontWeight: 600 }}>مراجعة</div>}
                   </div>
                 );
               })}
-              <div style={{ fontSize: 12, color: "#71717a", textAlign: "center", marginTop: 10 }}>اضغط على الدائرة كل مرة ترددّ — الهدف ٥ لكل جملة</div>
+              <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", textAlign: "center", marginTop: "var(--sp-3)" }}>اضغط على الدائرة كل مرة ترددّ — الهدف ٥ لكل جملة</div>
             </Card>
             {/* SRS Review Section */}
             {(() => {
@@ -3751,8 +3751,8 @@ function MainApp({ currentUser, onLogout }) {
               if (dueItems.length === 0) return null;
               return (
                 <Card s={{ borderColor: "rgba(29,78,216,0.15)" }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8", marginBottom: 10 }}>{"🔄 مراجعة مطلوبة (" + dueItems.length + " جملة)"}</div>
-                  <div style={{ fontSize: 12, color: "#71717a", marginBottom: 10 }}>هذه الجمل حان وقت مراجعتها حسب نظام التكرار المتباعد</div>
+                  <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>{"🔄 مراجعة مطلوبة (" + dueItems.length + " جملة)"}</div>
+                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)" }}>هذه الجمل حان وقت مراجعتها حسب نظام التكرار المتباعد</div>
                   {dueItems.slice(0, 5).map((item, i) => {
                     const k = "srs-" + item.srsKey;
                     const r = reps[k] || 0;
@@ -3767,13 +3767,13 @@ function MainApp({ currentUser, onLogout }) {
                           setSrsData(newSrs);
                           (async () => { try { await userStorage.set("srs-data", JSON.stringify(newSrs)); } catch(e) {} })();
                         }
-                      }} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, borderRadius: 10, background: r >= 5 ? "rgba(5,150,105,0.06)" : "rgba(29,78,216,0.04)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : "rgba(29,78,216,0.1)"), marginBottom: 6, cursor: "pointer" }}>
-                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
+                      }} style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", padding: "var(--sp-3)", borderRadius: "var(--r-md)", background: r >= 5 ? "rgba(5,150,105,0.06)" : "rgba(29,78,216,0.04)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : "rgba(29,78,216,0.1)"), marginBottom: "var(--sp-2)", cursor: "pointer" }}>
+                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-xs)", fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
                         <div style={{ flex: 1 }}>
-                          <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: 14, direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{item.phrase.en}</div>
-                          <div style={{ fontSize: 12, color: "#71717a" }}>{item.phrase.ar} — {item.icon} {item.cat}</div>
+                          <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{item.phrase.en}</div>
+                          <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{item.phrase.ar} — {item.icon} {item.cat}</div>
                         </div>
-                        <div style={{ fontSize: 12, color: "#1d4ed8" }}>{item.daysSince + "d"}</div>
+                        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)" }}>{item.daysSince + "d"}</div>
                       </div>
                     );
                   })}
@@ -3786,30 +3786,30 @@ function MainApp({ currentUser, onLogout }) {
         {/* PROGRESS */}
         {tab === "progress" && (
           <div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "var(--sp-2)", marginBottom: "var(--sp-3)" }}>
               {[
                 { l: "أيام", v: Object.values(store.days).filter(d => d.length >= 1).length, c: "#1d4ed8" },
                 { l: "أسبوع", v: wk + "/12", c: "#1d4ed8" },
-                { l: "سلسلة 🔥", v: (() => { let s = 0, d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s; })(), c: "#1d4ed8" },
+                { l: "سلسلة ", v: (() => { let s = 0, d = new Date(); for (let i = 0; i < 100; i++) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); if (store.days[k] && store.days[k].length >= 1) { s++; d.setDate(d.getDate() - 1); } else if (i === 0) { d.setDate(d.getDate() - 1); } else break; } return s; })(), c: "#1d4ed8" },
               ].map((s, i) => (
-                <Card key={i} s={{ padding: 12 }}>
+                <Card key={i} s={{ padding: "var(--sp-3)" }}>
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: 20, fontWeight: 800, color: s.c, fontFamily: "'IBM Plex Mono'" }}>{s.v}</div>
-                    <div style={{ fontSize: 12, color: "#a1a1aa", marginTop: 4 }}>{s.l}</div>
+                    <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: s.c, fontFamily: "'IBM Plex Mono'" }}>{s.v}</div>
+                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)", marginTop: "var(--sp-1)" }}>{s.l}</div>
                   </div>
                 </Card>
               ))}
             </div>
             <Card>
-              <div style={{ display: "flex", alignItems: "center", gap: 3, justifyContent: "center", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-1)", justifyContent: "center", flexWrap: "wrap" }}>
                 {Array.from({ length: 12 }, (_, i) => i + 1).map((w) => (
-                  <div key={w} style={{ width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, border: "2px solid " + (w <= wk ? "#1d4ed8" : "#e4e4e7"), background: w < wk ? "#1d4ed8" : "transparent", color: w < wk ? "#fafaf9" : w === wk ? "#1d4ed8" : "#a1a1aa", animation: "none", opacity: w > wk ? 0.2 : 1 }}>{w < wk ? "✓" : w}</div>
+                  <div key={w} style={{ width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-xs)", fontWeight: 700, border: "2px solid " + (w <= wk ? "#1d4ed8" : "#e4e4e7"), background: w < wk ? "#1d4ed8" : "transparent", color: w < wk ? "#fafaf9" : w === wk ? "#1d4ed8" : "#a1a1aa", animation: "none", opacity: w > wk ? 0.2 : 1 }}>{w < wk ? "✓" : w}</div>
                 ))}
               </div>
             </Card>
             {/* FIX 3: Smart Weekly Summary */}
             {sessionHistory.length >= 3 && <Card s={{ borderColor: "rgba(29,78,216,0.1)" }}>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8", marginBottom: 10 }}>📋 ملخص الأسبوع</div>
+              <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>📋 ملخص الأسبوع</div>
               {(() => {
                 const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
                 const weekStr = weekAgo.toISOString().slice(0, 10);
@@ -3820,19 +3820,19 @@ function MainApp({ currentUser, onLogout }) {
                 const weakScenarios = thisWeek.filter(s => { const rs = s.recallScore || {}; return Object.values(rs).filter(v => v === "forgot").length > 0; }).map(s => s.scenario);
                 const uniqueWeak = [...new Set(weakScenarios)];
                 return (
-                  <div style={{ fontSize: 13, color: "#52525b", lineHeight: 2.2 }}>
+                  <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2.2 }}>
                     <div>{"✅ " + thisWeek.length + " جلسة هالأسبوع — " + scenarios.length + " موقف مختلف"}</div>
-                    <div>{"💬 " + totalPh + " جملة تمرّنت عليها — تذكّرت " + recalled + " منها"}</div>
-                    {uniqueWeak.length > 0 && <div style={{ color: "#1d4ed8" }}>{"🔄 تحتاج مراجعة: " + uniqueWeak.slice(0, 3).join("، ")}</div>}
-                    {uniqueWeak.length === 0 && thisWeek.length >= 5 && <div style={{ color: "#059669" }}>{"🔥 أسبوع إنجاز مميز! ما نسيت أي جملة"}</div>}
-                    {thisWeek.length < 3 && <div style={{ color: "#71717a" }}>{"💡 حاول تسوي ٥ جلسات الأسبوع الجاي للحصول على أفضل نتيجة"}</div>}
+                    <div>{": " + totalPh + " جملة تمرّنت عليها — تذكّرت " + recalled + " منها"}</div>
+                    {uniqueWeak.length > 0 && <div style={{ color: "var(--c-accent)" }}>{"🔄 تحتاج مراجعة: " + uniqueWeak.slice(0, 3).join("، ")}</div>}
+                    {uniqueWeak.length === 0 && thisWeek.length >= 5 && <div style={{ color: "var(--c-success)" }}>{" أسبوع إنجاز مميز! ما نسيت أي جملة"}</div>}
+                    {thisWeek.length < 3 && <div style={{ color: "var(--c-text-secondary)" }}>{"حاول تسوي ٥ جلسات الأسبوع الجاي للحصول على أفضل نتيجة"}</div>}
                   </div>
                 );
               })()}
             </Card>}
             {/* Smart Progress — Session History */}
             {sessionHistory.length > 0 && <Card>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#dc2626", marginBottom: 10 }}>🧠 أداء الذاكرة</div>
+              <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-error)", marginBottom: "var(--sp-3)" }}>أداء الذاكرة</div>
               {(() => {
                 const recent = sessionHistory.slice(-10);
                 const totalPhrases = recent.reduce((sum, s) => sum + (s.phrasesCount || 0), 0);
@@ -3842,34 +3842,34 @@ function MainApp({ currentUser, onLogout }) {
                 const recallPct = totalPhrases > 0 ? Math.round((recalled / totalPhrases) * 100) : 0;
                 return (
                   <div>
-                    <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
-                      <div style={{ flex: 1, textAlign: "center", background: "rgba(5,150,105,0.06)", borderRadius: 10, padding: 10 }}>
-                        <div style={{ fontSize: 22, fontWeight: 800, color: "#059669", fontFamily: "'IBM Plex Mono'" }}>{recalled}</div>
-                        <div style={{ fontSize: 12, color: "#71717a" }}>تذكّرتها</div>
+                    <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-3)" }}>
+                      <div style={{ flex: 1, textAlign: "center", background: "rgba(5,150,105,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)" }}>
+                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-success)", fontFamily: "'IBM Plex Mono'" }}>{recalled}</div>
+                        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>تذكّرتها</div>
                       </div>
-                      <div style={{ flex: 1, textAlign: "center", background: "rgba(29,78,216,0.06)", borderRadius: 10, padding: 10 }}>
-                        <div style={{ fontSize: 22, fontWeight: 800, color: "#1d4ed8", fontFamily: "'IBM Plex Mono'" }}>{partial}</div>
-                        <div style={{ fontSize: 12, color: "#71717a" }}>تقريباً</div>
+                      <div style={{ flex: 1, textAlign: "center", background: "rgba(29,78,216,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)" }}>
+                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "'IBM Plex Mono'" }}>{partial}</div>
+                        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>تقريباً</div>
                       </div>
-                      <div style={{ flex: 1, textAlign: "center", background: "rgba(220,38,38,0.06)", borderRadius: 10, padding: 10 }}>
-                        <div style={{ fontSize: 22, fontWeight: 800, color: "#dc2626", fontFamily: "'IBM Plex Mono'" }}>{forgot}</div>
-                        <div style={{ fontSize: 12, color: "#71717a" }}>نسيتها</div>
+                      <div style={{ flex: 1, textAlign: "center", background: "rgba(220,38,38,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)" }}>
+                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-error)", fontFamily: "'IBM Plex Mono'" }}>{forgot}</div>
+                        <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>نسيتها</div>
                       </div>
                     </div>
-                    <div style={{ height: 6, borderRadius: 3, background: "#e4e4e7", overflow: "hidden", marginBottom: 8 }}>
-                      <div style={{ height: "100%", width: recallPct + "%", borderRadius: 3, background: recallPct >= 70 ? "#059669" : recallPct >= 40 ? "#1d4ed8" : "#dc2626", transition: "width .5s" }} />
+                    <div style={{ height: 6, borderRadius: "var(--r-sm)", background: "var(--c-border)", overflow: "hidden", marginBottom: "var(--sp-2)" }}>
+                      <div style={{ height: "100%", width: recallPct + "%", borderRadius: "var(--r-sm)", background: recallPct >= 70 ? "#059669" : recallPct >= 40 ? "#1d4ed8" : "#dc2626", transition: "width .5s" }} />
                     </div>
-                    <div style={{ fontSize: 12, color: "#52525b", textAlign: "center" }}>{recallPct >= 70 ? "ذاكرتك قوية! الجمل ترسخ" : recallPct >= 40 ? "تتحسن — استمر بالمراجعة اليومية" : "ركّز على خطوة التذكّر — ردّد الجمل المنسية أكثر"}</div>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: "#71717a", marginTop: 10, marginBottom: 6 }}>آخر الجلسات:</div>
+                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", textAlign: "center" }}>{recallPct >= 70 ? "ذاكرتك قوية! الجمل ترسخ" : recallPct >= 40 ? "تتحسن — استمر بالمراجعة اليومية" : "ركّز على خطوة التذكّر — ردّد الجمل المنسية أكثر"}</div>
+                    <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: "var(--c-text-secondary)", marginTop: "var(--sp-3)", marginBottom: "var(--sp-2)" }}>آخر الجلسات:</div>
                     {recent.slice(-5).reverse().map((s, i) => {
                       const rs = s.recallScore || {};
                       const g = Object.values(rs).filter(v => v === "good").length;
                       const t = s.phrasesCount || 3;
                       return (
-                        <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: 8, borderRadius: 8, background: "rgba(0,0,0,0.02)", marginBottom: 4 }}>
-                          <div style={{ fontSize: 12, color: "#71717a", minWidth: 55 }}>{s.date ? s.date.slice(5) : ""}</div>
-                          <div style={{ fontSize: 13, color: "#18181b", flex: 1 }}>{s.scenario}</div>
-                          <div style={{ fontSize: 12, fontWeight: 700, color: g === t ? "#059669" : g > 0 ? "#1d4ed8" : "#dc2626", fontFamily: "'IBM Plex Mono'" }}>{g + "/" + t}</div>
+                        <div key={i} style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)", padding: "var(--sp-2)", borderRadius: "var(--r-sm)", background: "rgba(0,0,0,0.02)", marginBottom: "var(--sp-1)" }}>
+                          <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", minWidth: 55 }}>{s.date ? s.date.slice(5) : ""}</div>
+                          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)", flex: 1 }}>{s.scenario}</div>
+                          <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: g === t ? "#059669" : g > 0 ? "#1d4ed8" : "#dc2626", fontFamily: "'IBM Plex Mono'" }}>{g + "/" + t}</div>
                         </div>
                       );
                     })}
@@ -3878,36 +3878,36 @@ function MainApp({ currentUser, onLogout }) {
               })()}
             </Card>}
             {levelResult && <Card>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", marginBottom: 12 }}>🎯 مستوى اللغة (CEFR)</div>
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <div style={{ width: 60, height: 60, borderRadius: 12, background: CEFR_LEVELS[levelResult.level].color + "18", border: "2px solid " + CEFR_LEVELS[levelResult.level].color + "40", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: CEFR_LEVELS[levelResult.level].color, fontFamily: "'IBM Plex Mono'" }}>{levelResult.levelCode}</div>
+              <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}> مستوى اللغة (CEFR)</div>
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-4)" }}>
+                <div style={{ width: 60, height: 60, borderRadius: "var(--r-lg)", background: CEFR_LEVELS[levelResult.level].color + "18", border: "2px solid " + CEFR_LEVELS[levelResult.level].color + "40", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: CEFR_LEVELS[levelResult.level].color, fontFamily: "'IBM Plex Mono'" }}>{levelResult.levelCode}</div>
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: "#18181b" }}>{CEFR_LEVELS[levelResult.level].name}</div>
-                  <div style={{ fontSize: 12, color: "#71717a" }}>{CEFR_LEVELS[levelResult.level].nameEn} — {levelResult.date}</div>
-                  {levelResult.skills && <div style={{ display: "flex", gap: 6, marginTop: 6, flexWrap: "wrap" }}>
+                  <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-text)" }}>{CEFR_LEVELS[levelResult.level].name}</div>
+                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{CEFR_LEVELS[levelResult.level].nameEn} — {levelResult.date}</div>
+                  {levelResult.skills && <div style={{ display: "flex", gap: "var(--sp-2)", marginTop: "var(--sp-2)", flexWrap: "wrap" }}>
                     {Object.keys(levelResult.skills).map(sk => {
                       const s = levelResult.skills[sk];
                       if (!s || s.total === 0) return null;
                       const pct = Math.round((s.correct / s.total) * 100);
-                      return <div key={sk} style={{ fontSize: 12, padding: "2px 6px", borderRadius: 4, background: (pct >= 60 ? "rgba(5,150,105,0.1)" : "rgba(217,119,6,0.1)"), color: pct >= 60 ? "#059669" : "#dc2626" }}>{TYPE_ICONS[sk]} {pct}%</div>;
+                      return <div key={sk} style={{ fontSize: "var(--fs-xs)", padding: "2px 6px", borderRadius: "var(--r-sm)", background: (pct >= 60 ? "rgba(5,150,105,0.1)" : "rgba(217,119,6,0.1)"), color: pct >= 60 ? "#059669" : "#dc2626" }}>{TYPE_ICONS[sk]} {pct}%</div>;
                     })}
                   </div>}
                 </div>
               </div>
-              <div style={{ textAlign: "center", marginTop: 10 }}>
-                <button onClick={() => { setTab("train"); setTrainMode("level"); }} style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(29,78,216,0.15)", background: "transparent", color: "#1d4ed8", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>🔄 أعد الاختبار</button>
+              <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
+                <button onClick={() => { setTab("train"); setTrainMode("level"); }} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.15)", background: "transparent", color: "var(--c-accent)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>>أعد الاختبار</button>
               </div>
             </Card>}
             {quizResults && quizResults.length > 0 && <Card>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", marginBottom: 12 }}>📊 نتائج الاختبارات</div>
-              <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height: 100, padding: "0 4px" }}>
+              <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>نتائج الاختبارات</div>
+              <div style={{ display: "flex", alignItems: "flex-end", gap: "var(--sp-2)", height: 100, padding: "0 4px" }}>
                 {quizResults.slice(-10).map((r, i) => (
-                  <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: r.pct >= 80 ? "#059669" : r.pct >= 50 ? "#1d4ed8" : "#dc2626" }}>{r.pct + "%"}</div>
-                    <div style={{ width: "100%", height: Math.max(r.pct * 0.8, 4), borderRadius: 4, background: r.pct >= 80 ? "#059669" : r.pct >= 50 ? "#1d4ed8" : "#dc2626", transition: "height .3s" }} />
-                    <div style={{ fontSize: 12, color: "#a1a1aa" }}>{r.date ? r.date.slice(5) : ""}</div>
+                  <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--sp-1)" }}>
+                    <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: r.pct >= 80 ? "#059669" : r.pct >= 50 ? "#1d4ed8" : "#dc2626" }}>{r.pct + "%"}</div>
+                    <div style={{ width: "100%", height: Math.max(r.pct * 0.8, 4), borderRadius: "var(--r-sm)", background: r.pct >= 80 ? "#059669" : r.pct >= 50 ? "#1d4ed8" : "#dc2626", transition: "height .3s" }} />
+                    <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)" }}>{r.date ? r.date.slice(5) : ""}</div>
                   </div>
                 ))}
               </div>
@@ -3915,42 +3915,42 @@ function MainApp({ currentUser, onLogout }) {
                 const last = quizResults[quizResults.length - 1].pct;
                 const prev = quizResults[quizResults.length - 2].pct;
                 const diff = last - prev;
-                return <div style={{ textAlign: "center", marginTop: 8, fontSize: 13, fontWeight: 700, color: diff >= 0 ? "#059669" : "#dc2626" }}>{diff >= 0 ? "📈 +" + diff + "%" : "📉 " + diff + "%"} مقارنة بالاختبار السابق</div>;
+                return <div style={{ textAlign: "center", marginTop: "var(--sp-2)", fontSize: "var(--fs-sm)", fontWeight: 700, color: diff >= 0 ? "#059669" : "#dc2626" }}>{diff >= 0 ? "+" + diff + "%" : "" + diff + "%"} مقارنة بالاختبار السابق</div>;
               })()}
             </Card>}
             {/* Voice Settings */}
             <Card>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#1d4ed8", marginBottom: 10 }}>🔊 تفضيلاتك الصوتية</div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                <div style={{ fontSize: 13, color: "#52525b" }}>الحالة:</div>
+              <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>>تفضيلاتك الصوتية</div>
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)", marginBottom: "var(--sp-3)" }}>
+                <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)" }}>الحالة:</div>
                 <VoiceBadge />
               </div>
 
               {/* Test current voice */}
-              <div style={{ marginBottom: 14 }}>
-                <button onClick={() => speak("Hello! Nice to meet you. How are you today?", 0.9)} style={{ padding: "8px 20px", borderRadius: 10, border: "none", background: "rgba(29,78,216,0.1)", color: "#1d4ed8", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>🔊 جرّب الصوت الحالي</button>
+              <div style={{ marginBottom: "var(--sp-4)" }}>
+                <button onClick={() => speak("Hello! Nice to meet you. How are you today?", 0.9)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "rgba(29,78,216,0.1)", color: "var(--c-accent)", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 600, cursor: "pointer" }}>>جرّب الصوت الحالي</button>
               </div>
               {/* FIX 8: Accent selection */}
-              <div style={{ fontSize: 12, color: "#71717a", marginBottom: 6 }}>اللهجة:</div>
-              <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
+              <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>اللهجة:</div>
+              <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-4)" }}>
                 {[{ code: "en-US", label: "🇺🇸 أمريكي" }, { code: "en-GB", label: "🇬🇧 بريطاني" }, { code: "en-AU", label: "🇦🇺 أسترالي" }].map(a => (
-                  <button key={a.code} onClick={() => { setAccent(a.code); speak("Hello! How are you today?", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (getAccent() === a.code ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)"), background: getAccent() === a.code ? "rgba(29,78,216,0.1)" : "transparent", color: getAccent() === a.code ? "#1d4ed8" : "#71717a", fontSize: 12, cursor: "pointer" }}>{a.label}</button>
+                  <button key={a.code} onClick={() => { setAccent(a.code); speak("Hello! How are you today?", 0.9); }} style={{ padding: "6px 12px", borderRadius: "var(--r-sm)", border: "1px solid " + (getAccent() === a.code ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)"), background: getAccent() === a.code ? "rgba(29,78,216,0.1)" : "transparent", color: getAccent() === a.code ? "#1d4ed8" : "#71717a", fontSize: "var(--fs-xs)", cursor: "pointer" }}>{a.label}</button>
                 ))}
               </div>
 
               {/* Tier explanation */}
-              <div style={{ background: "rgba(0,0,0,0.02)", borderRadius: 10, padding: 12, marginBottom: 14 }}>
-                <div style={{ fontSize: 12, color: "#18181b", lineHeight: 2.2 }}>
-                  <div style={{ marginBottom: 4 }}><span style={{ color: "#1d4ed8" }}>المستوى المجاني:</span> التطبيق يختار تلقائياً أفضل صوت متاح في متصفحك</div>
-                  <div style={{ fontSize: 12, color: "#71717a" }}>Edge = أصوات Neural ممتازة | Chrome = Google voices جيدة | Safari = أصوات Apple</div>
-                  <div style={{ marginTop: 8, marginBottom: 4 }}><span style={{ color: "#059669" }}>المستوى المدفوع (اختياري):</span> صوت بشري حقيقي عبر OpenAI</div>
-                  <div style={{ fontSize: 12, color: "#71717a" }}>أفضل جودة — connected speech + نبرة طبيعية (~$0.10/شهر)</div>
+              <div style={{ background: "rgba(0,0,0,0.02)", borderRadius: "var(--r-md)", padding: "var(--sp-3)", marginBottom: "var(--sp-4)" }}>
+                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text)", lineHeight: 2.2 }}>
+                  <div style={{ marginBottom: "var(--sp-1)" }}><span style={{ color: "var(--c-accent)" }}>المستوى المجاني:</span> التطبيق يختار تلقائياً أفضل صوت متاح في متصفحك</div>
+                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>Edge = أصوات Neural ممتازة | Chrome = Google voices جيدة | Safari = أصوات Apple</div>
+                  <div style={{ marginTop: "var(--sp-2)", marginBottom: "var(--sp-1)" }}><span style={{ color: "var(--c-success)" }}>المستوى المدفوع (اختياري):</span> صوت بشري حقيقي عبر OpenAI</div>
+                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>أفضل جودة — connected speech + نبرة طبيعية (~$0.10/شهر)</div>
                 </div>
               </div>
 
               {/* OpenAI API key (optional) */}
-              <div style={{ fontSize: 12, color: "#71717a", marginBottom: 6 }}>مفتاح OpenAI (اختياري):</div>
-              <div style={{ marginBottom: 10 }}>
+              <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>مفتاح OpenAI (اختياري):</div>
+              <div style={{ marginBottom: "var(--sp-3)" }}>
                 <input
                   type="password"
                   placeholder="sk-... اتركه فاضي للمجاني"
@@ -3960,33 +3960,33 @@ function MainApp({ currentUser, onLogout }) {
                     setOpenAIKey(key || null);
                     try { await userStorage.set("openai-tts-key", key); } catch(ex) {}
                   }}
-                  style={{ width: "100%", padding: 12, borderRadius: 10, fontFamily: "'IBM Plex Mono'", fontSize: 13, direction: "ltr", textAlign: "left", background: "rgba(0,0,0,0.02)", border: "1px solid rgba(29,78,216,0.15)", color: "#18181b", outline: "none" }}
+                  style={{ width: "100%", padding: "var(--sp-3)", borderRadius: "var(--r-md)", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", background: "rgba(0,0,0,0.02)", border: "1px solid rgba(29,78,216,0.15)", color: "var(--c-text)", outline: "none" }}
                 />
               </div>
               {getOpenAIKey() && <div>
-                <div style={{ fontSize: 12, color: "#71717a", marginBottom: 6 }}>الصوت:</div>
-                <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
+                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>الصوت:</div>
+                <div style={{ display: "flex", gap: "var(--sp-2)", flexWrap: "wrap", marginBottom: "var(--sp-2)" }}>
                   {["nova", "alloy", "echo", "fable", "onyx", "shimmer"].map(v => (
-                    <button key={v} onClick={async () => { setTTSVoice(v); try { await userStorage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid " + (getTTSVoice() === v ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)"), background: getTTSVoice() === v ? "rgba(29,78,216,0.1)" : "transparent", color: getTTSVoice() === v ? "#1d4ed8" : "#71717a", fontFamily: "'IBM Plex Mono'", fontSize: 12, cursor: "pointer" }}>{v}</button>
+                    <button key={v} onClick={async () => { setTTSVoice(v); try { await userStorage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: "var(--r-sm)", border: "1px solid " + (getTTSVoice() === v ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)"), background: getTTSVoice() === v ? "rgba(29,78,216,0.1)" : "transparent", color: getTTSVoice() === v ? "#1d4ed8" : "#71717a", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-xs)", cursor: "pointer" }}>{v}</button>
                   ))}
                 </div>
-                <div style={{ fontSize: 12, color: "#a1a1aa" }}>nova = أنثى طبيعية | onyx = ذكر واثق | shimmer = أنثى دافئة | echo = ذكر هادئ</div>
+                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)" }}>nova = أنثى طبيعية | onyx = ذكر واثق | shimmer = أنثى دافئة | echo = ذكر هادئ</div>
               </div>}
-              {!getOpenAIKey() && <div style={{ fontSize: 12, color: "#059669", background: "rgba(5,150,105,0.06)", borderRadius: 8, padding: 10 }}>💡 نصيحة: افتح التطبيق في متصفح Edge للحصول على أفضل صوت مجاني (Microsoft Neural voices)</div>}
+              {!getOpenAIKey() && <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", background: "rgba(5,150,105,0.06)", borderRadius: "var(--r-sm)", padding: "var(--sp-3)" }}>نصيحة: افتح التطبيق في متصفح Edge للحصول على أفضل صوت مجاني (Microsoft Neural voices)</div>}
             </Card>
             {/* Profile & Logout */}
             {currentUser && <Card>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
-                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#1d4ed8,#059669)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, fontWeight: 800, color: "#fafaf9", flexShrink: 0 }}>{currentUser.displayName.charAt(0).toUpperCase()}</div>
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", marginBottom: "var(--sp-3)" }}>
+                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,var(--c-accent),var(--c-success))", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-lg)", fontWeight: 800, color: "#fff", flexShrink: 0 }}>{currentUser.displayName.charAt(0).toUpperCase()}</div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: "#18181b" }}>{currentUser.displayName}</div>
-                  <div style={{ fontSize: 12, color: "#71717a" }}>@{currentUser.username}</div>
+                  <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-text)" }}>{currentUser.displayName}</div>
+                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>@{currentUser.username}</div>
                 </div>
               </div>
-              <button onClick={() => { if (confirm("تسجيل خروج؟")) onLogout(); }} style={{ width: "100%", padding: 10, borderRadius: 10, border: "1px solid rgba(29,78,216,0.15)", background: "transparent", color: "#1d4ed8", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>تسجيل خروج ←</button>
+              <button onClick={() => { if (confirm("تسجيل خروج؟")) onLogout(); }} style={{ width: "100%", padding: "var(--sp-3)", borderRadius: "var(--r-md)", border: "1px solid rgba(29,78,216,0.15)", background: "transparent", color: "var(--c-accent)", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 600, cursor: "pointer" }}>تسجيل خروج ←</button>
             </Card>}
-            <div style={{ textAlign: "center", marginTop: 14 }}>
-              <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: 10, border: "1px solid rgba(217,119,6,0.1)", background: "transparent", color: "#dc2626", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>إعادة ضبط</button>
+            <div style={{ textAlign: "center", marginTop: "var(--sp-4)" }}>
+              <button onClick={() => { if (confirm("حذف كل البيانات؟")) { save({ start: null, days: {} }); setTab("today"); } }} style={{ padding: "7px 16px", borderRadius: "var(--r-md)", border: "1px solid rgba(217,119,6,0.1)", background: "transparent", color: "var(--c-error)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>إعادة ضبط</button>
             </div>
           </div>
         )}
