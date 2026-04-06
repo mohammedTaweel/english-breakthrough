@@ -1306,64 +1306,80 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint, sessionHistory
         </div>
       )}
 
-      {/* Step 5: Produce + feedback */}
+      {/* Step 5: Produce — choice-based + optional writing challenge */}
       {step === 4 && (
         <div>
-          <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
+          <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-4)" }}>
             <div style={{ fontSize: "var(--fs-base)", color: "var(--c-text)", lineHeight: 2, marginBottom: "var(--sp-1)" }}>{sc.producePrompt}</div>
           </div>
-          <textarea value={prodInput} onChange={(e) => !prodSubmitted && setProdInput(e.target.value)} placeholder="اكتب ردك بالإنجليزي..." disabled={prodSubmitted} style={{ width: "100%", minHeight: 80, padding: "var(--sp-4)", borderRadius: "var(--r-lg)", fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(220,38,38,0.2)", color: "var(--c-text)", outline: "none", resize: "vertical", marginBottom: "var(--sp-3)" }} />
-          {!prodSubmitted ? (
-            <div style={{ textAlign: "center" }}>
-              <button onClick={() => setProdSubmitted(true)} disabled={prodInput.trim().length < 5} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: prodInput.trim().length >= 5 ? "#dc2626" : "#e4e4e7", color: prodInput.trim().length >= 5 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: prodInput.trim().length >= 5 ? "pointer" : "default" }}>أرسل</button>
+          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)" }}>اختر الرد الأفضل:</div>
+
+          {/* 3 choices */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--sp-2)", marginBottom: "var(--sp-4)" }}>
+            {produceChoices.map((ch, ci) => {
+              const isSelected = prodChoice === ci;
+              const isRevealed = prodRevealed;
+              const borderColor = isRevealed ? (ch.correct ? "rgba(5,150,105,0.4)" : isSelected ? "rgba(220,38,38,0.3)" : "rgba(0,0,0,0.05)") : isSelected ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)";
+              const bgColor = isRevealed ? (ch.correct ? "rgba(5,150,105,0.06)" : isSelected && !ch.correct ? "rgba(220,38,38,0.04)" : "rgba(0,0,0,0.01)") : isSelected ? "rgba(29,78,216,0.06)" : "rgba(0,0,0,0.02)";
+              return (
+                <div key={ci} onClick={() => { if (!isRevealed) { setProdChoice(ci); } }} style={{ padding: "var(--sp-4)", borderRadius: "var(--r-lg)", border: "2px solid " + borderColor, background: bgColor, cursor: isRevealed ? "default" : "pointer", transition: "all 0.2s" }}>
+                  <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
+                    <span style={{ flex: 1 }}>{ch.text}</span>
+                    {isRevealed && <SpeakBtn text={ch.text} size={14} />}
+                  </div>
+                  {isRevealed && (
+                    <div style={{ fontSize: "var(--fs-xs)", color: ch.correct ? "#059669" : "#dc2626", fontWeight: 600, marginTop: "var(--sp-1)" }}>
+                      {ch.correct ? "\u2713 " : "\u2717 "}{ch.label}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Submit choice */}
+          {prodChoice !== null && !prodRevealed && (
+            <div style={{ textAlign: "center", marginBottom: "var(--sp-3)" }}>
+              <button onClick={() => setProdRevealed(true)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>تأكيد اختياري</button>
             </div>
-          ) : (
-            <div>
-              <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-2)" }}>
-                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>النموذج المثالي:</div>
-                <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
-                  <span style={{ flex: 1 }}>{sc.produceModel}</span>
-                  <SpeakBtn text={sc.produceModel} size={16} />
-                </div>
-              </div>
-              {/* FIX 7: AI feedback on writing */}
-              {getOpenAIKey() && !aiFeedback && !aiLoading && (
-                <div style={{ textAlign: "center", marginBottom: "var(--sp-2)" }}>
-                  <Button variant="secondary" size="sm" onClick={async () => {
-                    setAiLoading(true);
-                    try {
-                      const res = await fetch("https://api.openai.com/v1/chat/completions", {
-                        method: "POST", headers: { "Authorization": "Bearer " + getOpenAIKey(), "Content-Type": "application/json" },
-                        body: JSON.stringify({ model: "gpt-4o-mini", max_tokens: 200, messages: [
-                          { role: "system", content: "You are an English language coach for Arabic speakers. Compare the student's response with the model answer. Give 2-3 SHORT tips in Arabic about grammar, vocabulary, or naturalness. Be encouraging. Max 3 lines." },
-                          { role: "user", content: "Situation: " + sc.producePrompt + "\nStudent wrote: " + prodInput + "\nModel answer: " + sc.produceModel + "\nGive feedback in Arabic:" }
-                        ] })
-                      });
-                      const data = await res.json();
-                      setAiFeedback(data.choices[0].message.content);
-                    } catch { setAiFeedback("لم أتمكن من الاتصال. تأكّد من مفتاح API."); }
-                    setAiLoading(false);
-                  }}><IconBrain size={16}/>تحليل ذكي لكتابتك</Button>
-                </div>
+          )}
+
+          {/* After reveal: noticing tips */}
+          {prodRevealed && (
+            <div style={{ animation: "fadeUp .3s" }}>
+              {prodChoice !== null && produceChoices[prodChoice] && produceChoices[prodChoice].correct && (
+                <div style={{ textAlign: "center", fontSize: "var(--fs-sm)", color: "#059669", fontWeight: 700, marginBottom: "var(--sp-3)" }}>إنجاز مميز! اخترت الرد الأفضل</div>
               )}
-              {aiLoading && <div style={{ textAlign: "center", fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", marginBottom: "var(--sp-2)" }}>جاري التحليل...</div>}
-              {aiFeedback && (
-                <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-2)" }}>
-                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>تحليل ذكي:</div>
-                  <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, whiteSpace: "pre-wrap" }}>{aiFeedback}</div>
-                </div>
+              {prodChoice !== null && produceChoices[prodChoice] && !produceChoices[prodChoice].correct && (
+                <div style={{ textAlign: "center", fontSize: "var(--fs-sm)", color: "#1d4ed8", fontWeight: 700, marginBottom: "var(--sp-3)" }}>شوف الرد الأخضر — لاحظ ليش هو الأفضل</div>
               )}
-              {/* Noticing feedback — explain WHY */}
+
+              {/* Noticing feedback */}
               <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
-                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>— لاحظ الفرق:</div>
+                <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>لاحظ الفرق:</div>
                 {sc.noticingTips ? sc.noticingTips.map((tip, ti) => (
-                  <div key={ti} style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, marginBottom: 2 }}>{"• " + tip}</div>
+                  <div key={ti} style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, marginBottom: 2 }}>{"\u2022 " + tip}</div>
                 )) : (
-                  <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>قارن ردّك بالنموذج — لاحظ: هل استخدمت "please"؟ هل حددت طلبك بوضوح؟ هل سألت سؤال إضافي يُظهر ثقة؟</div>
+                  <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>قارن الخيارات — لاحظ: الأدب، الوضوح، والطلاقة</div>
                 )}
               </div>
+
+              {/* Optional writing challenge — collapsed by default */}
+              <details style={{ marginBottom: "var(--sp-3)" }}>
+                <summary style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 600, cursor: "pointer", marginBottom: "var(--sp-2)" }}>تحدّى نفسك: اكتب ردك الخاص</summary>
+                <div style={{ marginTop: "var(--sp-2)" }}>
+                  <textarea value={prodInput} onChange={(e) => !prodSubmitted && setProdInput(e.target.value)} placeholder="اكتب ردك بالإنجليزي..." disabled={prodSubmitted} style={{ width: "100%", minHeight: 70, padding: "var(--sp-3)", borderRadius: "var(--r-lg)", fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(29,78,216,0.15)", color: "var(--c-text)", outline: "none", resize: "vertical", marginBottom: "var(--sp-2)" }} />
+                  {!prodSubmitted && prodInput.trim().length >= 5 && (
+                    <button onClick={() => setProdSubmitted(true)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>أرسل</button>
+                  )}
+                  {prodSubmitted && (
+                    <div style={{ fontSize: "var(--fs-xs)", color: "#059669", fontWeight: 600 }}>إنجاز مميز! كتبت رد بنفسك</div>
+                  )}
+                </div>
+              </details>
+
               <div style={{ textAlign: "center" }}>
-                <Button onClick={() => advanceStep(5)}>التالي: تحدّي اليوم →</Button>
+                <Button onClick={() => advanceStep(5)}>التالي: تحدّي اليوم</Button>
               </div>
             </div>
           )}
