@@ -261,8 +261,8 @@ function AuthScreen({ onLogin }) {
         {mode === "register" && (
           <input value={displayName} onChange={e => setDisplayName(e.target.value)} placeholder="الاسم (يظهر في ملفك الشخصي)" style={inputStyle} />
         )}
-        <input value={username} onChange={e => setUsername(e.target.value)} placeholder="اسم المستخدم" style={{ ...inputStyle, direction: "ltr", textAlign: "left", fontFamily: "'IBM Plex Mono'" }} autoComplete="username" />
-        <input value={password} onChange={e => setPassword(e.target.value)} placeholder="كلمة المرور" type="password" style={{ ...inputStyle, direction: "ltr", textAlign: "left", fontFamily: "'IBM Plex Mono'" }} autoComplete={mode === "register" ? "new-password" : "current-password"}
+        <input value={username} onChange={e => setUsername(e.target.value)} placeholder="اسم المستخدم" style={{ ...inputStyle, direction: "ltr", textAlign: "left", fontFamily: 'inherit', letterSpacing: '0.02em' }} autoComplete="username" />
+        <input value={password} onChange={e => setPassword(e.target.value)} placeholder="كلمة المرور" type="password" style={{ ...inputStyle, direction: "ltr", textAlign: "left", fontFamily: 'inherit', letterSpacing: '0.02em' }} autoComplete={mode === "register" ? "new-password" : "current-password"}
           onKeyDown={e => { if (e.key === "Enter") { mode === "register" ? handleRegister() : handleLogin(); } }}
         />
 
@@ -309,7 +309,7 @@ function AuthScreen({ onLogin }) {
                   setLoading(false);
                   setError(err.message || "فشل تسجيل الدخول");
                 }
-              }} style={{ flex: 1, padding: "var(--sp-3)", borderRadius: "var(--r-md)", border: "1px solid " + (p.configured ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.02)"), background: p.configured ? p.bg : "rgba(0,0,0,0.02)", color: p.configured ? p.color : "#a1a1aa", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-md)", fontWeight: 700, cursor: p.configured ? "pointer" : "default", display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--sp-2)", opacity: p.configured ? 1 : 0.5 }}>
+              }} style={{ flex: 1, padding: "var(--sp-3)", borderRadius: "var(--r-md)", border: "1px solid " + (p.configured ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.02)"), background: p.configured ? p.bg : "rgba(0,0,0,0.02)", color: p.configured ? p.color : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-md)", fontWeight: 700, cursor: p.configured ? "pointer" : "default", display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--sp-2)", opacity: p.configured ? 1 : 0.5 }}>
                 <span>{p.icon}</span>
                 <span style={{ fontSize: "var(--fs-xs)", fontFamily: "inherit", fontWeight: 600 }}>{p.name}</span>
               </button>
@@ -323,6 +323,7 @@ function AuthScreen({ onLogin }) {
 
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
 
   /* ===== DESIGN TOKENS ===== */
@@ -790,6 +791,12 @@ const CSS = `
     font-size: var(--fs-xs);
     color: var(--c-text-tertiary);
     font-weight: 500;
+  }
+
+  /* ===== ENGLISH TEXT — readable sans-serif ===== */
+  [dir="ltr"], [style*="direction: ltr"], [style*="direction:ltr"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: -0.01em;
   }
 
   /* ===== UTILITY CLASSES ===== */
@@ -1672,17 +1679,17 @@ function Prompter({ lines, gap, color, label, withAudio }) {
         {!on ? (
           <button onClick={start} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg," + color + ",#1e40af)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{"▶ ابدأ " + label}</button>
         ) : (
-          <button onClick={stop} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "1px solid #e4e4e7", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 600, cursor: "pointer" }}>>إيقاف</button>
+          <button onClick={stop} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "1px solid #e4e4e7", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 600, cursor: "pointer" }}>إيقاف</button>
         )}
-        {on && phase === "listen" && <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 600 }}>>استمع...</div>}
-        {on && phase === "repeat" && sec > 0 && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-xl)", fontWeight: 700, color: color }}>{sec}</div>}
+        {on && phase === "listen" && <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 600 }}>استمع...</div>}
+        {on && phase === "repeat" && sec > 0 && <div style={{ fontFamily: "inherit", fontSize: "var(--fs-xl)", fontWeight: 700, color: color }}>{sec}</div>}
         {on && phase === "repeat" && sec > 0 && <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>ردّد بصوت عالٍ!</div>}
       </div>
       {lines.map((line, i) => {
         const cur = on && i === idx;
         const past = on && i < idx;
         return (
-          <div key={i} style={{ padding: "10px 14px", borderRadius: "var(--r-md)", marginBottom: "var(--sp-1)", fontFamily: "'IBM Plex Mono',monospace", fontSize: cur ? 16 : 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, transition: "all .4s", background: cur ? color + "18" : "rgba(0,0,0,0.015)", border: "1px solid " + (cur ? color + "40" : "rgba(0,0,0,0.03)"), color: cur ? "#1e40af" : past ? "#a1a1aa" : "#52525b", fontWeight: cur ? 600 : 400, transform: cur ? "scale(1.01)" : "none", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
+          <div key={i} style={{ padding: "10px 14px", borderRadius: "var(--r-md)", marginBottom: "var(--sp-1)", fontFamily: "inherit", fontSize: cur ? 16 : 14, direction: "ltr", textAlign: "left", lineHeight: 1.7, transition: "all .4s", background: cur ? color + "18" : "rgba(0,0,0,0.015)", border: "1px solid " + (cur ? color + "40" : "rgba(0,0,0,0.03)"), color: cur ? "#1e40af" : past ? "#a1a1aa" : "#52525b", fontWeight: cur ? 600 : 400, transform: cur ? "scale(1.01)" : "none", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
             <div style={{ flex: 1 }}>{line}</div>
             <SpeakBtn text={line} size={cur ? 18 : 14} color={cur ? color : "#71717a"} />
             {cur && phase === "repeat" && <span style={{ fontSize: "var(--fs-xs)", color: color, flexShrink: 0 }}>← ردّد!</span>}
@@ -1712,7 +1719,7 @@ function MeetingSim() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-success)" }}>إنجاز</div>
       <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{m.steps.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score === m.steps.length ? "إنجاز مميز! أدرت المحادثة باحترافية كاملة" : score >= 3 ? "جيد! تقدم واضح" : "تحتاج تمرين أكثر على الجمل — راجعها في تبويب الجمل"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محادثة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محادثة جديدة</button>
     </div>
   );
   return (
@@ -1723,7 +1730,7 @@ function MeetingSim() {
       </div>
       <div style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
         <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", marginBottom: "var(--sp-1)" }}>{": " + s.speaker + ":"}</div>
-        <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)" }}><div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "var(--c-text)", flex: 1 }}>{s.text}</div><SpeakBtn text={s.text} size={18} /></div>
+        <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)" }}><div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "var(--c-text)", flex: 1 }}>{s.text}</div><SpeakBtn text={s.text} size={18} /></div>
       </div>
       <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>{" " + s.prompt + " — اختر الرد الأنسب واقرأه بصوت عالٍ:"}</div>
       {s.opts.map((o, oi) => {
@@ -1734,7 +1741,7 @@ function MeetingSim() {
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
         return (
-          <div key={oi} onClick={() => picked === null && pick(oi)} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: "var(--sp-2)", cursor: picked === null ? "pointer" : "default", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, transition: ".3s", opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+          <div key={oi} onClick={() => picked === null && pick(oi)} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: "var(--sp-2)", cursor: picked === null ? "pointer" : "default", fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, transition: ".3s", opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
             {o}
             {show && isCorrect && <span style={{ marginRight: 8, fontSize: "var(--fs-xs)", color: "var(--c-success)" }}> ✓ صحيح — اقرأها بصوت عالٍ!</span>}
             {show && isPicked && !isCorrect && <span style={{ marginRight: 8, fontSize: "var(--fs-xs)", color: "var(--c-error)" }}> ✗</span>}
@@ -1765,7 +1772,7 @@ function QuickResp() {
       <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-2)" }}>{score}/{total}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 7 ? "سريع وحاسم! " : score >= 5 ? "جيد! السرعة تتحسن" : "تحتاج تحفظ الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
     </div>
   );
   const rawQ = qs.current[qi];
@@ -1775,7 +1782,7 @@ function QuickResp() {
     <div style={{ animation: "fadeUp .4s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-3)" }}>
         <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"سؤال " + (qi + 1) + "/" + qs.current.length}</div>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-md)", fontWeight: 700, color: timer <= 3 ? "#dc2626" : "#1d4ed8" }}>{timer > 0 && picked === null ? timer + "s" : ""}</div>
+        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-md)", fontWeight: 700, color: timer <= 3 ? "#dc2626" : "#1d4ed8" }}>{timer > 0 && picked === null ? timer + "s" : ""}</div>
       </div>
       <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
         <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)", lineHeight: 1.8 }}>{" " + q.sit}</div>
@@ -1787,7 +1794,7 @@ function QuickResp() {
         let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
-        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: "var(--r-md)", marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: "var(--r-md)", marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
           {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> ✓ اقرأها!</span>}
         </div>;
       })}
@@ -1844,7 +1851,7 @@ function WeeklyQuiz({ onSave, checkpoint }) {
         <div style={{ fontSize: "var(--fs-md)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-1)" }}>{score + "/" + qs.current.length}</div>
         {diff !== null && <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: diff >= 0 ? "#059669" : "#dc2626", marginBottom: "var(--sp-1)" }}>{diff >= 0 ? "+" + diff + "% عن الاختبار السابق" : "" + diff + "% عن الاختبار السابق"}</div>}
         <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{pct >= 80 ? "إنجاز مميز! الجمل صارت جزء منك " : pct >= 50 ? "جيد! استمر في مراجعة الجمل يومياً" : "ركّز أكثر على بنك الجمل — راجعها يومياً"}</div>
-        <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>اختبار جديد</button>
+        <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>اختبار جديد</button>
       </div>
     );
   }
@@ -1867,7 +1874,7 @@ function WeeklyQuiz({ onSave, checkpoint }) {
         let bg = "rgba(0,0,0,0.02)", brd = "rgba(0,0,0,0.03)";
         if (show && isCorrect) { bg = "rgba(5,150,105,0.1)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(217,119,6,0.1)"; brd = "rgba(217,119,6,0.3)"; }
-        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: "var(--r-md)", marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
+        return <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: 11, borderRadius: "var(--r-md)", marginBottom: 5, cursor: show ? "default" : "pointer", fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.6, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1 }}>
           {o}{show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> </span>}
         </div>;
       })}
@@ -1940,7 +1947,7 @@ function FillBlank() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>أكمل الفراغ</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! ذاكرتك قوية " : score >= 4 ? "جيد! استمر في المراجعة" : "راجع الجمل أكثر"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
     </div>
   );
 
@@ -1954,7 +1961,7 @@ function FillBlank() {
         <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", fontWeight: 600 }}>{score + " صحيح"}</div>
       </div>
       <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 2.2, display: "flex", flexWrap: "wrap", alignItems: "center", gap: "var(--sp-1)" }}>
+        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 2.2, display: "flex", flexWrap: "wrap", alignItems: "center", gap: "var(--sp-1)" }}>
           {parts.map((p, pi) => p.type === "text" ? (
             <span key={pi} style={{ color: "var(--c-text)" }}>{p.value}</span>
           ) : (
@@ -1966,7 +1973,7 @@ function FillBlank() {
                 style={{
                   width: Math.max(p.word.length * 11, 60),
                   padding: "4px 8px", borderRadius: "var(--r-sm)", fontSize: "var(--fs-sm)",
-                  fontFamily: "'IBM Plex Mono'", textAlign: "center",
+                  fontFamily: "inherit", textAlign: "center",
                   background: checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(5,150,105,0.15)" : "rgba(220,38,38,0.15)") : "rgba(0,0,0,0.05)",
                   border: "1px solid " + (checked ? ((answers[p.index] || "").trim().toLowerCase() === p.word.toLowerCase() ? "rgba(5,150,105,0.4)" : "rgba(220,38,38,0.4)") : "rgba(29,78,216,0.3)"),
                   color: "#fff", outline: "none"
@@ -1983,7 +1990,7 @@ function FillBlank() {
       </div>
       {!checked ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={check} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>تأكّد</button>
+          <button onClick={check} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>تأكّد</button>
         </div>
       ) : (
         <div style={{ textAlign: "center" }}>
@@ -2062,7 +2069,7 @@ function SentenceBuild() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>بناء جمل</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! تركيب الجمل صار سهل " : score >= 4 ? "جيد! تحسن واضح" : "تمرّن أكثر على ترتيب الكلمات"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-success)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-success)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
     </div>
   );
 
@@ -2078,10 +2085,10 @@ function SentenceBuild() {
       </div>
       <div style={{ background: "rgba(77,181,165,0.06)", border: "1px solid rgba(77,181,165,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)", minHeight: 50 }}>
         <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>الجملة المُركّبة:</div>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: checked ? (isCorrect ? "#059669" : "#dc2626") : "#18181b", minHeight: 24 }}>
+        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: checked ? (isCorrect ? "#059669" : "#dc2626") : "#18181b", minHeight: 24 }}>
           {selected.length > 0 ? selected.map(i => shuffledWords.current[i]).join(" ") : <span style={{ color: "var(--c-text-tertiary)" }}>اضغط على الكلمات بالترتيب الصحيح...</span>}
         </div>
-        {checked && !isCorrect && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-success)", marginTop: "var(--sp-2)" }}>{"✓ " + qs.current[qi]}</div>}
+        {checked && !isCorrect && <div style={{ fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-success)", marginTop: "var(--sp-2)" }}>{"✓ " + qs.current[qi]}</div>}
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--sp-2)", marginBottom: "var(--sp-4)" }}>
         {shuffledWords.current.map((w, wi) => {
@@ -2089,7 +2096,7 @@ function SentenceBuild() {
           return (
             <button key={wi} onClick={() => toggleWord(wi)} style={{
               padding: "8px 14px", borderRadius: "var(--r-sm)",
-              fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)",
+              fontFamily: "inherit", fontSize: "var(--fs-sm)",
               border: "1px solid " + (isSelected ? "rgba(77,181,165,0.4)" : "rgba(0,0,0,0.06)"),
               background: isSelected ? "rgba(77,181,165,0.15)" : "rgba(0,0,0,0.02)",
               color: isSelected ? "#059669" : "#18181b",
@@ -2101,9 +2108,9 @@ function SentenceBuild() {
         })}
       </div>
       <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center" }}>
-        {!checked && selected.length > 0 && <button onClick={() => setSelected([])} style={{ padding: "8px 16px", borderRadius: "var(--r-md)", border: "1px solid #e4e4e7", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>>مسح</button>}
+        {!checked && selected.length > 0 && <button onClick={() => setSelected([])} style={{ padding: "8px 16px", borderRadius: "var(--r-md)", border: "1px solid #e4e4e7", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>مسح</button>}
         {!checked ? (
-          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: selected.length > 0 ? "#059669" : "#e4e4e7", color: selected.length > 0 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>>تأكّد</button>
+          <button onClick={check} disabled={selected.length === 0} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: selected.length > 0 ? "#059669" : "#e4e4e7", color: selected.length > 0 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: selected.length > 0 ? "pointer" : "default" }}>تأكّد</button>
         ) : (
           <button onClick={next} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-success)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         )}
@@ -2159,7 +2166,7 @@ function FreeRecall() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إنتاج حر</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 4 ? "#059669" : score >= 2 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 4 ? "إنجاز مميز! تقدر تنتج جمل من ذاكرتك" : score >= 2 ? "جيد! استمر بمراجعة الجمل الجاهزة" : "راجع بنك الجمل — حاول تكتبها من الذاكرة"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
     </div>
   );
 
@@ -2185,7 +2192,7 @@ function FreeRecall() {
           disabled={submitted}
           style={{
             width: "100%", minHeight: 80, padding: "var(--sp-4)", borderRadius: "var(--r-lg)",
-            fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left",
+            fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left",
             lineHeight: 1.8, background: "rgba(0,0,0,0.02)",
             border: "1px solid rgba(220,38,38,0.2)", color: "var(--c-text)",
             outline: "none", resize: "vertical"
@@ -2195,13 +2202,13 @@ function FreeRecall() {
 
       {!submitted ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={submit} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: input.trim().length >= 3 ? "#dc2626" : "#e4e4e7", color: input.trim().length >= 3 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>>أرسل</button>
+          <button onClick={submit} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: input.trim().length >= 3 ? "#dc2626" : "#e4e4e7", color: input.trim().length >= 3 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>أرسل</button>
         </div>
       ) : (
         <div>
           <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
-            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>>الجواب المثالي:</div>
-            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)" }}>{scenario.model}</div>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>الجواب المثالي:</div>
+            <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)" }}>{scenario.model}</div>
           </div>
           {matchedWords.length > 0 && (
             <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-success)", marginBottom: "var(--sp-2)" }}>{"كلمات مفتاحية استخدمتها: " + matchedWords.join(", ")}</div>
@@ -2241,12 +2248,12 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
 
   const sc = scenario;
   const steps = [
-    { icon: "L", title: "استمع", desc: "استمع جملة جملة — بدون نص" },
-    { label: "٢", title: "استمع واقرأ", desc: "استمع مع النص — لاحظ اللي فاتك" },
-    { icon: "♪", title: "ردّد", desc: "ردّد الجمل المفتاحية ٣ مرات" },
-    { label: "٤", title: "تذكّر", desc: "شوف الترجمة — قل الجملة من ذاكرتك" },
-    { label: "٥", title: "أنتج", desc: "اكتب ردك بنفسك" },
-    { label: "٦", title: "طبّق", desc: "تحدّي حقيقي اليوم" },
+    { num: "١", title: "استمع", desc: "استمع جملة جملة — بدون نص" },
+    { num: "٢", title: "استمع واقرأ", desc: "استمع مع النص — لاحظ اللي فاتك" },
+    { num: "٣", title: "ردّد", desc: "ردّد الجمل المفتاحية ٣ مرات" },
+    { num: "٤", title: "تذكّر", desc: "شوف الترجمة — قل الجملة من ذاكرتك" },
+    { num: "٥", title: "أنتج", desc: "اكتب ردك بنفسك" },
+    { num: "٦", title: "طبّق", desc: "تحدّي حقيقي اليوم" },
   ];
 
   // Checkpoint: save session state on every meaningful change
@@ -2297,7 +2304,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
           <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-accent)" }}>{"جلسة اليوم: " + sc.title}</div>
           <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{"الخطوة " + (step + 1) + "/6 — " + steps[step].title}</div>
         </div>
-        <div style={{ fontSize: "var(--fs-sm)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "'IBM Plex Mono'" }}>{stepPct + "%"}</div>
+        <div style={{ fontSize: "var(--fs-sm)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "inherit" }}>{stepPct + "%"}</div>
       </div>
 
       {/* Micro-celebration popup */}
@@ -2305,14 +2312,19 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
         <div style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: "var(--c-success)" }}>{stepCelebration}</div>
       </div>}
 
-      {/* Progress */}
-      {!stepCelebration && <div style={{ display: "flex", gap: "var(--sp-1)", marginBottom: "var(--sp-4)" }}>
-        {steps.map((s, i) => (
-          <div key={i} style={{ flex: 1, textAlign: "center" }}>
-            <div style={{ height: 5, borderRadius: "var(--r-sm)", background: i < step ? "var(--c-success)" : i === step ? "#1d4ed8" : "#e4e4e7", transition: ".3s", marginBottom: "var(--sp-1)" }} />
-            <div style={{ fontSize: "var(--fs-xs)", color: i === step ? "#1d4ed8" : i < step ? "#059669" : "#a1a1aa" }}>{i < step ? "✓" : s.icon}</div>
-          </div>
-        ))}
+      {/* Progress — step indicator */}
+      {!stepCelebration && <div style={{ marginBottom: "var(--sp-6)" }}>
+        <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-3)" }}>
+          {steps.map((s, i) => (
+            <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--sp-1)" }}>
+              <div style={{ width: 36, height: 36, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-sm)", fontWeight: 700, background: i < step ? "var(--c-success)" : i === step ? "var(--c-accent)" : "var(--c-surface-sunken)", color: i <= step ? "#fff" : "var(--c-text-tertiary)", transition: "all 0.3s", boxShadow: i === step ? "0 0 12px rgba(29,78,216,0.3)" : i < step ? "0 2px 4px rgba(22,163,74,0.2)" : "none" }}>{i < step ? "✓" : s.num}</div>
+              <div style={{ fontSize: "var(--fs-xs)", color: i === step ? "var(--c-accent)" : i < step ? "var(--c-success)" : "var(--c-text-tertiary)", fontWeight: i === step ? 600 : 400, whiteSpace: "nowrap" }}>{s.title}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: 2 }}>
+          {steps.map((_, i) => <div key={i} style={{ flex: 1, height: 3, borderRadius: 2, background: i < step ? "var(--c-success)" : i === step ? "var(--c-accent)" : "var(--c-surface-sunken)", transition: "background 0.3s" }} />)}
+        </div>
       </div>}
 
       {/* Breathing + Mental imagery + Step 1 */}
@@ -2378,7 +2390,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
               )}
               {(listenAnswer !== null || !sc.listenQ) && (
                 <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center" }}>
-                  <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} style={{ padding: "8px 16px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "var(--c-accent-hover)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>>استمع مرة ثانية</button>
+                  <button onClick={() => { setListenDone(false); setListenAnswer(null); playDialogueSequence(); }} style={{ padding: "8px 16px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "var(--c-accent-hover)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>استمع مرة ثانية</button>
                   <button onClick={() => advanceStep(1)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي →</button>
                 </div>
               )}
@@ -2391,13 +2403,17 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
       {step === 1 && (
         <div>
           <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)", lineHeight: 2 }}>اضغط ♪ على كل جملة واقرأها. لاحظ الكلمات اللي ما فهمتها أول مرة.</div>
-          {sc.dialogue.map((d, i) => (
-            <div key={i} style={{ display: "flex", gap: "var(--sp-3)", padding: "var(--sp-3)", marginBottom: "var(--sp-1)", borderRadius: "var(--r-md)", background: d.speaker === "أنت" ? "rgba(29,78,216,0.06)" : "rgba(0,0,0,0.02)", border: "1px solid " + (d.speaker === "أنت" ? "rgba(29,78,216,0.1)" : "rgba(0,0,0,0.03)") }}>
-              <div style={{ fontSize: "var(--fs-xs)", color: d.speaker === "أنت" ? "#1d4ed8" : "#1d4ed8", fontWeight: 700, minWidth: 50, flexShrink: 0 }}>{d.speaker}</div>
-              <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.7, flex: 1, color: "var(--c-text)" }}>{d.text}</div>
-              <SpeakBtn text={d.text} size={16} />
+          {sc.dialogue.map((d, i) => {
+            const isMe = d.speaker === "أنت";
+            return (
+            <div key={i} style={{ display: "flex", flexDirection: isMe ? "row-reverse" : "row", gap: "var(--sp-2)", marginBottom: "var(--sp-3)", alignItems: "flex-start" }}>
+              <div style={{ width: 32, height: 32, borderRadius: "50%", background: isMe ? "var(--c-accent)" : "var(--c-surface-sunken)", color: isMe ? "#fff" : "var(--c-text-secondary)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-xs)", fontWeight: 700, flexShrink: 0 }}>{isMe ? "أنا" : d.speaker.charAt(0)}</div>
+              <div style={{ maxWidth: "80%", padding: "var(--sp-3) var(--sp-4)", borderRadius: isMe ? "var(--r-lg) var(--r-lg) var(--r-sm) var(--r-lg)" : "var(--r-lg) var(--r-lg) var(--r-lg) var(--r-sm)", background: isMe ? "var(--c-accent)" : "var(--c-surface)", color: isMe ? "#fff" : "var(--c-text)", boxShadow: "var(--sh-sm)", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>
+                {!isMe && <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)", marginBottom: 2 }}>{d.speaker}</div>}
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)" }}><span style={{ flex: 1 }}>{d.text}</span><SpeakBtn text={d.text} size={14} color={isMe ? "#fff" : undefined} /></div>
+              </div>
             </div>
-          ))}
+          );})}
           <div style={{ textAlign: "center", marginTop: "var(--sp-4)" }}>
             <button onClick={() => advanceStep(2)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي: ردّد الجمل →</button>
           </div>
@@ -2417,7 +2433,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                 <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", marginBottom: "var(--sp-2)" }}>
                   <div style={{ width: 30, height: 30, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-xs)", fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 5 ? "✓" : r + "/5"}</div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
+                    <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
                     <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginTop: "var(--sp-1)" }}>{p.ar}</div>
                   </div>
                   <SpeakBtn text={p.en} size={18} />
@@ -2446,7 +2462,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                           setShadowReps(prev => ({ ...prev, [i]: (prev[i] || 0) + 1 }));
                         }
                       }, 2500);
-                    }} style={{ flex: 1, padding: "10px 16px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>استمع ثم  ردّد</button>
+                    }} style={{ flex: 1, padding: "10px 16px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>استمع ثم  ردّد</button>
                   </div>
                 )}
                 {spokenResult !== undefined && spokenResult !== null && (
@@ -2484,13 +2500,13 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                 {state === "thinking" && (
                   <div>
                     <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>قلت الجملة؟ اضغط "أظهر" وقارن:</div>
-                    <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "revealed" }))} style={{ padding: "8px 20px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>أظهر الجملة</button>
+                    <button onClick={() => setRecallState(prev => ({ ...prev, [i]: "revealed" }))} style={{ padding: "8px 20px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>أظهر الجملة</button>
                   </div>
                 )}
 
                 {state === "revealed" && (
                   <div>
-                    <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "var(--c-text)", marginBottom: "var(--sp-2)", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
+                    <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7, color: "var(--c-text)", marginBottom: "var(--sp-2)", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
                       <span style={{ flex: 1 }}>{p.en}</span>
                       <SpeakBtn text={p.en} size={16} />
                     </div>
@@ -2524,15 +2540,15 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                     {forgotten.map(fi => (
                       <div key={fi} style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)", padding: "var(--sp-3)", borderRadius: "var(--r-sm)", background: "rgba(0,0,0,0.02)", marginBottom: "var(--sp-1)" }}>
                         <SpeakBtn text={sc.keyPhrases[fi].en} size={18} color="#1d4ed8" />
-                        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", flex: 1, color: "var(--c-text)" }}>{sc.keyPhrases[fi].en}</div>
+                        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", flex: 1, color: "var(--c-text)" }}>{sc.keyPhrases[fi].en}</div>
                       </div>
                     ))}
-                    <button onClick={() => { const newState = { ...recallState }; const newScore = { ...recallScore }; forgotten.forEach(fi => { newState[fi] = "hidden"; delete newScore[fi]; }); setRecallState(newState); setRecallScore(newScore); }} style={{ marginTop: "var(--sp-2)", padding: "8px 20px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>أعد اختبار الجمل المنسيّة</button>
+                    <button onClick={() => { const newState = { ...recallState }; const newScore = { ...recallScore }; forgotten.forEach(fi => { newState[fi] = "hidden"; delete newScore[fi]; }); setRecallState(newState); setRecallScore(newScore); }} style={{ marginTop: "var(--sp-2)", padding: "8px 20px", borderRadius: "var(--r-sm)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>أعد اختبار الجمل المنسيّة</button>
                   </div>
                 )}
                 {allGood && (
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-success)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>>إنجاز مميز! تذكّرت كل الجمل</div>
+                    <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-success)", fontWeight: 600, marginBottom: "var(--sp-2)" }}>إنجاز مميز! تذكّرت كل الجمل</div>
                     <button onClick={() => advanceStep(4)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>التالي: أنتج بنفسك →</button>
                   </div>
                 )}
@@ -2548,16 +2564,16 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
           <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
             <div style={{ fontSize: "var(--fs-base)", color: "var(--c-text)", lineHeight: 2, marginBottom: "var(--sp-1)" }}>{sc.producePrompt}</div>
           </div>
-          <textarea value={prodInput} onChange={(e) => !prodSubmitted && setProdInput(e.target.value)} placeholder="اكتب ردك بالإنجليزي..." disabled={prodSubmitted} style={{ width: "100%", minHeight: 80, padding: "var(--sp-4)", borderRadius: "var(--r-lg)", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(220,38,38,0.2)", color: "var(--c-text)", outline: "none", resize: "vertical", marginBottom: "var(--sp-3)" }} />
+          <textarea value={prodInput} onChange={(e) => !prodSubmitted && setProdInput(e.target.value)} placeholder="اكتب ردك بالإنجليزي..." disabled={prodSubmitted} style={{ width: "100%", minHeight: 80, padding: "var(--sp-4)", borderRadius: "var(--r-lg)", fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(220,38,38,0.2)", color: "var(--c-text)", outline: "none", resize: "vertical", marginBottom: "var(--sp-3)" }} />
           {!prodSubmitted ? (
             <div style={{ textAlign: "center" }}>
-              <button onClick={() => setProdSubmitted(true)} disabled={prodInput.trim().length < 5} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: prodInput.trim().length >= 5 ? "#dc2626" : "#e4e4e7", color: prodInput.trim().length >= 5 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: prodInput.trim().length >= 5 ? "pointer" : "default" }}>>أرسل</button>
+              <button onClick={() => setProdSubmitted(true)} disabled={prodInput.trim().length < 5} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: prodInput.trim().length >= 5 ? "#dc2626" : "#e4e4e7", color: prodInput.trim().length >= 5 ? "#fafaf9" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: prodInput.trim().length >= 5 ? "pointer" : "default" }}>أرسل</button>
             </div>
           ) : (
             <div>
               <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-2)" }}>
                 <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>النموذج المثالي:</div>
-                <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
+                <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)", display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
                   <span style={{ flex: 1 }}>{sc.produceModel}</span>
                   <SpeakBtn text={sc.produceModel} size={16} />
                 </div>
@@ -2579,13 +2595,13 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
                       setAiFeedback(data.choices[0].message.content);
                     } catch { setAiFeedback("لم أتمكن من الاتصال. تأكّد من مفتاح API."); }
                     setAiLoading(false);
-                  }} style={{ padding: "6px 16px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "var(--c-accent-hover)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>>تحليل ذكي لكتابتك</button>
+                  }} style={{ padding: "6px 16px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "var(--c-accent-hover)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>تحليل ذكي لكتابتك</button>
                 </div>
               )}
               {aiLoading && <div style={{ textAlign: "center", fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", marginBottom: "var(--sp-2)" }}>جاري التحليل...</div>}
               {aiFeedback && (
                 <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-2)" }}>
-                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>>تحليل ذكي:</div>
+                  <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent-hover)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>تحليل ذكي:</div>
                   <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, whiteSpace: "pre-wrap" }}>{aiFeedback}</div>
                 </div>
               )}
@@ -2758,12 +2774,12 @@ function Fluency432() {
         <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>تكلم عن نفس الموضوع ٣ مرات — كل مرة وقت أقل<br />مخك يتعلم يسترجع الجمل أسرع = طلاقة حقيقية</div>
       </div>
       <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-5)", textAlign: "center", marginBottom: "var(--sp-4)" }}>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-md)", color: "var(--c-error)", direction: "ltr", lineHeight: 1.6, marginBottom: "var(--sp-2)" }}>{topic.topic}</div>
+        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-md)", color: "var(--c-error)", direction: "ltr", lineHeight: 1.6, marginBottom: "var(--sp-2)" }}>{topic.topic}</div>
         <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)" }}>{topic.ar}</div>
       </div>
       <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-4)" }}>
         <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>— استخدم هالجمل كبداية:</div>
-        {topic.starters.map((st, si) => <div key={si} style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text-secondary)", padding: "3px 0" }}>{st}</div>)}
+        {topic.starters.map((st, si) => <div key={si} style={{ fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text-secondary)", padding: "3px 0" }}>{st}</div>)}
       </div>
       <div style={{ textAlign: "center" }}>
         <button onClick={() => startRound(1)} style={{ padding: "12px 28px", borderRadius: "var(--r-lg)", border: "none", background: "var(--c-accent)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-base)", fontWeight: 700, cursor: "pointer" }}>ابدأ الجولة الأولى (٤ دقائق) →</button>
@@ -2776,7 +2792,7 @@ function Fluency432() {
       <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-3)" }}></div>
       <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-success)", marginBottom: "var(--sp-2)" }}>إنجاز رائع.. أنت تقترب من التمكّن</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, marginBottom: "var(--sp-4)" }}>تكلمت عن نفس الموضوع ٣ مرات — كل مرة بسرعة أكبر.<br />لاحظت كيف الجمل صارت تطلع أسرع في الجولة الثالثة؟<br />هذا بالضبط كيف تُبنى الطلاقة.</div>
-      <button onClick={restart} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>موضوع جديد</button>
+      <button onClick={restart} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>موضوع جديد</button>
     </div>
   );
 
@@ -2790,12 +2806,12 @@ function Fluency432() {
 
       <div style={{ textAlign: "center", marginBottom: "var(--sp-4)" }}>
         <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-error)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>{"الجولة " + round + "/3 — " + roundLabels[round]}</div>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-2xl)", fontWeight: 800, color: sec <= 10 && sec > 0 ? "#dc2626" : running ? "#dc2626" : "#059669" }}>{String(Math.floor(sec / 60)).padStart(2, "0") + ":" + String(sec % 60).padStart(2, "0")}</div>
+        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-2xl)", fontWeight: 800, color: sec <= 10 && sec > 0 ? "#dc2626" : running ? "#dc2626" : "#059669" }}>{String(Math.floor(sec / 60)).padStart(2, "0") + ":" + String(sec % 60).padStart(2, "0")}</div>
         {sec === 0 && !running && <div style={{ color: "var(--c-success)", fontWeight: 700, marginTop: "var(--sp-2)", fontSize: "var(--fs-sm)" }}>✅ انتهى الوقت!</div>}
       </div>
 
       <div style={{ background: "rgba(220,38,38,0.04)", border: "1px solid rgba(220,38,38,0.08)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-4)", textAlign: "center" }}>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", color: "var(--c-text)", direction: "ltr", lineHeight: 1.6 }}>{topic.topic}</div>
+        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", color: "var(--c-text)", direction: "ltr", lineHeight: 1.6 }}>{topic.topic}</div>
       </div>
 
       {running && <div style={{ textAlign: "center", fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>
@@ -2811,7 +2827,7 @@ function Fluency432() {
       )}
       {sec === 0 && !running && round === 3 && (
         <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
-          <button onClick={() => setRound(4)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg,#059669,#1d4ed8)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>النتيجة</button>
+          <button onClick={() => setRound(4)} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg,#059669,#1d4ed8)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>النتيجة</button>
         </div>
       )}
     </div>
@@ -2844,7 +2860,7 @@ function ListenExercise() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>الاستماع</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! أذنك صارت تلتقط بسرعة" : score >= 4 ? "جيد! استمر — الاستماع يتحسن بالتكرار" : "ركّز أكثر على الاستماع — أعد الجمل اللي ما فهمتها"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
     </div>
   );
 
@@ -2859,9 +2875,9 @@ function ListenExercise() {
       </div>
 
       <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-5)", marginBottom: "var(--sp-3)", textAlign: "center" }}>
-        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: "var(--r-lg)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-md)", fontWeight: 700, cursor: "pointer", marginBottom: "var(--sp-3)" }}>>استمع للجملة</button>
+        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: "var(--r-lg)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-md)", fontWeight: 700, cursor: "pointer", marginBottom: "var(--sp-3)" }}>استمع للجملة</button>
         <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>اضغط للاستماع — ثم أجب على السؤال</div>
-        {revealed && <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", color: "var(--c-accent-hover)", marginTop: "var(--sp-3)", direction: "ltr" }}>{raw.text}</div>}
+        {revealed && <div style={{ fontFamily: "inherit", fontSize: "var(--fs-sm)", color: "var(--c-accent-hover)", marginTop: "var(--sp-3)", direction: "ltr" }}>{raw.text}</div>}
       </div>
 
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)", marginBottom: "var(--sp-3)", fontWeight: 600 }}>{raw.q}</div>
@@ -2879,7 +2895,7 @@ function ListenExercise() {
       })}
       {picked !== null && (
         <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
-          {!revealed && <button onClick={() => setRevealed(true)} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "var(--c-accent-hover)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer", marginLeft: 8 }}>>أظهر النص</button>}
+          {!revealed && <button onClick={() => setRevealed(true)} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.2)", background: "transparent", color: "var(--c-accent-hover)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer", marginLeft: 8 }}>أظهر النص</button>}
           <button onClick={next} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer", marginRight: 8 }}>{qi + 1 >= qs.current.length ? "🏁 النتيجة" : "التالي ←"}</button>
         </div>
       )}
@@ -2915,7 +2931,7 @@ function DictationExercise() {
       <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>إملاء صوتي</div>
       <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: score >= 6 ? "#059669" : score >= 4 ? "#1d4ed8" : "#dc2626", marginBottom: "var(--sp-2)" }}>{score + "/" + qs.current.length}</div>
       <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-4)" }}>{score >= 6 ? "إنجاز مميز! أذنك تلتقط التفاصيل" : score >= 4 ? "جيد! استمر بالاستماع" : "أعد الاستماع لكل جملة عدة مرات"}</div>
-      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>محاولة جديدة</button>
+      <button onClick={restart} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>محاولة جديدة</button>
     </div>
   );
 
@@ -2931,26 +2947,26 @@ function DictationExercise() {
       </div>
 
       <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-5)", marginBottom: "var(--sp-3)", textAlign: "center" }}>
-        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: "var(--r-lg)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-md)", fontWeight: 700, cursor: "pointer", marginBottom: "var(--sp-2)" }}>>استمع</button>
+        <button onClick={playQ} style={{ padding: "12px 28px", borderRadius: "var(--r-lg)", border: "none", background: "var(--c-error)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-md)", fontWeight: 700, cursor: "pointer", marginBottom: "var(--sp-2)" }}>استمع</button>
         <div style={{ marginTop: "var(--sp-2)" }}>
           <button onClick={() => speak(qs.current[qi], 0.55)} style={{ padding: "4px 12px", borderRadius: "var(--r-sm)", border: "1px solid rgba(220,38,38,0.2)", background: "transparent", color: "var(--c-error)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>بطيء</button>
         </div>
         <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginTop: "var(--sp-2)" }}>استمع ثم اكتب ما سمعته بالإنجليزي</div>
       </div>
 
-      <textarea value={input} onChange={(e) => !checked && setInput(e.target.value)} placeholder="اكتب ما سمعته هنا..." disabled={checked} style={{ width: "100%", minHeight: 70, padding: "var(--sp-4)", borderRadius: "var(--r-lg)", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(220,38,38,0.2)", color: "var(--c-text)", outline: "none", resize: "vertical", marginBottom: "var(--sp-3)" }} />
+      <textarea value={input} onChange={(e) => !checked && setInput(e.target.value)} placeholder="اكتب ما سمعته هنا..." disabled={checked} style={{ width: "100%", minHeight: 70, padding: "var(--sp-4)", borderRadius: "var(--r-lg)", fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, background: "rgba(0,0,0,0.02)", border: "1px solid rgba(220,38,38,0.2)", color: "var(--c-text)", outline: "none", resize: "vertical", marginBottom: "var(--sp-3)" }} />
 
       {!checked ? (
         <div style={{ textAlign: "center" }}>
-          <button onClick={check} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: input.trim().length >= 3 ? "#dc2626" : "#e4e4e7", color: input.trim().length >= 3 ? "#fff" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>>تأكّد</button>
+          <button onClick={check} disabled={input.trim().length < 3} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: input.trim().length >= 3 ? "#dc2626" : "#e4e4e7", color: input.trim().length >= 3 ? "#fff" : "#a1a1aa", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: input.trim().length >= 3 ? "pointer" : "default" }}>تأكّد</button>
         </div>
       ) : (
         <div>
           <div style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
-            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>>الجملة الصحيحة:</div>
-            <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)" }}>{correct}</div>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-success)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>الجملة الصحيحة:</div>
+            <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.8, color: "var(--c-text)" }}>{correct}</div>
           </div>
-          <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 2, marginBottom: "var(--sp-3)" }}>
+          <div style={{ fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 2, marginBottom: "var(--sp-3)" }}>
             {correctWords.map((w, wi) => {
               const matched = userWords.includes(w);
               return <span key={wi} style={{ color: matched ? "#059669" : "#dc2626", fontWeight: matched ? 400 : 700 }}>{w + " "}</span>;
@@ -3144,14 +3160,13 @@ function LevelTest({ onComplete, checkpoint }) {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--sp-2)", marginBottom: "var(--sp-5)", textAlign: "right" }}>
         {[
-          { icon: "⌘", label: "قواعد اللغة", desc: "تركيب الجمل والأزمنة" },
-          { icon: "V", label: "المفردات", desc: "معاني الكلمات واستخدامها" },
-          { icon: "R", label: "فهم القراءة", desc: "فهم النصوص والسياق" },
-          { icon: "P", label: "التواصل", desc: "الرد المناسب في مواقف الحياة" },
+          { label: "قواعد اللغة", desc: "تركيب الجمل والأزمنة", color: "#3b82f6" },
+          { label: "المفردات", desc: "معاني الكلمات واستخدامها", color: "#8b5cf6" },
+          { label: "فهم القراءة", desc: "فهم النصوص والسياق", color: "#f59e0b" },
+          { label: "التواصل", desc: "الرد المناسب في مواقف الحياة", color: "#10b981" },
         ].map((s, i) => (
-          <div key={i} style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)" }}>
-            <div style={{ fontSize: "var(--fs-lg)", marginBottom: "var(--sp-1)" }}>{s.icon}</div>
-            <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: "var(--c-text)" }}>{s.label}</div>
+          <div key={i} className="card" style={{ marginBottom: 0, padding: "var(--sp-4)", borderRight: "3px solid " + s.color }}>
+            <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-text)", marginBottom: "var(--sp-1)" }}>{s.label}</div>
             <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{s.desc}</div>
           </div>
         ))}
@@ -3174,7 +3189,7 @@ function LevelTest({ onComplete, checkpoint }) {
           <div style={{ fontSize: "var(--fs-2xl)", marginBottom: "var(--sp-2)" }}></div>
           <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>مستواك في اللغة الإنجليزية</div>
           <div style={{ display: "inline-block", padding: "12px 32px", borderRadius: "var(--r-xl)", background: lvl.color + "18", border: "2px solid " + lvl.color + "40" }}>
-            <div style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: lvl.color, fontFamily: "'IBM Plex Mono'" }}>{lvl.code}</div>
+            <div style={{ fontSize: "var(--fs-2xl)", fontWeight: 800, color: lvl.color, fontFamily: "inherit" }}>{lvl.code}</div>
             <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-text)" }}>{lvl.name}</div>
             <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{lvl.nameEn}</div>
           </div>
@@ -3201,7 +3216,7 @@ function LevelTest({ onComplete, checkpoint }) {
               <div key={skill} style={{ marginBottom: "var(--sp-3)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--sp-1)" }}>
                   <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text)" }}>{TYPE_ICONS[skill]} {TYPE_LABELS[skill]}</div>
-                  <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: barColor, fontFamily: "'IBM Plex Mono'" }}>{pct}%</div>
+                  <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: barColor, fontFamily: "inherit" }}>{pct}%</div>
                 </div>
                 <div style={{ height: 6, borderRadius: "var(--r-sm)", background: "var(--c-border)", overflow: "hidden" }}>
                   <div style={{ height: "100%", width: pct + "%", borderRadius: "var(--r-sm)", background: barColor, transition: "width .5s" }} />
@@ -3213,7 +3228,7 @@ function LevelTest({ onComplete, checkpoint }) {
 
         {/* Level breakdown */}
         <div style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-3)" }}>
-          <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>الأداء حسب المستوى</div>
+          <div style={{ className: "section-title" }}>الأداء حسب المستوى</div>
           <div style={{ display: "flex", gap: "var(--sp-2)", alignItems: "flex-end" }}>
             {CEFR_LEVELS.map((l, i) => {
               const att = levelAttempts[i];
@@ -3233,17 +3248,17 @@ function LevelTest({ onComplete, checkpoint }) {
 
         <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-2)" }}>
           <div style={{ flex: 1, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)", textAlign: "center" }}>
-            <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "'IBM Plex Mono'" }}>{totalCorrect}/{history.length}</div>
+            <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "inherit" }}>{totalCorrect}/{history.length}</div>
             <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>إجابات صحيحة</div>
           </div>
           <div style={{ flex: 1, background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)", textAlign: "center" }}>
-            <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "'IBM Plex Mono'" }}>{Math.round((Date.now() - startTime) / 1000)}s</div>
+            <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "inherit" }}>{Math.round((Date.now() - startTime) / 1000)}s</div>
             <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>الوقت</div>
           </div>
         </div>
 
         <div style={{ textAlign: "center", marginTop: "var(--sp-4)" }}>
-          <button onClick={() => { setPhase("intro"); setQi(0); setPicked(null); setCurrentLevel(2); setHistory([]); setQuestions([]); setLevelScores({0:0,1:0,2:0,3:0,4:0,5:0}); setLevelAttempts({0:0,1:0,2:0,3:0,4:0,5:0}); setConsecutiveCorrect(0); setConsecutiveWrong(0); setFinalLevel(null); setSkillBreakdown(null); }} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg,var(--c-accent),var(--c-success))", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>أعد الاختبار</button>
+          <button onClick={() => { setPhase("intro"); setQi(0); setPicked(null); setCurrentLevel(2); setHistory([]); setQuestions([]); setLevelScores({0:0,1:0,2:0,3:0,4:0,5:0}); setLevelAttempts({0:0,1:0,2:0,3:0,4:0,5:0}); setConsecutiveCorrect(0); setConsecutiveWrong(0); setFinalLevel(null); setSkillBreakdown(null); }} style={{ padding: "10px 24px", borderRadius: "var(--r-md)", border: "none", background: "linear-gradient(135deg,var(--c-accent),var(--c-success))", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>أعد الاختبار</button>
         </div>
       </div>
     );
@@ -3275,8 +3290,8 @@ function LevelTest({ onComplete, checkpoint }) {
 
       {/* Question */}
       <div style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", borderRadius: "var(--r-lg)", padding: "var(--sp-4)", marginBottom: "var(--sp-4)" }}>
-        <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.9, color: "var(--c-text)" }}>{displayQ.q}</div>
-        {currentQ.audio && <div style={{ textAlign: "center", marginTop: "var(--sp-2)" }}><button onClick={() => speak(currentQ.audio, 0.85)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>>استمع مرة ثانية</button></div>}
+        <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.9, color: "var(--c-text)" }}>{displayQ.q}</div>
+        {currentQ.audio && <div style={{ textAlign: "center", marginTop: "var(--sp-2)" }}><button onClick={() => speak(currentQ.audio, 0.85)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "var(--c-accent-hover)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 700, cursor: "pointer" }}>استمع مرة ثانية</button></div>}
       </div>
 
       {/* Options */}
@@ -3288,7 +3303,7 @@ function LevelTest({ onComplete, checkpoint }) {
         if (show && isCorrect) { bg = "rgba(5,150,105,0.12)"; brd = "rgba(5,150,105,0.3)"; }
         else if (show && isPicked && !isCorrect) { bg = "rgba(220,38,38,0.12)"; brd = "rgba(217,119,6,0.3)"; }
         return (
-          <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: "var(--sp-2)", cursor: show ? "default" : "pointer", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1, transition: ".2s" }}>
+          <div key={oi} onClick={() => !show && pick(oi)} style={{ padding: "var(--sp-3)", borderRadius: "var(--r-md)", marginBottom: "var(--sp-2)", cursor: show ? "default" : "pointer", fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.7, background: bg, border: "1px solid " + brd, opacity: show && !isCorrect && !isPicked ? 0.3 : 1, transition: ".2s" }}>
             {o}
             {show && isCorrect && <span style={{ color: "var(--c-success)", fontSize: "var(--fs-xs)" }}> </span>}
             {show && isPicked && !isCorrect && <span style={{ color: "var(--c-error)", fontSize: "var(--fs-xs)" }}> ✗</span>}
@@ -3390,6 +3405,13 @@ function MainApp({ currentUser, onLogout }) {
     <div dir="rtl" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" }}>
       <style>{CSS}</style>
       <div style={{ maxWidth: 480, width: "100%", padding: "var(--sp-7)", animation: "fadeUp .5s" }}>
+
+        {/* Step indicator */}
+        {onboardStep > 0 && <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-7)", justifyContent: "center" }}>
+          {[1,2,3,4,5].map(s => (
+            <div key={s} style={{ width: s <= onboardStep ? 24 : 8, height: 8, borderRadius: "var(--r-full)", background: s <= onboardStep ? "var(--c-accent)" : "var(--c-surface-sunken)", transition: "all 0.3s ease", boxShadow: s === onboardStep ? "0 0 8px rgba(29,78,216,0.3)" : "none" }} />
+          ))}
+        </div>}
 
         {/* Screen 1: Hook */}
         {onboardStep === 0 && <div style={{ textAlign: "center", animation: "fadeUp .4s" }}>
@@ -3743,36 +3765,38 @@ function MainApp({ currentUser, onLogout }) {
           <div>
             {!trainMode && (() => {
               const allExercises = [
-                { id: "sim", title: "محادثات تفاعلية", desc: "سيناريوهات حقيقية — اختر الرد واقرأه" },
-                { id: "quick", title: "استجابة سريعة", desc: "مواقف يومية — اختر الرد الأنسب" },
-                { id: "quiz", title: "تقييم أسبوعي", desc: "١٠ أسئلة تقيس تقدمك" },
-                { id: "fill", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة" },
-                { id: "build", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة" },
-                { id: "fluency", title: "تمرين الطلاقة", desc: "تكلم ٣ مرات بوقت أقل" },
-                { id: "listen", title: "فهم الاستماع", desc: "استمع وأجب" },
-                { id: "dictation", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته" },
-                { id: "recall", title: "إنتاج حر", desc: "اكتب ردك بدون خيارات" },
-                { id: "level", title: "قياس التمكّن", desc: "اختبار CEFR تكيّفي" },
+                { id: "sim", title: "محادثات تفاعلية", desc: "سيناريوهات حقيقية — اختر الرد واقرأه", accent: "#3b82f6", tag: "محادثة" },
+                { id: "quick", title: "استجابة سريعة", desc: "مواقف يومية — اختر الرد الأنسب", accent: "#3b82f6", tag: "محادثة" },
+                { id: "quiz", title: "تقييم أسبوعي", desc: "١٠ أسئلة تقيس تقدمك", accent: "#8b5cf6", tag: "تقييم" },
+                { id: "fill", title: "أكمل الفراغ", desc: "اكتب الكلمات الناقصة", accent: "#f59e0b", tag: "كتابة" },
+                { id: "build", title: "بناء جمل", desc: "رتّب الكلمات المبعثرة", accent: "#f59e0b", tag: "كتابة" },
+                { id: "fluency", title: "تمرين الطلاقة", desc: "تكلم ٣ مرات بوقت أقل", accent: "#ef4444", tag: "تحدث" },
+                { id: "listen", title: "فهم الاستماع", desc: "استمع وأجب", accent: "#06b6d4", tag: "استماع" },
+                { id: "dictation", title: "إملاء صوتي", desc: "استمع واكتب ما سمعته", accent: "#06b6d4", tag: "استماع" },
+                { id: "recall", title: "إنتاج حر", desc: "اكتب ردك بدون خيارات", accent: "#10b981", tag: "إنتاج" },
+                { id: "level", title: "قياس التمكّن", desc: "اختبار CEFR تكيّفي", accent: "#8b5cf6", tag: "تقييم" },
               ];
+              const ExCard = ({ m }) => (
+                <div className="card" onClick={() => setTrainMode(m.id)} style={{ cursor: "pointer", marginBottom: 0, padding: 0, overflow: "hidden", position: "relative" }}>
+                  <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: 4, background: m.accent, borderRadius: "0 var(--r-xl) var(--r-xl) 0" }} />
+                  <div style={{ padding: "var(--sp-5)" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--sp-2)" }}>
+                      <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-text)" }}>{m.title}</div>
+                      <span style={{ fontSize: "var(--fs-xs)", padding: "2px 8px", borderRadius: "var(--r-full)", background: m.accent + "15", color: m.accent, fontWeight: 600 }}>{m.tag}</span>
+                    </div>
+                    <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)", lineHeight: 1.6 }}>{m.desc}</div>
+                  </div>
+                </div>
+              );
               return (
                 <div>
-                  <div style={{ fontSize: "var(--fs-sm)", fontWeight: 600, color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)" }}>مقترح لك</div>
-                  <div className="exercise-grid" style={{ marginBottom: "var(--sp-5)" }}>
-                    {allExercises.slice(0, 3).map(m => (
-                      <div key={m.id} className="card" onClick={() => setTrainMode(m.id)} style={{ cursor: "pointer", marginBottom: 0, padding: "var(--sp-4)" }}>
-                        <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-text)", marginBottom: "var(--sp-1)" }}>{m.title}</div>
-                        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)" }}>{m.desc}</div>
-                      </div>
-                    ))}
+                  <div className="section-title">مقترح لك</div>
+                  <div className="exercise-grid" style={{ marginBottom: "var(--sp-6)" }}>
+                    {allExercises.slice(0, 3).map(m => <ExCard key={m.id} m={m} />)}
                   </div>
-                  <div style={{ fontSize: "var(--fs-sm)", fontWeight: 600, color: "var(--c-text-secondary)", marginBottom: "var(--sp-3)" }}>المزيد من التمارين</div>
+                  <div className="section-title">المزيد من التمارين</div>
                   <div className="exercise-grid">
-                    {allExercises.slice(3).map(m => (
-                      <div key={m.id} className="card" onClick={() => setTrainMode(m.id)} style={{ cursor: "pointer", marginBottom: 0, padding: "var(--sp-4)" }}>
-                        <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-text)", marginBottom: "var(--sp-1)" }}>{m.title}</div>
-                        <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)" }}>{m.desc}</div>
-                      </div>
-                    ))}
+                    {allExercises.slice(3).map(m => <ExCard key={m.id} m={m} />)}
                   </div>
                 </div>
               );
@@ -3820,7 +3844,7 @@ function MainApp({ currentUser, onLogout }) {
                   }} style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", padding: "var(--sp-3)", borderRadius: "var(--r-md)", background: r >= 5 ? "rgba(5,150,105,0.06)" : isDue ? "rgba(29,78,216,0.04)" : "rgba(0,0,0,0.015)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : isDue ? "rgba(29,78,216,0.15)" : "rgba(0,0,0,0.03)"), marginBottom: "var(--sp-2)", cursor: "pointer" }}>
                     <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-xs)", fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 5 ? "✓" : r}</div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
+                      <div style={{ fontFamily: "inherit", fontSize: "var(--fs-base)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{p.en}</div>
                       <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginTop: "var(--sp-1)" }}>{p.ar}</div>
                     </div>
                     {isDue && <div style={{ fontSize: "var(--fs-xs)", padding: "2px 6px", borderRadius: "var(--r-sm)", background: "rgba(29,78,216,0.15)", color: "var(--c-accent)", fontWeight: 600 }}>مراجعة</div>}
@@ -3867,7 +3891,7 @@ function MainApp({ currentUser, onLogout }) {
                       }} style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)", padding: "var(--sp-3)", borderRadius: "var(--r-md)", background: r >= 5 ? "rgba(5,150,105,0.06)" : "rgba(29,78,216,0.04)", border: "1px solid " + (r >= 5 ? "rgba(5,150,105,0.15)" : "rgba(29,78,216,0.1)"), marginBottom: "var(--sp-2)", cursor: "pointer" }}>
                         <div style={{ width: 28, height: 28, borderRadius: "50%", background: r >= 5 ? "#059669" : r > 0 ? "#1d4ed8" : "#e4e4e7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-xs)", fontWeight: 700, color: r > 0 ? "#fafaf9" : "#a1a1aa", flexShrink: 0 }}>{r >= 3 ? "✓" : r}</div>
                         <div style={{ flex: 1 }}>
-                          <div style={{ fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{item.phrase.en}</div>
+                          <div style={{ fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", lineHeight: 1.7 }}>{item.phrase.en}</div>
                           <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>{item.phrase.ar} — {item.icon} {item.cat}</div>
                         </div>
                         <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-accent)" }}>{item.daysSince + "d"}</div>
@@ -3904,7 +3928,7 @@ function MainApp({ currentUser, onLogout }) {
             </Card>
             {/* FIX 3: Smart Weekly Summary */}
             {sessionHistory.length >= 3 && <Card s={{ borderColor: "rgba(29,78,216,0.1)" }}>
-              <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>📋 ملخص الأسبوع</div>
+              <div style={{ className: "section-title" }}>ملخص الأسبوع</div>
               {(() => {
                 const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
                 const weekStr = weekAgo.toISOString().slice(0, 10);
@@ -3927,7 +3951,7 @@ function MainApp({ currentUser, onLogout }) {
             </Card>}
             {/* Smart Progress — Session History */}
             {sessionHistory.length > 0 && <Card>
-              <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-error)", marginBottom: "var(--sp-3)" }}>أداء الذاكرة</div>
+              <div style={{ className: "section-title" }}>أداء الذاكرة</div>
               {(() => {
                 const recent = sessionHistory.slice(-10);
                 const totalPhrases = recent.reduce((sum, s) => sum + (s.phrasesCount || 0), 0);
@@ -3939,15 +3963,15 @@ function MainApp({ currentUser, onLogout }) {
                   <div>
                     <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-3)" }}>
                       <div style={{ flex: 1, textAlign: "center", background: "rgba(5,150,105,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)" }}>
-                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-success)", fontFamily: "'IBM Plex Mono'" }}>{recalled}</div>
+                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-success)", fontFamily: "inherit" }}>{recalled}</div>
                         <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>تذكّرتها</div>
                       </div>
                       <div style={{ flex: 1, textAlign: "center", background: "rgba(29,78,216,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)" }}>
-                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "'IBM Plex Mono'" }}>{partial}</div>
+                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-accent)", fontFamily: "inherit" }}>{partial}</div>
                         <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>تقريباً</div>
                       </div>
                       <div style={{ flex: 1, textAlign: "center", background: "rgba(220,38,38,0.06)", borderRadius: "var(--r-md)", padding: "var(--sp-3)" }}>
-                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-error)", fontFamily: "'IBM Plex Mono'" }}>{forgot}</div>
+                        <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: "var(--c-error)", fontFamily: "inherit" }}>{forgot}</div>
                         <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)" }}>نسيتها</div>
                       </div>
                     </div>
@@ -3964,7 +3988,7 @@ function MainApp({ currentUser, onLogout }) {
                         <div key={i} style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)", padding: "var(--sp-2)", borderRadius: "var(--r-sm)", background: "rgba(0,0,0,0.02)", marginBottom: "var(--sp-1)" }}>
                           <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", minWidth: 55 }}>{s.date ? s.date.slice(5) : ""}</div>
                           <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text)", flex: 1 }}>{s.scenario}</div>
-                          <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: g === t ? "#059669" : g > 0 ? "#1d4ed8" : "#dc2626", fontFamily: "'IBM Plex Mono'" }}>{g + "/" + t}</div>
+                          <div style={{ fontSize: "var(--fs-xs)", fontWeight: 700, color: g === t ? "#059669" : g > 0 ? "#1d4ed8" : "#dc2626", fontFamily: "inherit" }}>{g + "/" + t}</div>
                         </div>
                       );
                     })}
@@ -3976,7 +4000,7 @@ function MainApp({ currentUser, onLogout }) {
               <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}> مستوى اللغة (CEFR)</div>
               <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-4)" }}>
                 <div style={{ width: 60, height: 60, borderRadius: "var(--r-lg)", background: CEFR_LEVELS[levelResult.level].color + "18", border: "2px solid " + CEFR_LEVELS[levelResult.level].color + "40", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: CEFR_LEVELS[levelResult.level].color, fontFamily: "'IBM Plex Mono'" }}>{levelResult.levelCode}</div>
+                  <div style={{ fontSize: "var(--fs-xl)", fontWeight: 800, color: CEFR_LEVELS[levelResult.level].color, fontFamily: "inherit" }}>{levelResult.levelCode}</div>
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: "var(--fs-base)", fontWeight: 700, color: "var(--c-text)" }}>{CEFR_LEVELS[levelResult.level].name}</div>
@@ -3992,11 +4016,11 @@ function MainApp({ currentUser, onLogout }) {
                 </div>
               </div>
               <div style={{ textAlign: "center", marginTop: "var(--sp-3)" }}>
-                <button onClick={() => { setTab("train"); setTrainMode("level"); }} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.15)", background: "transparent", color: "var(--c-accent)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>>أعد الاختبار</button>
+                <button onClick={() => { setTab("train"); setTrainMode("level"); }} style={{ padding: "6px 14px", borderRadius: "var(--r-sm)", border: "1px solid rgba(29,78,216,0.15)", background: "transparent", color: "var(--c-accent)", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>أعد الاختبار</button>
               </div>
             </Card>}
             {quizResults && quizResults.length > 0 && <Card>
-              <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>نتائج الاختبارات</div>
+              <div className="section-title">نتائج الاختبارات</div>
               <div style={{ display: "flex", alignItems: "flex-end", gap: "var(--sp-2)", height: 100, padding: "0 4px" }}>
                 {quizResults.slice(-10).map((r, i) => (
                   <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--sp-1)" }}>
@@ -4015,7 +4039,7 @@ function MainApp({ currentUser, onLogout }) {
             </Card>}
             {/* Voice Settings */}
             <Card>
-              <div style={{ fontSize: "var(--fs-sm)", fontWeight: 700, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>>تفضيلاتك الصوتية</div>
+              <div className="section-title">الصوت والنطق</div>
               <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)", marginBottom: "var(--sp-3)" }}>
                 <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)" }}>الحالة:</div>
                 <VoiceBadge />
@@ -4023,12 +4047,12 @@ function MainApp({ currentUser, onLogout }) {
 
               {/* Test current voice */}
               <div style={{ marginBottom: "var(--sp-4)" }}>
-                <button onClick={() => speak("Hello! Nice to meet you. How are you today?", 0.9)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "none", background: "rgba(29,78,216,0.1)", color: "var(--c-accent)", fontFamily: "inherit", fontSize: "var(--fs-sm)", fontWeight: 600, cursor: "pointer" }}>>جرّب الصوت الحالي</button>
+                <button className="btn btn--secondary btn--sm" onClick={() => speak("Hello! Nice to meet you. How are you today?", 0.9)}>جرّب الصوت الحالي</button>
               </div>
               {/* FIX 8: Accent selection */}
               <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>اللهجة:</div>
               <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-4)" }}>
-                {[{ code: "en-US", label: "🇺🇸 أمريكي" }, { code: "en-GB", label: "🇬🇧 بريطاني" }, { code: "en-AU", label: "🇦🇺 أسترالي" }].map(a => (
+                {[{ code: "en-US", label: "أمريكي" }, { code: "en-GB", label: "بريطاني" }, { code: "en-AU", label: "أسترالي" }].map(a => (
                   <button key={a.code} onClick={() => { setAccent(a.code); speak("Hello! How are you today?", 0.9); }} style={{ padding: "6px 12px", borderRadius: "var(--r-sm)", border: "1px solid " + (getAccent() === a.code ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)"), background: getAccent() === a.code ? "rgba(29,78,216,0.1)" : "transparent", color: getAccent() === a.code ? "#1d4ed8" : "#71717a", fontSize: "var(--fs-xs)", cursor: "pointer" }}>{a.label}</button>
                 ))}
               </div>
@@ -4055,14 +4079,14 @@ function MainApp({ currentUser, onLogout }) {
                     setOpenAIKey(key || null);
                     try { await userStorage.set("openai-tts-key", key); } catch(ex) {}
                   }}
-                  style={{ width: "100%", padding: "var(--sp-3)", borderRadius: "var(--r-md)", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", background: "rgba(0,0,0,0.02)", border: "1px solid rgba(29,78,216,0.15)", color: "var(--c-text)", outline: "none" }}
+                  style={{ width: "100%", padding: "var(--sp-3)", borderRadius: "var(--r-md)", fontFamily: "inherit", fontSize: "var(--fs-sm)", direction: "ltr", textAlign: "left", background: "rgba(0,0,0,0.02)", border: "1px solid rgba(29,78,216,0.15)", color: "var(--c-text)", outline: "none" }}
                 />
               </div>
               {getOpenAIKey() && <div>
                 <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)" }}>الصوت:</div>
                 <div style={{ display: "flex", gap: "var(--sp-2)", flexWrap: "wrap", marginBottom: "var(--sp-2)" }}>
                   {["nova", "alloy", "echo", "fable", "onyx", "shimmer"].map(v => (
-                    <button key={v} onClick={async () => { setTTSVoice(v); try { await userStorage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: "var(--r-sm)", border: "1px solid " + (getTTSVoice() === v ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)"), background: getTTSVoice() === v ? "rgba(29,78,216,0.1)" : "transparent", color: getTTSVoice() === v ? "#1d4ed8" : "#71717a", fontFamily: "'IBM Plex Mono'", fontSize: "var(--fs-xs)", cursor: "pointer" }}>{v}</button>
+                    <button key={v} onClick={async () => { setTTSVoice(v); try { await userStorage.set("openai-tts-voice", v); } catch(ex) {} speak("Hello, nice to meet you.", 0.9); }} style={{ padding: "6px 12px", borderRadius: "var(--r-sm)", border: "1px solid " + (getTTSVoice() === v ? "rgba(29,78,216,0.3)" : "rgba(0,0,0,0.05)"), background: getTTSVoice() === v ? "rgba(29,78,216,0.1)" : "transparent", color: getTTSVoice() === v ? "#1d4ed8" : "#71717a", fontFamily: "inherit", fontSize: "var(--fs-xs)", cursor: "pointer" }}>{v}</button>
                   ))}
                 </div>
                 <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)" }}>nova = أنثى طبيعية | onyx = ذكر واثق | shimmer = أنثى دافئة | echo = ذكر هادئ</div>
