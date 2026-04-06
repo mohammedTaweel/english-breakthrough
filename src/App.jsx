@@ -1000,17 +1000,24 @@ function QuickResp() {
   );
 }
 
-function WeeklyQuiz({ onSave }) {
-  const [qi, setQi] = useState(0);
+function WeeklyQuiz({ onSave, checkpoint }) {
+  const cp = checkpoint || {};
+  const [qi, setQi] = useState(cp.qi || 0);
   const [picked, setPicked] = useState(null);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(cp.score || 0);
   const [done, setDone] = useState(false);
   const [prevPct, setPrevPct] = useState(null);
-  const qs = useRef(shuffle(QUIZ_BANK, gdn()).slice(0, 10));
+  const qs = useRef(cp.questions || shuffle(QUIZ_BANK, gdn()).slice(0, 10));
   const saved = useRef(false);
   function pick(oi) { setPicked(oi); const { correctIndex } = shuffleOpts(qs.current[qi].opts, qs.current[qi].ans, qi * 17 + 59); if (oi === correctIndex) setScore(score + 1); }
   function next() { if (qi + 1 >= qs.current.length) { setDone(true); return; } setQi(qi + 1); setPicked(null); }
-  function restart() { qs.current = shuffle(QUIZ_BANK, Date.now()); setQi(0); setPicked(null); setScore(0); setDone(false); saved.current = false; setPrevPct(null); }
+  // Checkpoint: save quiz progress on each question change
+  useEffect(() => {
+    if (done) return;
+    const cpData = { type: "quiz", qi, score, questions: qs.current, date: gtd() };
+    (async () => { try { await storage.set("checkpoint-quiz", JSON.stringify(cpData)); } catch(e) {} })();
+  }, [qi, score, done]);
+  function restart() { qs.current = shuffle(QUIZ_BANK, Date.now()); setQi(0); setPicked(null); setScore(0); setDone(false); saved.current = false; setPrevPct(null); (async () => { try { await storage.delete("checkpoint-quiz"); } catch(e) {} })(); }
   useEffect(() => {
     if (done && !saved.current) {
       saved.current = true;
@@ -1022,6 +1029,7 @@ function WeeklyQuiz({ onSave }) {
           if (results.length > 0) setPrevPct(results[results.length - 1].pct);
           results.push({ date: gtd(), pct, score, total: qs.current.length });
           await storage.set("quiz-results", JSON.stringify(results));
+          await storage.delete("checkpoint-quiz"); // clear checkpoint on completion
           if (onSave) onSave();
         } catch (e) {}
       })();
@@ -1412,24 +1420,25 @@ function FreeRecall() {
 }
 
 // ===== DAILY DEEP PROCESSING SESSION =====
-function DailySession({ scenario, onComplete, dayNum }) {
-  const [step, setStep] = useState(0);
+function DailySession({ scenario, onComplete, dayNum, checkpoint }) {
+  const cp = checkpoint || {};
+  const [step, setStep] = useState(cp.step || 0);
   const [listenIdx, setListenIdx] = useState(-1);
-  const [listenDone, setListenDone] = useState(false);
-  const [listenAnswer, setListenAnswer] = useState(null); // comprehension Q answer
-  const [shadowReps, setShadowReps] = useState({});
-  const [shadowSpoken, setShadowSpoken] = useState({});
-  const [recallState, setRecallState] = useState({}); // { 0: "hidden"|"thinking"|"revealed" }
-  const [recallScore, setRecallScore] = useState({});
-  const [prodInput, setProdInput] = useState("");
-  const [prodSubmitted, setProdSubmitted] = useState(false);
-  const [challengeAccepted, setChallengeAccepted] = useState(false);
-  const [challengeDone, setChallengeDone] = useState(false);
-  const [challengeNote, setChallengeNote] = useState("");
+  const [listenDone, setListenDone] = useState(cp.listenDone || false);
+  const [listenAnswer, setListenAnswer] = useState(cp.listenAnswer || null);
+  const [shadowReps, setShadowReps] = useState(cp.shadowReps || {});
+  const [shadowSpoken, setShadowSpoken] = useState(cp.shadowSpoken || {});
+  const [recallState, setRecallState] = useState(cp.recallState || {});
+  const [recallScore, setRecallScore] = useState(cp.recallScore || {});
+  const [prodInput, setProdInput] = useState(cp.prodInput || "");
+  const [prodSubmitted, setProdSubmitted] = useState(cp.prodSubmitted || false);
+  const [challengeAccepted, setChallengeAccepted] = useState(cp.challengeAccepted || false);
+  const [challengeDone, setChallengeDone] = useState(cp.challengeDone || false);
+  const [challengeNote, setChallengeNote] = useState(cp.challengeNote || "");
   const [aiFeedback, setAiFeedback] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [stepCelebration, setStepCelebration] = useState(null);
-  const [listenChunk, setListenChunk] = useState(0);
+  const [listenChunk, setListenChunk] = useState(cp.listenChunk || 0);
 
   const sc = scenario;
   const steps = [
@@ -1440,6 +1449,13 @@ function DailySession({ scenario, onComplete, dayNum }) {
     { icon: "✍️", title: "أنتج", desc: "اكتب ردك بنفسك" },
     { icon: "🌍", title: "طبّق", desc: "تحدّي حقيقي اليوم" },
   ];
+
+  // Checkpoint: save session state on every meaningful change
+  useEffect(() => {
+    if (challengeAccepted) return; // session completed, no need to checkpoint
+    const cpData = { type: "session", scenario: sc.title, step, listenDone, listenAnswer, shadowReps, shadowSpoken, recallState, recallScore, prodInput, prodSubmitted, challengeAccepted, challengeDone, challengeNote, listenChunk, date: gtd() };
+    (async () => { try { await storage.set("checkpoint-session", JSON.stringify(cpData)); } catch(e) {} })();
+  }, [step, listenDone, listenAnswer, shadowReps, shadowSpoken, recallState, recallScore, prodInput, prodSubmitted, challengeAccepted, challengeDone, challengeNote, listenChunk]);
 
   // FIX 5: Working Memory — play only first 3 lines initially, then expand
   // Baddeley's Model: WM capacity = 4±1 items. 7 lines at once = overload.
@@ -1808,6 +1824,7 @@ function DailySession({ scenario, onComplete, dayNum }) {
                 const hist = r && r.value ? JSON.parse(r.value) : [];
                 hist.push(sessionData);
                 await storage.set("session-history", JSON.stringify(hist));
+                await storage.delete("checkpoint-session"); // clear checkpoint on completion
               } catch(e) {} })();
               if (onComplete) onComplete();
             }} style={{ padding: "12px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#5ec4b6,#e8b84b)", color: "#1a1614", fontFamily: "inherit", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>أقبل التحدي ✓</button>
@@ -2149,22 +2166,30 @@ function DictationExercise() {
   );
 }
 
-function LevelTest({ onComplete }) {
-  const [phase, setPhase] = useState("intro"); // intro, testing, result
-  const [qi, setQi] = useState(0);
+function LevelTest({ onComplete, checkpoint }) {
+  const cp = checkpoint || {};
+  const [phase, setPhase] = useState(cp.phase === "testing" ? "testing" : "intro");
+  const [qi, setQi] = useState(cp.qi || 0);
   const [picked, setPicked] = useState(null);
-  const [currentLevel, setCurrentLevel] = useState(2); // Start at B1
-  const [history, setHistory] = useState([]); // {level, correct}
-  const [questions, setQuestions] = useState([]);
-  const [startTime, setStartTime] = useState(null);
-  const [levelScores, setLevelScores] = useState({0:0,1:0,2:0,3:0,4:0,5:0});
-  const [levelAttempts, setLevelAttempts] = useState({0:0,1:0,2:0,3:0,4:0,5:0});
-  const [consecutiveCorrect, setConsecutiveCorrect] = useState(0);
-  const [consecutiveWrong, setConsecutiveWrong] = useState(0);
+  const [currentLevel, setCurrentLevel] = useState(cp.currentLevel != null ? cp.currentLevel : 2);
+  const [history, setHistory] = useState(cp.history || []);
+  const [questions, setQuestions] = useState(cp.questions || []);
+  const [startTime, setStartTime] = useState(cp.startTime || null);
+  const [levelScores, setLevelScores] = useState(cp.levelScores || {0:0,1:0,2:0,3:0,4:0,5:0});
+  const [levelAttempts, setLevelAttempts] = useState(cp.levelAttempts || {0:0,1:0,2:0,3:0,4:0,5:0});
+  const [consecutiveCorrect, setConsecutiveCorrect] = useState(cp.consecutiveCorrect || 0);
+  const [consecutiveWrong, setConsecutiveWrong] = useState(cp.consecutiveWrong || 0);
   const [finalLevel, setFinalLevel] = useState(null);
   const [skillBreakdown, setSkillBreakdown] = useState(null);
 
   const TOTAL_QUESTIONS = 25;
+
+  // Checkpoint: save level test progress on each question
+  useEffect(() => {
+    if (phase !== "testing" || !questions.length) return;
+    const cpData = { type: "level", phase, qi, currentLevel, history, questions, startTime, levelScores, levelAttempts, consecutiveCorrect, consecutiveWrong, date: gtd() };
+    (async () => { try { await storage.set("checkpoint-level", JSON.stringify(cpData)); } catch(e) {} })();
+  }, [qi, history, phase]);
 
   function startTest() {
     // Build adaptive question pool - pick from current level
@@ -2302,6 +2327,7 @@ function LevelTest({ onComplete }) {
         const results = r && r.value ? JSON.parse(r.value) : [];
         results.push(result);
         await storage.set("level-test-results", JSON.stringify(results));
+        await storage.delete("checkpoint-level"); // clear checkpoint on completion
         if (onComplete) onComplete(result);
       } catch (e) {}
     })();
@@ -2507,6 +2533,7 @@ export default function App() {
   const [showXpPop, setShowXpPop] = useState(null);
   const [onboardStep, setOnboardStep] = useState(0);
   const [userChallenge, setUserChallenge] = useState(null); // "+15 تمكّن" popup
+  const [pendingCheckpoints, setPendingCheckpoints] = useState(null); // { session, quiz, level }
   const tmRef = useRef(null);
 
   useEffect(() => {
@@ -2517,6 +2544,13 @@ export default function App() {
       try { const r = await storage.get("srs-data"); if (r && r.value) setSrsData(JSON.parse(r.value)); } catch (e) {}
       try { const r = await storage.get("session-history"); if (r && r.value) setSessionHistory(JSON.parse(r.value)); } catch (e) {}
       try { const r = await storage.get("user-xp"); if (r && r.value) setXp(parseInt(r.value) || 0); } catch (e) {}
+      try { const r = await storage.get("phrase-reps"); if (r && r.value) setReps(JSON.parse(r.value)); } catch (e) {}
+      // Load any pending checkpoints for crash recovery
+      const cps = {};
+      try { const r = await storage.get("checkpoint-session"); if (r && r.value) { const d = JSON.parse(r.value); if (d.date === gtd()) cps.session = d; else await storage.delete("checkpoint-session"); } } catch (e) {}
+      try { const r = await storage.get("checkpoint-quiz"); if (r && r.value) { const d = JSON.parse(r.value); if (d.date === gtd()) cps.quiz = d; else await storage.delete("checkpoint-quiz"); } } catch (e) {}
+      try { const r = await storage.get("checkpoint-level"); if (r && r.value) { const d = JSON.parse(r.value); if (d.date === gtd()) cps.level = d; else await storage.delete("checkpoint-level"); } } catch (e) {}
+      if (cps.session || cps.quiz || cps.level) setPendingCheckpoints(cps);
       setLoading(false);
     })();
   }, []);
@@ -2526,6 +2560,14 @@ export default function App() {
       (async () => { try { const r = await storage.get("quiz-results"); if (r && r.value) setQuizResults(JSON.parse(r.value)); else setQuizResults([]); } catch (e) { setQuizResults([]); } })();
     }
   }, [quizResults, loading]);
+
+  // Persist phrase reps on change
+  const repsInitRef = useRef(false);
+  useEffect(() => {
+    if (!repsInitRef.current) { repsInitRef.current = true; return; } // skip initial render
+    if (Object.keys(reps).length === 0) return;
+    (async () => { try { await storage.set("phrase-reps", JSON.stringify(reps)); } catch(e) {} })();
+  }, [reps]);
 
   const save = useCallback(async (s) => { setStore(s); try { await storage.set(DK, JSON.stringify(s)); } catch (e) {} }, []);
   const today = gtd();
@@ -2733,6 +2775,71 @@ export default function App() {
           ))}
         </div>
 
+        {/* CRASH RECOVERY — Resume Banner */}
+        {pendingCheckpoints && (
+          <div style={{ background: "rgba(232,184,75,0.08)", border: "1px solid rgba(232,184,75,0.2)", borderRadius: 12, padding: 14, marginBottom: 14, animation: "fadeUp .4s" }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: "#e8b84b", marginBottom: 8 }}>⚡ عندك نشاط ما كمّلته</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              {pendingCheckpoints.session && (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: "8px 12px" }}>
+                  <div>
+                    <div style={{ fontSize: 13, color: "#f0f0f5" }}>{"🎯 جلسة: " + pendingCheckpoints.session.scenario}</div>
+                    <div style={{ fontSize: 11, color: "#7a8295" }}>{"الخطوة " + (pendingCheckpoints.session.step + 1) + "/6"}</div>
+                  </div>
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <button onClick={() => {
+                      const cp = pendingCheckpoints.session;
+                      const sc = DAILY_SCENARIOS.find(s => s.title === cp.scenario);
+                      if (sc) { setChosenScenario(sc); setTab("today"); }
+                      setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    <button onClick={() => {
+                      (async () => { try { await storage.delete("checkpoint-session"); } catch(e) {} })();
+                      setPendingCheckpoints(prev => { const n = { ...prev }; delete n.session; return Object.keys(n).length ? n : null; });
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
+                  </div>
+                </div>
+              )}
+              {pendingCheckpoints.quiz && (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: "8px 12px" }}>
+                  <div>
+                    <div style={{ fontSize: 13, color: "#f0f0f5" }}>{"📊 اختبار أسبوعي"}</div>
+                    <div style={{ fontSize: 11, color: "#7a8295" }}>{"سؤال " + (pendingCheckpoints.quiz.qi + 1) + "/10 — " + pendingCheckpoints.quiz.score + " صحيح"}</div>
+                  </div>
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <button onClick={() => {
+                      setTab("train"); setTrainMode("quiz");
+                      setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    <button onClick={() => {
+                      (async () => { try { await storage.delete("checkpoint-quiz"); } catch(e) {} })();
+                      setPendingCheckpoints(prev => { const n = { ...prev }; delete n.quiz; return Object.keys(n).length ? n : null; });
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
+                  </div>
+                </div>
+              )}
+              {pendingCheckpoints.level && (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: "8px 12px" }}>
+                  <div>
+                    <div style={{ fontSize: 13, color: "#f0f0f5" }}>{"🎓 اختبار المستوى"}</div>
+                    <div style={{ fontSize: 11, color: "#7a8295" }}>{"سؤال " + (pendingCheckpoints.level.qi + 1) + "/25"}</div>
+                  </div>
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <button onClick={() => {
+                      setTab("train"); setTrainMode("level");
+                      setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#e8b84b", color: "#1a1614", fontFamily: "inherit", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>كمّل</button>
+                    <button onClick={() => {
+                      (async () => { try { await storage.delete("checkpoint-level"); } catch(e) {} })();
+                      setPendingCheckpoints(prev => { const n = { ...prev }; delete n.level; return Object.keys(n).length ? n : null; });
+                    }} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>ابدأ من جديد</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* TODAY — Deep Processing Session */}
         {tab === "today" && (
           <div>
@@ -2757,6 +2864,7 @@ export default function App() {
                 scenario={chosenScenario || todayScenario}
                 dayNum={dn}
                 sessionHistory={sessionHistory}
+                checkpoint={pendingCheckpoints && pendingCheckpoints.session && pendingCheckpoints.session.scenario === (chosenScenario || todayScenario).title ? pendingCheckpoints.session : undefined}
                 onComplete={() => {
                   const d = store.days[today] || [];
                   if (!d.includes("session")) {
@@ -2880,14 +2988,14 @@ export default function App() {
             })()}
             {trainMode === "sim" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><MeetingSim /></Card>}
             {trainMode === "quick" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><QuickResp /></Card>}
-            {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} /></Card>}
+            {trainMode === "quiz" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><WeeklyQuiz onSave={() => setQuizResults(null)} checkpoint={pendingCheckpoints && pendingCheckpoints.quiz ? pendingCheckpoints.quiz : undefined} /></Card>}
             {trainMode === "fill" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FillBlank /></Card>}
             {trainMode === "build" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><SentenceBuild /></Card>}
             {trainMode === "fluency" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><Fluency432 /></Card>}
             {trainMode === "listen" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><ListenExercise /></Card>}
             {trainMode === "dictation" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><DictationExercise /></Card>}
             {trainMode === "recall" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><FreeRecall /></Card>}
-            {trainMode === "level" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><LevelTest onComplete={(result) => setLevelResult(result)} /></Card>}
+            {trainMode === "level" && <Card><div style={{ marginBottom: 10 }}><button onClick={() => setTrainMode(null)} style={{ background: "none", border: "none", color: "#7a8295", fontFamily: "inherit", fontSize: 12, cursor: "pointer" }}>→ رجوع</button></div><LevelTest onComplete={(result) => setLevelResult(result)} checkpoint={pendingCheckpoints && pendingCheckpoints.level ? pendingCheckpoints.level : undefined} /></Card>}
           </div>
         )}
 
