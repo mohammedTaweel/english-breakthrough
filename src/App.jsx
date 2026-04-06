@@ -213,13 +213,13 @@ function AuthScreen({ onLogin }) {
 
   // Quick profile selection if accounts exist
   if (showProfiles && accounts.length > 0 && mode === "login") return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "var(--c-bg)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" }}>
+    <div dir="rtl" className="auth-wrapper" style={{ fontFamily: "inherit" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
       `}</style>
-      <div style={{ maxWidth: 400, width: "100%", padding: "var(--sp-7)", animation: "fadeUp .5s" }}>
+      <div className="auth-card">
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <TaliqLogo size={44} />
           <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-text)", marginTop: "var(--sp-4)" }}>من يتدرب اليوم؟</div>
@@ -245,13 +245,13 @@ function AuthScreen({ onLogin }) {
   );
 
   return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "var(--c-bg)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" }}>
+    <div dir="rtl" className="auth-wrapper" style={{ fontFamily: "inherit" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;800&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
       `}</style>
-      <div style={{ maxWidth: 400, width: "100%", padding: "var(--sp-7)", animation: "fadeUp .5s" }}>
+      <div className="auth-card">
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <TaliqLogo size={44} />
           <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-text)", marginTop: "var(--sp-4)" }}>{mode === "register" ? "حساب جديد" : "تسجيل الدخول"}</div>
@@ -399,6 +399,8 @@ const CSS = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     background: var(--c-bg);
+    background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.03) 1px, transparent 0);
+    background-size: 24px 24px;
     color: var(--c-text);
     font-family: 'Noto Kufi Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: var(--fs-base);
@@ -758,39 +760,109 @@ const CSS = `
     margin-bottom: var(--sp-4);
   }
 
-  /* ===== HERO CARD (Today's session) ===== */
+  /* ===== HERO CARD (Today's session) — Cambly/Preply level ===== */
   .hero-card {
-    background: linear-gradient(135deg, var(--c-accent) 0%, #3b82f6 100%);
+    background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 50%, #3b82f6 100%);
     color: #fff;
     border-radius: var(--r-xl);
-    padding: var(--sp-7);
-    margin-bottom: var(--sp-5);
-    box-shadow: 0 8px 20px rgba(29,78,216,0.2), 0 4px 8px rgba(29,78,216,0.1);
-    animation: fadeUp 0.3s ease;
+    padding: var(--sp-8) var(--sp-7);
+    margin-bottom: var(--sp-6);
+    box-shadow: 0 12px 28px rgba(29,78,216,0.25), 0 4px 8px rgba(29,78,216,0.15);
+    animation: fadeUp 0.4s ease;
+    position: relative;
+    overflow: hidden;
   }
-  .hero-card h2 { font-size: var(--fs-lg); font-weight: 700; margin-bottom: var(--sp-2); }
-  .hero-card p { font-size: var(--fs-sm); opacity: 0.85; }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -20%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-card::after {
+    content: '';
+    position: absolute;
+    bottom: -30%; left: -10%;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-card h2 { font-size: var(--fs-xl); font-weight: 800; margin-bottom: var(--sp-2); position: relative; z-index: 1; }
+  .hero-card p { font-size: var(--fs-base); opacity: 0.8; position: relative; z-index: 1; line-height: 1.6; }
+  .hero-card .hero-quote {
+    font-size: var(--fs-sm); opacity: 0.6; font-style: italic;
+    margin-bottom: var(--sp-5); position: relative; z-index: 1;
+    border-right: 2px solid rgba(255,255,255,0.3); padding-right: var(--sp-3);
+  }
 
   /* ===== STATS CARD ===== */
   .stat-card {
     background: var(--c-surface);
     border-radius: var(--r-xl);
-    padding: var(--sp-5);
+    padding: var(--sp-5) var(--sp-4);
     text-align: center;
     box-shadow: var(--sh-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--c-accent), #3b82f6);
   }
   .stat-card__value {
-    font-size: var(--fs-xl);
+    font-size: var(--fs-2xl);
     font-weight: 800;
     color: var(--c-accent);
     font-family: 'IBM Plex Mono', monospace;
     line-height: 1;
-    margin-bottom: var(--sp-1);
+    margin-bottom: var(--sp-2);
   }
   .stat-card__label {
     font-size: var(--fs-xs);
     color: var(--c-text-tertiary);
     font-weight: 500;
+  }
+
+  /* ===== AUTH SCREEN ===== */
+  .auth-wrapper {
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(160deg, #1e3a5f 0%, #1d4ed8 100%);
+    padding: var(--sp-5);
+  }
+  .auth-card {
+    max-width: 420px; width: 100%;
+    background: var(--c-surface);
+    border-radius: var(--r-xl);
+    padding: var(--sp-8) var(--sp-7);
+    box-shadow: var(--sh-xl);
+    animation: fadeUp 0.5s ease;
+  }
+  @media (max-width: 480px) {
+    .auth-card { padding: var(--sp-6) var(--sp-5); border-radius: var(--r-lg); }
+  }
+
+  /* ===== ONBOARDING ===== */
+  .onboard-wrapper {
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--c-bg);
+    background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.03) 1px, transparent 0);
+    background-size: 24px 24px;
+    padding: var(--sp-5);
+  }
+  .onboard-card {
+    max-width: 500px; width: 100%;
+    background: var(--c-surface);
+    border-radius: var(--r-xl);
+    padding: var(--sp-8) var(--sp-7);
+    box-shadow: var(--sh-xl);
+    animation: fadeUp 0.4s ease;
+  }
+  @media (max-width: 480px) {
+    .onboard-card { padding: var(--sp-6) var(--sp-5); }
   }
 
   /* ===== ENGLISH TEXT — readable sans-serif ===== */
@@ -3515,9 +3587,9 @@ function MainApp({ currentUser, onLogout }) {
 
   // ===== ONBOARDING =====
   if (!store.start) return (
-    <div dir="rtl" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" }}>
+    <div dir="rtl" className="onboard-wrapper" style={{ fontFamily: "inherit" }}>
       <style>{CSS}</style>
-      <div style={{ maxWidth: 480, width: "100%", padding: "var(--sp-7)", animation: "fadeUp .5s" }}>
+      <div className="onboard-card">
 
         {/* Step indicator */}
         {onboardStep > 0 && <div style={{ display: "flex", gap: "var(--sp-2)", marginBottom: "var(--sp-7)", justifyContent: "center" }}>
@@ -3775,7 +3847,7 @@ function MainApp({ currentUser, onLogout }) {
           <div>
             {/* Hero — Today's Session */}
             <div className="hero-card">
-              <p style={{ opacity: 0.7, marginBottom: "var(--sp-4)", fontSize: "var(--fs-sm)" }}>{MOTIV[dn % MOTIV.length]}</p>
+              <p className="hero-quote">{MOTIV[dn % MOTIV.length]}</p>
               <h2>{"جلسة اليوم: " + todayScenario.title}</h2>
               <p>مقترح بناءً على تقدمك — اختر سيناريو آخر أدناه</p>
             </div>
