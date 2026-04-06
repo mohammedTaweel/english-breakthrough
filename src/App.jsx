@@ -2187,7 +2187,7 @@ function MainApp({ currentUser, onLogout }) {
             <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-tertiary)" }}>من يلتزم علناً يُكمل ٣ أضعاف من لا يفعل — أبحاث سلوكية</div>
           </div>
           <Button size="lg" full onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge, committed: true }); }}>أنا ملتزم — ابدأ الآن</Button>
-          <button className="btn btn--ghost btn--full" style={{ marginTop: "var(--sp-3)" }} onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge }); }}>أبدأ بدون التزام</button>
+          <Button variant="ghost" full style={{ marginTop: "var(--sp-3)" }} onClick={() => { save({ ...store, start: gtd(), challenge: userChallenge }); }}>أبدأ بدون التزام</Button>
         </div>}
 
       </div>
