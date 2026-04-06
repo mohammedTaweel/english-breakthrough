@@ -2724,7 +2724,7 @@ function MainApp({ currentUser, onLogout }) {
 
               {/* Test current voice */}
               <div style={{ marginBottom: "var(--sp-4)" }}>
-                <button className="btn btn--secondary btn--sm" onClick={() => speak("Hello! Nice to meet you. How are you today?", 0.9)}>جرّب الصوت الحالي</button>
+                <Button variant="secondary" size="sm" onClick={() => speak("Hello! Nice to meet you. How are you today?", 0.9)}><IconVolume size={16}/>جرّب الصوت الحالي</Button>
               </div>
               {/* FIX 8: Accent selection */}
               <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-secondary)", marginBottom: "var(--sp-2)", display: "flex", alignItems: "center", gap: 4 }}><IconGlobe size={14}/>اللهجة:</div>
