@@ -1386,41 +1386,72 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint, sessionHistory
         </div>
       )}
 
-      {/* Step 6: Real-world challenge */}
+      {/* Step 6: Apply — specific phrase + real challenge */}
       {step === 5 && (
         <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>تحدّي اليوم</div>
-          <div style={{ fontSize: "var(--fs-md)", fontWeight: 800, color: "var(--c-accent)", marginBottom: "var(--sp-3)" }}>تحدّي اليوم</div>
-          <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-5)", marginBottom: "var(--sp-4)" }}>
+          <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-3)", color: "var(--c-accent)" }}>طبّق اليوم</div>
+
+          {/* Show the specific phrase they learned */}
+          <div style={{ background: "linear-gradient(135deg, rgba(5,150,105,0.06), rgba(29,78,216,0.06))", border: "1px solid rgba(5,150,105,0.15)", borderRadius: "var(--r-xl)", padding: "var(--sp-5)", marginBottom: "var(--sp-3)" }}>
+            <div style={{ fontSize: "var(--fs-xs)", color: "var(--c-text-tertiary)", marginBottom: "var(--sp-2)" }}>الجملة اللي تعلمتها:</div>
+            <div style={{ fontFamily: "inherit", fontSize: "var(--fs-lg)", direction: "ltr", textAlign: "center", lineHeight: 1.8, color: "var(--c-text)", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--sp-2)" }}>
+              <span>{sc.keyPhrases[0].en}</span>
+              <SpeakBtn text={sc.keyPhrases[0].en} size={18} />
+            </div>
+            <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", marginTop: "var(--sp-2)" }}>{sc.keyPhrases[0].ar}</div>
+          </div>
+
+          {/* Challenge text */}
+          <div style={{ background: "rgba(29,78,216,0.06)", border: "1px solid rgba(29,78,216,0.12)", borderRadius: "var(--r-lg)", padding: "var(--sp-5)", marginBottom: "var(--sp-3)" }}>
+            <div style={{ fontSize: "var(--fs-md)", color: "var(--c-accent)", fontWeight: 700, marginBottom: "var(--sp-2)" }}>استخدم هذه الجملة في أقرب فرصة حقيقية</div>
             <div style={{ fontSize: "var(--fs-md)", color: "var(--c-text)", lineHeight: 2 }}>{sc.challenge}</div>
           </div>
+
+          {/* Tip */}
+          <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2, marginBottom: "var(--sp-4)", fontStyle: "italic" }}>
+            {sc.title === "في المطعم" ? "لما تطلب قهوتك الجاية — قلها بدال ما تشير" :
+             sc.title === "عند الدكتور" ? "المرة الجاية في الصيدلية — اشرح بالإنجليزي" :
+             sc.title === "في الفندق" ? "في أي حجز أونلاين — اقرأ الشروط بالإنجليزي" :
+             "جرّبها في أول فرصة حقيقية — حتى لو مع نفسك"}
+          </div>
+
+          {/* Celebration animation */}
+          {applyCelebration && (
+            <div style={{ animation: "stepDone .8s", textAlign: "center", marginBottom: "var(--sp-3)" }}>
+              <div style={{ fontSize: "48px", marginBottom: "var(--sp-2)" }}>\u2728</div>
+              <div style={{ fontSize: "var(--fs-lg)", fontWeight: 800, color: "var(--c-success)" }}>رائع! أنت ملتزم</div>
+            </div>
+          )}
+
           {!challengeAccepted ? (
             <button onClick={() => {
-              setChallengeAccepted(true);
-              const sessionData = { scenario: sc.title, date: gtd(), recallScore: { ...recallScore }, phrasesCount: sc.keyPhrases.length };
-              (async () => { try {
-                const r = await userStorage.get("session-history");
-                const hist = r && r.value ? JSON.parse(r.value) : [];
-                hist.push(sessionData);
-                await userStorage.set("session-history", JSON.stringify(hist));
-                await userStorage.delete("checkpoint-session"); // clear checkpoint on completion
-              } catch(e) {} })();
-              if (onComplete) onComplete();
-            }} style={{ padding: "12px 28px", borderRadius: "var(--r-lg)", border: "none", background: "linear-gradient(135deg,#059669,#1d4ed8)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-base)", fontWeight: 700, cursor: "pointer" }}>أقبل التحدي </button>
+              setApplyCelebration(true);
+              setTimeout(() => {
+                setChallengeAccepted(true);
+                setApplyCelebration(false);
+                const sessionData = { scenario: sc.title, date: gtd(), recallScore: { ...recallScore }, phrasesCount: sc.keyPhrases.length };
+                (async () => { try {
+                  const r = await userStorage.get("session-history");
+                  const hist = r && r.value ? JSON.parse(r.value) : [];
+                  hist.push(sessionData);
+                  await userStorage.set("session-history", JSON.stringify(hist));
+                  await userStorage.delete("checkpoint-session");
+                } catch(e) {} })();
+                if (onComplete) onComplete();
+              }, 1200);
+            }} style={{ padding: "14px 32px", borderRadius: "var(--r-lg)", border: "none", background: "linear-gradient(135deg,#059669,#1d4ed8)", color: "#fff", fontFamily: "inherit", fontSize: "var(--fs-base)", fontWeight: 700, cursor: "pointer", transition: "transform 0.2s" }}>سويته</button>
           ) : !challengeDone ? (
             <div style={{ animation: "fadeUp .4s" }}>
-              {/* FIX 4: Challenge follow-up */}
               <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-accent)", fontWeight: 700, marginBottom: "var(--sp-3)" }}>سوّيت التحدي؟</div>
               <div style={{ display: "flex", gap: "var(--sp-2)", justifyContent: "center", marginBottom: "var(--sp-3)" }}>
-                <Button variant="success" size="sm" onClick={() => setChallengeDone(true)}><IconCheck size={16}/>نعم سويته </Button>
-                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "1px solid rgba(0,0,0,0.06)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-sm)", cursor: "pointer" }}>بسويه لاحقاً</button>
+                <Button variant="success" size="sm" onClick={() => setChallengeDone(true)}><IconCheck size={16}/>نعم سويته</Button>
+                <button onClick={() => setChallengeDone(true)} style={{ padding: "8px 20px", borderRadius: "var(--r-md)", border: "1px solid rgba(0,0,0,0.06)", background: "transparent", color: "var(--c-text-secondary)", fontFamily: "inherit", fontSize: "var(--fs-sm)", cursor: "pointer" }}>بسويه لاحقا</button>
               </div>
               <input value={challengeNote} onChange={(e) => setChallengeNote(e.target.value)} placeholder="كيف كانت التجربة؟ (اختياري)" style={{ width: "100%", padding: "var(--sp-3)", borderRadius: "var(--r-md)", fontFamily: "inherit", fontSize: "var(--fs-sm)", background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.05)", color: "var(--c-text)", outline: "none", textAlign: "center" }} />
             </div>
           ) : (
             <div style={{ animation: "fadeUp .4s" }}>
               <div style={{ fontSize: "var(--fs-xl)", marginBottom: "var(--sp-2)", color: "var(--c-success)" }}>مبروك</div>
-              {/* FIX 5: Self-efficacy message based on history */}
               {(() => {
                 const totalSessions = (sessionHistory || []).length;
                 const recalled = Object.values(recallScore).filter(v => v === "good").length;
@@ -1430,7 +1461,7 @@ function DailySession({ scenario, onComplete, dayNum, checkpoint, sessionHistory
                 if (totalSessions >= 7) return <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-success)", marginBottom: "var(--sp-2)", lineHeight: 2 }}>أسبوع كامل! {totalSessions} جلسة أنجزتها.<br/>قبل أسبوع ما كنت تعرف هالجمل. اليوم تقولها.</div>;
                 return <div style={{ fontSize: "var(--fs-md)", fontWeight: 700, color: "var(--c-success)", marginBottom: "var(--sp-2)", lineHeight: 2 }}>جلسة #{totalSessions + 1} مكتملة!<br/>كل جلسة تقرّبك خطوة من الطلاقة الحقيقية.</div>;
               })()}
-              <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>تمرّنت على "{sc.title}" من ٦ زوايا. الجمل الآن أقرب لذاكرتك طويلة المدى.</div>
+              <div style={{ fontSize: "var(--fs-sm)", color: "var(--c-text-secondary)", lineHeight: 2 }}>تمرّنت على \"{sc.title}\" من ٦ زوايا. الجمل الآن أقرب لذاكرتك طويلة المدى.</div>
             </div>
           )}
         </div>
