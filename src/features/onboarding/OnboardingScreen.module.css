@@ -1,0 +1,164 @@
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-5);
+  background: var(--c-bg);
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--c-surface);
+  border-radius: var(--r-xl);
+  padding: var(--sp-7) var(--sp-6);
+  box-shadow: var(--sh-lg);
+  text-align: center;
+}
+
+.dots {
+  display: flex;
+  gap: var(--sp-2);
+  justify-content: center;
+  margin-bottom: var(--sp-7);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-full);
+  background: var(--c-surface-sunken);
+  transition: all var(--dur-base) var(--ease);
+}
+
+.dotActive {
+  width: 24px;
+  background: var(--c-accent);
+}
+
+.icon {
+  font-size: 48px;
+  margin-bottom: var(--sp-4);
+}
+
+.title {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  color: var(--c-text);
+  margin: 0 0 var(--sp-3);
+  line-height: 1.6;
+}
+
+.desc {
+  font-size: var(--fs-sm);
+  color: var(--c-text-secondary);
+  line-height: 2;
+  margin: 0 0 var(--sp-5);
+}
+
+.highlight {
+  color: var(--c-accent);
+  font-weight: 700;
+}
+
+.goalGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-5);
+  text-align: right;
+}
+
+.goalBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  text-align: right;
+  transition: all var(--dur-fast) var(--ease);
+  font-size: var(--fs-sm);
+  color: var(--c-text);
+}
+
+.goalBtn:hover {
+  border-color: var(--c-accent);
+}
+
+.goalBtnActive {
+  border-color: var(--c-accent);
+  background: rgba(29, 78, 216, 0.06);
+  font-weight: 700;
+}
+
+.goalIcon {
+  font-size: var(--fs-xl);
+  flex-shrink: 0;
+}
+
+.stepsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-5);
+  text-align: right;
+}
+
+.stepRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+  font-size: var(--fs-sm);
+  color: var(--c-text-secondary);
+}
+
+.stepNum {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-full);
+  background: var(--c-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.quote {
+  background: var(--c-surface-sunken);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-sm);
+  color: var(--c-text-secondary);
+  line-height: 2;
+  font-style: italic;
+  text-align: right;
+}
+
+.quoteName {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-top: var(--sp-2);
+  font-size: var(--fs-xs);
+}
+
+.social {
+  font-size: var(--fs-xs);
+  color: var(--c-success);
+  font-weight: 600;
+  margin-bottom: var(--sp-5);
+}
+
+.btnRow {
+  display: flex;
+  gap: var(--sp-2);
+  justify-content: center;
+}

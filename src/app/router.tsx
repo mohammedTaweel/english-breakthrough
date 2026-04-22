@@ -7,6 +7,7 @@ import { TodayScreen } from '@features/today';
 import { PhrasesScreen } from '@features/phrases/PhrasesScreen';
 import { ProgressScreen } from '@features/progress/ProgressScreen';
 import { TrainingScreen } from '@features/training/TrainingScreen';
+import { OnboardingScreen } from '@features/onboarding';
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: ROUTES.onboarding,
-        element: <PlaceholderScreen title="Onboarding" feature="onboarding" />,
+        element: <OnboardingScreen />,
       },
       {
         element: <AppLayout />,
