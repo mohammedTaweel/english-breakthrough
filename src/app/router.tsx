@@ -4,6 +4,7 @@ import { PlaceholderScreen } from '@shared/components/PlaceholderScreen';
 import { AuthScreen, ProtectedRoute } from '@features/auth';
 import { AppLayout } from './AppLayout';
 import { PhrasesScreen } from '@features/phrases/PhrasesScreen';
+import { ProgressScreen } from '@features/progress/ProgressScreen';
 
 export const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ export const router = createBrowserRouter([
           },
           {
             path: ROUTES.progress,
-            element: <PlaceholderScreen title="التقدم" feature="progress" />,
+            element: <ProgressScreen />,
           },
         ],
       },

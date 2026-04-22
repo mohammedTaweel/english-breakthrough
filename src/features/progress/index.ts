@@ -24,3 +24,4 @@ export type {
   RecallScore,
 } from './types';
 export { EMPTY_PROGRESS } from './types';
+export { ProgressScreen } from './ProgressScreen';
