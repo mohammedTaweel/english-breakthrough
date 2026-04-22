@@ -1,4 +1,4 @@
-export { getFirebaseApp, getFirebaseAuth, getFirebaseDb } from './config';
+export { getFirebaseApp, getFirebaseAuth, getFirebaseDb, isDevMode } from './config';
 export {
   signUp,
   signIn,

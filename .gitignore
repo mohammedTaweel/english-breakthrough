@@ -37,3 +37,4 @@ firebase-debug.log
 # Capacitor native folders
 ios/App/App/public
 android/app/src/main/assets/public
+test-results/

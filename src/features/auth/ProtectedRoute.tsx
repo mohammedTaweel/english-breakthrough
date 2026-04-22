@@ -1,16 +1,21 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from './useAuth';
+import { useProgress } from '@features/progress';
 import { ROUTES } from '@shared/types/routes';
 
 /**
  * Wraps routes that require authentication.
- * Shows a loading spinner while Firebase resolves the auth state,
- * then either renders the child route or redirects to /auth.
+ *
+ * 1. Not logged in → /auth
+ * 2. Logged in but no startDate (new user) → /onboarding
+ * 3. Logged in + startDate → pass through
  */
 export function ProtectedRoute() {
-  const { user, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const { progress, loading: progressLoading } = useProgress();
+  const { pathname } = useLocation();
 
-  if (loading) {
+  if (authLoading || (user && progressLoading)) {
     return (
       <div
         role="status"
@@ -39,6 +44,11 @@ export function ProtectedRoute() {
 
   if (!user) {
     return <Navigate to={ROUTES.auth} replace />;
+  }
+
+  // New user without startDate → onboarding (unless already there)
+  if (!progress.startDate && pathname !== ROUTES.onboarding) {
+    return <Navigate to={ROUTES.onboarding} replace />;
   }
 
   return <Outlet />;

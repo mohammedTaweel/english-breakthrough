@@ -1,13 +1,25 @@
+import { Suspense } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { ROUTES } from '@shared/types/routes';
-import { PlaceholderScreen } from '@shared/components/PlaceholderScreen';
-import { AuthScreen, ProtectedRoute } from '@features/auth';
+import { ProtectedRoute } from '@features/auth';
+import { Loading } from '@shared/components/Loading';
 import { AppLayout } from './AppLayout';
-import { TodayScreen } from '@features/today';
-import { PhrasesScreen } from '@features/phrases/PhrasesScreen';
-import { ProgressScreen } from '@features/progress/ProgressScreen';
-import { TrainingScreen } from '@features/training/TrainingScreen';
-import { OnboardingScreen } from '@features/onboarding';
+import {
+  AuthScreen,
+  OnboardingScreen,
+  TodayScreen,
+  TrainingScreen,
+  PhrasesScreen,
+  ProgressScreen,
+} from './lazy-screens';
+
+function withSuspense(Component: React.LazyExoticComponent<React.ComponentType>) {
+  return (
+    <Suspense fallback={<Loading />}>
+      <Component />
+    </Suspense>
+  );
+}
 
 export const router = createBrowserRouter([
   {
@@ -16,40 +28,39 @@ export const router = createBrowserRouter([
   },
   {
     path: ROUTES.auth,
-    element: <AuthScreen />,
+    element: withSuspense(AuthScreen),
   },
   {
     element: <ProtectedRoute />,
     children: [
       {
         path: ROUTES.onboarding,
-        element: <OnboardingScreen />,
+        element: withSuspense(OnboardingScreen),
       },
       {
         element: <AppLayout />,
         children: [
-          {
-            path: ROUTES.today,
-            element: <TodayScreen />,
-          },
-          {
-            path: ROUTES.training,
-            element: <TrainingScreen />,
-          },
-          {
-            path: ROUTES.phrases,
-            element: <PhrasesScreen />,
-          },
-          {
-            path: ROUTES.progress,
-            element: <ProgressScreen />,
-          },
+          { path: ROUTES.today, element: withSuspense(TodayScreen) },
+          { path: ROUTES.training, element: withSuspense(TrainingScreen) },
+          { path: ROUTES.phrases, element: withSuspense(PhrasesScreen) },
+          { path: ROUTES.progress, element: withSuspense(ProgressScreen) },
         ],
       },
     ],
   },
   {
     path: '*',
-    element: <PlaceholderScreen title="404" feature="not-found" />,
+    element: (
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <h1>404 — الصفحة غير موجودة</h1>
+      </div>
+    ),
   },
 ]);

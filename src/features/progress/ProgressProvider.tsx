@@ -1,6 +1,6 @@
 import { useMemo, useSyncExternalStore, type ReactNode } from 'react';
 import { useAuth } from '@features/auth';
-import { onProgressChange } from './progress-service';
+import { onProgressChange } from './service';
 import { ProgressContext, type ProgressContextValue } from './progress-context-value';
 import { EMPTY_PROGRESS, type UserProgress } from './types';
 

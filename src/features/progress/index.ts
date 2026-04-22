@@ -12,7 +12,7 @@ export {
   saveCheckpoint,
   clearCheckpoint,
   setStartDate,
-} from './progress-service';
+} from './service';
 export type {
   UserProgress,
   SessionRecord,
