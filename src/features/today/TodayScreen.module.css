@@ -1,0 +1,154 @@
+.todayContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding-bottom: var(--sp-7);
+}
+
+/* ===== Motivational quote ===== */
+
+.motiv {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-family: var(--ff-ar);
+  color: var(--c-text);
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* ===== Scenario header ===== */
+
+.scenarioHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.scenarioIcon {
+  font-size: var(--fs-2xl);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-accent-light);
+  border-radius: var(--r-lg);
+  flex-shrink: 0;
+}
+
+.scenarioTitle {
+  margin: 0;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  font-family: var(--ff-ar);
+  color: var(--c-text);
+}
+
+.scenarioDesc {
+  margin: var(--sp-1) 0 0;
+  font-size: var(--fs-sm);
+  font-family: var(--ff-ar);
+  color: var(--c-text-secondary);
+}
+
+/* ===== Scenario pill picker ===== */
+
+.pillScroll {
+  display: flex;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  padding: var(--sp-1) 0;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pillScroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.pillScroll::-webkit-scrollbar-track {
+  background: var(--c-surface-sunken);
+  border-radius: var(--r-full);
+}
+
+.pillScroll::-webkit-scrollbar-thumb {
+  background: var(--c-border);
+  border-radius: var(--r-full);
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--c-surface);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-full);
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--ff-ar);
+  font-size: var(--fs-sm);
+  color: var(--c-text);
+  transition: all var(--dur-fast) var(--ease);
+  flex-shrink: 0;
+}
+
+.pill:hover {
+  border-color: var(--c-accent);
+  background: var(--c-accent-light);
+}
+
+.pillActive {
+  background: var(--c-accent);
+  color: #fff;
+  border-color: var(--c-accent);
+}
+
+.pillActive:hover {
+  background: var(--c-accent-hover);
+}
+
+.pillSeen {
+  opacity: 0.7;
+}
+
+.pillSeen.pillActive {
+  opacity: 1;
+}
+
+.pillIcon {
+  font-size: var(--fs-base);
+}
+
+.pillTitle {
+  font-size: var(--fs-xs);
+}
+
+/* ===== Success card ===== */
+
+.successCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  text-align: center;
+}
+
+.successEmoji {
+  font-size: var(--fs-display);
+}
+
+.successTitle {
+  margin: 0;
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  font-family: var(--ff-ar);
+  color: var(--c-text);
+}
+
+.successText {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-family: var(--ff-ar);
+  color: var(--c-text-secondary);
+}

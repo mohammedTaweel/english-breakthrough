@@ -3,6 +3,7 @@ import { ROUTES } from '@shared/types/routes';
 import { PlaceholderScreen } from '@shared/components/PlaceholderScreen';
 import { AuthScreen, ProtectedRoute } from '@features/auth';
 import { AppLayout } from './AppLayout';
+import { TodayScreen } from '@features/today';
 import { PhrasesScreen } from '@features/phrases/PhrasesScreen';
 import { ProgressScreen } from '@features/progress/ProgressScreen';
 import { TrainingScreen } from '@features/training/TrainingScreen';
@@ -28,7 +29,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: ROUTES.today,
-            element: <PlaceholderScreen title="اليوم" feature="today" />,
+            element: <TodayScreen />,
           },
           {
             path: ROUTES.training,

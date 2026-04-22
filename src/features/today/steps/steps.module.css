@@ -1,0 +1,500 @@
+/* ===== Shared step layout ===== */
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.stepHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.stepIcon {
+  font-size: var(--fs-xl);
+}
+
+.stepTitle {
+  margin: 0;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--c-text);
+  font-family: var(--ff-ar);
+  flex: 1;
+}
+
+.stepDuration {
+  font-size: var(--fs-xs);
+  color: var(--c-text-tertiary);
+  font-family: var(--ff-ar);
+  background: var(--c-surface-sunken);
+  padding: var(--sp-1) var(--sp-2);
+  border-radius: var(--r-full);
+}
+
+.stepInstruction {
+  margin: 0;
+  font-size: var(--fs-base);
+  color: var(--c-text-secondary);
+  font-family: var(--ff-ar);
+  line-height: 1.6;
+}
+
+/* ===== Listen step ===== */
+
+.progressDots {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) 0;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--r-full);
+  background: var(--c-border);
+  transition: background var(--dur-base) var(--ease),
+    transform var(--dur-base) var(--ease);
+}
+
+.dotDone {
+  background: var(--c-success);
+}
+
+.dotActive {
+  background: var(--c-accent);
+  transform: scale(1.3);
+}
+
+.listenControls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  align-items: center;
+}
+
+.speakerLabel {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--c-text-secondary);
+  font-family: var(--ff-ar);
+}
+
+/* ===== Question block ===== */
+
+.questionBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.questionText {
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: 600;
+  font-family: var(--ff-ar);
+  color: var(--c-text);
+  text-align: center;
+}
+
+.optionsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.resultBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  align-items: center;
+}
+
+.correctMsg {
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--c-success);
+  font-family: var(--ff-ar);
+}
+
+.wrongMsg {
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--c-error);
+  font-family: var(--ff-ar);
+}
+
+/* ===== Read step — chat bubbles ===== */
+
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  max-height: 360px;
+  overflow-y: auto;
+  padding: var(--sp-2);
+}
+
+.chatBubble {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding: var(--sp-3);
+  border-radius: var(--r-lg);
+  max-width: 85%;
+  position: relative;
+}
+
+.chatUser {
+  align-self: flex-end;
+  background: var(--c-accent-light);
+  border-end-end-radius: var(--r-sm);
+}
+
+.chatOther {
+  align-self: flex-start;
+  background: var(--c-surface-sunken);
+  border-end-start-radius: var(--r-sm);
+}
+
+.chatSpeaker {
+  font-size: var(--fs-xs);
+  color: var(--c-text-tertiary);
+  font-family: var(--ff-ar);
+  font-weight: 600;
+}
+
+.chatText {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-family: var(--ff-en);
+  color: var(--c-text);
+  line-height: 1.5;
+  direction: ltr;
+  text-align: left;
+}
+
+.speakBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--fs-base);
+  padding: var(--sp-1);
+  border-radius: var(--r-sm);
+  align-self: flex-end;
+  opacity: 0.7;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.speakBtn:hover {
+  opacity: 1;
+}
+
+.speakBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ===== Shadow step ===== */
+
+.phraseList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.phraseCard {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  transition: border-color var(--dur-base) var(--ease);
+}
+
+.phraseDone {
+  border-color: var(--c-success);
+  background: var(--c-success-light);
+}
+
+.phraseTexts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.phraseEn {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-family: var(--ff-en);
+  color: var(--c-text);
+  font-weight: 600;
+  direction: ltr;
+  text-align: left;
+}
+
+.phraseAr {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-family: var(--ff-ar);
+  color: var(--c-text-secondary);
+}
+
+.phraseActions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  justify-content: flex-end;
+}
+
+.repBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  background: var(--c-surface-sunken);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-full);
+  padding: var(--sp-1) var(--sp-3);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease);
+  font-family: var(--ff-ar);
+  color: var(--c-text);
+}
+
+.repBtn:hover:not(:disabled) {
+  background: var(--c-accent-light);
+}
+
+.repBtn:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.repCount {
+  font-family: var(--ff-mono);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+}
+
+/* ===== Recall step ===== */
+
+.flashCard {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  align-items: center;
+  text-align: center;
+}
+
+.flashLabel {
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--c-text-tertiary);
+  font-family: var(--ff-mono);
+}
+
+.flashAr {
+  margin: 0;
+  font-size: var(--fs-lg);
+  font-family: var(--ff-ar);
+  color: var(--c-text);
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.flashEn {
+  margin: 0;
+  font-size: var(--fs-md);
+  font-family: var(--ff-en);
+  color: var(--c-accent);
+  font-weight: 600;
+  direction: ltr;
+  line-height: 1.5;
+}
+
+.scoreButtons {
+  display: flex;
+  gap: var(--sp-2);
+  width: 100%;
+}
+
+.scoreBtn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-3) var(--sp-2);
+  background: var(--c-surface-sunken);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font-family: var(--ff-ar);
+  font-size: var(--fs-xs);
+  color: var(--c-text);
+  transition: background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.scoreBtn:hover {
+  background: var(--c-accent-light);
+  border-color: var(--c-accent);
+}
+
+.recallSummary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+}
+
+.recallStat {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-base);
+  font-family: var(--ff-ar);
+  color: var(--c-text);
+}
+
+.recallStatEmoji {
+  font-size: var(--fs-lg);
+}
+
+/* ===== Produce step ===== */
+
+.produceOpt {
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--c-surface);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font-family: var(--ff-en);
+  font-size: var(--fs-sm);
+  color: var(--c-text);
+  text-align: left;
+  direction: ltr;
+  line-height: 1.5;
+  transition: border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+
+.produceOpt:hover:not(:disabled) {
+  border-color: var(--c-accent);
+  background: var(--c-accent-light);
+}
+
+.produceOpt:disabled {
+  cursor: default;
+}
+
+.optCorrect {
+  border-color: var(--c-success) !important;
+  background: var(--c-success-light) !important;
+}
+
+.optWrong {
+  border-color: var(--c-error) !important;
+  background: var(--c-error-light) !important;
+}
+
+.tipsBlock {
+  background: var(--c-surface-sunken);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+}
+
+.tipsTitle {
+  margin: 0 0 var(--sp-2) 0;
+  font-size: var(--fs-base);
+  font-weight: 700;
+  font-family: var(--ff-ar);
+  color: var(--c-text);
+}
+
+.tipsList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.tipItem {
+  font-size: var(--fs-sm);
+  font-family: var(--ff-ar);
+  color: var(--c-text-secondary);
+  line-height: 1.6;
+  padding-inline-start: var(--sp-3);
+  border-inline-start: 2px solid var(--c-accent);
+}
+
+/* ===== Apply step ===== */
+
+.challengeCard {
+  background: var(--c-accent-light);
+  border: 1px solid var(--c-accent);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  text-align: center;
+}
+
+.challengeText {
+  margin: 0;
+  font-size: var(--fs-md);
+  font-family: var(--ff-ar);
+  color: var(--c-text);
+  font-weight: 600;
+  line-height: 1.8;
+}
+
+.todayPhrase {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.todayPhraseLabel {
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--c-text-tertiary);
+  font-family: var(--ff-ar);
+}
+
+.todayPhraseEn {
+  margin: 0;
+  font-size: var(--fs-md);
+  font-family: var(--ff-en);
+  color: var(--c-accent);
+  font-weight: 700;
+  direction: ltr;
+}
+
+.todayPhraseAr {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-family: var(--ff-ar);
+  color: var(--c-text-secondary);
+}

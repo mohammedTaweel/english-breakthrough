@@ -1,0 +1,85 @@
+.sessionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+/* ===== Step navigation ===== */
+
+.stepNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--c-surface);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--c-border);
+  overflow-x: auto;
+}
+
+.stepDot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+  flex: 1;
+  min-width: 0;
+  opacity: 0.4;
+  transition: opacity var(--dur-base) var(--ease);
+}
+
+.stepDone {
+  opacity: 0.7;
+}
+
+.stepActive {
+  opacity: 1;
+}
+
+.stepDotNum {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-full);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  font-family: var(--ff-mono);
+  background: var(--c-surface-sunken);
+  color: var(--c-text-tertiary);
+  border: 2px solid var(--c-border);
+  transition: all var(--dur-base) var(--ease);
+}
+
+.stepDone .stepDotNum {
+  background: var(--c-success-light);
+  color: var(--c-success);
+  border-color: var(--c-success);
+}
+
+.stepActive .stepDotNum {
+  background: var(--c-accent);
+  color: #fff;
+  border-color: var(--c-accent);
+}
+
+.stepDotLabel {
+  font-size: var(--fs-xs);
+  font-family: var(--ff-ar);
+  color: var(--c-text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.stepDone .stepDotLabel {
+  color: var(--c-success);
+}
+
+.stepActive .stepDotLabel {
+  color: var(--c-accent);
+  font-weight: 700;
+}
