@@ -1,0 +1,162 @@
+.header {
+  margin-bottom: var(--sp-5);
+}
+
+.title {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  color: var(--c-text);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--fs-sm);
+  color: var(--c-text-secondary);
+  margin: var(--sp-1) 0 0;
+}
+
+/* Category pills */
+.pills {
+  display: flex;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  padding-bottom: var(--sp-2);
+  margin-bottom: var(--sp-4);
+  scrollbar-width: none;
+}
+
+.pills::-webkit-scrollbar {
+  display: none;
+}
+
+.pill {
+  white-space: nowrap;
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-full);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  background: var(--c-surface);
+  color: var(--c-text-secondary);
+  border: 1px solid var(--c-border);
+  transition: all var(--dur-fast) var(--ease);
+  flex-shrink: 0;
+}
+
+.pill:hover {
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+}
+
+.pillActive {
+  background: var(--c-accent);
+  color: #fff;
+  border-color: var(--c-accent);
+}
+
+/* Phrase item */
+.phraseItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  margin-bottom: var(--sp-2);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+
+.phraseItem:hover {
+  border-color: var(--c-accent-light, rgba(29, 78, 216, 0.2));
+}
+
+.phraseItemDone {
+  background: var(--c-success-light);
+  border-color: rgba(5, 150, 105, 0.2);
+}
+
+/* Rep circle */
+.repCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  flex-shrink: 0;
+  background: var(--c-surface-sunken);
+  color: var(--c-text-tertiary);
+  transition: all var(--dur-fast) var(--ease);
+}
+
+.repCircleActive {
+  background: var(--c-accent);
+  color: #fff;
+}
+
+.repCircleDone {
+  background: var(--c-success);
+  color: #fff;
+}
+
+/* Phrase text */
+.phraseEn {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-base);
+  direction: ltr;
+  text-align: left;
+  line-height: 1.7;
+  color: var(--c-text);
+}
+
+.phraseAr {
+  font-size: var(--fs-xs);
+  color: var(--c-text-secondary);
+  margin-top: var(--sp-1);
+}
+
+.phraseContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.speakBtn {
+  flex-shrink: 0;
+  padding: var(--sp-1);
+  font-size: var(--fs-md);
+  opacity: 0.5;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.speakBtn:hover {
+  opacity: 1;
+}
+
+.speakBtnPlaying {
+  opacity: 1;
+  color: var(--c-accent);
+}
+
+/* Footer hint */
+.hint {
+  font-size: var(--fs-xs);
+  color: var(--c-text-tertiary);
+  text-align: center;
+  margin-top: var(--sp-4);
+}
+
+/* Progress summary */
+.progressBar {
+  margin-bottom: var(--sp-5);
+}
+
+.progressLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-xs);
+  color: var(--c-text-secondary);
+  margin-bottom: var(--sp-2);
+}

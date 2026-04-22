@@ -2,14 +2,9 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { ROUTES } from '@shared/types/routes';
 import { PlaceholderScreen } from '@shared/components/PlaceholderScreen';
 import { AuthScreen, ProtectedRoute } from '@features/auth';
+import { AppLayout } from './AppLayout';
+import { PhrasesScreen } from '@features/phrases/PhrasesScreen';
 
-/**
- * App routing.
- *
- * /auth is public.
- * Everything else is wrapped in ProtectedRoute — if the user isn't
- * logged in, they get redirected to /auth automatically.
- */
 export const router = createBrowserRouter([
   {
     path: ROUTES.root,
@@ -27,20 +22,25 @@ export const router = createBrowserRouter([
         element: <PlaceholderScreen title="Onboarding" feature="onboarding" />,
       },
       {
-        path: ROUTES.today,
-        element: <PlaceholderScreen title="اليوم" feature="today" />,
-      },
-      {
-        path: ROUTES.training,
-        element: <PlaceholderScreen title="تدريب" feature="training" />,
-      },
-      {
-        path: ROUTES.phrases,
-        element: <PlaceholderScreen title="الجمل" feature="phrases" />,
-      },
-      {
-        path: ROUTES.progress,
-        element: <PlaceholderScreen title="التقدم" feature="progress" />,
+        element: <AppLayout />,
+        children: [
+          {
+            path: ROUTES.today,
+            element: <PlaceholderScreen title="اليوم" feature="today" />,
+          },
+          {
+            path: ROUTES.training,
+            element: <PlaceholderScreen title="تدريب" feature="training" />,
+          },
+          {
+            path: ROUTES.phrases,
+            element: <PhrasesScreen />,
+          },
+          {
+            path: ROUTES.progress,
+            element: <PlaceholderScreen title="التقدم" feature="progress" />,
+          },
+        ],
       },
     ],
   },

@@ -1,0 +1,1 @@
+export { PhrasesScreen } from './PhrasesScreen';
