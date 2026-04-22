@@ -1,0 +1,5 @@
+node_modules
+dist
+src/legacy
+docs/BUSINESS_REQUIREMENTS.md
+package-lock.json

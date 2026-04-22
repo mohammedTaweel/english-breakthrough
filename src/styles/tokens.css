@@ -1,0 +1,86 @@
+/**
+ * Design tokens — source of truth for colors, spacing, typography.
+ * Any visual property used in the app MUST reference a token here.
+ * Inline styles in components are forbidden except for dynamic values.
+ */
+
+:root {
+  /* ============ Colors — Brand ============ */
+  --c-accent: #1d4ed8;
+  --c-accent-hover: #1e40af;
+  --c-accent-light: #dbeafe;
+
+  /* ============ Colors — Semantic ============ */
+  --c-success: #059669;
+  --c-success-light: #d1fae5;
+  --c-error: #dc2626;
+  --c-error-light: #fee2e2;
+  --c-warn: #d97706;
+  --c-warn-light: #fef3c7;
+
+  /* ============ Colors — Surface (light mode) ============ */
+  --c-bg: #fafaf9;
+  --c-surface: #ffffff;
+  --c-surface-sunken: #f5f5f4;
+  --c-border: #e7e5e4;
+
+  /* ============ Colors — Text ============ */
+  --c-text: #1c1917;
+  --c-text-secondary: #57534e;
+  --c-text-tertiary: #a8a29e;
+
+  /* ============ Typography ============ */
+  --ff-ar: 'Noto Kufi Arabic', system-ui, sans-serif;
+  --ff-en: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ff-mono: 'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+
+  --fs-xs: 0.6875rem;   /* 11px */
+  --fs-sm: 0.8125rem;   /* 13px */
+  --fs-base: 0.9375rem; /* 15px */
+  --fs-md: 1.0625rem;   /* 17px */
+  --fs-lg: 1.25rem;     /* 20px */
+  --fs-xl: 1.5rem;      /* 24px */
+  --fs-2xl: 1.75rem;    /* 28px */
+  --fs-display: 2.25rem;/* 36px */
+
+  /* ============ Spacing ============ */
+  --sp-1: 0.25rem;  /* 4px */
+  --sp-2: 0.5rem;   /* 8px */
+  --sp-3: 0.75rem;  /* 12px */
+  --sp-4: 1rem;     /* 16px */
+  --sp-5: 1.5rem;   /* 24px */
+  --sp-6: 2rem;     /* 32px */
+  --sp-7: 3rem;     /* 48px */
+  --sp-8: 4rem;     /* 64px */
+
+  /* ============ Radius ============ */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-full: 9999px;
+
+  /* ============ Shadow ============ */
+  --sh-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --sh-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --sh-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --sh-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+  /* ============ Motion ============ */
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #1a1a2e;
+    --c-surface: #252540;
+    --c-surface-sunken: #2a2a45;
+    --c-border: #3a3a55;
+    --c-text: #e7e5e4;
+    --c-text-secondary: #a8a29e;
+    --c-text-tertiary: #78716c;
+  }
+}

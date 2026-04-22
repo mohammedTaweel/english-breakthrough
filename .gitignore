@@ -1,4 +1,39 @@
+# Dependencies
 node_modules/
+
+# Build output
+dist/
 .netlify/
+
+# Environment
 .env
 .env.local
+.env.*.local
+
+# Testing
+coverage/
+.vitest-cache/
+
+# Editors
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+Thumbs.db
+
+# Firebase
+.firebaserc
+firebase-debug.log
+
+# Capacitor native folders
+ios/App/App/public
+android/app/src/main/assets/public
