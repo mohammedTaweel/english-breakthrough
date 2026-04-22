@@ -1,0 +1,44 @@
+.card {
+  background-color: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-md);
+  transition: box-shadow var(--dur-base) var(--ease),
+              transform var(--dur-base) var(--ease);
+}
+
+/* ---- Padding ---- */
+
+.padNone {
+  padding: 0;
+}
+
+.padSm {
+  padding: var(--sp-3);
+}
+
+.padMd {
+  padding: var(--sp-4);
+}
+
+.padLg {
+  padding: var(--sp-5);
+}
+
+/* ---- Variants ---- */
+
+.default {
+  /* base styles from .card are sufficient */
+}
+
+.accent {
+  border-inline-start: 4px solid var(--c-accent);
+}
+
+.success {
+  border-inline-start: 4px solid var(--c-success);
+}
+
+.warn {
+  border-inline-start: 4px solid var(--c-warn);
+}

@@ -1,0 +1,61 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--c-text);
+}
+
+.input {
+  height: 44px;
+  min-height: 44px;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-base);
+  font-family: inherit;
+  color: var(--c-text);
+  background-color: var(--c-surface);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-md);
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease);
+}
+
+.input::placeholder {
+  color: var(--c-text-tertiary);
+}
+
+.input:focus {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  background-color: var(--c-surface-sunken);
+}
+
+.inputError {
+  border-color: var(--c-error);
+}
+
+.inputError:focus {
+  border-color: var(--c-error);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.hint {
+  font-size: var(--fs-xs);
+  color: var(--c-text-tertiary);
+}
+
+.error {
+  font-size: var(--fs-xs);
+  color: var(--c-error);
+  font-weight: 500;
+}
