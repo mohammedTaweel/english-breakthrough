@@ -1,0 +1,1 @@
+export { useSpeak } from './useSpeak';
