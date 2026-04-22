@@ -5,6 +5,7 @@ import { AuthScreen, ProtectedRoute } from '@features/auth';
 import { AppLayout } from './AppLayout';
 import { PhrasesScreen } from '@features/phrases/PhrasesScreen';
 import { ProgressScreen } from '@features/progress/ProgressScreen';
+import { TrainingScreen } from '@features/training/TrainingScreen';
 
 export const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ export const router = createBrowserRouter([
           },
           {
             path: ROUTES.training,
-            element: <PlaceholderScreen title="تدريب" feature="training" />,
+            element: <TrainingScreen />,
           },
           {
             path: ROUTES.phrases,

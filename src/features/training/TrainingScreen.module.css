@@ -1,0 +1,181 @@
+.header {
+  margin-bottom: var(--sp-5);
+}
+
+.title {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--fs-sm);
+  color: var(--c-text-secondary);
+  margin: var(--sp-1) 0 0;
+}
+
+.sectionLabel {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--c-text-secondary);
+  margin: 0 0 var(--sp-3);
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-6);
+}
+
+.exerciseCard {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+
+.exerciseCard:hover {
+  border-color: var(--c-accent);
+}
+
+.exerciseAccent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 0 var(--r-lg) var(--r-lg) 0;
+}
+
+.exerciseBody {
+  padding: var(--sp-4) var(--sp-5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.exerciseName {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--c-text);
+}
+
+.exerciseDesc {
+  font-size: var(--fs-sm);
+  color: var(--c-text-tertiary);
+  margin-top: var(--sp-1);
+}
+
+.exerciseTag {
+  font-size: var(--fs-xs);
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Back button */
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  color: var(--c-text-secondary);
+  margin-bottom: var(--sp-4);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.backBtn:hover {
+  color: var(--c-text);
+}
+
+/* Result screen */
+.resultCenter {
+  text-align: center;
+  padding: var(--sp-6) 0;
+}
+
+.resultScore {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  font-family: var(--ff-mono);
+}
+
+.resultMsg {
+  font-size: var(--fs-sm);
+  color: var(--c-text-secondary);
+  margin-top: var(--sp-2);
+  line-height: 1.8;
+}
+
+/* Exercise: option item */
+.optionItem {
+  padding: var(--sp-3);
+  border-radius: var(--r-md);
+  margin-bottom: var(--sp-2);
+  cursor: pointer;
+  font-family: var(--ff-mono);
+  font-size: var(--fs-sm);
+  direction: ltr;
+  text-align: left;
+  line-height: 1.7;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  transition: all var(--dur-fast) var(--ease);
+}
+
+.optionItem:hover {
+  border-color: var(--c-accent);
+}
+
+.optionCorrect {
+  background: var(--c-success-light);
+  border-color: var(--c-success);
+}
+
+.optionWrong {
+  background: var(--c-error-light);
+  border-color: var(--c-error);
+}
+
+.optionDim {
+  opacity: 0.3;
+}
+
+.optionDisabled {
+  cursor: default;
+}
+
+/* Question box */
+.questionBox {
+  background: rgba(29, 78, 216, 0.06);
+  border: 1px solid rgba(29, 78, 216, 0.12);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-3);
+}
+
+.questionText {
+  font-size: var(--fs-sm);
+  color: var(--c-text);
+  line-height: 1.8;
+}
+
+.progressRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-xs);
+  color: var(--c-text-secondary);
+}
+
+.center {
+  text-align: center;
+  margin-top: var(--sp-3);
+}
